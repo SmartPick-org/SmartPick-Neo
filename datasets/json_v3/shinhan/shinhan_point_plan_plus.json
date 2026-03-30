@@ -1,0 +1,359 @@
+{
+  "card_meta": {
+    "card_id": "shinhan_point_plan_plus",
+    "card_name": "신한카드 Point Plan+",
+    "card_company": "신한카드",
+    "annual_fee": 7000,
+    "minimum_performance": 400000,
+    "reward_currency": "MY_SHINHAN_POINT",
+    "currency_to_krw_rate": 1.0
+  },
+  "benefit_groups": [
+    {
+      "group_id": "G_PLANPLUS_DAILY",
+      "group_name": "일상 생활비 적립 서비스",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": 10000,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_PLANPLUS_ESSENTIAL",
+      "group_name": "필수 생활비 적립 서비스",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": 7000,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_PLANPLUS_LEISURE",
+      "group_name": "여가 생활비 적립 서비스",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": 1000,
+      "top_n_count": null
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_id": "b_planplus_daily_domestic",
+      "category": "General",
+      "content": "국내 건당 결제금액별 0.7~3% 마이신한포인트 적립",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 0,
+          "monthly_limit": 10000,
+          "reward_rate": 0.007,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 30000,
+          "reward_rate": 0.01,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 800000,
+          "monthly_limit": 50000,
+          "reward_rate": 0.015,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 1200000,
+          "monthly_limit": 60000,
+          "reward_rate": 0.02,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "TIERED_RATE_BY_TRANSACTION",
+        "rate": null,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": [
+          {
+            "min_amount": 0,
+            "rate": 0.007
+          },
+          {
+            "min_amount": 30000,
+            "rate": 0.01
+          },
+          {
+            "min_amount": 100000,
+            "rate": 0.015
+          },
+          {
+            "min_amount": 300000,
+            "rate": 0.02
+          },
+          {
+            "min_amount": 1000000,
+            "rate": 0.03
+          }
+        ]
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_PLANPLUS_DAILY",
+      "ui_warnings": [
+        "무이자할부 거래(슬림할부 등 부분 무이자, 일시불의 무이자할부 전환 포함)는 적립되지 않음",
+        "포인트 사용 거래의 경우, 포인트 사용 금액을 제외한 결제금액을 기준으로 적립"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": "가족행사월(5월, 12월) 적립 한도 1만 포인트 추가 제공",
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_planplus_daily_solpay",
+      "category": "General",
+      "content": "신한 SOL페이로 국내 결제 시 0.5% 마이신한포인트 추가 적립",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 0,
+          "monthly_limit": 10000,
+          "reward_rate": 0.005,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 30000,
+          "reward_rate": 0.005,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 800000,
+          "monthly_limit": 50000,
+          "reward_rate": 0.005,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 1200000,
+          "monthly_limit": 60000,
+          "reward_rate": 0.005,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.005,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_PLANPLUS_DAILY",
+      "ui_warnings": [
+        "신한 SOL페이(터치결제, QR·바코드 결제, NFC결제 포함. 단, ARS결제, 일반결제, Smart결제는 추가 적립 제외)"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": "가족행사월(5월, 12월) 적립 한도 1만 포인트 추가 제공",
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_planplus_daily_overseas",
+      "category": "Travel",
+      "content": "해외(일시불) 결제금액에 대해 1% 마이신한포인트 적립",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 0,
+          "monthly_limit": 10000,
+          "reward_rate": 0.01,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 30000,
+          "reward_rate": 0.01,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 800000,
+          "monthly_limit": 50000,
+          "reward_rate": 0.01,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 1200000,
+          "monthly_limit": 60000,
+          "reward_rate": 0.01,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.01,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_PLANPLUS_DAILY",
+      "ui_warnings": [
+        "해외 일시불 거래 후 할부로 전환(유이자 할부 전환 포함)하는 경우는 적립되지 않음",
+        "해외 현금인출 이용금액은 적립되지 않음"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": "가족행사월(5월, 12월) 적립 한도 1만 포인트 추가 제공",
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_planplus_essential_food",
+      "category": "Food",
+      "content": "주말(토/일) 음식점/배달앱 건당 2만원 이상 결제 시 1천 마이신한포인트 적립",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 0,
+          "monthly_limit": 2000,
+          "reward_rate": null,
+          "fixed_amount": 1000
+        },
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 5000,
+          "reward_rate": null,
+          "fixed_amount": 1000
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": 1000,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 20000,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": 5
+      },
+      "group_id": "G_PLANPLUS_ESSENTIAL",
+      "ui_warnings": [
+        "통합 일 1회 적용",
+        "커피 업종 제외",
+        "오프라인 가맹점에서만 적립",
+        "간편결제(Pay)로 결제하여 가맹점명이 간편결제명인 경우 적립 제외"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_planplus_essential_bill",
+      "category": "Life",
+      "content": "도시가스/전기요금, 이동통신요금 자동납부 시 2만원당 1천 마이신한포인트 적립",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 10000,
+          "reward_rate": null,
+          "fixed_amount": 1000
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_PER_VOLUME",
+        "rate": null,
+        "fixed_amount": 1000,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 20000,
+        "max_payment_amount_applied": 100000,
+        "max_count_per_month": 1
+      },
+      "group_id": "G_PLANPLUS_ESSENTIAL",
+      "ui_warnings": [
+        "대상 영역별 각각 월 1회 적용",
+        "1회 승인금액 기준 10만원까지 적용 (영역별 최대 5천 포인트 적립)",
+        "도시가스/전기요금이 아파트관리비에 포함되어 결제되는 경우 적립되지 않음"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_planplus_leisure_ott",
+      "category": "Cultural",
+      "content": "OTT 7천원 이상 자동납부 시 최대 2천 마이신한포인트 적립",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 1000,
+          "reward_rate": null,
+          "fixed_amount": 1000
+        },
+        {
+          "min_prev_performance": 800000,
+          "monthly_limit": 2000,
+          "reward_rate": null,
+          "fixed_amount": 2000
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": 2000,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 7000,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": 1
+      },
+      "group_id": "G_PLANPLUS_LEISURE",
+      "ui_warnings": [
+        "통합 월 1회 적용",
+        "1회성 일반구매 결제, 앱마켓 인앱결제, 통신 요금 포함(합산) 결제, 앱마켓 가맹점 결제 시 적립 제외"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    }
+  ]
+}

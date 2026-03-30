@@ -1,0 +1,205 @@
+{
+  "card_meta": {
+    "card_id": "shinhan_the_classic_s",
+    "card_name": "신한카드 The CLASSIC-S",
+    "card_company": "신한카드",
+    "annual_fee": 97000,
+    "minimum_performance": 0,
+    "reward_currency": "MY_SHINHAN_POINT",
+    "currency_to_krw_rate": 1.0
+  },
+  "benefit_groups": [
+    {
+      "group_id": "G_CLASSIC_S_MONTHLY_LIMIT",
+      "group_name": "월 적립 한도 통합",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": 1000000,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_CLASSIC_S_TRAVEL_LIMIT",
+      "group_name": "Travel 적립 한도",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": 50000,
+      "top_n_count": null
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_id": "b_classic_s_base_1pct",
+      "category": "General",
+      "content": "일시불·할부 이용금액의 1% 적립",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.01,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_CLASSIC_S_MONTHLY_LIMIT",
+      "ui_warnings": [
+        "단기카드대출(현금서비스), 장기카드대출(카드론), 연회비, 각종수수료/이자, 거래 취소금액, 기프트카드/선불카드 구매·충전금액, 국세, 4대보험 등 제외"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_classic_s_add_05pct",
+      "category": "General",
+      "content": "전월 300만원 이상 이용 시 0.5% 추가 적립",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 3000000,
+          "monthly_limit": 1000000,
+          "reward_rate": 0.005,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.005,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_CLASSIC_S_MONTHLY_LIMIT",
+      "ui_warnings": [
+        "신규 발급 시 발급월/등록월 제외, Travel 적립/국세/4대보험 제외"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_classic_s_travel_2pct",
+      "category": "Travel",
+      "content": "해외 일시불 및 면세점 이용금액 2% 추가 적립",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": 50000,
+          "reward_rate": 0.02,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.02,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_CLASSIC_S_TRAVEL_LIMIT",
+      "ui_warnings": [
+        "신규 발급 시 등록월+1개월 제공, 월적립한도 초과 시 기본적립만 적용"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_classic_s_bonus_25k",
+      "category": "General",
+      "content": "분기당 1천만원 이상 이용 시 보너스 포인트 25,000점 적립",
+      "frequency": "QUARTERLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 10000000,
+          "monthly_limit": 25000,
+          "reward_rate": null,
+          "fixed_amount": 25000
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": 25000,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": null,
+      "ui_warnings": [
+        "분기별 1회 적립, 본인카드 회원만 제공"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": "분기별 보너스",
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_classic_s_lounge_5x",
+      "category": "Travel",
+      "content": "연 5회 공항라운지 무료 입장",
+      "frequency": "ANNUAL",
+      "reward_type": "VOUCHER",
+      "tier_conditions": [],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": 5,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": null,
+      "ui_warnings": [
+        "본인카드 회원만 제공, 동반 1인 포함, 라운지 이용권 24시간 유효"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    }
+  ]
+}

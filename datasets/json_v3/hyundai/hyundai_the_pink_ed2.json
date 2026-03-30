@@ -1,0 +1,208 @@
+{
+  "card_meta": {
+    "card_id": "hyundai_the_pink_ed2",
+    "card_name": "현대카드 the Pink Edition2",
+    "card_company": "현대카드",
+    "annual_fee": 50000,
+    "minimum_performance": 500000,
+    "reward_currency": "M_POINT",
+    "currency_to_krw_rate": 0.666
+  },
+  "benefit_groups": [
+    {
+      "group_id": "G_PINK_ED2_MONTHLY_LIMIT",
+      "group_name": "프리미엄쇼핑 월 적립 한도",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": 50000,
+      "top_n_count": null
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_id": "b_pink_ed2_general_1_5pct",
+      "category": "General",
+      "content": "국내외 가맹점 1.5% M포인트 적립",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": null,
+          "reward_rate": 0.015,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.015,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": null,
+      "ui_warnings": [
+        "신규 발급 시 카드 수령 등록월 다음 달 이용 건까지는 전월 이용 금액 50만원 미만도 기본 혜택 제공"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_pink_ed2_premiumshopping_5pct",
+      "category": "Shopping",
+      "content": "프리미엄쇼핑 영역 5% M포인트 적립",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 1000000,
+          "monthly_limit": 50000,
+          "reward_rate": 0.05,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.05,
+        "fixed_amount": null,
+        "monthly_limit": 50000,
+        "fallback_reward_rate": 0.015,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_PINK_ED2_MONTHLY_LIMIT",
+      "ui_warnings": [
+        "추가 혜택 적용 시 기본 혜택은 중복 제공되지 않음",
+        "신규 발급 시 카드 수령 등록월 다음 달 이용 건까지는 전월 이용 금액 100만원 미만도 추가 혜택 제공"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_pink_ed2_lounge_5times",
+      "category": "Travel",
+      "content": "전 세계 공항 라운지 무료 이용",
+      "frequency": "ANNUAL",
+      "reward_type": "VOUCHER",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": null,
+          "reward_rate": null,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": 5
+      },
+      "group_id": null,
+      "ui_warnings": [
+        "연간 5회 한도",
+        "신규 발급 시 카드 수령 등록월 다음 달 이용 건까지는 전월 이용 금액 50만원 미만도 라운지 이용 가능"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_pink_ed2_valet_5times",
+      "category": "Travel",
+      "content": "공항 및 특급호텔 발레파킹 무료 이용",
+      "frequency": "MONTHLY",
+      "reward_type": "VOUCHER",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": null,
+          "reward_rate": null,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": 5
+      },
+      "group_id": null,
+      "ui_warnings": [
+        "공항·호텔 통합 월 5회 한도",
+        "신규 발급 시 카드 수령 등록월 다음 달 이용 건까지는 전월 이용 금액 50만원 미만도 발레파킹 이용 가능"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_pink_ed2_metalplate",
+      "category": "Others",
+      "content": "메탈 플레이트 제공",
+      "frequency": "ONCE",
+      "reward_type": "VOUCHER",
+      "tier_conditions": [],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": null,
+      "ui_warnings": [
+        "발급 수수료 10만원 별도 부과 또는 10만 M포인트로 결제"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": true,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    }
+  ]
+}

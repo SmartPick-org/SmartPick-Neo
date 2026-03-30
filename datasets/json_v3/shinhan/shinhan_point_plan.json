@@ -1,0 +1,223 @@
+{
+  "card_meta": {
+    "card_id": "shinhan_point_plan",
+    "card_name": "신한카드 Point Plan",
+    "card_company": "신한카드",
+    "annual_fee": 20000,
+    "minimum_performance": 0,
+    "reward_currency": "POINTREE",
+    "currency_to_krw_rate": 1.0
+  },
+  "benefit_groups": [
+    {
+      "group_id": "G_POINT_PLAN_DAILY",
+      "group_name": "일상 생활비 적립 서비스",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": 10000,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_POINT_PLAN_WEEKEND",
+      "group_name": "주말 외식비 포인트 적립",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": 5000,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_POINT_PLAN_BILL",
+      "group_name": "정기결제 자동납부 포인트 적립",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": 10000,
+      "top_n_count": null
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_id": "b_point_plan_daily_05pct",
+      "category": "General",
+      "content": "국내 건당 결제금액별 0.5~3% 포인트 적립",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 0,
+          "monthly_limit": 10000,
+          "reward_rate": 0.005,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 30000,
+          "reward_rate": 0.005,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 800000,
+          "monthly_limit": 50000,
+          "reward_rate": 0.005,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.005,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_POINT_PLAN_DAILY",
+      "ui_warnings": [
+        "가족행사월(5월, 12월)에는 적립 한도 1만 포인트 추가 제공"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": "5월, 12월",
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_point_plan_daily_1pct",
+      "category": "General",
+      "content": "해외 결제금액 1% 포인트 적립",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 0,
+          "monthly_limit": 10000,
+          "reward_rate": 0.01,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 30000,
+          "reward_rate": 0.01,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 800000,
+          "monthly_limit": 50000,
+          "reward_rate": 0.01,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.01,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_POINT_PLAN_DAILY",
+      "ui_warnings": [
+        "가족행사월(5월, 12월)에는 적립 한도 1만 포인트 추가 제공"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": "5월, 12월",
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_point_plan_weekend_1000p",
+      "category": "Food",
+      "content": "음식점/배달앱 건당 2만원 이상 결제 시 1천 포인트 적립",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 0,
+          "monthly_limit": 2000,
+          "reward_rate": null,
+          "fixed_amount": 1000
+        },
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 5000,
+          "reward_rate": null,
+          "fixed_amount": 1000
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": 1000,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 20000,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_POINT_PLAN_WEEKEND",
+      "ui_warnings": [
+        "주말(토, 일)에만 적용"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_point_plan_bill_1000p",
+      "category": "Life",
+      "content": "도시가스/전기요금, 이동통신요금 2만원당 1천 포인트 적립",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 0,
+          "monthly_limit": 10000,
+          "reward_rate": null,
+          "fixed_amount": 1000
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_PER_VOLUME",
+        "rate": null,
+        "fixed_amount": 1000,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": [
+          {
+            "min_amount": 20000,
+            "rate": 0.05
+          }
+        ]
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 20000,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_POINT_PLAN_BILL",
+      "ui_warnings": [
+        "2개 영역(도시가스/전기요금, 이동통신요금) 각각 월 5천 포인트 한도"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    }
+  ]
+}

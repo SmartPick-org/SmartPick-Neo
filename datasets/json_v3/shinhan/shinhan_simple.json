@@ -1,0 +1,148 @@
+{
+  "card_meta": {
+    "card_id": "shinhan_simple",
+    "card_name": "신한카드 Simple 플래티늄",
+    "card_company": "신한카드",
+    "annual_fee": 0,
+    "minimum_performance": 300000,
+    "reward_currency": "KRW",
+    "currency_to_krw_rate": 1.0
+  },
+  "benefit_groups": [
+    {
+      "group_id": "G_SIMPLE_PARKING",
+      "group_name": "공항 발레파킹 통합 한도",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": 3,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_SIMPLE_LOUNGE",
+      "group_name": "공항 라운지 통합 한도",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": 2,
+      "top_n_count": null
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_id": "b_simple_parking",
+      "category": "Travel",
+      "content": "인천공항 제1/2터미널 발레파킹 월 3회 무료 이용 (전월 실적 30만원 이상)",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": 3,
+          "reward_rate": null,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": null,
+        "monthly_limit": 3,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": 3
+      },
+      "group_id": "G_SIMPLE_PARKING",
+      "ui_warnings": [
+        "사전 예약 필요, 현장 상황에 따라 당일 이용 가능",
+        "서비스 제공 횟수 초과 시 비용 부과",
+        "주차요금은 본인 부담"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_simple_lounge",
+      "category": "Travel",
+      "content": "인천공항/김포공항 라운지 연 2회 무료 이용 (전월 실적 30만원 이상)",
+      "frequency": "ANNUAL",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": 2,
+          "reward_rate": null,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": null,
+        "monthly_limit": 2,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_SIMPLE_LOUNGE",
+      "ui_warnings": [
+        "동반자 입장 시 입장료 본인 부담",
+        "라운지 혼잡 시 이용 제한 가능"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_simple_hotel_parking",
+      "category": "Travel",
+      "content": "제휴 호텔 발레파킹 월 3회 무료 이용 (전월 실적 30만원 이상)",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": 3,
+          "reward_rate": null,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": null,
+        "monthly_limit": 3,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": 3
+      },
+      "group_id": "G_SIMPLE_PARKING",
+      "ui_warnings": [
+        "호텔별 무료 주차 시간 상이",
+        "객실/매장 이용 영수증 필수 제시",
+        "행사 시 서비스 이용 불가"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    }
+  ]
+}

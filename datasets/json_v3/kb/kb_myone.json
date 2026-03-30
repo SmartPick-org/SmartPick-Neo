@@ -1,0 +1,196 @@
+{
+  "card_meta": {
+    "card_id": "kb_myone",
+    "card_name": "KB국민 마이원카드",
+    "card_company": "KB국민카드",
+    "annual_fee": 3000,
+    "minimum_performance": 300000,
+    "reward_currency": "KRW",
+    "currency_to_krw_rate": 1.0
+  },
+  "benefit_groups": [
+    {
+      "group_id": "G_MYONE_HOMEPLUS",
+      "group_name": "홈플러스 할인 통합 한도",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": 30000,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_MYONE_RESTAURANT_BEAUTY",
+      "group_name": "패밀리레스토랑/미용 통합 할인 한도",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": 20000,
+      "top_n_count": null
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_id": "b_myone_homeplus_discount",
+      "category": "Shopping",
+      "content": "홈플러스에서 건당 5만원 이상 사용 시 전월 이용실적에 따라 5%~10% 청구할인, 월 최대 3만원까지 할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": 30000,
+          "reward_rate": 0.05,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 600000,
+          "monthly_limit": 30000,
+          "reward_rate": 0.07,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 900000,
+          "monthly_limit": 30000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": null,
+        "fixed_amount": null,
+        "monthly_limit": 30000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 50000,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_MYONE_HOMEPLUS",
+      "ui_warnings": [
+        "할인대상: 홈플러스 할인점, 홈플러스 익스프레스, 문화센터, 온라인몰 및 애슐리(홈플러스 입점매장)",
+        "최초 카드 사용등록일로부터 90일간 이용금액 미달 시 5% 할인율 적용",
+        "동일 제휴카드 2개 이상 소지 시 중복 적용 불가"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_myone_restaurant_discount",
+      "category": "Dining_FNB",
+      "content": "아웃백, VIPS, TGIF에서 1일 1회, 월 2회, 월간 통합 할인한도 2만원까지 10% 청구할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": 20000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.1,
+        "fixed_amount": null,
+        "monthly_limit": 20000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": 2
+      },
+      "group_id": "G_MYONE_RESTAURANT_BEAUTY",
+      "ui_warnings": [
+        "1일 1회, 월 2회, 월간 통합 할인한도 2만원까지 적용"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_myone_beauty_discount",
+      "category": "Life",
+      "content": "미용, 피부미용업종에서 월간 통합 할인한도 2만원까지 10% 청구할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": 20000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.1,
+        "fixed_amount": null,
+        "monthly_limit": 20000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_MYONE_RESTAURANT_BEAUTY",
+      "ui_warnings": [
+        "월간 통합 할인한도 2만원까지 적용"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_myone_telecom_discount",
+      "category": "Life",
+      "content": "이동통신요금 자동이체 시 월 3천원 정액할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": 3000,
+          "reward_rate": null,
+          "fixed_amount": 3000
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": 3000,
+        "monthly_limit": 3000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 10000,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": 1
+      },
+      "group_id": null,
+      "ui_warnings": [
+        "자동납부 금액 1만원 이상 시 제공",
+        "유무선 통합청구방식 자동납부 금액 제외"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    }
+  ]
+}

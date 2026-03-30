@@ -1,0 +1,461 @@
+{
+  "card_meta": {
+    "card_id": "hyundai_t3_edition2",
+    "card_name": "현대카드 T3 Edition2",
+    "card_company": "현대카드",
+    "annual_fee": 65000,
+    "minimum_performance": 0,
+    "reward_currency": "MILEAGE",
+    "currency_to_krw_rate": 15.0
+  },
+  "benefit_groups": [
+    {
+      "group_id": "G_T3_MILEAGE",
+      "group_name": "마일리지 적립 그룹",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": null,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_T3_BONUS_MILEAGE",
+      "group_name": "연간 보너스 마일리지",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": null,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_T3_TRAVEL",
+      "group_name": "여행편의 서비스",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": null,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_T3_PLATINUM",
+      "group_name": "플래티넘 서비스",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": null,
+      "top_n_count": null
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_id": "b_t3_airline_mileage_koreanair",
+      "category": "Travel",
+      "content": "대한항공 마일리지 적립: 200만원 미만 시 1,500원당 0.8마일, 200만원 이상 시 1,500원당 1.0마일",
+      "frequency": "MONTHLY",
+      "reward_type": "MILEAGE",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 0,
+          "monthly_limit": null,
+          "reward_rate": 0.000533,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 2000000,
+          "monthly_limit": null,
+          "reward_rate": 0.000666,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.000533,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_T3_MILEAGE",
+      "ui_warnings": [
+        "당월 이용금액 50만원 미만 시 마일리지 적립 제외",
+        "할부, 리볼빙, 현금서비스, 세금 납부액 등은 마일리지 적립 제외"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": true,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_t3_airline_mileage_asiana",
+      "category": "Travel",
+      "content": "아시아나항공 마일리지 적립: 200만원 미만 시 1,000원당 0.8마일, 200만원 이상 시 1,000원당 1.0마일",
+      "frequency": "MONTHLY",
+      "reward_type": "MILEAGE",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 0,
+          "monthly_limit": null,
+          "reward_rate": 0.0008,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 2000000,
+          "monthly_limit": null,
+          "reward_rate": 0.001,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.0008,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_T3_MILEAGE",
+      "ui_warnings": [
+        "당월 이용금액 50만원 미만 시 마일리지 적립 제외",
+        "할부, 리볼빙, 현금서비스, 세금 납부액 등은 마일리지 적립 제외"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": true,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_t3_bonus_mileage",
+      "category": "Travel",
+      "content": "연간 2,400만원 이상 이용 시 연간 누적 마일리지에 10% 보너스 마일리지",
+      "frequency": "ANNUAL",
+      "reward_type": "MILEAGE",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 24000000,
+          "monthly_limit": null,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.1,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_T3_BONUS_MILEAGE",
+      "ui_warnings": [
+        "최초 카드 발급월 이후 12개월 동안 실적 기준 충족 시에만 제공",
+        "연간 실적은 매년 재산정"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_t3_coffee_discount",
+      "category": "Coffee",
+      "content": "커피전문점(스타벅스, 커피빈, 투썸플레이스, 엔제리너스, 탐앤탐스) 건당 500원 할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 0,
+          "monthly_limit": null,
+          "reward_rate": null,
+          "fixed_amount": 500
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": 500,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_T3_PLATINUM",
+      "ui_warnings": [
+        "실적 충족 시에만 제공"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_t3_cgv_discount",
+      "category": "Cultural",
+      "content": "CGV, 메가박스 3,000원 초과 1만원 이하 결제 시 3,000원 할인, 1만원 초과 결제 시 6,000원 할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 0,
+          "monthly_limit": null,
+          "reward_rate": null,
+          "fixed_amount": 3000
+        },
+        {
+          "min_prev_performance": 10000,
+          "monthly_limit": null,
+          "reward_rate": null,
+          "fixed_amount": 6000
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "TIERED_RATE_BY_TRANSACTION",
+        "rate": null,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": [
+          {
+            "min_amount": 3000,
+            "rate": 0.0
+          },
+          {
+            "min_amount": 10000,
+            "rate": 0.0
+          }
+        ]
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 3000,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_T3_PLATINUM",
+      "ui_warnings": [
+        "실적 충족 시에만 제공"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_t3_outlet_discount",
+      "category": "Shopping",
+      "content": "롯데·신세계 프리미엄아웃렛, 유니클로, ZARA, H&M 10% 할인(월 1회/연간 2회/건당 1만원 한도)",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 0,
+          "monthly_limit": 10000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.1,
+        "fixed_amount": null,
+        "monthly_limit": 10000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": 10000,
+        "max_count_per_month": 1
+      },
+      "group_id": "G_T3_PLATINUM",
+      "ui_warnings": [
+        "월 1회/연간 2회 한도",
+        "실적 충족 시에만 제공"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_t3_parking_discount",
+      "category": "Life",
+      "content": "서울 및 대도시 제휴 주차장 주말 무료 주차(일 1회/연간 20회 한도)",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 0,
+          "monthly_limit": null,
+          "reward_rate": null,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_T3_PLATINUM",
+      "ui_warnings": [
+        "주말(토, 일)에만 제공",
+        "일 1회/연간 20회 한도",
+        "실적 충족 시에만 제공"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_t3_insurance_discount",
+      "category": "Life",
+      "content": "푸본현대생명 ZERO 보험 상품 5% 할인(월 1건/연간 3만원 한도)",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 0,
+          "monthly_limit": 30000,
+          "reward_rate": 0.05,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.05,
+        "fixed_amount": null,
+        "monthly_limit": 30000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": 1
+      },
+      "group_id": "G_T3_PLATINUM",
+      "ui_warnings": [
+        "월 1건/연간 3만원 한도",
+        "실적 충족 시에만 제공"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_t3_roaming",
+      "category": "Travel",
+      "content": "모바일 해외데이터 로밍 1일 이용권 제공(SKT/Kt/LG U+ 중 택 1)",
+      "frequency": "MONTHLY",
+      "reward_type": "VOUCHER",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 0,
+          "monthly_limit": null,
+          "reward_rate": null,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": 1
+      },
+      "group_id": "G_T3_TRAVEL",
+      "ui_warnings": [
+        "본인+가족 월 1회/연간 2회 한도",
+        "인천국제공항 내 현대카드 지정 장소에서 이용권 제공",
+        "실적 충족 시에만 제공"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": true,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_t3_airport_transport",
+      "category": "Travel",
+      "content": "인천국제공항 출발 교통할인권 제공(무료통행권, 직통열차 8,000원 할인권, 리무진버스 1만원 할인권 중 택 1)",
+      "frequency": "MONTHLY",
+      "reward_type": "VOUCHER",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 0,
+          "monthly_limit": null,
+          "reward_rate": null,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": 1
+      },
+      "group_id": "G_T3_TRAVEL",
+      "ui_warnings": [
+        "본인+가족 월 1회/연간 2회 한도",
+        "인천국제공항 내 현대카드 지정 장소에서 이용권 제공",
+        "실적 충족 시에만 제공"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": true,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    }
+  ]
+}

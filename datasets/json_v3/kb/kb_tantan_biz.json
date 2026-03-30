@@ -1,0 +1,587 @@
+{
+  "card_meta": {
+    "card_id": "kb_tantan_biz",
+    "card_name": "KB국민 탄탄대로 Biz카드",
+    "card_company": "KB국민카드",
+    "annual_fee": 9000,
+    "minimum_performance": 400000,
+    "reward_currency": "POINTREE",
+    "currency_to_krw_rate": 1.0
+  },
+  "benefit_groups": [
+    {
+      "group_id": "G_BIZ_FAVORITE",
+      "group_name": "Biz Favorite 선택 서비스",
+      "group_type": "USER_CHOICE_ONE",
+      "limit_amount": null,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_BIZ_BASIC",
+      "group_name": "Biz Basic 서비스",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": 5000,
+      "top_n_count": null
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_id": "b_biz_favorite_1",
+      "category": "Traffic",
+      "content": "SK,GS 주유소(충전소) 100점/ℓ (월 20만원/30만원 한도)",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 200000,
+          "reward_rate": null,
+          "fixed_amount": 100
+        },
+        {
+          "min_prev_performance": 800000,
+          "monthly_limit": 300000,
+          "reward_rate": null,
+          "fixed_amount": 100
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_PER_VOLUME",
+        "rate": null,
+        "fixed_amount": 100,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 10000,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_BIZ_FAVORITE",
+      "ui_warnings": [
+        "이용 건당 1만원 이상 시 적립 제공",
+        "복수 선택 불가"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": true,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_biz_favorite_2",
+      "category": "Shopping",
+      "content": "3대 마트, 하나로식자재매장 10% (1만점/1만5천점 한도)",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 10000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 800000,
+          "monthly_limit": 15000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.1,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 10000,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_BIZ_FAVORITE",
+      "ui_warnings": [
+        "이용 건당 1만원 이상 시 적립 제공",
+        "복수 선택 불가"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": true,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_biz_favorite_3",
+      "category": "Shopping",
+      "content": "6대 인터넷쇼핑몰 10% (1만점/1만5천점 한도)",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 10000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 800000,
+          "monthly_limit": 15000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.1,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 10000,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_BIZ_FAVORITE",
+      "ui_warnings": [
+        "이용 건당 1만원 이상 시 적립 제공",
+        "복수 선택 불가"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": true,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_biz_favorite_4",
+      "category": "Traffic",
+      "content": "SK,GS 주유소(충전소) 130점/ℓ (월 20만원/30만원 한도)",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 200000,
+          "reward_rate": null,
+          "fixed_amount": 130
+        },
+        {
+          "min_prev_performance": 800000,
+          "monthly_limit": 300000,
+          "reward_rate": null,
+          "fixed_amount": 130
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_PER_VOLUME",
+        "rate": null,
+        "fixed_amount": 130,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 10000,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_BIZ_FAVORITE",
+      "ui_warnings": [
+        "이용 건당 1만원 이상 시 적립 제공",
+        "복수 선택 불가"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": true,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_biz_favorite_5",
+      "category": "Shopping",
+      "content": "3대 마트, 하나로식자재매장 20% (1만5천점/3만점 한도)",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 15000,
+          "reward_rate": 0.2,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 800000,
+          "monthly_limit": 30000,
+          "reward_rate": 0.2,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.2,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 10000,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_BIZ_FAVORITE",
+      "ui_warnings": [
+        "이용 건당 1만원 이상 시 적립 제공",
+        "복수 선택 불가"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": true,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_biz_favorite_6",
+      "category": "Shopping",
+      "content": "6대 인터넷쇼핑몰 20% (1만5천점/3만점 한도)",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 15000,
+          "reward_rate": 0.2,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 800000,
+          "monthly_limit": 30000,
+          "reward_rate": 0.2,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.2,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 10000,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_BIZ_FAVORITE",
+      "ui_warnings": [
+        "이용 건당 1만원 이상 시 적립 제공",
+        "복수 선택 불가"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": true,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_biz_basic_1",
+      "category": "Life",
+      "content": "정수기렌탈 5% (5천점 한도)",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 5000,
+          "reward_rate": 0.05,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.05,
+        "fixed_amount": null,
+        "monthly_limit": 5000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_BIZ_BASIC",
+      "ui_warnings": [],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_biz_basic_2",
+      "category": "Life",
+      "content": "보안 및 용역 5% (5천점 한도)",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 5000,
+          "reward_rate": 0.05,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.05,
+        "fixed_amount": null,
+        "monthly_limit": 5000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_BIZ_BASIC",
+      "ui_warnings": [],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_biz_basic_3",
+      "category": "Life",
+      "content": "문구 및 사무용기기 5% (5천점 한도)",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 5000,
+          "reward_rate": 0.05,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.05,
+        "fixed_amount": null,
+        "monthly_limit": 5000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_BIZ_BASIC",
+      "ui_warnings": [],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_biz_basic_4",
+      "category": "Life",
+      "content": "건강,고용,산재,국민연금 5% (5천점 한도)",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 5000,
+          "reward_rate": 0.05,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.05,
+        "fixed_amount": null,
+        "monthly_limit": 5000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_BIZ_BASIC",
+      "ui_warnings": [],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_biz_basic_5",
+      "category": "Life",
+      "content": "통신요금 5% (5천점 한도)",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 5000,
+          "reward_rate": 0.05,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.05,
+        "fixed_amount": null,
+        "monthly_limit": 5000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_BIZ_BASIC",
+      "ui_warnings": [],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_biz_basic_6",
+      "category": "Life",
+      "content": "전기수도요금 5% (5천점 한도)",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 5000,
+          "reward_rate": 0.05,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.05,
+        "fixed_amount": null,
+        "monthly_limit": 5000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_BIZ_BASIC",
+      "ui_warnings": [],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_biz_basic_7",
+      "category": "Shopping",
+      "content": "SK행복스토어 5% (5천점 한도)",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 5000,
+          "reward_rate": 0.05,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.05,
+        "fixed_amount": null,
+        "monthly_limit": 5000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_BIZ_BASIC",
+      "ui_warnings": [],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_biz_basic_8",
+      "category": "Shopping",
+      "content": "플러스 O2O 5% (5천점 한도)",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 5000,
+          "reward_rate": 0.05,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.05,
+        "fixed_amount": null,
+        "monthly_limit": 5000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_BIZ_BASIC",
+      "ui_warnings": [],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    }
+  ]
+}

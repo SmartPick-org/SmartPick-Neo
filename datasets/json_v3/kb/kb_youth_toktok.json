@@ -1,0 +1,176 @@
+{
+  "card_meta": {
+    "card_id": "kb_youth_toktok",
+    "card_name": "KB국민 청춘대로 톡톡카드",
+    "card_company": "KB국민카드",
+    "annual_fee": 10000,
+    "minimum_performance": 300000,
+    "reward_currency": "KRW",
+    "currency_to_krw_rate": 1.0
+  },
+  "benefit_groups": [
+    {
+      "group_id": "G_KB_TOOLTAL_DISCOUNT",
+      "group_name": "통합 할인 한도",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": 26000,
+      "top_n_count": null
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_id": "b_kb_toktok_starbucks_50pct",
+      "category": "Coffee",
+      "content": "스타벅스 청구할인 50% (월 1만원 한도)",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": 10000,
+          "reward_rate": 0.5,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.5,
+        "fixed_amount": null,
+        "monthly_limit": 10000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_KB_TOOLTAL_DISCOUNT",
+      "ui_warnings": [
+        "상품권 구매 및 건물 내 임대매장 이용금액은 서비스 제외"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_kb_toktok_fastfood_20pct",
+      "category": "Food",
+      "content": "버거/패스트푸드 업종 청구할인 20% (월 5천원 한도)",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": 5000,
+          "reward_rate": 0.2,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.2,
+        "fixed_amount": null,
+        "monthly_limit": 5000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_KB_TOOLTAL_DISCOUNT",
+      "ui_warnings": [
+        "상품권 구매 및 건물 내 임대매장 이용금액은 서비스 제외"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_kb_toktok_pay_10pct",
+      "category": "General",
+      "content": "간편결제(Pay) 청구할인 10% (월 5천원 한도)",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": 5000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.1,
+        "fixed_amount": null,
+        "monthly_limit": 5000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_KB_TOOLTAL_DISCOUNT",
+      "ui_warnings": [
+        "ISP, MISP 이용금액은 제외"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_kb_toktok_transport_10pct",
+      "category": "Traffic",
+      "content": "대중교통, 택시/이동통신요금 청구할인 10% (월 5천원 한도)",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": 5000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.1,
+        "fixed_amount": null,
+        "monthly_limit": 5000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_KB_TOOLTAL_DISCOUNT",
+      "ui_warnings": [
+        "인터넷, IPTV 등 결합상품 및 알뜰폰은 서비스 제외",
+        "시외버스, 고속버스, 모바일 티머니(후불형) 서비스 제외",
+        "버스/지하철 요금은 실제 카드 사용일이 아닌 이용일 기준으로 서비스 제공"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    }
+  ]
+}

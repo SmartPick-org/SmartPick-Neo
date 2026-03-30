@@ -1,0 +1,109 @@
+{
+  "card_meta": {
+    "card_id": "hyundai_digital_lover",
+    "card_name": "현대카드 DIGITAL LOVER",
+    "card_company": "현대카드",
+    "annual_fee": 20000,
+    "minimum_performance": 500000,
+    "reward_currency": "KRW",
+    "currency_to_krw_rate": 1.0
+  },
+  "benefit_groups": [
+    {
+      "group_id": "G_DL_STREAMING",
+      "group_name": "디지털 스트리밍 서비스 할인",
+      "group_type": "USER_CHOICE_ONE",
+      "limit_amount": 10000,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_DL_PAYMENT",
+      "group_name": "온라인 간편결제서비스 할인",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": 10000,
+      "top_n_count": null
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_id": "b_dl_streaming_10000",
+      "category": "Cultural",
+      "content": "넷플릭스, 유튜브 프리미엄, 멜론, 지니, 디즈니+ 중 택 1 서비스 월 1만원 청구 할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": 10000,
+          "reward_rate": null,
+          "fixed_amount": 10000
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": 10000,
+        "monthly_limit": 10000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": 1
+      },
+      "group_id": "G_DL_STREAMING",
+      "ui_warnings": [
+        "전월 이용 금액 50만원 미만 시 할인 제외",
+        "할부, 리볼빙 이용 시 최초 결제일자에 실적 포함",
+        "최초 신규 발급 시 발급월 기준 다음 달 이용 건까지는 전월 실적 50만원 미만도 서비스 제공"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": true,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_dl_payment_5pct",
+      "category": "General",
+      "content": "삼성페이, 네이버페이, 카카오페이, SSG페이, 스마일페이, 쿠페이 온라인 가맹점 결제 건 5% 청구 할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": 10000,
+          "reward_rate": 0.05,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.05,
+        "fixed_amount": null,
+        "monthly_limit": 10000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_DL_PAYMENT",
+      "ui_warnings": [
+        "전월 이용 금액 50만원 미만 시 할인 제외",
+        "할부, 리볼빙 이용 시 최초 결제일자에 실적 포함",
+        "최초 신규 발급 시 발급월 기준 다음 달 이용 건까지는 전월 실적 50만원 미만도 서비스 제공"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    }
+  ]
+}

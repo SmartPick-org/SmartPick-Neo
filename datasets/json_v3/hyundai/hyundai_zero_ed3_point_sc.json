@@ -1,0 +1,54 @@
+{
+  "card_meta": {
+    "card_id": "hyundai_zero_ed3_point_sc",
+    "card_name": "현대카드 ZERO Edition3 포인트형 (SC제일은행)",
+    "card_company": "현대카드",
+    "annual_fee": 10000,
+    "minimum_performance": 0,
+    "reward_currency": "M_POINT",
+    "currency_to_krw_rate": 0.666
+  },
+  "benefit_groups": [
+    {
+      "group_id": "G_ZERO_ED3_POINT",
+      "group_name": "기본 포인트 적립",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": null,
+      "top_n_count": null
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_id": "b_zero_ed3_point_1_2pct",
+      "category": "General",
+      "content": "실적·한도 제한 없이 국내외 가맹점 이용 금액의 1.2% M포인트 적립",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.012,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_ZERO_ED3_POINT",
+      "ui_warnings": [
+        "국제브랜드 수수료 및 해외서비스 수수료 제외",
+        "공과금, 교육비, 상품권 구매 등 일부 결제 제외"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    }
+  ]
+}

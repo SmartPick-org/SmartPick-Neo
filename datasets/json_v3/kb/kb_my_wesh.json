@@ -1,0 +1,417 @@
+{
+  "card_meta": {
+    "card_id": "kb_my_wesh",
+    "card_name": "KB국민 My WE:SH카드",
+    "card_company": "KB국민카드",
+    "annual_fee": 9000,
+    "minimum_performance": 400000,
+    "reward_currency": "KRW",
+    "currency_to_krw_rate": 1.0
+  },
+  "benefit_groups": [
+    {
+      "group_id": "G_WESH_NA_SERVICE",
+      "group_name": "나한테 진심 서비스",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": 5000,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_WESH_MORE_SERVICE",
+      "group_name": "더욱 진심 서비스 (택1)",
+      "group_type": "USER_CHOICE_ONE",
+      "limit_amount": null,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_WESH_BIRTH_MONTH",
+      "group_name": "Happy Birth Month",
+      "group_type": "AUTO_TOP_N",
+      "limit_amount": null,
+      "top_n_count": 1
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_id": "b_wesh_kbpay_10pct",
+      "category": "General",
+      "content": "KB Pay 10% 할인 (건당 한도 2,500원, 월 할인한도 5,000원)",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 5000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.1,
+        "fixed_amount": null,
+        "monthly_limit": 5000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": 2500,
+        "max_count_per_month": null
+      },
+      "group_id": "G_WESH_NA_SERVICE",
+      "ui_warnings": [
+        "할인 받은 이용 건을 취소할 경우 할인한도가 즉시 복원되지 않을 수 있음"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_wesh_food_10pct",
+      "category": "Food",
+      "content": "음식점, 편의점(CU/GS25) 10% 할인 (건당 한도 2,500원, 월 할인한도 5,000원)",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 5000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.1,
+        "fixed_amount": null,
+        "monthly_limit": 5000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": 2500,
+        "max_count_per_month": null
+      },
+      "group_id": "G_WESH_NA_SERVICE",
+      "ui_warnings": [
+        "할인 받은 이용 건을 취소할 경우 할인한도가 즉시 복원되지 않을 수 있음"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_wesh_mobile_10pct",
+      "category": "Life",
+      "content": "이동통신요금 (SKT/KT/LG U+/Liiv M) 10% 할인 (건당 한도 2,500원, 월 할인한도 5,000원)",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 5000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.1,
+        "fixed_amount": null,
+        "monthly_limit": 5000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": 2500,
+        "max_count_per_month": null
+      },
+      "group_id": "G_WESH_NA_SERVICE",
+      "ui_warnings": [
+        "할인 받은 이용 건을 취소할 경우 할인한도가 즉시 복원되지 않을 수 있음"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_wesh_ott_30pct",
+      "category": "Streaming",
+      "content": "OTT (넷플릭스/유튜브/웨이브/티빙/디즈니) 30% 할인 (건당 한도 2,500원, 월 할인한도 5,000원)",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 5000,
+          "reward_rate": 0.3,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.3,
+        "fixed_amount": null,
+        "monthly_limit": 5000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": 2500,
+        "max_count_per_month": null
+      },
+      "group_id": "G_WESH_NA_SERVICE",
+      "ui_warnings": [
+        "할인 받은 이용 건을 취소할 경우 할인한도가 즉시 복원되지 않을 수 있음"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_wesh_food_delivery_5pct",
+      "category": "Food",
+      "content": "베달(배민/요기요/마켓컬리), 커피 5% 할인 (월 할인한도 5,000원)",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 5000,
+          "reward_rate": 0.05,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.05,
+        "fixed_amount": null,
+        "monthly_limit": 5000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_WESH_MORE_SERVICE",
+      "ui_warnings": [
+        "할인 받은 이용 건을 취소할 경우 할인한도가 즉시 복원되지 않을 수 있음"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": true,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_wesh_entertainment_5pct",
+      "category": "Cultural",
+      "content": "택시, 커피 5% 할인 (월 할인한도 5,000원)",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 5000,
+          "reward_rate": 0.05,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.05,
+        "fixed_amount": null,
+        "monthly_limit": 5000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_WESH_MORE_SERVICE",
+      "ui_warnings": [
+        "할인 받은 이용 건을 취소할 경우 할인한도가 즉시 복원되지 않을 수 있음"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": true,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_wesh_movie_30pct",
+      "category": "Cultural",
+      "content": "영화(CGV/롯데시네마/메가박스) 30% 할인 (월 할인한도 5,000원, 연 4회)",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 5000,
+          "reward_rate": 0.3,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.3,
+        "fixed_amount": null,
+        "monthly_limit": 5000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": 1
+      },
+      "group_id": "G_WESH_MORE_SERVICE",
+      "ui_warnings": [
+        "할인 받은 이용 건을 취소할 경우 할인한도가 즉시 복원되지 않을 수 있음",
+        "연 4회 제한"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": true,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_wesh_health_5pct",
+      "category": "EduHealth",
+      "content": "미용실, 스포츠, 올리브영, 온라인서점(교보문고/YES24) 5% 할인 (월 할인한도 10,000원)",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 10000,
+          "reward_rate": 0.05,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.05,
+        "fixed_amount": null,
+        "monthly_limit": 10000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_WESH_MORE_SERVICE",
+      "ui_warnings": [
+        "할인 받은 이용 건을 취소할 경우 할인한도가 즉시 복원되지 않을 수 있음"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": true,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_wesh_birth_month",
+      "category": "General",
+      "content": "생일월 더욱 진심 서비스 월 할인한도 2배 (연 1회)",
+      "frequency": "ANNUAL",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": null,
+          "reward_rate": null,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "MAX_COVER_UP_TO_LIMIT",
+        "rate": null,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_WESH_BIRTH_MONTH",
+      "ui_warnings": [
+        "생일월에만 적용"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": true,
+        "special_month_bonus": "할인한도 2배",
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_wesh_performance_boost",
+      "category": "General",
+      "content": "전월실적 5만원 이내 부족분 채움서비스 (연 2회)",
+      "frequency": "ANNUAL",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 0,
+          "monthly_limit": null,
+          "reward_rate": null,
+          "fixed_amount": 50000
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": 50000,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": null,
+      "ui_warnings": [
+        "연 2회 제한"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    }
+  ]
+}

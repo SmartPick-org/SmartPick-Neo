@@ -1,0 +1,174 @@
+{
+  "card_meta": {
+    "card_id": "shinhan_air_one",
+    "card_name": "신한카드 Air One",
+    "card_company": "신한카드",
+    "annual_fee": 49000,
+    "minimum_performance": 500000,
+    "reward_currency": "MILEAGE",
+    "currency_to_krw_rate": 15.0
+  },
+  "benefit_groups": [
+    {
+      "group_id": "G_AIRONE_MILEAGE",
+      "group_name": "마일리지 적립 통합 그룹",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": null,
+      "top_n_count": null
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_id": "b_airone_mileage_base",
+      "category": "General",
+      "content": "국내 일시불/할부, 해외 일시불 이용금액 1천원당 1마일리지 적립",
+      "frequency": "MONTHLY",
+      "reward_type": "MILEAGE",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": null,
+          "reward_rate": 0.001,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.001,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_AIRONE_MILEAGE",
+      "ui_warnings": [],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_airone_mileage_air_dutyfree",
+      "category": "Travel",
+      "content": "국내 항공/면세 업종 이용금액 1천원당 1마일리지 추가 적립 (월 2,000마일 한도)",
+      "frequency": "MONTHLY",
+      "reward_type": "MILEAGE",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": 2000,
+          "reward_rate": 0.001,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.001,
+        "fixed_amount": null,
+        "monthly_limit": 2000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_AIRONE_MILEAGE",
+      "ui_warnings": [
+        "추가적립 한도 초과 이용금액은 기본적립만 제공",
+        "면세업종 가맹점은 오프라인 매장에 한하여 적용"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_airone_mileage_overseas",
+      "category": "Travel",
+      "content": "해외 일시불 이용금액 1천원당 1마일리지 추가 적립 (월 2,000마일 한도)",
+      "frequency": "MONTHLY",
+      "reward_type": "MILEAGE",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": 2000,
+          "reward_rate": 0.001,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.001,
+        "fixed_amount": null,
+        "monthly_limit": 2000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_AIRONE_MILEAGE",
+      "ui_warnings": [
+        "추가적립 한도 초과 이용금액은 기본적립만 제공"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_airone_mileage_dutyfree_online",
+      "category": "Travel",
+      "content": "신라면세점 온라인 이용금액 1천원당 1마일리지 추가 적립 (월 적립한도 없음)",
+      "frequency": "MONTHLY",
+      "reward_type": "MILEAGE",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": null,
+          "reward_rate": 0.001,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.001,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_AIRONE_MILEAGE",
+      "ui_warnings": [
+        "간편결제로 결제 시 서비스 적용 제외",
+        "신라트립 이용금액은 추가적립 대상 아님"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    }
+  ]
+}

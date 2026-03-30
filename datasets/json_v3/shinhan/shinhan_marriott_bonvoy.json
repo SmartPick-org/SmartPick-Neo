@@ -1,0 +1,394 @@
+{
+  "card_meta": {
+    "card_id": "shinhan_marriott_bonvoy",
+    "card_name": "메리어트 본보이 더 베스트 신한카드",
+    "card_company": "신한카드",
+    "annual_fee": 7000,
+    "minimum_performance": 0,
+    "reward_currency": "MILEAGE",
+    "currency_to_krw_rate": 15.0
+  },
+  "benefit_groups": [
+    {
+      "group_id": "G_MARRIOTT_BONVOY_ANNUAL",
+      "group_name": "연회비 주기 혜택 통합",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": null,
+      "top_n_count": null
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_id": "b_marriott_free_stay",
+      "category": "Travel",
+      "content": "전세계 메리어트 참여 호텔 1박 무료 숙박권 제공 (연 1회)",
+      "frequency": "ANNUAL",
+      "reward_type": "VOUCHER",
+      "tier_conditions": [],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": 35000,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_MARRIOTT_BONVOY_ANNUAL",
+      "ui_warnings": [
+        "연회비 청구 주기 내 100만원 이상 이용 시 제공",
+        "35,000 포인트 이하 호텔까지 사용 가능",
+        "발행 후 12개월 미사용 시 소멸"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_marriott_point_5pct",
+      "category": "Travel",
+      "content": "전세계 메리어트 참여 호텔 1천원당 5 메리어트 본보이 포인트 적립",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.005,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.001,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": null,
+      "ui_warnings": [
+        "메리어트 공식 웹사이트 또는 호텔 현장 결제 시만 적립",
+        "호텔 예약 사이트/여행사 결제 시 기본적립 적용"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_marriott_point_3pct",
+      "category": "Travel",
+      "content": "해외/항공/택시/카페 가맹점 1천원당 3 메리어트 본보이 포인트 적립",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.003,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.001,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": null,
+      "ui_warnings": [
+        "해외 할부 거래 건은 적립 제외",
+        "카페 적립은 스타벅스, 커피빈, 폴바셋, 투썸플레이스만 해당"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_marriott_point_1pct",
+      "category": "General",
+      "content": "전 가맹점 1천원당 1 메리어트 본보이 포인트 적립",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.001,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": null,
+      "ui_warnings": [
+        "특별적립 가맹점 외 국내 모든 가맹점 대상"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_marriott_bonus_5k",
+      "category": "Travel",
+      "content": "연회비 주기 내 1천만원 이상 이용 시 5,000 메리어트 본보이 포인트",
+      "frequency": "ANNUAL",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 10000000,
+          "monthly_limit": null,
+          "reward_rate": null,
+          "fixed_amount": 5000
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": 5000,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_MARRIOTT_BONVOY_ANNUAL",
+      "ui_warnings": [
+        "연회비 청구 주기 내 일시불·할부 누적 금액 기준"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_marriott_bonus_10k",
+      "category": "Travel",
+      "content": "연회비 주기 내 2천만원 이상 이용 시 10,000 메리어트 본보이 포인트",
+      "frequency": "ANNUAL",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 20000000,
+          "monthly_limit": null,
+          "reward_rate": null,
+          "fixed_amount": 10000
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": 10000,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_MARRIOTT_BONVOY_ANNUAL",
+      "ui_warnings": [
+        "연회비 청구 주기 내 일시불·할부 누적 금액 기준"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_marriott_elite_gold",
+      "category": "Travel",
+      "content": "골드 엘리트 등급 자동 부여",
+      "frequency": "ANNUAL",
+      "reward_type": "VOUCHER",
+      "tier_conditions": [],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_MARRIOTT_BONVOY_ANNUAL",
+      "ui_warnings": [
+        "카드 발급 및 갱신 시 매년 자동 부여"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_marriott_elite_platinum",
+      "category": "Travel",
+      "content": "연회비 주기 내 6천만원 이상 이용 시 플래티늄 엘리트 등급 제공",
+      "frequency": "ANNUAL",
+      "reward_type": "VOUCHER",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 60000000,
+          "monthly_limit": null,
+          "reward_rate": null,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_MARRIOTT_BONVOY_ANNUAL",
+      "ui_warnings": [
+        "연회비 청구 주기 내 일시불·할부 누적 금액 기준"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_marriott_credit_10",
+      "category": "Travel",
+      "content": "연 1회 10 메리어트 본보이 엘리트 숙박 크레딧 제공",
+      "frequency": "ANNUAL",
+      "reward_type": "VOUCHER",
+      "tier_conditions": [],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": 10,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_MARRIOTT_BONVOY_ANNUAL",
+      "ui_warnings": [
+        "카드 발급 시 60일 이내 제공",
+        "카드 발급년도 이후 매년 1~12월 제공",
+        "최대 15개 크레딧 보유 가능"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_marriott_breakfast",
+      "category": "Travel",
+      "content": "국내 메리어트 참여 호텔 조식 5만원 할인 (연 2회)",
+      "frequency": "ANNUAL",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": 50000,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 50000,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": 1
+      },
+      "group_id": "G_MARRIOTT_BONVOY_ANNUAL",
+      "ui_warnings": [
+        "전월 30만원 이상 이용 시 사용 가능",
+        "1일 1회만 사용 가능",
+        "조식 결제 총 금액이 5만원 이상인 경우에만 적용"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_airport_lounge",
+      "category": "Travel",
+      "content": "The Lounge Members 모바일 앱을 통한 전세계 공항 라운지 무료 이용 (연 4회)",
+      "frequency": "ANNUAL",
+      "reward_type": "VOUCHER",
+      "tier_conditions": [],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_MARRIOTT_BONVOY_ANNUAL",
+      "ui_warnings": [
+        "전월 30만원 이상 이용 시 사용 가능",
+        "본인 및 동반 1인까지 무료",
+        "연간 4회 이용 기준 (1~12월)"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    }
+  ]
+}

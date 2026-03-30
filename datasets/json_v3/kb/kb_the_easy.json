@@ -1,0 +1,149 @@
+{
+  "card_meta": {
+    "card_id": "kb_the_easy",
+    "card_name": "KB국민 The Easy카드",
+    "card_company": "KB국민카드",
+    "annual_fee": 9000,
+    "minimum_performance": 500000,
+    "reward_currency": "POINTREE",
+    "currency_to_krw_rate": 1.0
+  },
+  "benefit_groups": [
+    {
+      "group_id": "G_EASY_POINT_CHOICE",
+      "group_name": "적립/할인형 선택",
+      "group_type": "USER_CHOICE_ONE",
+      "limit_amount": null,
+      "top_n_count": null
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_id": "b_easy_base_point",
+      "category": "General",
+      "content": "국내/외 전 가맹점 0.7% 적립/할인",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.007,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_EASY_POINT_CHOICE",
+      "ui_warnings": [],
+      "edge_case_flags": {
+        "requires_user_selection": true,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_easy_add_point",
+      "category": "Shopping",
+      "content": "7대영역 중 월간 이용횟수 상위 2개 영역 3% 추가 적립",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": 10000,
+          "reward_rate": 0.03,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 1000000,
+          "monthly_limit": 20000,
+          "reward_rate": 0.03,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.03,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_EASY_POINT_CHOICE",
+      "ui_warnings": [
+        "대형마트: 온라인쇼핑몰, 상품권 구매, SSM 제외",
+        "편의점: 백화점/대형마트 입점매장 제외",
+        "커피: 상품권/선불카드 구입, 입점매장 제외",
+        "학원: PG결제, 유아교육기관, 학습자재 제외",
+        "미용: 입점매장 제외",
+        "생활: 알뜰폰 제외, 아파트관리비 실적 제외"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": true,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_easy_add_discount",
+      "category": "Shopping",
+      "content": "7대영역 중 건당 이용금액 상위 2건 5% 추가 할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": 10000,
+          "reward_rate": 0.05,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 1000000,
+          "monthly_limit": 20000,
+          "reward_rate": 0.05,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.05,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": 2
+      },
+      "group_id": "G_EASY_POINT_CHOICE",
+      "ui_warnings": [
+        "대형마트: 온라인쇼핑몰, 상품권 구매, SSM 제외",
+        "편의점: 백화점/대형마트 입점매장 제외",
+        "커피: 상품권/선불카드 구입, 입점매장 제외",
+        "학원: PG결제, 유아교육기관, 학습자재 제외",
+        "미용: 입점매장 제외",
+        "생활: 알뜰폰 제외, 아파트관리비 실적 제외"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": true,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    }
+  ]
+}

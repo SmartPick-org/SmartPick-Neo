@@ -1,0 +1,101 @@
+{
+  "card_meta": {
+    "card_id": "hyundai_m",
+    "card_name": "현대카드 M",
+    "card_company": "현대카드",
+    "annual_fee": 30000,
+    "minimum_performance": 500000,
+    "reward_currency": "M_POINT",
+    "currency_to_krw_rate": 0.666
+  },
+  "benefit_groups": [
+    {
+      "group_id": "G_HYUNDAI_M_POINT",
+      "group_name": "M포인트 적립 통합 그룹",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": 10000,
+      "top_n_count": null
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_id": "b_hyundai_m_point_basic",
+      "category": "General",
+      "content": "전월 이용 금액 50만원 이상 시 1.5% M포인트 적립",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": null,
+          "reward_rate": 0.015,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.015,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_HYUNDAI_M_POINT",
+      "ui_warnings": [
+        "신규 발급 시 발급월 다음 달 이용 건까지는 전월 이용 금액 50만원 미만도 혜택 제공",
+        "적립 한도는 본인+가족 카드 합산 기준, 적립 한도 초과 시 기본 혜택 적립률 적용"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_hyundai_m_point_additional",
+      "category": "General",
+      "content": "전월 이용 금액 100만원 이상 시 5% M포인트 적립",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 1000000,
+          "monthly_limit": 10000,
+          "reward_rate": 0.05,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.05,
+        "fixed_amount": null,
+        "monthly_limit": 10000,
+        "fallback_reward_rate": 0.015,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_HYUNDAI_M_POINT",
+      "ui_warnings": [
+        "추가 혜택 적용 시 기본 혜택은 중복 제공되지 않음",
+        "신규 발급 시 발급월 다음 달 이용 건까지는 전월 이용 금액 100만원 미만도 혜택 제공",
+        "적립 한도는 본인+가족 카드 합산 기준, 적립 한도 초과 시 기본 혜택 적립률 적용"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    }
+  ]
+}

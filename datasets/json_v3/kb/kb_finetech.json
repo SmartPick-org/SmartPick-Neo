@@ -1,0 +1,188 @@
+{
+  "card_meta": {
+    "card_id": "kb_finetech",
+    "card_name": "KB국민 FINETECH카드",
+    "card_company": "KB국민카드",
+    "annual_fee": 0,
+    "minimum_performance": 0,
+    "reward_currency": "KRW",
+    "currency_to_krw_rate": 1.0
+  },
+  "benefit_groups": [
+    {
+      "group_id": "G_KB_FINETECH_AIRPORT",
+      "group_name": "공항 라운지/발레파킹 통합 혜택",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": 0,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_KB_FINETECH_HOTEL",
+      "group_name": "호텔 발레파킹 통합 혜택",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": 0,
+      "top_n_count": null
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_id": "b_kb_finetech_airport_lounge",
+      "category": "Travel",
+      "content": "전월 실적 50만원 이상 시 국내 공항 라운지 연 3회 무료 이용",
+      "frequency": "ANNUAL",
+      "reward_type": "VOUCHER",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": 0,
+          "reward_rate": null,
+          "fixed_amount": 0
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": 0,
+        "monthly_limit": 3,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_KB_FINETECH_AIRPORT",
+      "ui_warnings": [
+        "최초 카드 사용 등록일로부터 다음 달 말일까지는 전월 실적 50만원 미만 시에도 서비스 제공",
+        "전월 실적 제외 대상: 현금서비스, 카드론, 세금, 공과금, 등록금, 수수료, 연체료, 연회비, 상품권 구입/충전 금액, 무승인 전표, 취소금액"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_kb_finetech_airport_parking",
+      "category": "Travel",
+      "content": "전월 실적 50만원 이상 시 인천공항 발레파킹 연 5회/월 3회 무료 이용",
+      "frequency": "ANNUAL",
+      "reward_type": "VOUCHER",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": 0,
+          "reward_rate": null,
+          "fixed_amount": 0
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": 0,
+        "monthly_limit": 3,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": 3
+      },
+      "group_id": "G_KB_FINETECH_AIRPORT",
+      "ui_warnings": [
+        "최초 카드 사용 등록일로부터 다음 달 말일까지는 전월 실적 50만원 미만 시에도 서비스 제공",
+        "전월 실적 제외 대상: 현금서비스, 카드론, 세금, 공과금, 등록금, 수수료, 연체료, 연회비, 상품권 구입/충전 금액, 무승인 전표, 취소금액",
+        "주차비 별도"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_kb_finetech_hotel_parking",
+      "category": "Travel",
+      "content": "전월 실적 50만원 이상 시 국내 호텔 발레파킹 연 15회/월 5회 무료 이용",
+      "frequency": "ANNUAL",
+      "reward_type": "VOUCHER",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": 0,
+          "reward_rate": null,
+          "fixed_amount": 0
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": 0,
+        "monthly_limit": 5,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": 5
+      },
+      "group_id": "G_KB_FINETECH_HOTEL",
+      "ui_warnings": [
+        "최초 카드 사용 등록일로부터 다음 달 말일까지는 전월 실적 50만원 미만 시에도 서비스 제공",
+        "전월 실적 제외 대상: 현금서비스, 카드론, 세금, 공과금, 등록금, 수수료, 연체료, 연회비, 상품권 구입/충전 금액, 무승인 전표, 취소금액",
+        "1일 3시간 이내 무료주차 포함(일부 호텔 제외)",
+        "호텔 객실/식음료 이용 시 영수증 제시 필요(호텔별 금액 상이)"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_kb_finetech_priority_pass",
+      "category": "Travel",
+      "content": "전월 실적 50만원 이상 시 Priority Pass 라운지 연 10회 무료 이용",
+      "frequency": "ANNUAL",
+      "reward_type": "VOUCHER",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": 0,
+          "reward_rate": null,
+          "fixed_amount": 0
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": 0,
+        "monthly_limit": 10,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": null,
+      "ui_warnings": [
+        "최초 카드 사용 등록일로부터 다음 달 말일까지는 전월 실적 50만원 미만 시에도 서비스 제공",
+        "전월 실적 제외 대상: 현금서비스, 카드론, 세금, 공과금, 등록금, 수수료, 연체료, 연회비, 상품권 구입/충전 금액, 무승인 전표, 취소금액"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    }
+  ]
+}

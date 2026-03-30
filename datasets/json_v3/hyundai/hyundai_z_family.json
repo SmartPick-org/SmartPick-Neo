@@ -1,0 +1,273 @@
+{
+  "card_meta": {
+    "card_id": "hyundai_z_family",
+    "card_name": "현대카드 Z family",
+    "card_company": "현대카드",
+    "annual_fee": 10000,
+    "minimum_performance": 400000,
+    "reward_currency": "KRW",
+    "currency_to_krw_rate": 1.0
+  },
+  "benefit_groups": [
+    {
+      "group_id": "G_ZFAMILY_5CATEGORIES",
+      "group_name": "5개 영역 통합 할인",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": null,
+      "top_n_count": null
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_id": "b_zfamily_online_shopping_10pct",
+      "category": "Shopping",
+      "content": "온라인쇼핑 10% 할인 (전월 실적 40만원 이상 시 월 5천원, 80만원 이상 시 월 8천원 한도)",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 5000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 800000,
+          "monthly_limit": 8000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.1,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_ZFAMILY_5CATEGORIES",
+      "ui_warnings": [
+        "할인 제외 대상: 상품권 등 현금성 유가증권 구매 및 선불카드 구매·충전금액, 매출취소금액, 무이자할부 이용금액"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_zfamily_mart_10pct",
+      "category": "Shopping",
+      "content": "대형마트 10% 할인 (전월 실적 40만원 이상 시 월 5천원, 80만원 이상 시 월 8천원 한도)",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 5000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 800000,
+          "monthly_limit": 8000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.1,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_ZFAMILY_5CATEGORIES",
+      "ui_warnings": [
+        "할인 제외 대상: 상품권 등 현금성 유가증권 구매 및 선불카드 구매·충전금액, 매출취소금액, 무이자할부 이용금액"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_zfamily_delivery_10pct",
+      "category": "Food",
+      "content": "배달 앱 10% 할인 (전월 실적 40만원 이상 시 월 5천원, 80만원 이상 시 월 8천원 한도)",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 5000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 800000,
+          "monthly_limit": 8000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.1,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_ZFAMILY_5CATEGORIES",
+      "ui_warnings": [
+        "할인 제외 대상: 상품권 등 현금성 유가증권 구매 및 선불카드 구매·충전금액, 매출취소금액, 무이자할부 이용금액"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_zfamily_gas_100perliter",
+      "category": "Traffic",
+      "content": "주유 리터당 100원 할인 (전월 실적 40만원 이상 시 월 1만원, 80만원 이상 시 월 1만3천원 한도)",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 10000,
+          "reward_rate": null,
+          "fixed_amount": 100
+        },
+        {
+          "min_prev_performance": 800000,
+          "monthly_limit": 13000,
+          "reward_rate": null,
+          "fixed_amount": 100
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_PER_VOLUME",
+        "rate": null,
+        "fixed_amount": 100,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_ZFAMILY_5CATEGORIES",
+      "ui_warnings": [
+        "할인 제외 대상: 상품권 등 현금성 유가증권 구매 및 선불카드 구매·충전금액, 매출취소금액, 무이자할부 이용금액"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_zfamily_utility_7pct",
+      "category": "Life",
+      "content": "생활요금 정기결제 7% 할인 (전월 실적 40만원 이상 시 월 5천원, 80만원 이상 시 월 8천원 한도)",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 5000,
+          "reward_rate": 0.07,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 800000,
+          "monthly_limit": 8000,
+          "reward_rate": 0.07,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.07,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_ZFAMILY_5CATEGORIES",
+      "ui_warnings": [
+        "할인 제외 대상: 상품권 등 현금성 유가증권 구매 및 선불카드 구매·충전금액, 매출취소금액, 무이자할부 이용금액"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_zfamily_installment_0pct",
+      "category": "General",
+      "content": "모든 가맹점에서 5만원 이상 결제 시 2~3개월 무이자할부",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": 0,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 50000,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": null,
+      "ui_warnings": [
+        "무이자할부 이용금액은 할인 혜택 제외"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    }
+  ]
+}

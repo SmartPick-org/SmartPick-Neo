@@ -1,0 +1,225 @@
+{
+  "card_meta": {
+    "card_id": "shinhan_deep_oil",
+    "card_name": "신한카드 Deep Oil",
+    "card_company": "신한카드",
+    "annual_fee": 5000,
+    "minimum_performance": 300000,
+    "reward_currency": "KRW",
+    "currency_to_krw_rate": 1.0
+  },
+  "benefit_groups": [
+    {
+      "group_id": "G_DEEP_OIL_FUEL",
+      "group_name": "주유 서비스",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": 150000,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_DEEP_OIL_VEHICLE",
+      "group_name": "차량 서비스",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": 150000,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_DEEP_OIL_LIFE",
+      "group_name": "생활 서비스",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": 150000,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_DEEP_OIL_MOVIE",
+      "group_name": "영화 서비스",
+      "group_type": "AUTO_TOP_N",
+      "limit_amount": null,
+      "top_n_count": 1
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_id": "b_deep_oil_fuel_10pct",
+      "category": "Traffic",
+      "content": "4개 정유사 중 선택한 1개 정유사 주유 이용금액 10% 결제일 할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": 150000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 700000,
+          "monthly_limit": 300000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.1,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_DEEP_OIL_FUEL",
+      "ui_warnings": [
+        "휘발유, 등유, 경유에 대해서만 할인 제공, LPG 제외",
+        "정유사 선택 1곳만 가능(연 1회 변경 가능)",
+        "선택 정유사 미선택 시 GS칼텍스 자동 선택"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": true,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_deep_oil_vehicle_10pct",
+      "category": "Traffic",
+      "content": "스피드메이트 정비소 및 전국 주차장 이용금액 10% 결제일 할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": 150000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 700000,
+          "monthly_limit": 300000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.1,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_DEEP_OIL_VEHICLE",
+      "ui_warnings": [
+        "정비소 할인은 오프라인 현장 일반결제만 가능",
+        "주차장 할인은 당사 주차장 업종으로 등록된 가맹점에 한함"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_deep_oil_life_5pct",
+      "category": "Life",
+      "content": "GS25, CU, 스타벅스, 이디야, 택시 이용금액 5% 결제일 할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": 150000,
+          "reward_rate": 0.05,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 700000,
+          "monthly_limit": 300000,
+          "reward_rate": 0.05,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.05,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_DEEP_OIL_LIFE",
+      "ui_warnings": [
+        "상품권 구입, 선불카드 충전은 할인 제외",
+        "택시 할인은 오프라인 현장 일반결제만 가능"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_deep_oil_movie_5k",
+      "category": "Cultural",
+      "content": "롯데시네마 일반관 5천원 현장 할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": 5000,
+          "reward_rate": null,
+          "fixed_amount": 5000
+        },
+        {
+          "min_prev_performance": 700000,
+          "monthly_limit": 10000,
+          "reward_rate": null,
+          "fixed_amount": 5000
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": 5000,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 5000,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": 1
+      },
+      "group_id": "G_DEEP_OIL_MOVIE",
+      "ui_warnings": [
+        "3D 등 스페셜관 상영 영화, 일반관에서 5천원 이하 금액 영화 제외",
+        "타 할인과 중복 적용 불가",
+        "온라인 예매 시 할인 수단 선택 필요"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    }
+  ]
+}

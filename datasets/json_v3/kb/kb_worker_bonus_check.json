@@ -1,0 +1,530 @@
+{
+  "card_meta": {
+    "card_id": "kb_worker_bonus_check",
+    "card_name": "KB국민 직장인보너스 체크카드",
+    "card_company": "KB국민카드",
+    "annual_fee": 0,
+    "minimum_performance": 200000,
+    "reward_currency": "KRW",
+    "currency_to_krw_rate": 1.0
+  },
+  "benefit_groups": [
+    {
+      "group_id": "G_KBWB_SHARED_LIMIT",
+      "group_name": "월간 통합할인한도",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": null,
+      "top_n_count": null
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_id": "b_kbwb_tax_7000",
+      "category": "Life",
+      "content": "국세/지방세 7천원 환급할인 (건당 10만원 이상, 월 1회, 전월 실적 30만원 이상)",
+      "frequency": "MONTHLY",
+      "reward_type": "CASHBACK",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": 7000,
+          "reward_rate": null,
+          "fixed_amount": 7000
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": 7000,
+        "monthly_limit": 7000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 100000,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": 1
+      },
+      "group_id": "G_KBWB_SHARED_LIMIT",
+      "ui_warnings": [
+        "할인 적용 시 이용전표 매입처리 완료 후 환급"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_kbwb_insurance_2000",
+      "category": "Life",
+      "content": "보험료 2천원 환급할인 (건당 10만원 이상, 월 1회, 전월 실적 30만원 이상)",
+      "frequency": "MONTHLY",
+      "reward_type": "CASHBACK",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": 2000,
+          "reward_rate": null,
+          "fixed_amount": 2000
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": 2000,
+        "monthly_limit": 2000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 100000,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": 1
+      },
+      "group_id": "G_KBWB_SHARED_LIMIT",
+      "ui_warnings": [
+        "할인 적용 시 이용전표 매입처리 완료 후 환급"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_kbwb_tel_1000",
+      "category": "Life",
+      "content": "이동통신요금 1천원 환급할인 (건당 5만원 이상, 월 1회, 전월 실적 30만원 이상, 자동이체 등록 시)",
+      "frequency": "MONTHLY",
+      "reward_type": "CASHBACK",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": 1000,
+          "reward_rate": null,
+          "fixed_amount": 1000
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": 1000,
+        "monthly_limit": 1000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 50000,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": 1
+      },
+      "group_id": "G_KBWB_SHARED_LIMIT",
+      "ui_warnings": [
+        "유무선 통합 청구금액 자동이체 시 제외",
+        "할인 적용 시 이용전표 매입처리 완료 후 환급"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_kbwb_transport_5pct",
+      "category": "Traffic",
+      "content": "대중교통 5% 청구할인 (월 2만원까지, 전월 실적 30만원 이상)",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": 20000,
+          "reward_rate": 0.05,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.05,
+        "fixed_amount": null,
+        "monthly_limit": 20000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_KBWB_SHARED_LIMIT",
+      "ui_warnings": [
+        "후불교통(시내버스, 지하철) 적용",
+        "실제 이용일이 아닌 이용내역서 기준 적용"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_kbwb_express_5pct",
+      "category": "Traffic",
+      "content": "고속/시외버스 5% 환급할인 (전월 실적 30만원 이상)",
+      "frequency": "MONTHLY",
+      "reward_type": "CASHBACK",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": null,
+          "reward_rate": 0.05,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.05,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": null,
+      "ui_warnings": [
+        "월간 통합할인한도 예외 적용 서비스"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_kbwb_rental_annual",
+      "category": "Travel",
+      "content": "SK렌터카 할인 (연 2회, 전월 실적 30만원 이상)",
+      "frequency": "ANNUAL",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": null,
+          "reward_rate": null,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": null,
+      "ui_warnings": [
+        "월간 통합할인한도 예외 적용 서비스",
+        "타 할인카드/쿠폰 중복 불가",
+        "수입차 할인 제외"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_kbwb_oil_20000",
+      "category": "Traffic",
+      "content": "엔진오일 교환 2만원 현장 할인 (연 1회, 전월 실적 30만원 이상)",
+      "frequency": "ANNUAL",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": 20000,
+          "reward_rate": null,
+          "fixed_amount": 20000
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": 20000,
+        "monthly_limit": 20000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": null,
+      "ui_warnings": [
+        "월간 통합할인한도 예외 적용 서비스",
+        "ZIC-A Bulk 기준/1.4톤 이상 차량 적용",
+        "수입차 할인 제외"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_kbwb_maintenance_10pct",
+      "category": "Traffic",
+      "content": "정비공임 10% 현장 할인 (전월 실적 30만원 이상)",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": null,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.1,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": null,
+      "ui_warnings": [
+        "월간 통합할인한도 예외 적용 서비스"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_kbwb_gs_caltex",
+      "category": "Traffic",
+      "content": "GS칼텍스 리터당 주중 50원/주말 60원 환급할인 (건당 10만원, 월 30만원까지, 전월 실적 20만원 이상)",
+      "frequency": "MONTHLY",
+      "reward_type": "CASHBACK",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 200000,
+          "monthly_limit": 300000,
+          "reward_rate": null,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_PER_VOLUME",
+        "rate": null,
+        "fixed_amount": null,
+        "monthly_limit": 300000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": [
+          {
+            "min_amount": 0,
+            "rate": 50
+          },
+          {
+            "min_amount": 0,
+            "rate": 60
+          }
+        ]
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 100000,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_KBWB_SHARED_LIMIT",
+      "ui_warnings": [
+        "휘발유 기준, 경유/등유는 환산 적용",
+        "비제휴주유소/LPG 제외"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_kbwb_everland_50pct",
+      "category": "Cultural",
+      "content": "에버랜드 50% 환급할인 (건당 3만원~5만원, 현장티켓, 전월 실적 20만원 이상)",
+      "frequency": "MONTHLY",
+      "reward_type": "CASHBACK",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 200000,
+          "monthly_limit": null,
+          "reward_rate": 0.5,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.5,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 30000,
+        "max_payment_amount_applied": 50000,
+        "max_count_per_month": null
+      },
+      "group_id": "G_KBWB_SHARED_LIMIT",
+      "ui_warnings": [
+        "현장티켓 발매에 한함"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_kbwb_outback_10pct",
+      "category": "Food",
+      "content": "아웃백 10% 환급할인 (건당 3만원~10만원, 백화점/대형할인점 제외, 전월 실적 20만원 이상)",
+      "frequency": "MONTHLY",
+      "reward_type": "CASHBACK",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 200000,
+          "monthly_limit": null,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.1,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 30000,
+        "max_payment_amount_applied": 100000,
+        "max_count_per_month": null
+      },
+      "group_id": "G_KBWB_SHARED_LIMIT",
+      "ui_warnings": [
+        "백화점 및 대형할인점 입점점포 제외"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_kbwb_department_5pct",
+      "category": "Shopping",
+      "content": "롯데/신세계/현대백화점 5% 환급할인 (건당 5만원~10만원, 전월 실적 50만원 이상)",
+      "frequency": "MONTHLY",
+      "reward_type": "CASHBACK",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": null,
+          "reward_rate": 0.05,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.05,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 50000,
+        "max_payment_amount_applied": 100000,
+        "max_count_per_month": null
+      },
+      "group_id": "G_KBWB_SHARED_LIMIT",
+      "ui_warnings": [],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_kbwb_happypoint_5pct",
+      "category": "General",
+      "content": "해피포인트 5% 현장적립 (1,000원 이상 이용 시, 통신사 할인/사이즈 업그레이드 시 미적립 가능)",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 0,
+          "monthly_limit": null,
+          "reward_rate": 0.05,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.05,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 1000,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": null,
+      "ui_warnings": [
+        "통신사 카드 할인 또는 사이즈 업그레이드 서비스 적용 시 미적립"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    }
+  ]
+}

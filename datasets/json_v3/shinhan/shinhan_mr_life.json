@@ -1,0 +1,542 @@
+{
+  "card_meta": {
+    "card_id": "shinhan_mr_life",
+    "card_name": "신한카드 Mr.Life",
+    "card_company": "신한카드",
+    "annual_fee": 15000,
+    "minimum_performance": 300000,
+    "reward_currency": "KRW",
+    "currency_to_krw_rate": 1.0
+  },
+  "benefit_groups": [
+    {
+      "group_id": "G_MRLIFE_MONTHLY",
+      "group_name": "월납 할인",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": null,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_MRLIFE_WEEKEND",
+      "group_name": "주말 할인",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": null,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_MRLIFE_TIME",
+      "group_name": "Time 할인",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": null,
+      "top_n_count": null
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_id": "b_mrlife_utility_10pct",
+      "category": "Life",
+      "content": "전기요금, 도시가스요금, 통신요금 10% 할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": 3000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": 7000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 1000000,
+          "monthly_limit": 10000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.1,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": 50000,
+        "max_count_per_month": 1
+      },
+      "group_id": "G_MRLIFE_MONTHLY",
+      "ui_warnings": [
+        "일 1회 할인 적용",
+        "1회 승인금액 5만원까지 할인 적용(1회 최대 5천원 할인)"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_mrlife_mart_10pct",
+      "category": "Shopping",
+      "content": "3대 할인마트 10% 할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": 3000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": 7000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 1000000,
+          "monthly_limit": 10000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.1,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": 50000,
+        "max_count_per_month": 1
+      },
+      "group_id": "G_MRLIFE_WEEKEND",
+      "ui_warnings": [
+        "일 1회 할인 적용",
+        "1회 승인금액 5만원까지 할인 적용(1회 최대 5천원 할인)",
+        "토요일/일요일에만 적용"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_mrlife_gas_60perliter",
+      "category": "Traffic",
+      "content": "4대 주유소 리터당 60원 할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": 3000,
+          "reward_rate": null,
+          "fixed_amount": 60
+        },
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": 7000,
+          "reward_rate": null,
+          "fixed_amount": 60
+        },
+        {
+          "min_prev_performance": 1000000,
+          "monthly_limit": 10000,
+          "reward_rate": null,
+          "fixed_amount": 60
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_PER_VOLUME",
+        "rate": null,
+        "fixed_amount": 60,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": 100000,
+        "max_count_per_month": null
+      },
+      "group_id": "G_MRLIFE_WEEKEND",
+      "ui_warnings": [
+        "일 1회 할인 적용",
+        "1회 승인금액 10만원까지 할인 적용",
+        "월 승인금액 30만원까지 할인 적용",
+        "토요일/일요일에만 적용"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_mrlife_convenience_10pct",
+      "category": "Life",
+      "content": "편의점 10% 할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": 10000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": 20000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 1000000,
+          "monthly_limit": 30000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.1,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": 10000,
+        "max_count_per_month": 5
+      },
+      "group_id": "G_MRLIFE_TIME",
+      "ui_warnings": [
+        "구분 영역별 각각 일 1회/ 월 5회 할인 적용",
+        "1회 승인금액 1만원까지 할인 적용(1회 최대 1천원 할인)"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_mrlife_hospital_10pct",
+      "category": "EduHealth",
+      "content": "병원/약국 10% 할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": 10000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": 20000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 1000000,
+          "monthly_limit": 30000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.1,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": 10000,
+        "max_count_per_month": 5
+      },
+      "group_id": "G_MRLIFE_TIME",
+      "ui_warnings": [
+        "구분 영역별 각각 일 1회/ 월 5회 할인 적용",
+        "1회 승인금액 1만원까지 할인 적용(1회 최대 1천원 할인)",
+        "동물병원 제외, 치과/한의원 포함"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_mrlife_laundry_10pct",
+      "category": "Life",
+      "content": "세탁비 10% 할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": 10000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": 20000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 1000000,
+          "monthly_limit": 30000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.1,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": 10000,
+        "max_count_per_month": 5
+      },
+      "group_id": "G_MRLIFE_TIME",
+      "ui_warnings": [
+        "구분 영역별 각각 일 1회/ 월 5회 할인 적용",
+        "1회 승인금액 1만원까지 할인 적용(1회 최대 1천원 할인)"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_mrlife_online_10pct",
+      "category": "Shopping",
+      "content": "온라인 쇼핑 10% 할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": 10000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": 20000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 1000000,
+          "monthly_limit": 30000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.1,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": 10000,
+        "max_count_per_month": 10
+      },
+      "group_id": "G_MRLIFE_TIME",
+      "ui_warnings": [
+        "구분 영역별 각각 일 1회/ 월 10회 할인 적용",
+        "1회 승인금액 1만원까지 할인 적용(1회 최대 1천원 할인)",
+        "오후 9시 ~ 오전 9시까지 적용",
+        "대상 사이트 직접 접속 시에만 할인 적용"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_mrlife_taxi_10pct",
+      "category": "Traffic",
+      "content": "택시 10% 할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": 10000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": 20000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 1000000,
+          "monthly_limit": 30000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.1,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": 10000,
+        "max_count_per_month": 10
+      },
+      "group_id": "G_MRLIFE_TIME",
+      "ui_warnings": [
+        "구분 영역별 각각 일 1회/ 월 10회 할인 적용",
+        "1회 승인금액 1만원까지 할인 적용(1회 최대 1천원 할인)",
+        "오후 9시 ~ 오전 9시까지 적용"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_mrlife_food_10pct",
+      "category": "Food",
+      "content": "식음료 10% 할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": 10000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": 20000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 1000000,
+          "monthly_limit": 30000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.1,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": 10000,
+        "max_count_per_month": 10
+      },
+      "group_id": "G_MRLIFE_TIME",
+      "ui_warnings": [
+        "구분 영역별 각각 일 1회/ 월 10회 할인 적용",
+        "1회 승인금액 1만원까지 할인 적용(1회 최대 1천원 할인)",
+        "오후 9시 ~ 오전 9시까지 적용"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_mrlife_intake_20pct",
+      "category": "Food",
+      "content": "인테이크몰 결제 시 20% 할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 0,
+          "monthly_limit": null,
+          "reward_rate": 0.2,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.2,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": 4
+      },
+      "group_id": null,
+      "ui_warnings": [
+        "인테이크몰 직접 접속 시에만 할인 적용",
+        "신규 발급 회원은 카드사용 등록월 익월말까지 실적 상관없이 할인 제공"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,362 @@
+{
+  "card_meta": {
+    "card_id": "kb_goodday_olym",
+    "card_name": "KB국민 굿데이올림카드",
+    "card_company": "KB국민카드",
+    "annual_fee": 9000,
+    "minimum_performance": 300000,
+    "reward_currency": "KRW",
+    "currency_to_krw_rate": 1.0
+  },
+  "benefit_groups": [
+    {
+      "group_id": "G_GDO_OLYM_BASIC",
+      "group_name": "기본서비스 통합한도",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": 100000,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_GDO_OLYM_ADD",
+      "group_name": "추가서비스 통합한도",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": 300000,
+      "top_n_count": null
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_id": "b_gdo_olym_fuel_60perliter",
+      "category": "Traffic",
+      "content": "주유 리터당 60원 청구할인 (1일 10만원 한도)",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": 200000,
+          "reward_rate": null,
+          "fixed_amount": 60
+        },
+        {
+          "min_prev_performance": 600000,
+          "monthly_limit": 400000,
+          "reward_rate": null,
+          "fixed_amount": 60
+        },
+        {
+          "min_prev_performance": 1200000,
+          "monthly_limit": 400000,
+          "reward_rate": null,
+          "fixed_amount": 60
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_PER_VOLUME",
+        "rate": null,
+        "fixed_amount": 60,
+        "monthly_limit": 100000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_GDO_OLYM_BASIC",
+      "ui_warnings": [
+        "1일 이용금액 한도 10만원",
+        "휘발유 기준, 경유/등유/LPG는 휘발유 가격 비례 적용"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_gdo_olym_mart_10pct",
+      "category": "Shopping",
+      "content": "대형마트(이마트, 롯데마트, 홈플러스) 10% 청구할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": 30000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 600000,
+          "monthly_limit": 50000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 1200000,
+          "monthly_limit": 100000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.1,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_GDO_OLYM_BASIC",
+      "ui_warnings": [
+        "온라인 쇼핑몰, 상품권 구매, SSM(이마트 에브리데이 등) 제외"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_gdo_olym_telco_10pct",
+      "category": "Life",
+      "content": "통신(전화요금, 인터넷, 케이블TV) 10% 청구할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": 30000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 600000,
+          "monthly_limit": 30000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 1200000,
+          "monthly_limit": 30000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.1,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_GDO_OLYM_BASIC",
+      "ui_warnings": [],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_gdo_olym_transport_10pct",
+      "category": "Traffic",
+      "content": "대중교통(버스, 지하철, 택시) 10% 청구할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": 50000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 600000,
+          "monthly_limit": 50000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 1200000,
+          "monthly_limit": 50000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.1,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_GDO_OLYM_BASIC",
+      "ui_warnings": [
+        "시외버스, 고속버스 제외",
+        "실제 카드 사용일이 아닌 이용대금 명세서상 이용일 기준"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_gdo_olym_abroad_5pct",
+      "category": "Travel",
+      "content": "해외이용(해외직구) 5% 캐시백 (다음달 둘째 주 결제계좌 입금)",
+      "frequency": "MONTHLY",
+      "reward_type": "CASHBACK",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": 200000,
+          "reward_rate": 0.05,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 600000,
+          "monthly_limit": 200000,
+          "reward_rate": 0.05,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 1200000,
+          "monthly_limit": 200000,
+          "reward_rate": 0.05,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.05,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_GDO_OLYM_BASIC",
+      "ui_warnings": [
+        "캐시백은 다음달 둘째 주 결제계좌로 입금"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_gdo_olym_food_10pct",
+      "category": "Food",
+      "content": "음식/커피/편의점/약국 10% 청구할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 600000,
+          "monthly_limit": 50000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 1200000,
+          "monthly_limit": 50000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.1,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_GDO_OLYM_ADD",
+      "ui_warnings": [
+        "제과/아이스크림, 패스트푸드, 유흥주점 업종 제외"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_gdo_olym_academy_10pct",
+      "category": "EduHealth",
+      "content": "학원/피트니스 10% 청구할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 1200000,
+          "monthly_limit": 300000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.1,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_GDO_OLYM_ADD",
+      "ui_warnings": [
+        "PG(결제대행) 이용금액, 유아교육기관, 학습자재 업종 제외",
+        "레포츠클럽, 수영장, 골프연습장, 테니스장, 요가, 스포츠용품점 업종 제외"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": true,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,176 @@
+{
+  "card_meta": {
+    "card_id": "hyundai_x",
+    "card_name": "현대카드 X",
+    "card_company": "현대카드",
+    "annual_fee": 50000,
+    "minimum_performance": 500000,
+    "reward_currency": "KRW",
+    "currency_to_krw_rate": 1.0
+  },
+  "benefit_groups": [
+    {
+      "group_id": "G_HYUNDAI_X_CASHBACK",
+      "group_name": "연간 캐시백 통합 그룹",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": 100000,
+      "top_n_count": null
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_id": "b_hyundai_x_discount",
+      "category": "General",
+      "content": "국내외 가맹점 1% 청구 할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": null,
+          "reward_rate": 0.01,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.01,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": null,
+      "ui_warnings": [
+        "장기카드대출(카드론), 단기카드대출(현금서비스), 연회비, 제수수료, 이자, 국제브랜드 수수료, 공과금 납부액, 상품권 등 현금성 유가증권 구매 및 선불 카드 구매·충전 금액, 현대카드의 모든 할인 서비스 및 무이자 할부 이용 금액 제외"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_hyundai_x_cashback",
+      "category": "General",
+      "content": "연간 누적 이용 금액 500만원당 2만원 캐시백 (연간 최대 10만원)",
+      "frequency": "ANNUAL",
+      "reward_type": "CASHBACK",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": null,
+          "reward_rate": null,
+          "fixed_amount": 20000
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": 20000,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_HYUNDAI_X_CASHBACK",
+      "ui_warnings": [
+        "연간 누적 이용 금액 2,500만원까지 연간 최대 10만원 한도",
+        "장기카드대출(카드론), 단기카드대출(현금서비스), 연회비, 제수수료, 이자, 국제브랜드 수수료, 공과금 납부액, 상품권 등 현금성 유가증권 구매 및 선불 카드 구매·충전 금액, 현대카드의 모든 할인 서비스 및 무이자 할부 이용 금액 제외"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_hyundai_x_emergency_discount",
+      "category": "General",
+      "content": "긴급할인(선지급 포인트 서비스) 최대 50만원 캐시 먼저 받아 할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": 500000,
+          "reward_rate": null,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_PER_VOLUME",
+        "rate": null,
+        "fixed_amount": null,
+        "monthly_limit": 500000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": null,
+      "ui_warnings": [
+        "상환되지 못한 긴급할인 캐시가 남아있을 경우 별도 현금 청구",
+        "기본 혜택으로 받는 할인 금액 및 추가 혜택으로 받는 캐시백 금액은 긴급할인 상환으로 적용"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": true,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_hyundai_x_airport_lounge",
+      "category": "Travel",
+      "content": "인천국제공항 라운지/발레파킹 무료 이용",
+      "frequency": "MONTHLY",
+      "reward_type": "VOUCHER",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": 1,
+          "reward_rate": null,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": 0,
+        "monthly_limit": 1,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": 1
+      },
+      "group_id": null,
+      "ui_warnings": [
+        "연간 2회 한도 (본인 및 가족 카드 통합 기준)"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    }
+  ]
+}

@@ -21,7 +21,7 @@ def adapt_v3_for_calculator(card_data: dict) -> dict:
                 "currency_to_krw_rate": krw_rate,
             }
 
-        rule = dict(adapted.get("calculation_rule", {}))
+        rule = dict(adapted.get("calculation_rule") or {})
         if rule.get("calc_method") == "FIXED_PER_VOLUME":
             rule["calc_method"] = "PER_UNIT"
             rule.setdefault("unit_label", "liter")
@@ -34,7 +34,7 @@ def adapt_v3_for_calculator(card_data: dict) -> dict:
         rule.setdefault("transaction_tiers", None)
         adapted["calculation_rule"] = rule
 
-        tc = dict(adapted.get("transaction_conditions", {}))
+        tc = dict(adapted.get("transaction_conditions") or {})
         tc.setdefault("min_payment_amount", 0)
         tc.setdefault("max_payment_amount_applied", None)
         tc.setdefault("max_count_per_day", None)
@@ -47,7 +47,7 @@ def adapt_v3_for_calculator(card_data: dict) -> dict:
         tc.setdefault("requires_online", False)
         adapted["transaction_conditions"] = tc
 
-        ef = dict(adapted.get("edge_case_flags", {}))
+        ef = dict(adapted.get("edge_case_flags") or {})
         ef.setdefault("requires_user_selection", False)
         ef.setdefault("excludes_from_performance", False)
         ef.setdefault("category_excludes_from_performance", False)

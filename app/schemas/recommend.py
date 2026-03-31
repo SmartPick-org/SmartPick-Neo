@@ -2,10 +2,24 @@ from typing import Dict, List
 
 from pydantic import BaseModel, Field
 
+from app.schemas.enums import CategoryEnum
+
 
 class RecommendRequest(BaseModel):
     total_budget: int = Field(..., description="월 총 소비 금액")
-    category_spending: Dict[str, int] = Field(..., description="카테고리별 월 소비 금액")
+    category_spending: Dict[CategoryEnum, int] = Field(..., description="카테고리별 월 소비 금액", examples=[
+        {
+            "Coffee": 50000,
+            "Traffic": 100000,
+            "Shopping": 150000,
+        },
+        {
+            "Food": 200000,
+            "Life": 120000,
+            "Cultural": 80000,
+            "Others": 30000,
+        },
+    ])
 
 
 class CategoryBreakdown(BaseModel):

@@ -1,10 +1,11 @@
-# main.py
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+from app.api.card import router as card_router
+
 
 app = FastAPI()
 
-
-#CORS 구현해줘
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -13,9 +14,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(card_router)
+
 
 @app.get("/")
 def read_root() -> dict[str, str]:
-    return {"Hello": "World"}
-
-
+    return {"status": "ok"}

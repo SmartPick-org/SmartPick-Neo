@@ -8,7 +8,6 @@
     "minimum_performance": "[Integer] 혜택을 받기 위한 카드의 최소 전월 실적 (원 단위). 실적 무관이면 0",
     "performance_excluded_categories": "[Array<String>|Null] 전월 실적 산정에서 제외되는 카테고리 목록 (예: [\"Fuel\", \"Tax\"]). 카드 전체에 공통 적용되는 제외 항목"
   },
-
   "benefit_groups": [
     {
       "group_id": "[String] 그룹 고유 식별자 (예: G_TIME_PLAN)",
@@ -19,7 +18,6 @@
       "top_n_count": "[Integer|Null] AUTO_TOP_N일 경우 선택될 상위 혜택 개수 (예: 2)"
     }
   ],
-
   "benefits": [
     {
       "benefit_id": "[String] 개별 혜택 고유 식별자",
@@ -27,14 +25,11 @@
       "category_description": "예시: Coffee, Dining_FNB, Convenience_Store, Online_Shopping, Fuel, Public_Transport, Telecom, OTT_Streaming, Membership_Subscription, Department_Store, Mart, Hospital_Pharmacy, Academy, Beauty, Overseas, Duty_Free, Airline, Hotel, All_Domestic 등",
       "content": "[String] 약관 원문 (LLM 추론 근거 및 디버깅용)",
       "frequency": "[Enum] 혜택 발생 주기 (MONTHLY | ANNUAL | ONCE | QUARTERLY)",
-
       "reward_type": "[Enum] DISCOUNT(청구할인) | POINT(포인트/마일리지 적립) | CASHBACK(캐시백) | VOUCHER(바우처/상품권)",
-
       "reward_unit": {
         "currency": "[Enum] KRW | M_POINT | MY_SHINHAN_POINT | SOL_POINT | POINTREE | MILEAGE_KE(대한항공) | MILEAGE_OZ(아시아나) | MARRIOTT_POINT 등",
         "currency_to_krw_rate": "[Float] 1단위당 실제 현금(원) 환산 가치. KRW이면 1.0, M포인트는 0.666, 마일리지는 15.0 등"
       },
-
       "tier_conditions": [
         {
           "min_prev_performance": "[Integer] 해당 구간 적용을 위한 전월 실적 하한선 (원 단위)",
@@ -46,21 +41,16 @@
           "description": "[String|Null] 이 구간에 대한 설명 (디버깅용)"
         }
       ],
-
       "calculation_rule": {
         "calc_method": "[Enum] RATE | FIXED_AMOUNT | PER_UNIT | TIERED_RATE_BY_TRANSACTION | MAX_COVER_UP_TO_LIMIT",
         "calc_method_description": "RATE: 정률 할인/적립 (예: 10%). FIXED_AMOUNT: 건당 또는 월간 정액 (예: 월 3000원). PER_UNIT: 단위당 정액 (예: 리터당 60원). TIERED_RATE_BY_TRANSACTION: 결제건별 금액 구간에 따라 비율 차등. MAX_COVER_UP_TO_LIMIT: 한도 내 전액 커버 (예: OTT 100% 적립)",
-
         "rate": "[Float|Null] 기본 할인/적립률 (tier_conditions를 따를 경우 Null)",
         "fixed_amount": "[Integer|Null] 정액 혜택 금액 (원 또는 포인트 단위)",
         "unit_label": "[String|Null] PER_UNIT 방식의 단위 라벨 (예: 'liter', 'transaction')",
         "unit_amount": "[Integer|Null] PER_UNIT 방식의 단위당 금액 (예: 리터당 60원이면 60). tier_conditions가 있을 경우 Null",
-
         "monthly_limit": "[Integer|Null] 해당 혜택 단독 월 할인/적립 한도 (그룹 한도와 별개, 결과값 기준)",
         "monthly_usage_limit": "[Integer|Null] 해당 혜택의 월 최대 적용 이용금액 한도 (입력값 기준)",
-
         "fallback_reward_rate": "[Float] 한도 초과 시 적용되는 기본 적립률 (없으면 0.0)",
-
         "transaction_tiers": [
           {
             "min_transaction_amount": "[Integer] 이 구간의 최소 결제 금액 (원 단위)",
@@ -69,14 +59,12 @@
           }
         ]
       },
-
       "transaction_conditions": {
         "min_payment_amount": "[Integer] 건당 최소 결제 요구 금액 (예: 1만원 이상 결제시). 조건 없으면 0",
         "max_payment_amount_applied": "[Integer|Null] 1회 결제 시 혜택이 적용되는 최대 금액 (예: 건당 최대 5만원까지만 할인 적용). 제한 없으면 null",
         "max_count_per_day": "[Integer|Null] 일 최대 혜택 제공 횟수 (예: 일 1회). 제한 없으면 null",
         "max_count_per_month": "[Integer|Null] 월 최대 혜택 제공 횟수 (예: 월 5회). 제한 없으면 null",
         "max_count_per_year": "[Integer|Null] 연 최대 혜택 제공 횟수 (예: 연 6회). 제한 없으면 null",
-
         "day_of_week": "[Array<Enum>|Null] 혜택 적용 요일 제한 (예: ['SAT','SUN'] = 주말만). null이면 매일 적용",
         "time_of_day": {
           "start": "[String|Null] 혜택 적용 시작 시간 (24h, 예: '21:00'). null이면 시간제한 없음",
@@ -86,38 +74,30 @@
         "requires_offline": "[Boolean] 오프라인 매장 결제 필수 여부",
         "requires_online": "[Boolean] 온라인 결제 필수 여부 (공식 사이트/앱 직접 결제 등)"
       },
-
       "group_id": "[String|Null] benefit_groups의 group_id를 참조. 단독 혜택이면 null",
-
       "ui_warnings": [
         "[String] 사용자에게 툴팁으로 고지해야 할 예외 사항 배열 (예: '오프라인 매장 한정', '상품권 구매 제외', '스마트오더 포함')"
       ],
-
       "edge_case_flags": {
         "requires_user_selection": "[Boolean] 사용자가 여러 옵션 중 사전에 선택해야 하는가? (정유사 택1, 서비스팩 택1 등)",
         "excludes_from_performance": "[Boolean] 이 혜택을 받은 결제건이 전월 실적에서 제외되는가?",
         "category_excludes_from_performance": "[Boolean] 이 카테고리 자체가 전월 실적에서 제외되는가? (예: 주유 이용금액 → card_meta.performance_excluded_categories와 연동)",
-
         "special_month_bonus": {
           "type": "[Enum|Null] BIRTHDAY(생일월) | FAMILY_EVENT(가족행사월 5/12월) | PLAN_DAY(매월1일 2배 등). null이면 해당 없음",
           "multiplier": "[Float|Null] 한도 또는 적립률 배수 (예: 2.0 = 2배)",
           "bonus_limit_add": "[Integer|Null] 추가 한도 금액 (예: 10000 포인트 추가)",
           "months": "[Array<Integer>|Null] 적용 월 (예: [5, 12]). BIRTHDAY면 null (유저별 상이)"
         },
-
         "performance_gap_forgiveness": {
           "enabled": "[Boolean] 전월 실적 부족분을 일부 면제해 주는가?",
           "max_gap_amount": "[Integer|Null] 면제 가능한 최대 부족 금액 (예: 50000 = 5만원 이내)",
           "max_count_per_year": "[Integer|Null] 연 최대 적용 횟수"
         },
-
         "current_month_performance": "[Boolean] 전월이 아닌 '당월' 이용금액 기준으로 tier가 결정되는가? (예: T3 마일리지)",
-
         "payment_platform_bonus": {
           "platform": "[String|Null] 보너스 적용 플랫폼 (예: 'SOL_PAY', 'KB_PAY', 'SAMSUNG_PAY' 등). null이면 해당 없음",
           "additional_rate": "[Float|Null] 추가 적립률 (예: 0.005 = 0.5% 추가)"
         },
-
         "annual_usage_tiers": [
           {
             "min_annual_spend": "[Integer] 연간 누적 이용금액 하한 (원 단위)",
@@ -126,14 +106,12 @@
             "description": "[String|Null] 설명 (예: '연 500만원당 2만원 캐시백')"
           }
         ],
-
         "annual_voucher": {
           "voucher_value_krw": "[Integer|Null] 바우처 액면가 (원 단위). null이면 해당 없음",
           "initial_year_condition": "[String|Null] 초년도 제공 조건 설명 (예: '누적 100만원 이상 이용')",
           "renewal_year_condition": "[String|Null] 2차년도 이후 제공 조건 설명 (예: '전년도 1200만원 이상')",
           "choices": "[Array<String>|Null] 바우처 사용처 선택지 (예: ['쇼핑', '호텔', '여행', 'M포인트'])"
         },
-
         "escape_hatch_note": "[String|Null] 현재 스키마로 완벽히 표현 불가능한 매우 특이한 조건 (백엔드 수동 개입용)"
       }
     }

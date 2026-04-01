@@ -199,4 +199,5 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 .venv
+/LLM_Advice
 # End of https://www.toptal.com/developers/gitignore/api/windows,python

@@ -65,14 +65,18 @@ class BenefitCalculator:
     # 1. 전월 실적(Performance) 보정
     # -----------------------------------------------------------------
     def _adjusted_performance(
-        self, user_budgets: dict[str, int], user_total_spend: int
+        self, user_budgets: dict, user_total_spend: int
     ) -> int:
         """카드 메타 및 혜택별 실적 제외 로직을 반영한 보정 실적."""
         adjusted = user_total_spend
 
+        def _get_total(cat_name):
+            val = user_budgets.get(cat_name, 0)
+            return val.get("total", 0) if isinstance(val, dict) else val
+
         # card_meta 레벨 제외 (예: Fuel)
         for cat in self._perf_excluded_cats:
-            adjusted -= user_budgets.get(cat, 0)
+            adjusted -= _get_total(cat)
 
         # benefit 레벨 제외 (excludes_from_performance / category_excludes_from_performance)
         already_excluded = set(self._perf_excluded_cats)
@@ -83,7 +87,7 @@ class BenefitCalculator:
                 if flags.get("excludes_from_performance") or flags.get(
                     "category_excludes_from_performance"
                 ):
-                    adjusted -= user_budgets.get(cat, 0)
+                    adjusted -= _get_total(cat)
                     already_excluded.add(cat)
 
         return max(adjusted, 0)
@@ -250,6 +254,7 @@ class BenefitCalculator:
         return {
             "benefit_id": benefit.get("benefit_id"),
             "category": benefit.get("category"),
+            "sub_category": benefit.get("sub_category"),
             "frequency": freq,
             "reward_type": benefit.get("reward_type"),
             "raw_amount": round(final_amount, 2),
@@ -264,6 +269,7 @@ class BenefitCalculator:
         return {
             "benefit_id": benefit.get("benefit_id"),
             "category": benefit.get("category"),
+            "sub_category": benefit.get("sub_category"),
             "frequency": benefit.get("frequency", "MONTHLY"),
             "reward_type": benefit.get("reward_type"),
             "raw_amount": 0,
@@ -369,22 +375,24 @@ class BenefitCalculator:
     # -----------------------------------------------------------------
     def calculate(
         self,
-        user_budgets: dict[str, int],
+        user_budgets: dict,
         user_total_spend: int | None = None,
     ) -> dict:
         """
         유저의 카테고리별 예산을 받아 해당 카드의 이론상 최대 할인 금액을 산출합니다.
 
         Args:
-            user_budgets: 카테고리 → 월 예산(원) 매핑.
-                          예: {"Coffee": 50000, "Traffic": 60000}
-            user_total_spend: 전체 월 소비액 (미입력 시 user_budgets 합산)
+            user_budgets: 카테고리 → 월 예산(원) 매핑 (또는 서브카테고리 비율 포함 dict).
+                          예: {"Coffee": {"total": 50000, "cafe": "75%", "bakery": "25%"}, "Traffic": 60000}
+            user_total_spend: 전체 월 소비액 (미입력 시 user_budgets 총합)
 
         Returns:
             dict: 카드별 카테고리 할인 내역, 월간/연간 합계 등
         """
         if user_total_spend is None:
-            user_total_spend = sum(user_budgets.values())
+            user_total_spend = sum(
+                (v.get("total", 0) if isinstance(v, dict) else v) for v in user_budgets.values()
+            )
 
         # ── 전월 실적 보정 ──
         performance = self._adjusted_performance(user_budgets, user_total_spend)
@@ -442,13 +450,27 @@ class BenefitCalculator:
 
         for b in sorted_benefits:
             cat = b.get("category")
+            sub_cat = b.get("sub_category")
             freq = b.get("frequency", "MONTHLY")
 
             # 예산 결정
             if cat == "All_Domestic":
                 budget = remaining_total
             else:
-                budget = user_budgets.get(cat, 0)
+                info = user_budgets.get(cat, 0)
+                if isinstance(info, dict):
+                    total_cat_budget = info.get("total", 0)
+                    if sub_cat and sub_cat != "general":
+                        if sub_cat in info:
+                            ratio_val = info[sub_cat]
+                            ratio = float(str(ratio_val).replace("%", "")) / 100.0 if "%" in str(ratio_val) else float(ratio_val)
+                            budget = total_cat_budget * ratio
+                        else:
+                            budget = 0.0
+                    else:
+                        budget = float(total_cat_budget)
+                else:
+                    budget = float(info)
 
             if budget <= 0 and freq not in ("ANNUAL", "ONCE"):
                 continue
@@ -475,18 +497,25 @@ class BenefitCalculator:
 
         # ── 카테고리별 합산 ──
         cat_totals: dict[str, dict] = defaultdict(
-            lambda: {"monthly_discount_krw": 0, "warnings": []}
+            lambda: {"monthly_discount_krw": 0, "discount_info": defaultdict(int), "warnings": set()}
         )
         for r in monthly_results:
             cat = r["category"]
+            sub_cat = r.get("sub_category") or "general"
+            
             cat_totals[cat]["monthly_discount_krw"] += r["amount_krw"]
-            cat_totals[cat]["warnings"].extend(r["warnings"])
+            if r["amount_krw"] > 0:
+                key = f"sub_category_{sub_cat}"
+                cat_totals[cat]["discount_info"][key] += r["amount_krw"]
+            for w in r["warnings"]:
+                cat_totals[cat]["warnings"].add(w)
 
         for cat, data in cat_totals.items():
             result["category_breakdown"].append({
                 "category": cat,
                 "monthly_discount_krw": round(data["monthly_discount_krw"]),
-                "warnings": list(set(data["warnings"])),
+                "discount_info": dict(data["discount_info"]),
+                "warnings": list(data["warnings"]),
             })
 
         # 유저가 선택한 카테고리 순서대로 정렬 (All_Domestic 마지막)

@@ -107,6 +107,7 @@ def build_prompt_block() -> str:
     lines = [
         "[카테고리 + 서브카테고리 매핑 규칙]",
         "각 benefit에 category와 sub_category를 반드시 지정할 것.",
+        "⚠ 중요: category와 sub_category는 반드시 아래 목록의 계층 관계를 정확히 일치시켜야 한다. 예를 들어 'duty_free'는 'Shopping' 카테고리에, 'rental'은 'Travel' 카테고리에, 'leisure_sports'는 'Cultural' 카테고리에만 종속되므로 이 관계를 임의로 섞지 말 것.",
         "sub_category가 정의된 카테고리는 아래 목록에서 선택. 미정의 카테고리(General, Others 등)는 sub_category를 null로 지정.",
         "",
     ]

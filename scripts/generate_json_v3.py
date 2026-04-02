@@ -325,6 +325,17 @@ CONVERT_V3_PROMPT = """너는 신용카드 약관/설명서 마크다운을 읽�
 
 [변환 규칙]
 
+0. 엄격한 카테고리 매핑 원칙 (절대 위반 금지):
+   - LLM 본인의 일반 상식을 동원하여 임의로 카테고리를 판단하지 마라.
+   - 혜택 대상을 "매핑 규칙"의 'sub_category' 기재 내용과 대조한 뒤, 반드시 해당 서브 카테고리가 속한 최상위 'category'를 직접 지정해야 한다.
+   - 빈번한 오분류 사례 (이 지시를 무조건 따를 것):
+     * 골프장/골프연습장: Travel이 아닌 Cultural (sub_category: leisure_sports)
+     * 면세점: Travel이 아닌 Shopping (sub_category: duty_free)
+     * 렌터카/카셰어링: Traffic이 아닌 Travel (sub_category: rental)
+     * 놀이공원/테마파크: Travel이 아닌 Cultural (sub_category: theme_park)
+     * 기차(KTX/SRT): Travel이 아닌 Traffic (sub_category: transit)
+   - 잘못된 부모 카테고리를 임의 설정하면 시스템 에러가 발생하므로, [category - sub_category] 종속 관계 규칙을 최우선으로 복종하라.
+
 1. calc_method 판단:
    - "XX% 할인/적립" → RATE (rate = 소수, 예: 10% → 0.1)
    - "N천원 할인", "N만원 적립" → FIXED_AMOUNT
@@ -446,9 +457,24 @@ def validate_v3(data: dict) -> dict:
             print(f"    [FIX] rate={rate} 비정상 → {b.get('benefit_id')}")
             rule["rate"] = rate / 100.0  # 퍼센트를 소수로 보정
 
-        # sub_category 검증
+        # sub_category 검증 및 Category 자동 교정
         cat = b.get("category", "")
         sub = b.get("sub_category")
+        
+        # 1. 서브카테고리로 카테고리 자동 교정 (general은 중복되므로 제외)
+        if sub and sub != "general":
+            correct_cat = None
+            for parent_cat, subs in VALID_SUB_CATEGORIES.items():
+                if sub in subs:
+                    correct_cat = parent_cat
+                    break
+            
+            if correct_cat and correct_cat != cat:
+                print(f"    [FIX] 카테고리 오분류 교정 (sub_category 기준): '{cat}' → '{correct_cat}' (혜택: {b.get('benefit_id')})")
+                b["category"] = correct_cat
+                cat = correct_cat
+
+        # 2. 일반 유효성 검증
         if cat in VALID_SUB_CATEGORIES:
             if sub and sub not in VALID_SUB_CATEGORIES[cat]:
                 print(f"    [WARN] sub_category '{sub}'가 {cat}에 유효하지 않음 → {b.get('benefit_id')}")

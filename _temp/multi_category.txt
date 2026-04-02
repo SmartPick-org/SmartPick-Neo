@@ -1,0 +1,65 @@
+Total: 16
+
+  [KB국민 굿데이올림카드] category=Food
+    content: 음식/커피/편의점/약국 10% 청구할인
+    matched: ['Coffee', 'Shopping']
+
+  [KB국민 My WE:SH카드] category=Food
+    content: 음식점, 편의점(CU/GS25) 10% 할인 (건당 한도 2,500원, 월 할인한도 5,000원)
+    matched: ['Food', 'Shopping']
+
+  [KB국민 My WE:SH카드] category=Cultural
+    content: 택시, 커피 5% 할인 (월 할인한도 5,000원)
+    matched: ['Coffee', 'Traffic']
+
+  [KB국민 Star카드] category=Others
+    content: 연 1회 쿠폰 서비스 택1 제공 (신세계 상품권, 롯데백화점 상품권, 포인트리, 호텔 뷔페 이용권)
+    matched: ['Shopping', 'Travel']
+
+  [KB국민 Star카드] category=Others
+    content: 연 1회 쿠폰 서비스 택1 제공 (신세계 상품권, 롯데백화점 상품권, 포인트리, 호텔 뷔페 이용권)
+    matched: ['Shopping', 'Travel']
+
+  [KB국민 Star카드] category=Others
+    content: 연 1회 쿠폰 서비스 택1 제공 (신세계 상품권, 롯데백화점 상품권, 포인트리, 호텔 뷔페 이용권)
+    matched: ['Shopping', 'Travel']
+
+  [KB국민 Star카드] category=Others
+    content: 연 1회 쿠폰 서비스 택1 제공 (신세계 상품권, 롯데백화점 상품권, 포인트리, 호텔 뷔페 이용권)
+    matched: ['Shopping', 'Travel']
+
+  [KB국민 직장인보너스 체크카드] category=Food
+    content: 아웃백 10% 환급할인 (건당 3만원~10만원, 백화점/대형할인점 제외, 전월 실적 20만원 이상)
+    matched: ['Food', 'Shopping']
+
+  [KB국민 청춘대로 톡톡카드] category=Traffic
+    content: 대중교통, 택시/이동통신요금 청구할인 10% (월 5천원 한도)
+    matched: ['Life', 'Traffic']
+
+  [신한카드 Deep Oil] category=Life
+    content: GS25, CU, 스타벅스, 이디야, 택시 이용금액 5% 결제일 할인
+    matched: ['Coffee', 'Traffic']
+
+  [신한카드 Discount Plan+] category=Food
+    content: DAY 10% 할인 : 카페 / 음식점 (07~15시)
+    matched: ['Coffee', 'Food']
+
+  [신한카드 Discount Plan+] category=Life
+    content: NIGHT 10% 할인 : 편의점 / 배달앱 (18~22시)
+    matched: ['Food', 'Shopping']
+
+  [신한카드 처음] category=Food
+    content: 음식점, 카페, 편의점, 온라인쇼핑 5% 마이신한포인트 적립
+    matched: ['Coffee', 'Food', 'Shopping']
+
+  [신한카드 처음 체크] category=Food
+    content: 편의점, 푸드, 카페 기본 5% 적립 (영역별 월 최대 1천 포인트)
+    matched: ['Coffee', 'Food', 'Shopping']
+
+  [신한카드 처음 체크] category=Food
+    content: 편의점, 푸드, 카페 오후 4~8시 2% 추가 적립 (통합 월 최대 1천 포인트)
+    matched: ['Coffee', 'Food', 'Shopping']
+
+  [메리어트 본보이 더 베스트 신한카드] category=Travel
+    content: 해외/항공/택시/카페 가맹점 1천원당 3 메리어트 본보이 포인트 적립
+    matched: ['Coffee', 'Traffic', 'Travel']

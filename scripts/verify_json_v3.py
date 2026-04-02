@@ -26,11 +26,9 @@ MD_DIR = ROOT / "datasets" / "markdown_upstage"
 
 # ===========================< 스키마 검증 >============================
 
-VALID_CATEGORIES = {
-    "General", "Shopping", "Traffic", "Food", "Coffee", "Dining_FNB",
-    "Cultural", "Travel", "Life", "EduHealth", "Streaming",
-    "All_Domestic", "Others",
-}
+from scripts.sub_categories import VALID_CATEGORIES, VALID_SUB_CATEGORIES
+
+# Streaming, Dining_FNB는 제거됨 — Cultural, Food로 흡수
 
 VALID_CALC_METHODS = {
     "RATE", "FIXED_AMOUNT", "FIXED_PER_VOLUME",

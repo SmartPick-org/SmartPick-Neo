@@ -1,0 +1,97 @@
+[카테고리 + 서브카테고리 매핑 규칙]
+각 benefit에 category와 sub_category를 반드시 지정할 것.
+sub_category가 정의된 카테고리는 아래 목록에서 선택. 미정의 카테고리(General, Others 등)는 sub_category를 null로 지정.
+
+- Traffic:
+  · transit: 시내버스, 지하철, 철도, KTX, SRT (예: "후불교통 5% 할인", "버스/지하철 청구할인")
+  · express_bus: 고속버스, 시외버스 (예: "고속/시외버스 5% 환급할인")
+  · taxi: 택시, 택시 호출앱 (예: "택시 10% 할인")
+  · fuel: 주유소, LPG, 리터당 할인 (예: "GS칼텍스 리터당 60원 할인", "정유사 주유 10% 할인")
+  · ev_charge: 전기차 충전소 [RESERVED]
+  · parking: 주차장, 주차 할인 (예: "전국 주차장 10% 할인", "주말 무료 주차")
+  · toll: 통행료, 하이패스 [RESERVED]
+  · maintenance: 차량 정비, 세차, 엔진오일 (예: "정비공임 10% 할인", "엔진오일 교환 2만원 할인")
+  · general: 특정 교통수단을 한정하지 않고 교통 카테고리 전체에 적용되거나, 복합 혜택 분할 시 교통 부분에 해당하는 혜택 (예: "교통/이동 5% 할인")
+
+- Shopping:
+  · online: 온라인쇼핑, 이커머스, 패션앱 (예: "쿠팡, G마켓 10% 할인", "지그재그, 무신사")
+  · dept_store: 백화점, 아울렛 (예: "롯데/신세계/현대백화점 5% 할인", "프리미엄아울렛")
+  · mart: 대형마트, 슈퍼, 식자재 (예: "이마트, 홈플러스 10% 할인", "하나로식자재")
+  · convenience: 편의점 (CU, GS25 등) (예: "CU, GS25 10% 할인", "편의점 5% 적립")
+  · home_shopping: 홈쇼핑 [RESERVED]
+  · duty_free: 면세점 (예: "신라면세점 추가 적립")
+  · daily_goods: 생활용품, 잡화 [RESERVED]
+  · beauty: 뷰티, 미용, 올리브영, 미용실 (예: "미용실 10% 할인", "올리브영 3천원 적립")
+  · general: 특정 쇼핑 채널을 한정하지 않고 쇼핑 카테고리 전체에 적용되거나, 복합 혜택 분할 시 쇼핑 부분에 해당하는 혜택 (예: "쇼핑 5% 할인")
+
+- Food:
+  · restaurant: 음식점, 외식, 레스토랑 (예: "일반음식점 5% 적립", "아웃백 10% 할인")
+  · delivery: 배달앱 (배민, 요기요 등) (예: "배달앱 10% 할인")
+  · fast_food: 패스트푸드, 버거 (예: "버거/패스트푸드 업종 20% 할인")
+  · general: 특정 식음료 업종을 한정하지 않고 Food 카테고리 전체에 적용되거나, 복합 혜택 분할 시 식음료 부분에 해당하는 혜택 (예: "푸드 5% 적립")
+
+- Coffee:
+  · cafe: 카페, 커피전문점 (예: "스타벅스 50% 할인", "커피빈, 투썸 건당 500원 할인")
+  · bakery: 디저트, 베이커리 (예: "곤트란쉐리에 베이커리 할인")
+  · general: 카페와 베이커리를 구분하지 않고 Coffee 카테고리 전체에 적용되거나, 복합 혜택 분할 시 카페/디저트 부분에 해당하는 혜택 (예: "카페/디저트 5% 적립")
+
+- Cultural:
+  · cinema: 영화관 (CGV, 메가박스, 롯데시네마) (예: "CGV 3천원 할인", "롯데시네마 5천원 할인")
+  · performance: 공연, 전시 [RESERVED]
+  · books: 도서, 서점, 온라인서점 (예: "교보문고, YES24 5% 할인", "독서실/도서/문구 적립")
+  · music: 음악 스트리밍 (멜론, 지니 등) (예: "멜론, 지니 1만원 할인")
+  · ott: OTT, 디지털 구독 (넷플릭스, 유튜브, 디즈니+ 등) (예: "넷플릭스 1만원 할인", "OTT 30% 할인", "유튜브 프리미엄")
+  · theme_park: 놀이공원, 테마파크 (예: "에버랜드 50% 할인", "롯데월드 자유이용권 50% 할인")
+  · leisure_sports: 레저, 스포츠 (골프, 테니스 등) (예: "골프장 그린피 15% 할인")
+  · general: 특정 문화 분야를 한정하지 않고 Cultural 카테고리 전체에 적용되거나, 복합 혜택 분할 시 문화 부분에 해당하는 혜택 (예: "문화생활 5% 할인")
+
+- Travel:
+  · airline: 항공사 마일리지, 항공권 (예: "대한항공 마일리지 적립", "1천원당 1마일리지")
+  · hotel: 호텔 숙박, 예약 플랫폼 (예: "메리어트 참여 호텔 5포인트", "IHG 20% 할인")
+  · travel_agency: 여행사, 여행 플랫폼 (Trip.com, KKday 등) (예: "Trip.com 호텔 8%/항공 2% 할인", "KKday 5% 할인")
+  · overseas: 해외 결제, 해외직구 캐시백 (예: "해외이용 5% 캐시백", "해외 일시불 1% 추가 적립")
+  · lounge_valet: 공항 라운지, 발레파킹 (예: "공항라운지 연 2회 무료", "인천공항 발레파킹 무료")
+  · rental: 렌터카, 카셰어링 (예: "SK렌터카 할인", "Hertz 렌터카 10% 할인")
+  · roaming: 로밍, 해외 데이터, eSIM (예: "해외데이터 로밍 1일 이용권", "eSIM 15% 할인")
+  · general: 특정 여행 분야를 한정하지 않고 Travel 카테고리 전체에 적용되거나, 복합 혜택 분할 시 여행 부분에 해당하는 혜택 (예: "여행 5% 할인")
+
+- Life:
+  · telecom: 이동통신, 인터넷 요금 (예: "이동통신요금 10% 할인", "통신요금 자동이체 1천원 할인")
+  · utility: 전기, 가스, 수도, 공과금 (예: "전기요금, 도시가스 10% 할인", "공과금 10% 할인")
+  · housing: 아파트 관리비 [RESERVED]
+  · daily_service: 세탁, 청소, 정수기렌탈 등 (예: "세탁비 10% 할인", "정수기렌탈 5% 적립")
+  · insurance_tax: 보험료, 국세, 지방세, 연금 (예: "국세/지방세 7천원 할인", "보험료 2천원 할인")
+  · office: 문구, 사무용기기, 보안/용역 (예: "문구 및 사무용기기 5% 적립", "보안 및 용역 5% 적립")
+  · general: 특정 생활 분야를 한정하지 않고 Life 카테고리 전체에 적용되거나, 복합 혜택 분할 시 생활 부분에 해당하는 혜택 (예: "생활요금 정기결제 7% 할인")
+
+- EduHealth:
+  · hospital: 병원, 한의원, 치과, 안과 (예: "병원/약국 10% 할인")
+  · pharmacy: 약국 (예: "약국 5% 적립")
+  · education: 학원, 독서실, 교육 (예: "학원/피트니스 10% 할인")
+  · fitness: 피트니스, 헬스, 요가 (예: "피트니스 5% 할인")
+  · medical_detail: 의료 세부 (필요 시 확장) [RESERVED]
+  · general: 특정 교육/건강 분야를 한정하지 않고 EduHealth 카테고리 전체에 적용되거나, 복합 혜택 분할 시 교육·건강 부분에 해당하는 혜택 (예: "교육/건강 5% 할인")
+
+- General: 모든 가맹점, 전 가맹점 적립/할인 → sub_category: null
+- All_Domestic: 국내 전 가맹점 → sub_category: null
+- Others: 위에 해당하지 않는 경우 → sub_category: null
+
+[RESERVED] 표시된 항목은 현재 데이터에 해당 혜택이 없으나, 해당하는 혜택 발견 시 사용 가능.
+
+[general sub_category 사용 기준]
+각 카테고리의 general은 다음 경우에만 사용:
+1. 해당 카테고리 전체에 걸쳐 적용되어 특정 세부 분류로 한정할 수 없는 혜택
+   예: '생활요금 정기결제 7% 할인' → Life/general (통신, 공과금, 보험 등을 구분하지 않고 Life 전반 대상)
+2. 복합 카테고리 혜택을 분할할 때, 분할된 각 항목이 해당 카테고리 내에서 특정 세부 분류에 대응하지 않는 경우
+   예: '편의점, 푸드, 카페 5%' 분할 시 → Food 부분은 Food/general (외식도 배달도 아닌 '푸드 전반')
+⚠ 특정 세부 분류에 명확히 대응 가능한 혜택은 반드시 해당 sub_category를 사용할 것. general을 남용하지 마라.
+
+--- VALID_SUB_CATEGORIES ---
+  Coffee: ['bakery', 'cafe', 'general']
+  Cultural: ['books', 'cinema', 'general', 'leisure_sports', 'music', 'ott', 'performance', 'theme_park']
+  EduHealth: ['education', 'fitness', 'general', 'hospital', 'medical_detail', 'pharmacy']
+  Food: ['delivery', 'fast_food', 'general', 'restaurant']
+  Life: ['daily_service', 'general', 'housing', 'insurance_tax', 'office', 'telecom', 'utility']
+  Shopping: ['beauty', 'convenience', 'daily_goods', 'dept_store', 'duty_free', 'general', 'home_shopping', 'mart', 'online']
+  Traffic: ['ev_charge', 'express_bus', 'fuel', 'general', 'maintenance', 'parking', 'taxi', 'toll', 'transit']
+  Travel: ['airline', 'general', 'hotel', 'lounge_valet', 'overseas', 'rental', 'roaming', 'travel_agency']

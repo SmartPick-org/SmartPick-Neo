@@ -25,19 +25,18 @@ from langchain.tools import tool
 from langchain_core.messages import HumanMessage, SystemMessage, ToolMessage
 from langsmith import traceable
 
-from apps.backend.tools.web_search import (
+from app.core.database import fetch_markdown_from_s3, get_supabase
+from app.tools.web_search import (
     search_blog,
     search_web,
     NaverSearchError,
     tavily_search,
-    duckduckgo_search,
-    serper_search,
     format_results as _format_web_results,
     WebSearchError,
 )
 
 # ===========================< Setting >============================
-load_dotenv(Path(__file__).resolve().parents[1] / ".env")
+load_dotenv(Path(__file__).resolve().parents[2] / ".env")
 
 logging.basicConfig(level=logging.INFO, format="[ADVISOR] %(levelname)s %(message)s")
 logger = logging.getLogger(__name__)
@@ -57,25 +56,6 @@ QueryType = Literal[
     "revolving",
 ]
 
-MARKDOWN_DIR = Path(__file__).resolve().parents[3] / "datasets" / "markdown"
-
-# ---------------------------------------------------------------------------
-# TODO: Replace this hardcoded path with dynamic lookup.
-# Naming convention: {CompanyCode}_{FullCardName}_{descriptor}_terms.md
-# e.g. card_company="KB", card_name="KB 국민 굿데이 카드"
-#   → datasets/markdown/kb/terms/KB_KB 국민 굿데이 카드_PDF로 파일저장_terms.md
-#
-# Future logic should:
-#   1. Lowercase card_company → subfolder (e.g. "KB" → "kb")
-#   2. Glob MARKDOWN_DIR / subfolder / "terms" / f"{card_company}_{card_name}_*_terms.md"
-#   3. Return the first match
-# ---------------------------------------------------------------------------
-_HARDCODED_CARD_FILE = (
-    MARKDOWN_DIR
-    / "kb"
-    / "terms"
-    / "KB_KB 국민 굿데이 카드_PDF로 파일저장_terms.md"
-)
 
 # ===========================< Button Queries (반말) >============================
 # UI 버튼 구조:
@@ -170,79 +150,34 @@ def naver_blog_search(query: str) -> str:
         return f"검색 실패: {exc}"
 
 
-# --- web search backends (one is selected via ACTIVE_WEB_SEARCH_TOOL below) ---
+# --- web search: Naver first, Tavily as fallback ---
 
 @tool
-def naver_web_search(query: str) -> str:
+def web_search(query: str) -> str:
     """
-    네이버 웹 검색으로 공식 페이지와 뉴스를 검색합니다.
+    웹 검색으로 공식 페이지와 뉴스를 검색합니다.
     카드사 공식 신청 페이지, 발급 조건, 공지사항 등 공식 출처 정보를 찾을 때 사용하세요.
     """
-    logger.info("Tool called — naver_web_search | query: %s", query)
+    logger.info("Tool called — web_search | query: %s", query)
     try:
         return _log_and_format(search_web(query, display=5), "naver_web_search")
     except NaverSearchError as exc:
-        logger.warning("naver_web_search failed: %s", exc)
-        return f"검색 실패: {exc}"
-
-
-@tool
-def tavily_web_search(query: str) -> str:
-    """
-    Tavily 웹 검색으로 공식 페이지와 뉴스를 검색합니다.
-    카드사 공식 신청 페이지, 발급 조건, 공지사항 등 공식 출처 정보를 찾을 때 사용하세요.
-    """
-    logger.info("Tool called — tavily_web_search | query: %s", query)
+        logger.warning("naver_web_search failed (%s) — falling back to Tavily", exc)
     try:
         return _log_and_format(tavily_search(query, max_results=5), "tavily_web_search")
     except WebSearchError as exc:
-        logger.warning("tavily_web_search failed: %s", exc)
+        logger.warning("tavily_web_search also failed: %s", exc)
         return f"검색 실패: {exc}"
-
-
-@tool
-def duckduckgo_web_search(query: str) -> str:
-    """
-    DuckDuckGo 웹 검색으로 공식 페이지와 뉴스를 검색합니다.
-    카드사 공식 신청 페이지, 발급 조건, 공지사항 등 공식 출처 정보를 찾을 때 사용하세요.
-    """
-    logger.info("Tool called — duckduckgo_web_search | query: %s", query)
-    try:
-        return _log_and_format(duckduckgo_search(query, max_results=5), "duckduckgo_web_search")
-    except WebSearchError as exc:
-        logger.warning("duckduckgo_web_search failed: %s", exc)
-        return f"검색 실패: {exc}"
-
-
-@tool
-def serper_web_search(query: str) -> str:
-    """
-    Serper(Google) 웹 검색으로 공식 페이지와 뉴스를 검색합니다.
-    카드사 공식 신청 페이지, 발급 조건, 공지사항 등 공식 출처 정보를 찾을 때 사용하세요.
-    """
-    logger.info("Tool called — serper_web_search | query: %s", query)
-    try:
-        return _log_and_format(serper_search(query, max_results=5), "serper_web_search")
-    except WebSearchError as exc:
-        logger.warning("serper_web_search failed: %s", exc)
-        return f"검색 실패: {exc}"
-
-
-# ===========================< Active Web Search Backend >============================
-# Switch this to test different backends alongside naver_blog_search.
-# Options: naver_web_search | tavily_web_search | duckduckgo_web_search | serper_web_search
-
-ACTIVE_WEB_SEARCH_TOOL = naver_web_search
 
 
 # ===========================< System Prompt >============================
 
 _SYSTEM_PROMPT = """
-너는 {card_company} {card_name} 전문 상담사야.
+너는 {card_name} 전문 상담사야.
 사용자 질문에 대해 아래 [카드 공식 정보]를 우선 참고해서 답해줘.
 공식 정보만으로 부족하다고 판단되면 아래 툴을 자유롭게 활용해:
 - naver_blog_search: 실사용자 후기, 개인 경험담 등 비공식 의견이 필요할 때
-- {web_tool_name}: 공식 신청 페이지, 발급 조건 등 공식 출처 정보가 필요할 때
+- web_search: 공식 신청 페이지, 발급 조건 등 공식 출처 정보가 필요할 때
 
 [카드 공식 정보]
 {card_info}
@@ -259,15 +194,25 @@ _SYSTEM_PROMPT = """
 
 # ===========================< Card Info Loader >============================
 
-def _load_card_info(card_company: str, card_name: str) -> str:  # noqa: ARG001
-    # TODO: replace with dynamic file resolution using card_company + card_name
-    # (see _HARDCODED_CARD_FILE comment above for the naming convention)
-    md_file = _HARDCODED_CARD_FILE
-    if not md_file.exists():
-        logger.error("Card markdown not found: %s", md_file)
-        return f"카드 파일을 찾을 수 없어: {md_file}"
-    logger.info("Loaded card info from: %s (%d chars)", md_file.name, md_file.stat().st_size)
-    return md_file.read_text(encoding="utf-8")
+def _load_card_info(card_name: str) -> str:
+    try:
+        supabase = get_supabase()
+        response = supabase.table("cards").select("manual_file_path").eq("card_name", card_name).single().execute()
+    except Exception as exc:
+        logger.error("DB lookup failed for card '%s': %s", card_name, exc)
+        return f"카드 정보를 불러오는 중 오류가 발생했어: {exc}"
+
+    if not response.data or not response.data.get("manual_file_path"):
+        logger.error("No manual_file_path found for card: %s", card_name)
+        return f"'{card_name}'에 대한 카드 파일 경로를 찾을 수 없어."
+
+    file_path = response.data["manual_file_path"]
+    logger.info("Fetching card markdown from S3: %s", file_path)
+    content = fetch_markdown_from_s3(file_path)
+    if not content:
+        return f"카드 파일을 S3에서 불러올 수 없어: {file_path}"
+    logger.info("Loaded card info from S3: %s (%d chars)", file_path, len(content))
+    return content
 
 
 # ===========================< Agent Loop >============================
@@ -275,7 +220,6 @@ def _load_card_info(card_company: str, card_name: str) -> str:  # noqa: ARG001
 @traceable(name="advisor_agent")
 def run_advisor(
     card_name: str,
-    card_company: str,
     query_type: QueryType,
 ) -> str:
     """
@@ -283,24 +227,23 @@ def run_advisor(
     LLM이 필요하다고 판단할 때만 naver_blog_search 툴을 호출합니다.
 
     Args:
-        card_name    : 카드 이름  (예: "현대카드 M")
-        card_company : 카드사 이름 (예: "Hyundai", "KB", "Shinhan")
-        query_type   : 질문 유형
+        card_name  : 카드 이름  (예: "현대카드 M")
+        query_type : 질문 유형
 
     Returns:
         LLM이 생성한 답변 문자열
     """
-    logger.info("run_advisor start | card=%s (%s) query_type=%s", card_name, card_company, query_type)
+    logger.info("run_advisor start | card=%s query_type=%s", card_name, query_type)
 
     # 1. Load card markdown
-    card_info = _load_card_info(card_company, card_name)
+    card_info = _load_card_info(card_name)
 
     # 2. Build LLM with tools
     # naver_blog_search is only relevant for reviews; all other queries use web search only
     tools = (
-        [naver_blog_search, ACTIVE_WEB_SEARCH_TOOL]
+        [naver_blog_search, web_search]
         if query_type == "reviews"
-        else [ACTIVE_WEB_SEARCH_TOOL]
+        else [web_search]
     )
     llm = init_chat_model(model=MODEL, temperature=0.0)
     llm_with_tools = llm.bind_tools(tools)
@@ -308,10 +251,8 @@ def run_advisor(
 
     messages = [
         SystemMessage(content=_SYSTEM_PROMPT.format(
-            card_company=card_company,
             card_name=card_name,
             card_info=card_info,
-            web_tool_name=ACTIVE_WEB_SEARCH_TOOL.name,
         )),
         HumanMessage(content=QUERIES[query_type]),
     ]
@@ -348,8 +289,7 @@ def run_advisor(
 # ===========================< Test Run >============================
 
 if __name__ == "__main__":
-    TEST_CARD_NAME = "KB 국민 굿데이 카드"
-    TEST_CARD_COMPANY = "KB"
+    TEST_CARD_NAME = "KB_goodday"
 
     # One from QUERIES_DETAILS, both from QUERIES_STANDALONE
     for qtype in ["how_to_apply"]:
@@ -357,6 +297,6 @@ if __name__ == "__main__":
         print(f"Query type: {qtype}")
         print(f"Query: {QUERIES[qtype]}")
         print("="*60)
-        answer = run_advisor(TEST_CARD_NAME, TEST_CARD_COMPANY, qtype)
+        answer = run_advisor(TEST_CARD_NAME, qtype)
         print(answer)
         print()

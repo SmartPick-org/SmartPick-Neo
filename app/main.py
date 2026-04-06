@@ -1,3 +1,5 @@
+import os
+import sys
 from loguru import logger
 
 from fastapi import FastAPI, Request
@@ -9,6 +11,27 @@ from app.api.card import router as card_router
 from app.core.discord import notify_discord
 from app.core.exceptions import BusinessException, SystemException
 
+# ---------------------------------------------------------------------------
+# 전역 로깅 설정 (민감 정보 보호 및 파일 저장)
+# ---------------------------------------------------------------------------
+logger.remove()  # 기본 핸들러 제거
+logger.add(
+    sys.stdout, 
+    diagnose=False,  # 운영 필수: 예외 발생 시 로컬 변수 평문 노출 차단
+    backtrace=True,
+    format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>"
+)
+
+# 파일 로깅 (로컬 및 단일 서버용)
+os.makedirs("logs", exist_ok=True)
+logger.add(
+    "logs/smartpick_{time}.log", 
+    rotation="10 MB", 
+    retention="10 days", 
+    diagnose=False,  # 여기도 동일하게 지역 변수 가리기 적용
+    backtrace=True,
+    level="INFO"
+)
 
 app = FastAPI()
 

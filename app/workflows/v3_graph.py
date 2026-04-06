@@ -1,4 +1,4 @@
-from typing import Annotated, Dict, List, Literal, NotRequired, Optional, TypedDict
+from typing import Annotated, Dict, List, Literal, NotRequired, Optional, TypedDict, Any
 
 from langchain_core.messages import AIMessage, AnyMessage
 from langgraph.checkpoint.memory import InMemorySaver
@@ -13,7 +13,7 @@ from app.services.explain_service import ExplainService
 class AgentState(TypedDict):
     messages: Annotated[List[AnyMessage], add_messages]
     total_budget: NotRequired[Optional[int]]
-    category_spending: NotRequired[Optional[Dict[str, int]]]
+    category_spending: NotRequired[Optional[Dict[str, Any]]]
     filtered_cards: NotRequired[Optional[list]]
     calc_results: NotRequired[Optional[list]]
     recommended_cards: NotRequired[Optional[list]]

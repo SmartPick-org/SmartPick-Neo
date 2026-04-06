@@ -28,9 +28,12 @@ def recommend_cards(payload: RecommendRequest) -> RecommendResponse:
     calc_results = recommend_service.calculate_benefits(filtered, payload.total_budget, payload.category_spending)
     ranked = recommend_service.rank_top(calc_results, top_n=3)
 
-    card_digest = digest_repo.get_digest(ranked[0].get("_card_data", {})) if ranked else ""
-    explanation = explain_service.explain(payload.total_budget, payload.category_spending, ranked, card_digest)
-    recommended_cards = explain_service.build_recommended_cards(ranked, explanation)
+    # 모든 상위 카드의 Digest를 로드하여 상세 설명 생성에 대비
+    digests = [digest_repo.get_digest(card.get("_card_data", {})) for card in ranked]
+    top_digest = digests[0] if digests else ""
+
+    explanation = explain_service.explain(payload.total_budget, payload.category_spending, ranked, top_digest)
+    recommended_cards = explain_service.build_recommended_cards(ranked, explanation, digests)
 
     return RecommendResponse(recommended_cards=recommended_cards, explanation=explanation)
 

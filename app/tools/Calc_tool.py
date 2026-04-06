@@ -505,7 +505,7 @@ class BenefitCalculator:
             
             cat_totals[cat]["monthly_discount_krw"] += r["amount_krw"]
             if r["amount_krw"] > 0:
-                key = f"sub_category_{sub_cat}"
+                key = sub_cat
                 cat_totals[cat]["discount_info"][key] += r["amount_krw"]
             for w in r["warnings"]:
                 cat_totals[cat]["warnings"].add(w)

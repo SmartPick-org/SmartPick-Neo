@@ -17,6 +17,14 @@ REQUIRED_KEYS: Iterable[str] = (
     "SUPABASE_SERVICE_KEY",
 )
 
+# --- LLM Resilience Settings ---
+LLM_TIMEOUT = float(os.getenv("LLM_TIMEOUT", "30.0"))
+LLM_TOTAL_TIMEOUT = float(os.getenv("LLM_TOTAL_TIMEOUT", "65.0")) # Total time including all retries
+LLM_MAX_RETRIES = int(os.getenv("LLM_MAX_RETRIES", "2")) # Number of extra attempts (0 = no retries)
+LLM_CB_FAILURE_THRESHOLD = int(os.getenv("LLM_CB_FAILURE_THRESHOLD", "5"))
+LLM_CB_RECOVERY_TIMEOUT = int(os.getenv("LLM_CB_RECOVERY_TIMEOUT", "60"))
+
+
 
 def init_env(project_root: Path | None = None) -> None:
     root = project_root or Path(__file__).resolve().parents[2]
@@ -36,4 +44,8 @@ def init_env(project_root: Path | None = None) -> None:
 
 def get_llm(model: str = DEFAULT_MODEL, temperature: float = 0.0):
     init_env()
-    return init_chat_model(model=model, temperature=temperature)
+    return init_chat_model(
+        model=model, 
+        temperature=temperature,
+        request_timeout=LLM_TIMEOUT
+    )

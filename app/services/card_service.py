@@ -1,45 +1,51 @@
-from typing import Dict, List
+from typing import Dict, List, Any
 
 from app.domain.models import CardData
 from app.repositories.card_repo import CardRepository
 from app.tools.Calc_tool import BenefitCalculator
+from loguru import logger
 
 
 class CardRecommendService:
     def __init__(self, card_repo: CardRepository):
         self.card_repo = card_repo
 
-    def filter_cards(self, total_budget: int, category_spending: Dict[str, int]) -> List[CardData]:
-        user_categories = set(category_spending.keys())
+    def filter_cards(self, total_budget: int, category_spending: Dict[str, Any]) -> List[CardData]:
+        user_categories = {cat.value if hasattr(cat, 'value') else str(cat) for cat in category_spending.keys()}
         all_cards = self.card_repo.list_cards()
+        logger.info(f"[CardRecommendService] 전체 카드 수량: {len(all_cards)}")
 
         after_performance = [
             card for card in all_cards
             if card.get("card_meta", {}).get("minimum_performance", 0) <= total_budget
         ]
+        logger.info(f"[CardRecommendService] 전월 실적 충족(<= {total_budget}): {len(after_performance)}")
 
         filtered = []
         for card in after_performance:
             categories = card.get("_card_categories", set())
-            if categories & user_categories or "General" in categories:
+            if categories & user_categories or "General" in categories or "All_Domestic" in categories:
                 filtered.append(card)
-
+        logger.info(f"[CardRecommendService] 필터링 된 1차 결과(최종): {len(filtered)}장")
         return filtered
 
     def calculate_benefits(
         self,
         cards: List[CardData],
         total_budget: int,
-        category_spending: Dict[str, int],
+        category_spending: Dict[str, Any],
     ) -> List[dict]:
-        user_categories = set(category_spending.keys())
+        user_categories = {cat.value if hasattr(cat, 'value') else str(cat) for cat in category_spending.keys()}
+        spending_str_keys = {cat.value if hasattr(cat, 'value') else str(cat): val for cat, val in category_spending.items()}
+        
         results: List[dict] = []
+        success_count = 0
 
         for card in cards:
             card_meta = card.get("card_meta", {})
             card_name = card_meta.get("card_name", "?")
             calculator = BenefitCalculator(card)
-            result = calculator.calculate(category_spending, user_total_spend=total_budget)
+            result = calculator.calculate(spending_str_keys, user_total_spend=total_budget)
 
             monthly = result.get("monthly_total_krw", 0)
             annual_extra = result.get("annual_total_krw", 0)
@@ -49,10 +55,16 @@ class CardRecommendService:
             specific_cats = card_categories - {"General"}
             overlapping = user_categories & specific_cats
             fit_score = len(overlapping) / len(user_categories) if user_categories else 0.0
-            covered_spend = sum(category_spending.get(cat, 0) for cat in overlapping)
+            covered_spend = sum(
+                (spending_str_keys[cat].get('total', 0) if isinstance(spending_str_keys[cat], dict) else spending_str_keys[cat])
+                for cat in overlapping if cat in spending_str_keys
+            )
             coverage_score = covered_spend / total_budget if total_budget > 0 else 0.0
             min_perf = card_meta.get("minimum_performance", 0)
             min_spend_score = min_perf / total_budget if total_budget > 0 else 1.0
+
+            if monthly > 0:
+                success_count += 1
 
             results.append({
                 "card_name": card_name,
@@ -76,7 +88,10 @@ class CardRecommendService:
             })
 
         results.sort(key=lambda item: item["expected_monthly_benefit"], reverse=True)
+        logger.info(f"[CardRecommendService] 계산에 성공(혜택>0)한 카드 수량: {success_count}장")
         return results
 
     def rank_top(self, calc_results: List[dict], top_n: int = 3) -> List[dict]:
-        return sorted(calc_results, key=lambda item: item["expected_monthly_benefit"], reverse=True)[:top_n]
+        ranked = sorted(calc_results, key=lambda item: item["expected_monthly_benefit"], reverse=True)[:top_n]
+        logger.info(f"[CardRecommendService] Top-{top_n} 선정된 카드명: {[c['card_name'] for c in ranked]}")
+        return ranked

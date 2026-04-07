@@ -551,7 +551,7 @@ class BenefitCalculator:
 
                 cat_totals[cat]["monthly_discount_krw"] += r["amount_krw"]
                 if r["amount_krw"] > 0:
-                    key = f"sub_category_{sub_cat}"
+                    key = sub_cat
                     cat_totals[cat]["discount_info"][key] += r["amount_krw"]
                 for w in r["warnings"]:
                     cat_totals[cat]["warnings"].add(w)
@@ -565,6 +565,7 @@ class BenefitCalculator:
                         "warnings": list(data["warnings"]),
                     }
                 )
+
 
             # 유저가 선택한 카테고리 순서대로 정렬 (All_Domestic 마지막)
             result["category_breakdown"].sort(

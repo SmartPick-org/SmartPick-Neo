@@ -93,38 +93,35 @@ def recommend_cards(payload: RecommendRequest) -> RecommendResponse:
         raise NoCardsFoundError("혜택 계산 결과가 없습니다.")
 
     # 3. LLM 설명 생성 — 실패해도 카드 목록은 반환 (Graceful Degradation)
+    digests = []
     try:
-        top_card_data = ranked[0].get("_card_data", {}) if ranked else {}
-        card_digest = digest_repo.get_digest(top_card_data)
-    except KeyError as e:
-        logger.exception("[recommend_cards] digest get_digest KeyError: %s", repr(e))
-        card_digest = ""
+        # 모든 카드의 Digest를 시도하여 상세 내역 생성에 대비
+        digests = [digest_repo.get_digest(card.get("_card_data", {})) for card in ranked]
+        top_digest = digests[0] if digests else ""
     except Exception as e:
-        logger.warning("[recommend_cards] digest get_digest 실패, 빈 digest 사용: %s", repr(e))
-        card_digest = ""
+        logger.warning("[recommend_cards] digest 로드 실패: %s", repr(e))
+        top_digest = ""
+        digests = [""] * len(ranked)
 
     explanation = _LLM_FALLBACK_EXPLAIN
     if explain_service is not None:
         try:
             explanation = explain_service.explain(
-                payload.total_budget, payload.category_spending, ranked, card_digest
+                payload.total_budget, payload.category_spending, ranked, top_digest
             )
             if not explanation or not explanation.strip():
-                # 빈 문자열/공백 → fallback
                 explanation = _LLM_FALLBACK_EXPLAIN
         except Exception as e:
             logger.warning("[LLM Fallback] explain() 실패, Fallback 텍스트 사용: %s", repr(e))
             explanation = _LLM_FALLBACK_EXPLAIN
 
     try:
-        recommended_cards = ExplainService.build_recommended_cards(ranked, explanation)
-    except KeyError as e:
-        # 데이터 누락으로 build_recommended_cards가 깨지면, 최소한의 필드로 안전 응답 생성
-        logger.exception("[recommend_cards] build_recommended_cards KeyError: %s", repr(e))
-        recommended_cards = _safe_build_recommended_cards(ranked, explanation)
+        # 상세 Tracing 기능이 포함된 빌더 호출
+        recommended_cards = explain_service.build_recommended_cards(ranked, explanation, digests)
     except Exception as e:
-        logger.warning("[recommend_cards] build_recommended_cards 실패, 안전 빌더 사용: %s", repr(e))
+        logger.warning("[recommend_cards] 상세 빌더 실패, 안전 빌더 사용: %s", repr(e))
         recommended_cards = _safe_build_recommended_cards(ranked, explanation)
+
 
     return RecommendResponse(recommended_cards=recommended_cards, explanation=explanation)
 

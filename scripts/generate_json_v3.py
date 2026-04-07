@@ -352,7 +352,7 @@ CONVERT_V3_PROMPT = """너는 신용카드 약관/설명서 마크다운을 읽�
 
 4. transaction_conditions:
    - "1회 승인금액 5만원까지 할인" → max_payment_amount_applied: 50000
-   - "일 1회" → 해당 내용을 ui_warnings에 기재
+   - "일 1회" → 해당 내용을 ui_warnings에 기재하되, 절대 max_count_per_month에 1을 할당하지 마라. (월간 제한 구문이 명시되어 있지 않다면 max_count_per_month: null)
    - "월 5회" → max_count_per_month: 5
 
 5. edge_case_flags:

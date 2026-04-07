@@ -25,7 +25,7 @@ class DatasetCardRepository(CardRepository):
         for company_dir in self.datasets_dir.iterdir():
             if not company_dir.is_dir():
                 continue
-            for json_file in company_dir.glob("*.json"):
+            for json_file in company_dir.rglob("*.json"):
                 raw = json.loads(json_file.read_text(encoding="utf-8"))
                 if not raw.get("card_meta", {}).get("card_name"):
                     continue

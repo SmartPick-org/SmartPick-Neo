@@ -1,5 +1,5 @@
 from loguru import logger
-from typing import Annotated, Dict, List, Literal, NotRequired, Optional, TypedDict
+from typing import Annotated, Dict, List, Literal, NotRequired, Optional, TypedDict, Any
 
 from langchain_core.messages import AIMessage, AnyMessage
 from langgraph.checkpoint.memory import InMemorySaver
@@ -11,11 +11,10 @@ from app.services.card_service import CardRecommendService
 from app.services.explain_service import ExplainService
 
 
-
 class AgentState(TypedDict):
     messages: Annotated[List[AnyMessage], add_messages]
     total_budget: NotRequired[Optional[int]]
-    category_spending: NotRequired[Optional[Dict[str, int]]]
+    category_spending: NotRequired[Optional[Dict[str, Any]]]
     filtered_cards: NotRequired[Optional[list]]
     calc_results: NotRequired[Optional[list]]
     recommended_cards: NotRequired[Optional[list]]
@@ -113,16 +112,26 @@ def build_graph(
                 "recommended_cards": [],
             }
 
+        # 모든 상위 카드의 Digest를 로드하여 상세 설명 생성에 대비
+        digests = []
+        top_digest = ""
         try:
-            card_digest = digest_repo.get_digest(ranked[0].get("_card_data", {}))
-            explanation = explain_service.explain(total_budget, category_spending, ranked, card_digest)
+            digests = [digest_repo.get_digest(card.get("_card_data", {})) for card in ranked]
+            top_digest = digests[0] if digests else ""
+        except Exception as e:
+            logger.warning("[rank_and_explain_node] digest 로드 실패: %s", repr(e))
+            digests = [""] * len(ranked)
+
+        try:
+            explanation = explain_service.explain(total_budget, category_spending, ranked, top_digest)
             if not explanation or not explanation.strip():
                 raise ValueError("LLM이 빈 응답을 반환했습니다.")
         except Exception as e:
             # LLM 실패 → error_recovery로 라우팅 (카드 목록은 state에 보존)
             logger.warning("[rank_and_explain_node] LLM 실패, error_recovery로 이동: %s", repr(e))
             try:
-                recommended_cards = explain_service.build_recommended_cards(ranked, "")
+                # 상세 Tracing 기능이 포함된 빌더 호출 (LLM 설명 없이 상세 내역만)
+                recommended_cards = explain_service.build_recommended_cards(ranked, "", digests)
             except Exception:
                 logger.exception("[rank_and_explain_node] build_recommended_cards 실패")
                 recommended_cards = []
@@ -136,7 +145,7 @@ def build_graph(
             }
 
         try:
-            recommended_cards = explain_service.build_recommended_cards(ranked, explanation)
+            recommended_cards = explain_service.build_recommended_cards(ranked, explanation, digests)
         except Exception:
             logger.exception("[rank_and_explain_node] build_recommended_cards 실패")
             return {
@@ -151,6 +160,7 @@ def build_graph(
             "recommended_cards": recommended_cards,
             "last_raw_data": explain_service.to_raw_data(recommended_cards),
         }
+
 
     def answer_qa_node(state: AgentState):
         raw_data = state.get("last_raw_data", "이전 검색 결과 원본이 존재하지 않습니다.")

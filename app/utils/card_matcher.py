@@ -1,6 +1,6 @@
 import re
 from typing import Optional, List, Pattern, Tuple
-from apps.backend.crawler.config import TARGET_CARDS, CARD_NAME_MAPPING
+from app.crawler.config import TARGET_CARDS, CARD_NAME_MAPPING
 
 
 class CardMatcher:

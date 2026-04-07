@@ -3,7 +3,7 @@ from __future__ import annotations
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 
-from apps.backend.agent.advisor_agent import QUERIES, QUERIES_DETAILS, QUERIES_STANDALONE, QueryType, run_advisor
+from app.services.advise_service import QUERIES, QUERIES_DETAILS, QUERIES_STANDALONE, QueryType, run_advisor
 
 router = APIRouter(prefix="/advisor", tags=["advisor"])
 

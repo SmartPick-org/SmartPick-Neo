@@ -50,6 +50,17 @@ class RecommendRequest(BaseModel):
                         raise ValueError(f"Invalid sub_category '{sub_key}' in category '{cat.value}'.")
         return self
 
+    def masked_dict(self) -> dict:
+        """
+        로깅 및 알림 전송용 마스킹 필터.
+        민감한 예산 데이터 노출을 방지합니다.
+        """
+        data = self.model_dump()
+        data["total_budget"] = "***"
+        data["category_spending"] = {k: "***" for k in data["category_spending"].keys()}
+        return data
+
+
 
 class CategoryBreakdown(BaseModel):
     category: str = Field(..., description="카테고리", examples=["Coffee"])
@@ -85,6 +96,12 @@ class RecommendResponse(BaseModel):
 class QARequest(BaseModel):
     raw_data: str = Field(..., description="추천 결과 원본 JSON 문자열")
     question: str = Field(..., description="유저 질문")
+
+    def masked_dict(self) -> dict:
+        data = self.model_dump()
+        # raw_data는 내용이 길고 사용자 예산을 포함할 수 있으므로 절삭/마스킹
+        data["raw_data"] = "[MASKED_JSON_DATA]" 
+        return data
 
 
 class QAResponse(BaseModel):

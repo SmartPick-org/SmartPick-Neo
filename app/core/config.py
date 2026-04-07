@@ -18,6 +18,14 @@ REQUIRED_KEYS: Iterable[str] = (
     "SUPABASE_SERVICE_KEY",
 )
 
+# --- LLM Resilience Settings ---
+LLM_TIMEOUT = float(os.getenv("LLM_TIMEOUT", "30.0"))
+LLM_TOTAL_TIMEOUT = float(os.getenv("LLM_TOTAL_TIMEOUT", "65.0")) # Total time including all retries
+LLM_MAX_RETRIES = int(os.getenv("LLM_MAX_RETRIES", "2")) # Number of extra attempts (0 = no retries)
+LLM_CB_FAILURE_THRESHOLD = int(os.getenv("LLM_CB_FAILURE_THRESHOLD", "5"))
+LLM_CB_RECOVERY_TIMEOUT = int(os.getenv("LLM_CB_RECOVERY_TIMEOUT", "60"))
+
+
 
 def init_env(project_root: Path | None = None) -> None:
     root = project_root or Path(__file__).resolve().parents[2]
@@ -25,7 +33,10 @@ def init_env(project_root: Path | None = None) -> None:
 
     for key in REQUIRED_KEYS:
         if not os.getenv(key):
-            print(f"[WARN] {key}가 환경 변수에 설정되지 않았습니다.")
+            if os.getenv("ENV") == "production":
+                raise RuntimeError(f"Missing required environment variable: {key}")
+            else:
+                print(f"[WARN] {key}가 환경 변수에 설정되지 않았습니다.")
 
     os.environ.setdefault("LANGSMITH_TRACING_V2", "true")
     os.environ.setdefault("LANGSMITH_PROJECT", "Smart_Pick_V3")
@@ -36,5 +47,12 @@ def get_llm(model: str = DEFAULT_MODEL, temperature: float = 0.0):
     init_env()
     # solar 모델의 경우 ChatUpstage를 직접 사용
     if "solar" in model.lower():
-        return ChatUpstage(model=model, temperature=temperature)
-    return init_chat_model(model=model, temperature=temperature)
+        return ChatUpstage(model=model, 
+            temperature=temperature,
+            request_timeout=LLM_TIMEOUT
+            )
+    return init_chat_model(
+        model=model, 
+        temperature=temperature,
+        request_timeout=LLM_TIMEOUT
+    )

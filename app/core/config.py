@@ -24,7 +24,10 @@ def init_env(project_root: Path | None = None) -> None:
 
     for key in REQUIRED_KEYS:
         if not os.getenv(key):
-            print(f"[WARN] {key}가 환경 변수에 설정되지 않았습니다.")
+            if os.getenv("ENV") == "production":
+                raise RuntimeError(f"Missing required environment variable: {key}")
+            else:
+                print(f"[WARN] {key}가 환경 변수에 설정되지 않았습니다.")
 
     os.environ.setdefault("LANGSMITH_TRACING_V2", "true")
     os.environ.setdefault("LANGSMITH_PROJECT", "Smart_Pick_V3")

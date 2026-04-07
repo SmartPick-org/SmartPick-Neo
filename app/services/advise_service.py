@@ -25,7 +25,7 @@ from langchain.tools import tool
 from langchain_core.messages import HumanMessage, SystemMessage, ToolMessage
 from langsmith import traceable
 
-from apps.backend.tools.web_search import (
+from app.tools.web_search import (
     search_blog,
     search_web,
     NaverSearchError,

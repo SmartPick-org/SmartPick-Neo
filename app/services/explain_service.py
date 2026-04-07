@@ -6,6 +6,10 @@ from app.prompts import EXPLAIN_PROMPT, QA_PROMPT
 
 
 class ExplainService:
+    """
+    ExplainService: 추천된 카드들의 혜택 계산 결과(RAG 데이터)를 바탕으로 
+    추천 사유를 요약하고, 사용자의 추가 질문에 답변하는 서비스입니다.
+    """
     def __init__(self, llm):
         self.llm = llm
 
@@ -55,6 +59,10 @@ class ExplainService:
         return self.llm.invoke([SystemMessage(content=explain_prompt)]).content
 
     def answer_qa(self, raw_data: str, question: str) -> str:
+        """
+        추천 결과 JSON 데이터(raw_data)를 바탕으로 사용자의 자유 질문에 답변합니다.
+        상세 약관이나 수수료 등 데이터에 없는 내용은 답변하지 않고 안내 멘트를 반환합니다.
+        """
         qa_prompt = QA_PROMPT.format(raw_data=raw_data)
         response = self.llm.invoke(
             [

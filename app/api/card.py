@@ -131,6 +131,12 @@ def recommend_cards(payload: RecommendRequest) -> RecommendResponse:
 
 @router.post("/qa", response_model=QAResponse)
 def answer_qa(payload: QARequest) -> QAResponse:
+    """
+    추천 결과 데이터(JSON)를 바탕으로 사용자의 자유 질문에 대해 답변합니다.
+    
+    - **raw_data**: 추천 결과로 반환된 전체 JSON 문자열 (계산 근거가 포함됨)
+    - **question**: 사용자가 입력한 자유 질문 (예: '왜 이 카드가 1순위야?')
+    """
     # raw_data는 "추천 결과 원본 JSON 문자열"이라서, 최소한 JSON 파싱 가능 여부를 확인합니다.
     try:
         json.loads(payload.raw_data)

@@ -3,16 +3,16 @@ from __future__ import annotations
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 
-from apps.backend.agent.advisor_agent import QUERIES, QUERIES_DETAILS, QUERIES_STANDALONE, QueryType, run_advisor
+from app.services.advise_service import QUERIES, QUERIES_DETAILS, QUERIES_STANDALONE, QueryType, get_advice
 
 router = APIRouter(prefix="/advisor", tags=["advisor"])
 
 
 class AdvisorRequest(BaseModel):
-    card_name: str = Field(..., description="카드 이름 (예: '현대카드 M')")
-    card_company: str = Field(..., description="카드사 이름 (예: 'Hyundai', 'KB', 'Shinhan')")
+    card_name: str = Field(..., description="카드 이름 (예: '현대카드 M')", examples=["현대카드 T3 Edition2"])
+    card_company: str = Field(..., description="카드사 이름 (예: 'Hyundai', 'KB', 'Shinhan')", examples=["Hyundai"])
     query_type: QueryType = Field(
-        ..., description="질문 유형"
+        ..., description="질문 유형", examples=["reviews", "credit_fees", "installment_fees"]
     )
 
 
@@ -23,8 +23,15 @@ class AdvisorResponse(BaseModel):
 
 @router.post("/ask", response_model=AdvisorResponse)
 def ask(payload: AdvisorRequest) -> AdvisorResponse:
+    """
+    특정 신용카드에 대한 상세 정보(수수료, 할부, 후기 등)를 전문 상담원처럼 답변합니다.
+    
+    - **card_name**: 마크다운 파일 검색에 사용되는 카드 전체 명칭 (예: 'KB 국민 굿데이 카드')
+    - **card_company**: 카드사 (KB, Hyundai, Shinhan 등)
+    - **query_type**: 버튼 기반 질문 유형 (reviews, credit_fees, installment_fees 등)
+    """
     try:
-        answer = run_advisor(
+        answer = get_advice(
             card_name=payload.card_name,
             card_company=payload.card_company,
             query_type=payload.query_type,

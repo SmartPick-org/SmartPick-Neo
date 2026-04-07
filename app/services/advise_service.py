@@ -20,12 +20,12 @@ from pathlib import Path
 from typing import Literal
 
 from dotenv import load_dotenv
-from langchain.chat_models import init_chat_model
+from app.core.config import get_llm
 from langchain.tools import tool
 from langchain_core.messages import HumanMessage, SystemMessage, ToolMessage
 from langsmith import traceable
 
-from apps.backend.tools.web_search import (
+from app.tools.web_search import (
     search_blog,
     search_web,
     NaverSearchError,
@@ -37,7 +37,7 @@ from apps.backend.tools.web_search import (
 )
 
 # ===========================< Setting >============================
-load_dotenv(Path(__file__).resolve().parents[1] / ".env")
+# Environment initialization is handled by get_llm()
 
 logging.basicConfig(level=logging.INFO, format="[ADVISOR] %(levelname)s %(message)s")
 logger = logging.getLogger(__name__)
@@ -57,7 +57,7 @@ QueryType = Literal[
     "revolving",
 ]
 
-MARKDOWN_DIR = Path(__file__).resolve().parents[3] / "datasets" / "markdown"
+MARKDOWN_DIR = Path(__file__).resolve().parents[2] / "datasets" / "markdown_upstage"
 
 # ---------------------------------------------------------------------------
 # TODO: Replace this hardcoded path with dynamic lookup.
@@ -70,12 +70,7 @@ MARKDOWN_DIR = Path(__file__).resolve().parents[3] / "datasets" / "markdown"
 #   2. Glob MARKDOWN_DIR / subfolder / "terms" / f"{card_company}_{card_name}_*_terms.md"
 #   3. Return the first match
 # ---------------------------------------------------------------------------
-_HARDCODED_CARD_FILE = (
-    MARKDOWN_DIR
-    / "kb"
-    / "terms"
-    / "KB_KB 국민 굿데이 카드_PDF로 파일저장_terms.md"
-)
+# Hardcoded file path removed.
 
 # ===========================< Button Queries (반말) >============================
 # UI 버튼 구조:
@@ -259,38 +254,45 @@ _SYSTEM_PROMPT = """
 
 # ===========================< Card Info Loader >============================
 
-def _load_card_info(card_company: str, card_name: str) -> str:  # noqa: ARG001
-    # TODO: replace with dynamic file resolution using card_company + card_name
-    # (see _HARDCODED_CARD_FILE comment above for the naming convention)
-    md_file = _HARDCODED_CARD_FILE
-    if not md_file.exists():
-        logger.error("Card markdown not found: %s", md_file)
-        return f"카드 파일을 찾을 수 없어: {md_file}"
-    logger.info("Loaded card info from: %s (%d chars)", md_file.name, md_file.stat().st_size)
-    return md_file.read_text(encoding="utf-8")
+def _load_card_info(card_company: str, card_name: str) -> str:
+    """
+    카드사와 카드 이름에 기반하여 datasets/markdown_upstage 폴더에서 일치하는 마크다운 파일을 로드합니다.
+    """
+    normalized_company = card_company.lower()
+    company_dir = MARKDOWN_DIR / normalized_company / "terms"
+
+    if not company_dir.exists():
+        logger.error("Company directory not found: %s", company_dir)
+        return f"해당 카드사({card_company})의 데이터를 찾을 수 없어."
+
+    # Fuzzy matching by checking if card_name is included in the filename
+    target_file = None
+    for file in company_dir.glob("*.md"):
+        # Remove spaces for more robust matching
+        if card_name.replace(" ", "") in file.name.replace(" ", ""):
+            target_file = file
+            break
+
+    if not target_file:
+        logger.warning("No matching markdown file for card: %s in %s", card_name, company_dir)
+        return "카드 상세 약관 정보를 찾을 수 없어. 카드사 공식 홈페이지를 확인해봐야 할 것 같아."
+
+    logger.info("Loaded card info from: %s (%d chars)", target_file.name, target_file.stat().st_size)
+    return target_file.read_text(encoding="utf-8")
 
 
 # ===========================< Agent Loop >============================
 
 @traceable(name="advisor_agent")
-def run_advisor(
+def get_advice(
     card_name: str,
     card_company: str,
     query_type: QueryType,
 ) -> str:
     """
-    특정 신용카드에 대한 사용자 질문에 답변하는 어드바이저 에이전트.
-    LLM이 필요하다고 판단할 때만 naver_blog_search 툴을 호출합니다.
-
-    Args:
-        card_name    : 카드 이름  (예: "현대카드 M")
-        card_company : 카드사 이름 (예: "Hyundai", "KB", "Shinhan")
-        query_type   : 질문 유형
-
-    Returns:
-        LLM이 생성한 답변 문자열
+    특정 신용카드에 대한 상세 정보(수수료, 후기 등)를 제공하는 어드바이저 서비스.
     """
-    logger.info("run_advisor start | card=%s (%s) query_type=%s", card_name, card_company, query_type)
+    logger.info("get_advice start | card=%s (%s) query_type=%s", card_name, card_company, query_type)
 
     # 1. Load card markdown
     card_info = _load_card_info(card_company, card_name)
@@ -302,7 +304,7 @@ def run_advisor(
         if query_type == "reviews"
         else [ACTIVE_WEB_SEARCH_TOOL]
     )
-    llm = init_chat_model(model=MODEL, temperature=0.0)
+    llm = get_llm(model=MODEL, temperature=0.0)
     llm_with_tools = llm.bind_tools(tools)
     logger.info("LLM initialised | model=%s | tools=%s", MODEL, [t.name for t in tools])
 
@@ -341,7 +343,7 @@ def run_advisor(
             ))
             logger.info("Tool result received (%d chars)", len(result))
 
-    logger.info("run_advisor complete | answer length=%d chars", len(str(response.content)))
+    logger.info("get_advice complete | answer length=%d chars", len(str(response.content)))
     return str(response.content)
 
 
@@ -357,6 +359,6 @@ if __name__ == "__main__":
         print(f"Query type: {qtype}")
         print(f"Query: {QUERIES[qtype]}")
         print("="*60)
-        answer = run_advisor(TEST_CARD_NAME, TEST_CARD_COMPANY, qtype)
+        answer = get_advice(TEST_CARD_NAME, TEST_CARD_COMPANY, qtype)
         print(answer)
         print()

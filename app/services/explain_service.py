@@ -7,7 +7,10 @@ from app.prompts import EXPLAIN_PROMPT, QA_PROMPT
 
 class ExplainService:
     def __init__(self, llm):
+        from app.core.resilience import with_resilience
         self.llm = llm
+        # LLM 호출부에 회복력 래퍼 적용 (비동기 처리 고려)
+        self._resilient_invoke = with_resilience(self.llm.ainvoke)
 
     def build_user_spending(self, total_budget: int, category_spending: Dict[str, Any]) -> str:
         lines = [f"월 총 소비: {total_budget:,}원"]
@@ -39,7 +42,7 @@ class ExplainService:
             + "\n".join(breakdown_lines)
         )
 
-    def explain(self, total_budget: int, category_spending: Dict[str, Any], ranked: List[dict], card_digest: str) -> str:
+    async def explain(self, total_budget: int, category_spending: Dict[str, Any], ranked: List[dict], card_digest: str) -> str:
         if not ranked:
             return "혜택 계산 결과가 없습니다."
 
@@ -52,11 +55,11 @@ class ExplainService:
             card_digest=card_digest,
             calc_summary=calc_summary,
         )
-        return self.llm.invoke([SystemMessage(content=explain_prompt)]).content
+        return await self._resilient_invoke([SystemMessage(content=explain_prompt)]).content
 
-    def answer_qa(self, raw_data: str, question: str) -> str:
+    async def answer_qa(self, raw_data: str, question: str) -> str:
         qa_prompt = QA_PROMPT.format(raw_data=raw_data)
-        response = self.llm.invoke(
+        response = await self._resilient_invoke(
             [
                 SystemMessage(content=qa_prompt),
                 HumanMessage(content=question),

@@ -133,6 +133,9 @@ class BenefitCalculator:
         freq = benefit.get("frequency", "MONTHLY")
 
         conversion_rate = reward_unit.get("currency_to_krw_rate", 1.0)
+        # 현금 할인(DISCOUNT)은 이미 KRW 기반이므로 환산 적용 제외 (긴급 수정)
+        if benefit.get("reward_type") == "DISCOUNT":
+            conversion_rate = 1.0
 
         # --- Tier 결정 ---
         perf_for_tier = performance
@@ -225,8 +228,14 @@ class BenefitCalculator:
         elif calc_method == "TIERED_RATE_BY_TRANSACTION":
             txn_tiers = calc_rule.get("transaction_tiers") or []
             if txn_tiers:
-                best = max(txn_tiers, key=lambda t: t.get("rate", 0))
-                raw_amount = eff_budget * (best["rate"] + add_rate)
+                # 예산(eff_budget) 범위 내에서 달성 가능한 최적의 비율 선택
+                applicable = [t for t in txn_tiers if (t.get("min_amount") or 0) <= eff_budget]
+                if applicable:
+                    best = max(applicable, key=lambda t: t.get("rate", 0))
+                    raw_amount = eff_budget * (best["rate"] + add_rate)
+                else:
+                    # 예산이 모든 구간의 최소 금액보다 작은 경우 0으로 처리 (또는 기본 적립률이 있다면 적용 가능)
+                    raw_amount = 0.0
             used_budget = eff_budget
 
         elif calc_method == "MAX_COVER_UP_TO_LIMIT":

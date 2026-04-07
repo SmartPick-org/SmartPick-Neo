@@ -228,6 +228,7 @@ def _load_card_info(card_name: str) -> str:
 def run_advisor(
     card_name: str,
     query_type: QueryType,
+    file_path: str | None = None,
 ) -> str:
     """
     특정 신용카드에 대한 사용자 질문에 답변하는 어드바이저 에이전트.
@@ -236,14 +237,22 @@ def run_advisor(
     Args:
         card_name  : 카드 이름  (예: "현대카드 M")
         query_type : 질문 유형
+        file_path  : S3 파일 경로 (제공 시 DB 조회 생략, 예: "manual/kb_GoodDay.md")
 
     Returns:
         LLM이 생성한 답변 문자열
     """
     logger.info("run_advisor start | card=%s query_type=%s", card_name, query_type)
 
-    # 1. Load card markdown
-    card_info = _load_card_info(card_name)
+    # 1. Load card markdown (file_path 제공 시 DB 조회 생략)
+    if file_path:
+        from app.core.database import fetch_markdown_from_s3
+        logger.info("Loading card info directly from S3: %s", file_path)
+        card_info = fetch_markdown_from_s3(file_path)
+        if not card_info:
+            card_info = f"카드 파일을 S3에서 불러올 수 없어: {file_path}"
+    else:
+        card_info = _load_card_info(card_name)
 
     # 2. Build LLM with tools
     # naver_blog_search is only relevant for reviews; all other queries use web search only
@@ -296,14 +305,26 @@ def run_advisor(
 # ===========================< Test Run >============================
 
 if __name__ == "__main__":
-    TEST_CARD_NAME = "KB_goodday"
+    from app.core.database import fetch_markdown_from_s3
 
-    # One from QUERIES_DETAILS, both from QUERIES_STANDALONE
-    for qtype in ["how_to_apply"]:
-        print(f"\n{'='*60}")
-        print(f"Query type: {qtype}")
-        print(f"Query: {QUERIES[qtype]}")
-        print("="*60)
-        answer = run_advisor(TEST_CARD_NAME, qtype)
-        print(answer)
-        print()
+    TEST_CARD_NAME = "KB국민 굿데이올림카드"
+    TEST_FILE_PATH = "manual/kb_GoodDay.md"
+
+    # 1. Fetch markdown from S3
+    print(f"\n{'='*60}")
+    print(f"[1] S3 fetch: {TEST_FILE_PATH}")
+    print("="*60)
+    content = fetch_markdown_from_s3(TEST_FILE_PATH)
+    if content:
+        print(f"OK — {len(content)} chars fetched")
+        print(f"Preview:\n{content[:300]}")
+    else:
+        print("FAIL — empty content returned")
+        raise SystemExit(1)
+
+    # 2. Run the full advisor agent
+    print(f"\n{'='*60}")
+    print(f"[2] Running advisor agent — how_to_apply")
+    print("="*60)
+    answer = run_advisor(TEST_CARD_NAME, "how_to_apply", file_path=TEST_FILE_PATH)
+    print(answer)

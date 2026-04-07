@@ -123,7 +123,7 @@ def build_graph(
             digests = [""] * len(ranked)
 
         try:
-            explanation = explain_service.explain(total_budget, category_spending, ranked, top_digest)
+            explanation = await explain_service.explain(total_budget, category_spending, ranked, top_digest)
             if not explanation or not explanation.strip():
                 raise ValueError("LLM이 빈 응답을 반환했습니다.")
         except Exception as e:
@@ -167,7 +167,7 @@ def build_graph(
         messages = state.get("messages") or []
         last_message = messages[-1].content if messages else ""
         try:
-            response = explain_service.answer_qa(raw_data, last_message)
+            response = await explain_service.answer_qa(raw_data, last_message)
             if not response or not response.strip():
                 raise ValueError("LLM이 빈 응답을 반환했습니다.")
             return {"messages": [AIMessage(content=response)]}

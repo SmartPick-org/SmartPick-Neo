@@ -6,7 +6,7 @@ JSON v3 + BenefitCalculator 기반 카드 추천 (llmrun_v3)
 - BenefitCalculator(Calc_tool.py)로 정밀 혜택 계산
 - 스코어링 필터 없이 전체 카드 계산 → 혜택 금액 기준 랭킹
 
-사용법: python -m apps.backend.agent.llmrun_v3
+사용법: python -m llmrun_v3
 """
 
 import os
@@ -29,20 +29,12 @@ from langchain_core.runnables import RunnableConfig
 from langsmith import traceable
 from langfuse import observe, Langfuse
 
-from apps.backend.agent.prompts import EXPLAIN_PROMPT, QA_PROMPT
-from apps.backend.tools.Calc_tool import BenefitCalculator
+from app.prompts import EXPLAIN_PROMPT, QA_PROMPT
+from app.tools.Calc_tool import BenefitCalculator
 
 # ===========================< Setting >============================
-load_dotenv(Path(__file__).resolve().parents[3] / ".env")
-
-REQUIRED_KEYS = ["LANGSMITH_API_KEY", "UPSTAGE_API_KEY", "LANGFUSE_PUBLIC_KEY", "LANGFUSE_SECRET_KEY"]
-for key in REQUIRED_KEYS:
-    if not os.getenv(key):
-        print(f"[WARN] {key}가 환경 변수에 설정되지 않았습니다.")
-
-os.environ["LANGSMITH_TRACING_V2"] = "true"
-os.environ["LANGSMITH_PROJECT"] = "Smart_Pick_V3"
-os.environ["LANGSMITH_ENDPOINT"] = "https://api.smith.langchain.com"
+from app.core.config import init_env
+init_env()
 
 langfuse = Langfuse()
 

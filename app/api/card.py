@@ -52,7 +52,10 @@ def recommend_cards(payload: RecommendRequest) -> RecommendResponse:
         raise ValueError("total_budget은 0보다 커야 합니다.")
     if not payload.category_spending:
         raise ValueError("category_spending은 비어 있을 수 없습니다.")
-    if any(v is None or v <= 0 for v in payload.category_spending.values()):
+    if any(
+        (v.get("total", 0) if isinstance(v, dict) else v) <= 0 
+        for v in payload.category_spending.values()
+    ):
         raise ValueError("category_spending의 각 값은 0보다 커야 합니다.")
 
     card_repo = DatasetCardRepository(DATASETS_DIR)

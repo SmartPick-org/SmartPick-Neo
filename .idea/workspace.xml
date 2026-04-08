@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f8753ee0-eddc-47e8-9dda-9e6a917abdd9" name="Changes" comment="- update folder structure&#10;- remove unused files">
-      <change beforePath="$PROJECT_DIR$/app/api/card.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/card.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/services/card_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/card_service.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/workflows/v3_graph.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/workflows/v3_graph.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +107,7 @@
       <workItem from="1775375447840" duration="22000" />
       <workItem from="1775375498744" duration="1646000" />
       <workItem from="1775521291413" duration="7100000" />
-      <workItem from="1775605557974" duration="2078000" />
+      <workItem from="1775605557974" duration="2793000" />
     </task>
     <task id="LOCAL-00001" summary="- update folder structure&#10;- remove unused files">
       <option name="closed" value="true" />

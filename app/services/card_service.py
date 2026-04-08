@@ -35,58 +35,6 @@ class CardRecommendService:
         logger.info(f"[CardRecommendService] 필터링 된 1차 결과(최종): {len(filtered)}장")
         return filtered
 
-    def _compute_card_result(
-        self,
-        card: CardData,
-        user_categories: set,
-        spending_str_keys: Dict[str, Any],
-        total_budget: int,
-    ) -> dict:
-        # 카드 한 장에 대한 순수 동기 계산 로직.
-        # 기존 for 루프에서 분리하여 asyncio.to_thread로 스레드에 위임할 수 있도록 추출함.
-        # 이 메서드 자체는 동기이므로 이벤트 루프를 직접 블로킹하지 않음.
-        card_meta = card.get("card_meta", {})
-        card_name = card_meta.get("card_name", "?")
-        calculator = BenefitCalculator(card)
-        result = calculator.calculate(spending_str_keys, user_total_spend=total_budget)
-
-        monthly = result.get("monthly_total_krw", 0)
-        annual_extra = result.get("annual_total_krw", 0)
-        yearly = monthly * 12 + annual_extra
-
-        card_categories = card.get("_card_categories", set())
-        specific_cats = card_categories - {"General"}
-        overlapping = user_categories & specific_cats
-        fit_score = len(overlapping) / len(user_categories) if user_categories else 0.0
-        covered_spend = sum(
-            (spending_str_keys[cat].get('total', 0) if isinstance(spending_str_keys[cat], dict) else spending_str_keys[cat])
-            for cat in overlapping if cat in spending_str_keys
-        )
-        coverage_score = covered_spend / total_budget if total_budget > 0 else 0.0
-        min_perf = card_meta.get("minimum_performance", 0)
-        min_spend_score = min_perf / total_budget if total_budget > 0 else 1.0
-
-        return {
-            "card_name": card_name,
-            "card_company": card_meta.get("card_company", ""),
-            "card_id": card_meta.get("card_id", ""),
-            "annual_fee": card_meta.get("annual_fee", 0),
-            "minimum_performance": min_perf,
-            "performance_met": result.get("performance_met", False),
-            "expected_monthly_benefit": monthly,
-            "expected_yearly_benefit": yearly,
-            "scores": {
-                "fit_score": round(fit_score, 3),
-                "coverage_score": round(coverage_score, 3),
-                "min_spend_score": round(min_spend_score, 3),
-            },
-            "category_breakdown": result.get("category_breakdown", []),
-            "benefit_details": result.get("benefit_details", []),
-            "annual_breakdown": result.get("annual_breakdown", []),
-            "warnings": result.get("warnings", []),
-            "_card_data": card,
-        }
-
     async def calculate_benefits(
         self,
         cards: List[CardData],
@@ -108,17 +56,51 @@ class CardRecommendService:
                 # 이벤트 루프가 다른 코루틴을 처리할 수 있도록 함.
                 # to_thread 없이 동기 함수를 직접 호출하면 이벤트 루프 전체가
                 # 블로킹되어 동시성 효과가 사라짐.
-                return await asyncio.to_thread(
-                    self._compute_card_result,
-                    card,
-                    user_categories,
-                    spending_str_keys,
-                    total_budget,
-                )
+                def _compute():
+                    card_meta = card.get("card_meta", {})
+                    card_name = card_meta.get("card_name", "?")
+                    calculator = BenefitCalculator(card)
+                    result = calculator.calculate(spending_str_keys, user_total_spend=total_budget)
 
-        # asyncio.gather로 모든 카드 코루틴을 순차가 아닌 동시에 스케줄링함.
-        # 세마포어와 함께 사용하면 최대 _CONCURRENCY_LIMIT개만 동시에 실행되며,
-        # 전체 지연 시간이 기존 O(N) 순차 처리에서 O(N / _CONCURRENCY_LIMIT)로 줄어듦.
+                    monthly = result.get("monthly_total_krw", 0)
+                    annual_extra = result.get("annual_total_krw", 0)
+                    yearly = monthly * 12 + annual_extra
+
+                    card_categories = card.get("_card_categories", set())
+                    specific_cats = card_categories - {"General"}
+                    overlapping = user_categories & specific_cats
+                    fit_score = len(overlapping) / len(user_categories) if user_categories else 0.0
+                    covered_spend = sum(
+                        (spending_str_keys[cat].get('total', 0) if isinstance(spending_str_keys[cat], dict) else spending_str_keys[cat])
+                        for cat in overlapping if cat in spending_str_keys
+                    )
+                    coverage_score = covered_spend / total_budget if total_budget > 0 else 0.0
+                    min_perf = card_meta.get("minimum_performance", 0)
+                    min_spend_score = min_perf / total_budget if total_budget > 0 else 1.0
+
+                    return {
+                        "card_name": card_name,
+                        "card_company": card_meta.get("card_company", ""),
+                        "card_id": card_meta.get("card_id", ""),
+                        "annual_fee": card_meta.get("annual_fee", 0),
+                        "minimum_performance": min_perf,
+                        "performance_met": result.get("performance_met", False),
+                        "expected_monthly_benefit": monthly,
+                        "expected_yearly_benefit": yearly,
+                        "scores": {
+                            "fit_score": round(fit_score, 3),
+                            "coverage_score": round(coverage_score, 3),
+                            "min_spend_score": round(min_spend_score, 3),
+                        },
+                        "category_breakdown": result.get("category_breakdown", []),
+                        "benefit_details": result.get("benefit_details", []),
+                        "annual_breakdown": result.get("annual_breakdown", []),
+                        "warnings": result.get("warnings", []),
+                        "_card_data": card,
+                    }
+                return await asyncio.to_thread(_compute)
+
+        # asyncio.gather로 모든 카드를 동시에 처리 (순차 O(N) → 동시 O(N / _CONCURRENCY_LIMIT))
         results: List[dict] = list(
             await asyncio.gather(*[_calculate_single(card) for card in cards])
         )

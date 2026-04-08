@@ -46,7 +46,9 @@ def _safe_build_recommended_cards(ranked: list[dict], explanation: str) -> list[
 
 
 @router.post("/recommend", response_model=RecommendResponse)
-def recommend_cards(payload: RecommendRequest) -> RecommendResponse:
+# calculate_benefits가 코루틴(async)으로 변경되었으므로 엔드포인트도 async로 선언해야 함.
+# FastAPI는 async 라우트 핸들러를 기본적으로 지원하며 이벤트 루프에서 실행됨.
+async def recommend_cards(payload: RecommendRequest) -> RecommendResponse:
     # Pydantic 1차 검증 이후의 방어 로직 (강화)
     if payload.total_budget <= 0:
         raise ValueError("total_budget은 0보다 커야 합니다.")
@@ -76,7 +78,7 @@ def recommend_cards(payload: RecommendRequest) -> RecommendResponse:
 
     # 2. 혜택 계산 & 랭킹
     try:
-        calc_results = recommend_service.calculate_benefits(
+        calc_results = await recommend_service.calculate_benefits(
             filtered, payload.total_budget, payload.category_spending
         )
     except KeyError as e:

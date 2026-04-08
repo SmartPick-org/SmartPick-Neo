@@ -80,12 +80,14 @@ def build_graph(
             }
         return {"filtered_cards": filtered}
 
-    def calculate_benefits_node(state: AgentState):
+    # calculate_benefits가 asyncio.gather를 사용하는 코루틴으로 변경되었으므로
+    # LangGraph가 올바르게 await할 수 있도록 이 노드도 async로 선언함.
+    async def calculate_benefits_node(state: AgentState):
         filtered_cards = state.get("filtered_cards", [])
         category_spending = state.get("category_spending", {})
         total_budget = state.get("total_budget", 0)
         try:
-            calc_results = recommend_service.calculate_benefits(
+            calc_results = await recommend_service.calculate_benefits(
                 filtered_cards, total_budget, category_spending
             )
             return {"calc_results": calc_results}

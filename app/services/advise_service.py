@@ -24,6 +24,7 @@ from app.core.config import get_llm
 from langchain.tools import tool
 from langchain_core.messages import HumanMessage, SystemMessage, ToolMessage
 from langsmith import traceable
+from app.core.resilience import with_resilience
 
 from app.tools.web_search import (
     search_blog,
@@ -284,7 +285,7 @@ def _load_card_info(card_company: str, card_name: str) -> str:
 # ===========================< Agent Loop >============================
 
 @traceable(name="advisor_agent")
-def get_advice(
+async def get_advice(
     card_name: str,
     card_company: str,
     query_type: QueryType,
@@ -306,6 +307,7 @@ def get_advice(
     )
     llm = get_llm(model=MODEL, temperature=0.0)
     llm_with_tools = llm.bind_tools(tools)
+    resilient_invoke = with_resilience(llm_with_tools.ainvoke)
     logger.info("LLM initialised | model=%s | tools=%s", MODEL, [t.name for t in tools])
 
     messages = [
@@ -324,7 +326,7 @@ def get_advice(
     while True:
         turn += 1
         logger.info("LLM invoke | turn=%d", turn)
-        response = llm_with_tools.invoke(messages)
+        response = await resilient_invoke(messages)
         messages.append(response)
 
         if not response.tool_calls:

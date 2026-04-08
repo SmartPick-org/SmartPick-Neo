@@ -59,7 +59,8 @@ class ExplainService:
             card_digest=card_digest,
             calc_summary=calc_summary,
         )
-        return await self._resilient_invoke([SystemMessage(content=explain_prompt)]).content
+        response = await self._resilient_invoke([SystemMessage(content=explain_prompt)])
+        return response.content
 
     async def answer_qa(self, raw_data: str, question: str) -> str:
         """

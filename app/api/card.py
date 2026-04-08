@@ -46,7 +46,7 @@ def _safe_build_recommended_cards(ranked: list[dict], explanation: str) -> list[
 
 
 @router.post("/recommend", response_model=RecommendResponse)
-def recommend_cards(payload: RecommendRequest) -> RecommendResponse:
+async def recommend_cards(payload: RecommendRequest) -> RecommendResponse:
     # Pydantic 1차 검증 이후의 방어 로직 (강화)
     if payload.total_budget <= 0:
         raise ValueError("total_budget은 0보다 커야 합니다.")
@@ -109,7 +109,7 @@ def recommend_cards(payload: RecommendRequest) -> RecommendResponse:
     explanation = _LLM_FALLBACK_EXPLAIN
     if explain_service is not None:
         try:
-            explanation = explain_service.explain(
+            explanation = await explain_service.explain(
                 payload.total_budget, payload.category_spending, ranked, top_digest
             )
             if not explanation or not explanation.strip():
@@ -130,7 +130,7 @@ def recommend_cards(payload: RecommendRequest) -> RecommendResponse:
 
 
 @router.post("/qa", response_model=QAResponse)
-def answer_qa(payload: QARequest) -> QAResponse:
+async def answer_qa(payload: QARequest) -> QAResponse:
     """
     추천 결과 데이터(JSON)를 바탕으로 사용자의 자유 질문에 대해 답변합니다.
     
@@ -150,7 +150,7 @@ def answer_qa(payload: QARequest) -> QAResponse:
         raise LLMUnavailableError()
 
     try:
-        answer = explain_service.answer_qa(payload.raw_data, payload.question)
+        answer = await explain_service.answer_qa(payload.raw_data, payload.question)
         if not answer or not answer.strip():
             raise LLMUnavailableError()
     except LLMUnavailableError:

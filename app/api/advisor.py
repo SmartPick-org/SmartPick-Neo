@@ -22,7 +22,7 @@ class AdvisorResponse(BaseModel):
 
 
 @router.post("/ask", response_model=AdvisorResponse)
-def ask(payload: AdvisorRequest) -> AdvisorResponse:
+async def ask(payload: AdvisorRequest) -> AdvisorResponse:
     """
     특정 신용카드에 대한 상세 정보(수수료, 할부, 후기 등)를 전문 상담원처럼 답변합니다.
     
@@ -31,7 +31,7 @@ def ask(payload: AdvisorRequest) -> AdvisorResponse:
     - **query_type**: 버튼 기반 질문 유형 (reviews, credit_fees, installment_fees 등)
     """
     try:
-        answer = get_advice(
+        answer = await get_advice(
             card_name=payload.card_name,
             card_company=payload.card_company,
             query_type=payload.query_type,

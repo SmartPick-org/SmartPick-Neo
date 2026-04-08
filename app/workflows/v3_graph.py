@@ -99,7 +99,7 @@ def build_graph(
                 "_error_type": "DATA",
             }
 
-    def rank_and_explain_node(state: AgentState):
+    async def rank_and_explain_node(state: AgentState):
         calc_results = state.get("calc_results", [])
         category_spending = state.get("category_spending", {})
         total_budget = state.get("total_budget", 0)
@@ -162,7 +162,7 @@ def build_graph(
         }
 
 
-    def answer_qa_node(state: AgentState):
+    async def answer_qa_node(state: AgentState):
         raw_data = state.get("last_raw_data", "이전 검색 결과 원본이 존재하지 않습니다.")
         messages = state.get("messages") or []
         last_message = messages[-1].content if messages else ""

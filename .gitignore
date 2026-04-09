@@ -13,7 +13,8 @@ __pycache__/
 # Distribution / packaging
 .Python
 .claude
-.idea
+.idea/
+.idea\workspace.xml
 *.gitignore
 build/
 develop-eggs/

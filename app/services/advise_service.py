@@ -14,17 +14,18 @@ LLM이 네이버 블로그 검색 툴을 직접 사용할지 판단합니다.
 
 from __future__ import annotations
 
-import logging
 import os
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Literal
 
-from dotenv import load_dotenv
-from langchain.chat_models import init_chat_model
+from loguru import logger
+
+from app.core.config import get_llm
 from langchain.tools import tool
 from langchain_core.messages import HumanMessage, SystemMessage, ToolMessage
 from langsmith import traceable
+from app.core.resilience import with_resilience
 
 from app.core.database import fetch_markdown_from_s3, get_supabase
 from app.tools.web_search import (
@@ -37,10 +38,6 @@ from app.tools.web_search import (
 )
 
 # ===========================< Setting >============================
-load_dotenv(Path(__file__).resolve().parents[2] / ".env")
-
-logging.basicConfig(level=logging.INFO, format="[ADVISOR] %(levelname)s %(message)s")
-logger = logging.getLogger(__name__)
 
 os.environ["LANGSMITH_TRACING_V2"] = "true"
 os.environ["LANGSMITH_PROJECT"] = "SmartPick_Advisor"
@@ -57,6 +54,7 @@ QueryType = Literal[
     "revolving",
 ]
 
+MARKDOWN_DIR = Path(__file__).resolve().parents[2] / "datasets" / "markdown_upstage"
 
 # ===========================< Button Queries (반말) >============================
 # UI 버튼 구조:
@@ -140,7 +138,7 @@ QUERIES: dict[str, str] = {**QUERIES_STANDALONE, **QUERIES_DETAILS}
 # ===========================< Search Tools >============================
 
 def _log_and_format(results: list[dict], source: str) -> str:
-    logger.info("%s returned %d results", source, len(results))
+    logger.info(f"[CardAdvisorService] {source} returned {len(results)} results")
     return _format_web_results(results)
 
 
@@ -153,11 +151,11 @@ def naver_blog_search(query: str) -> str:
     실사용자 후기, 장단점, 개인 경험담 등 비공식 의견을 찾을 때 사용하세요.
     검색 쿼리는 카드명과 핵심 키워드를 포함한 자연어로 작성하세요.
     """
-    logger.info("Tool called -naver_blog_search | query: %s", query)
+    logger.info(f"[CardAdvisorService] Tool called — naver_blog_search | query: {query}")
     try:
         return _log_and_format(search_blog(query, display=5), "naver_blog_search")
     except NaverSearchError as exc:
-        logger.warning("naver_blog_search failed: %s", exc)
+        logger.warning(f"[CardAdvisorService] naver_blog_search failed: {exc}")
         return f"검색 실패: {exc}"
 
 
@@ -169,15 +167,15 @@ def web_search(query: str) -> str:
     웹 검색으로 공식 페이지와 뉴스를 검색합니다.
     카드사 공식 신청 페이지, 발급 조건, 공지사항 등 공식 출처 정보를 찾을 때 사용하세요.
     """
-    logger.info("Tool called -web_search | query: %s", query)
+    logger.info(f"[CardAdvisorService] Tool called — web_search | query: {query}")
     try:
         return _log_and_format(search_web(query, display=5), "naver_web_search")
     except NaverSearchError as exc:
-        logger.warning("naver_web_search failed (%s) -falling back to Tavily", exc)
+        logger.warning(f"[CardAdvisorService] naver_web_search failed ({exc}) — falling back to Tavily")
     try:
         return _log_and_format(tavily_search(query, max_results=5), "tavily_web_search")
     except WebSearchError as exc:
-        logger.warning("tavily_web_search also failed: %s", exc)
+        logger.warning(f"[CardAdvisorService] tavily_web_search also failed: {exc}")
         return f"검색 실패: {exc}"
 
 
@@ -259,37 +257,66 @@ def _cache_set(cache_key: str, answer: str) -> None:
 
 # ===========================< Card Info Loader >============================
 
+def _local_load_card_info(card_name: str) -> str:
+    """
+    DB/S3를 사용할 수 없을 때 로컬 datasets/markdown_upstage 폴더에서 일치하는 마크다운 파일을 로드합니다.
+    """
+    target_file = None
+    if MARKDOWN_DIR.exists():
+        company_dirs = [d for d in MARKDOWN_DIR.iterdir() if d.is_dir()]
+        for d in company_dirs:
+            terms_dir = d / "terms"
+            if not terms_dir.exists():
+                continue
+            for file in terms_dir.glob("*.md"):
+                if card_name.replace(" ", "") in file.name.replace(" ", ""):
+                    target_file = file
+                    break
+            if target_file:
+                break
+
+    if not target_file:
+        logger.warning(f"[CardAdvisorService] 일치하는 마크다운 파일을 로컬에서도 찾을 수 없음: {card_name}")
+        return "카드 상세 약관 정보를 찾을 수 없어. 카드사 공식 홈페이지를 확인해봐야 할 것 같아."
+
+    logger.info(f"[CardAdvisorService] 로컬 카드 정보 로드 성공: {target_file.name} ({target_file.stat().st_size} chars)")
+    return target_file.read_text(encoding="utf-8")
+
+
 def _load_card_info(card_name: str) -> str:
     try:
         supabase = get_supabase()
         response = supabase.table("cards").select("manual_file_path").eq("card_name", card_name).single().execute()
+        
+        if not response.data or not response.data.get("manual_file_path"):
+            logger.warning(f"[CardAdvisorService] No manual_file_path found in DB for card: {card_name}")
+            return _local_load_card_info(card_name)
+
+        file_path = response.data["manual_file_path"].replace("manual/", "terms/", 1)
+        logger.info(f"[CardAdvisorService] Fetching card markdown from S3: {file_path}")
+        content = fetch_markdown_from_s3(file_path)
+        if not content:
+            logger.warning(f"[CardAdvisorService] S3 파일 찾을 수 없음, 로컬으로 fallback 시도: {file_path}")
+            return _local_load_card_info(card_name)
+            
+        logger.info(f"[CardAdvisorService] Loaded card info from S3: {file_path} ({len(content)} chars)")
+        return content
     except Exception as exc:
-        logger.error("DB lookup failed for card '%s': %s", card_name, exc)
-        return f"카드 정보를 불러오는 중 오류가 발생했어: {exc}"
+        logger.warning(f"[CardAdvisorService] DB lookup failed or S3 failed, falling back to local: {exc}")
+        return _local_load_card_info(card_name)
 
-    if not response.data or not response.data.get("manual_file_path"):
-        logger.error("No manual_file_path found for card: %s", card_name)
-        return f"'{card_name}'에 대한 카드 파일 경로를 찾을 수 없어."
-
-    file_path = response.data["manual_file_path"].replace("manual/", "terms/", 1)
-    logger.info("Fetching card markdown from S3: %s", file_path)
-    content = fetch_markdown_from_s3(file_path)
-    if not content:
-        return f"카드 파일을 S3에서 불러올 수 없어: {file_path}"
-    logger.info("Loaded card info from S3: %s (%d chars)", file_path, len(content))
-    return content
 
 
 # ===========================< Agent Loop >============================
 
 @traceable(name="advisor_agent")
-def run_advisor(
+async def get_advice(
     card_name: str,
     query_type: QueryType,
     file_path: str | None = None,
 ) -> str:
     """
-    특정 신용카드에 대한 사용자 질문에 답변하는 어드바이저 에이전트.
+    특정 신용카드에 대한 상세 정보(수수료, 후기 등)를 제공하는 어드바이저 서비스.
     LLM이 필요하다고 판단할 때만 naver_blog_search 툴을 호출합니다.
 
     Args:
@@ -300,7 +327,7 @@ def run_advisor(
     Returns:
         LLM이 생성한 답변 문자열
     """
-    logger.info("run_advisor start | card=%s query_type=%s", card_name, query_type)
+    logger.info(f"[CardAdvisorService] get_advice 시작 | card={card_name} query_type={query_type}")
 
     # 캐시 확인 -동일한 카드+질문 조합의 답변이 7일 이내에 생성된 경우 바로 반환
     cache_key = f"{card_name}::{query_type}"
@@ -324,9 +351,10 @@ def run_advisor(
         if query_type == "reviews"
         else [web_search]
     )
-    llm = init_chat_model(model=MODEL, temperature=0.0)
+    llm = get_llm(model=MODEL, temperature=0.0)
     llm_with_tools = llm.bind_tools(tools)
-    logger.info("LLM initialised | model=%s | tools=%s", MODEL, [t.name for t in tools])
+    resilient_invoke = with_resilience(llm_with_tools.ainvoke)
+    logger.info(f"[CardAdvisorService] LLM 초기화 완료 | model={MODEL} | tools={[t.name for t in tools]}")
 
     messages = [
         SystemMessage(content=_SYSTEM_PROMPT.format(
@@ -335,35 +363,52 @@ def run_advisor(
         )),
         HumanMessage(content=QUERIES[query_type]),
     ]
-    logger.info("Prompt built | user query: %s", QUERIES[query_type])
+    logger.info(f"[CardAdvisorService] 프롬프트 구성 완료 | 사용자 쿼리: {QUERIES[query_type][:50]}...")
 
     # 3. Agent loop -LLM decides whether to call the search tool
     turn = 0
     while True:
         turn += 1
-        logger.info("LLM invoke | turn=%d", turn)
-        response = llm_with_tools.invoke(messages)
+        logger.info(f"[CardAdvisorService] LLM 호출 시작 | turn={turn}")
+        response = await resilient_invoke(messages)
         messages.append(response)
 
         if not response.tool_calls:
-            logger.info("No tool calls -generating final answer (turn=%d)", turn)
+            logger.info(f"[CardAdvisorService] 도구 호출 없음 — 최종 답변 생성 중 (turn={turn})")
             break
 
         _tools = {t.name: t for t in tools}
-        logger.info("%d tool call(s) requested", len(response.tool_calls))
+        logger.info(f"[CardAdvisorService] {len(response.tool_calls)}개의 도구 호출 요청됨")
         for tool_call in response.tool_calls:
             name = tool_call["name"]
-            logger.info("Executing tool: %s | args=%s", name, tool_call["args"])
+            logger.info(f"[CardAdvisorService] 도구 실행: {name} | args={tool_call['args']}")
             result = _tools[name].invoke(tool_call["args"])
             messages.append(ToolMessage(
                 content=result,
                 tool_call_id=tool_call["id"],
             ))
-            logger.info("Tool result received (%d chars)", len(result))
+            logger.info(f"[CardAdvisorService] 도구 실행 결과 수신 ({len(result)} chars)")
 
     answer = str(response.content)
-    logger.info("run_advisor complete | answer length=%d chars", len(answer))
+    logger.info(f"[CardAdvisorService] get_advice 완료 | 답변 길이={len(answer)} chars")
 
     # 생성된 답변을 캐시에 저장 -동일 조합의 다음 요청은 LLM 호출 없이 바로 반환됨
     _cache_set(cache_key, answer)
     return answer
+
+
+# ===========================< Test Run >============================
+
+if __name__ == "__main__":
+    import asyncio
+    TEST_CARD_NAME = "KB 국민 굿데이 카드"
+
+    async def run_test():
+        print(f"\n{'='*60}")
+        print(f"Testing get_advice for {TEST_CARD_NAME}...")
+        print("="*60)
+        answer = await get_advice(TEST_CARD_NAME, "how_to_apply")
+        print("\nAnswer:\n", answer)
+        print()
+
+    asyncio.run(run_test())

@@ -6,10 +6,17 @@ from app.schemas.enums import CategoryEnum, SubCategoryEnum
 
 
 class RecommendRequest(BaseModel):
-    total_budget: int = Field(..., description="월 총 소비 금액")
+    total_budget: int = Field(..., description="월 총 소비 금액", examples=[500000])
     category_spending: Dict[CategoryEnum, Union[int, Dict[str, Union[int, str]]]] = Field(
         ..., 
-        description="카테고리별 월 소비 금액 (단일 금액 또는 서브 카테고리 비율 표기)", 
+        description="""카테고리별 월 소비 금액 데이터입니다.
+- **키**: `CategoryEnum` 값 (예: 'Food', 'Shopping', 'Coffee' 등)
+- **값 형식**:
+    1. **단일 숫자 (int)**: 해당 카테고리의 전체 소비 금액 (예: `150000`)
+    2. **상세 객체 (dict)**: 특정 업종별 비중을 포함한 상세 내역
+        - `total`: 해당 카테고리의 총 소비 금액 (**필수**, int)
+        - 그 외 키: `SubCategoryEnum` 값 (예: 'cafe', 'delivery' 등). 값은 해당 카테고리 내 비중(예: `"75%"`) 또는 금액(int)을 입력합니다.
+        - *참고*: 서브 카테고리는 가급적 해당 부모 카테고리에 속하는 항목을 사용하세요.""", 
         examples=[
         {
             "Coffee": {
@@ -22,13 +29,12 @@ class RecommendRequest(BaseModel):
                 "transit": "100%"
             },
             "Shopping": 150000,
-        },
-        {
-            "Food": 200000,
-            "Life": 120000,
-            "Cultural": {"total": 80000, "cinema": "50%", "ott": "50%"},
-            "Others": 30000,
-        },
+            "Food": {
+                "total": 300000,
+                "delivery": "30%",
+                "restaurant": "70%"
+            }
+        }
     ])
 
     @model_validator(mode="after")
@@ -67,7 +73,9 @@ class CategoryBreakdown(BaseModel):
     monthly_discount_krw: int = Field(..., description="월 할인 금액", examples=[10000])
     discount_info: Dict[SubCategoryEnum, int] = Field(
         default_factory=dict, 
-        description="서브 카테고리별 할인 금액", 
+        description="""서브 카테고리별 할인 금액 상세 내역입니다.
+- **키**: `SubCategoryEnum` 값 (예: 'cafe', 'transit' 등)
+- **값**: 해당 업종에서 할인받은 원화(KRW) 금액""", 
         json_schema_extra={
             "examples": [
                 {SubCategoryEnum.CAFE: 3000, SubCategoryEnum.BAKERY: 2000}
@@ -85,7 +93,7 @@ class RecommendCard(BaseModel):
     minimum_performance: int = Field(..., description="전월 실적", examples=[100000])
     expected_monthly_benefit: int = Field(..., description="기대 월 할인/적립 금액", examples=[10000])
     category_breakdown: List[CategoryBreakdown] = Field(..., description="카테고리별 할인/적립 금액")
-    explanation: str = Field(..., description="이 카드가 1순위로 추천된 이유", examples=["이 카드는 커피, 교통, 쇼핑에서 높은 할인 혜택을 제공합니다."])
+    explanation: str = Field(..., description="이 카드의 주요 혜택 및 주의 사항", examples=["[1순위] 신한카드 Mr.Life (신한카드)\n연회비: 15,000원 | 월 예상 할인: 약 99,000원 | 연 순이익 추정: 1,185,000원\n  - Food: 70,000원\n    ⚠ 1회 승인금액 1만원까지 할인 적용(1회 최대 1천원 할인)\n    ⚠ 신규 발급 회원은 카드사용 등록월 익월말까지 실적 상관없이 할인 제공\n"])
 
 
 class RecommendResponse(BaseModel):

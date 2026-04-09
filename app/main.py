@@ -8,6 +8,7 @@ from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 
 from app.api.card import router as card_router
+from app.api.advisor import router as advisor_router
 from app.core.discord import notify_discord
 from app.core.exceptions import BusinessException, SystemException
 
@@ -44,6 +45,7 @@ app.add_middleware(
 )
 
 app.include_router(card_router)
+app.include_router(advisor_router)
 
 
 # ---------------------------------------------------------------------------

@@ -13,6 +13,8 @@ import os
 from dotenv import load_dotenv
 from supabase import Client, create_client
 
+from loguru import logger
+
 # 프로젝트 루트의 .env 로드
 _env_path = os.path.join(os.path.dirname(__file__), "..", "..", ".env")
 load_dotenv(dotenv_path=_env_path)
@@ -21,19 +23,24 @@ _url: str = os.environ.get("SUPABASE_URL", "")
 _key: str = os.environ.get("SUPABASE_KEY", "")
 _service_key: str = os.environ.get("SUPABASE_SERVICE_KEY", "")
 
-if not _url or not _key:
-    raise ValueError("Missing SUPABASE_URL or SUPABASE_KEY in .env")
+supabase: Client | None = None
+_storage_client: Client | None = None
 
-# DB 쿼리용 anon 클라이언트 (singleton)
-supabase: Client = create_client(_url, _key)
+if _url and _key:
+    # DB 쿼리용 anon 클라이언트 (singleton)
+    supabase = create_client(_url, _key)
 
-# Storage 전용 service_role 클라이언트 (private 버킷 접근용)
-# service_key 가 없으면 anon 클라이언트로 fallback
-_storage_client: Client = create_client(_url, _service_key) if _service_key else supabase
+    # Storage 전용 service_role 클라이언트 (private 버킷 접근용)
+    # service_key 가 없으면 anon 클라이언트로 fallback
+    _storage_client = create_client(_url, _service_key) if _service_key else supabase
+else:
+    logger.warning("Missing SUPABASE_URL or SUPABASE_KEY in .env. Supabase disabled. Falling back to local mode.")
 
 
 def get_supabase() -> Client:
     """FastAPI Depends 등에서 사용할 DB 클라이언트 반환."""
+    if supabase is None:
+        raise RuntimeError("Supabase client is not initialized due to missing environment variables.")
     return supabase
 
 
@@ -64,6 +71,10 @@ def fetch_markdown_from_s3(file_path: str) -> str:
                                                실제 버킷 경로는 {company}/{filename}
     """
     if not file_path:
+        return ""
+        
+    if not _storage_client:
+        print("[WARN] Supabase storage is disabled due to missing URL/KEY.")
         return ""
 
     prefix = file_path.split("/")[0]    # 'manual' or 'digest'

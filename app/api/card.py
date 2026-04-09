@@ -54,7 +54,10 @@ async def recommend_cards(payload: RecommendRequest) -> RecommendResponse:
         raise ValueError("total_budget은 0보다 커야 합니다.")
     if not payload.category_spending:
         raise ValueError("category_spending은 비어 있을 수 없습니다.")
-    if any(v is None or v <= 0 for v in payload.category_spending.values()):
+    if any(
+        (v.get("total", 0) if isinstance(v, dict) else v) <= 0 
+        for v in payload.category_spending.values()
+    ):
         raise ValueError("category_spending의 각 값은 0보다 커야 합니다.")
 
     card_repo = DatasetCardRepository(DATASETS_DIR)
@@ -108,7 +111,7 @@ async def recommend_cards(payload: RecommendRequest) -> RecommendResponse:
     explanation = _LLM_FALLBACK_EXPLAIN
     if explain_service is not None:
         try:
-            explanation = explain_service.explain(
+            explanation = await explain_service.explain(
                 payload.total_budget, payload.category_spending, ranked, top_digest
             )
             if not explanation or not explanation.strip():
@@ -129,7 +132,13 @@ async def recommend_cards(payload: RecommendRequest) -> RecommendResponse:
 
 
 @router.post("/qa", response_model=QAResponse)
-def answer_qa(payload: QARequest) -> QAResponse:
+async def answer_qa(payload: QARequest) -> QAResponse:
+    """
+    추천 결과 데이터(JSON)를 바탕으로 사용자의 자유 질문에 대해 답변합니다.
+    
+    - **raw_data**: 추천 결과로 반환된 전체 JSON 문자열 (계산 근거가 포함됨)
+    - **question**: 사용자가 입력한 자유 질문 (예: '왜 이 카드가 1순위야?')
+    """
     # raw_data는 "추천 결과 원본 JSON 문자열"이라서, 최소한 JSON 파싱 가능 여부를 확인합니다.
     try:
         json.loads(payload.raw_data)
@@ -143,7 +152,7 @@ def answer_qa(payload: QARequest) -> QAResponse:
         raise LLMUnavailableError()
 
     try:
-        answer = explain_service.answer_qa(payload.raw_data, payload.question)
+        answer = await explain_service.answer_qa(payload.raw_data, payload.question)
         if not answer or not answer.strip():
             raise LLMUnavailableError()
     except LLMUnavailableError:

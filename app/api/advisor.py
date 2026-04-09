@@ -5,6 +5,8 @@ from pydantic import BaseModel, Field
 
 from app.services.advise_service import QUERIES, QUERIES_DETAILS, QUERIES_STANDALONE, QueryType, get_advice
 
+from loguru import logger
+
 router = APIRouter(prefix="/advisor", tags=["advisor"])
 
 
@@ -30,6 +32,7 @@ async def ask(payload: AdvisorRequest) -> AdvisorResponse:
     - **card_company**: 카드사 (KB, Hyundai, Shinhan 등)
     - **query_type**: 버튼 기반 질문 유형 (reviews, credit_fees, installment_fees 등)
     """
+    logger.info(f"[AdvisorAPI] POST /ask | card={payload.card_name} | company={payload.card_company} | type={payload.query_type}")
     try:
         answer = await get_advice(
             card_name=payload.card_name,
@@ -37,6 +40,7 @@ async def ask(payload: AdvisorRequest) -> AdvisorResponse:
             query_type=payload.query_type,
         )
     except Exception as exc:
+        logger.exception(f"[AdvisorAPI] get_advice 처리 중 오류 발생: {exc}")
         raise HTTPException(status_code=500, detail=str(exc))
 
     return AdvisorResponse(

@@ -1,4 +1,5 @@
 from typing import Dict, List, Any
+from loguru import logger
 
 from langchain_core.messages import HumanMessage, SystemMessage
 
@@ -54,27 +55,40 @@ class ExplainService:
         user_spending = self.build_user_spending(total_budget, category_spending)
         calc_summary = self.build_calc_summary(top1)
 
+        logger.info(f"[ExplainService] explain 시작 | 카드: {top1.get('card_name')} | 세부내역 길이: {len(card_digest)} chars")
+
         explain_prompt = EXPLAIN_PROMPT.format(
             user_spending=user_spending,
             card_digest=card_digest,
             calc_summary=calc_summary,
         )
-        response = await self._resilient_invoke([SystemMessage(content=explain_prompt)])
-        return response.content
+        try:
+            response = await self._resilient_invoke([SystemMessage(content=explain_prompt)])
+            logger.info(f"[ExplainService] explain 완료 | 답변 길이: {len(str(response.content))} chars")
+            return response.content
+        except Exception as e:
+            logger.exception(f"[ExplainService] explain 처리 중 오류 발생: {e}")
+            raise
 
     async def answer_qa(self, raw_data: str, question: str) -> str:
         """
         추천 결과 JSON 데이터(raw_data)를 바탕으로 사용자의 자유 질문에 답변합니다.
         상세 약관이나 수수료 등 데이터에 없는 내용은 답변하지 않고 안내 멘트를 반환합니다.
         """
+        logger.info(f"[ExplainService] answer_qa 시작 | 질문: {question[:50]}... | 원본 데이터 길이: {len(raw_data)} chars")
         qa_prompt = QA_PROMPT.format(raw_data=raw_data)
-        response = await self._resilient_invoke(
-            [
-                SystemMessage(content=qa_prompt),
-                HumanMessage(content=question),
-            ]
-        )
-        return response.content
+        try:
+            response = await self._resilient_invoke(
+                [
+                    SystemMessage(content=qa_prompt),
+                    HumanMessage(content=question),
+                ]
+            )
+            logger.info(f"[ExplainService] answer_qa 완료 | 답변 길이: {len(str(response.content))} chars")
+            return response.content
+        except Exception as e:
+            logger.exception(f"[ExplainService] answer_qa 처리 중 오류 발생: {e}")
+            raise
 
     @staticmethod
     def _round_to_thousands(amount: int) -> str:

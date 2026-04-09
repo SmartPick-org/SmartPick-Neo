@@ -14,12 +14,12 @@ LLM이 네이버 블로그 검색 툴을 직접 사용할지 판단합니다.
 
 from __future__ import annotations
 
-import logging
 import os
 from pathlib import Path
 from typing import Literal
 
-from dotenv import load_dotenv
+from loguru import logger
+
 from app.core.config import get_llm
 from langchain.tools import tool
 from langchain_core.messages import HumanMessage, SystemMessage, ToolMessage
@@ -39,9 +39,6 @@ from app.tools.web_search import (
 
 # ===========================< Setting >============================
 # Environment initialization is handled by get_llm()
-
-logging.basicConfig(level=logging.INFO, format="[ADVISOR] %(levelname)s %(message)s")
-logger = logging.getLogger(__name__)
 
 os.environ["LANGSMITH_TRACING_V2"] = "true"
 os.environ["LANGSMITH_PROJECT"] = "SmartPick_Advisor"
@@ -145,7 +142,7 @@ QUERIES: dict[str, str] = {**QUERIES_STANDALONE, **QUERIES_DETAILS}
 # ===========================< Search Tools >============================
 
 def _log_and_format(results: list[dict], source: str) -> str:
-    logger.info("%s returned %d results", source, len(results))
+    logger.info(f"[CardAdvisorService] {source} returned {len(results)} results")
     return _format_web_results(results)
 
 
@@ -158,11 +155,11 @@ def naver_blog_search(query: str) -> str:
     실사용자 후기, 장단점, 개인 경험담 등 비공식 의견을 찾을 때 사용하세요.
     검색 쿼리는 카드명과 핵심 키워드를 포함한 자연어로 작성하세요.
     """
-    logger.info("Tool called — naver_blog_search | query: %s", query)
+    logger.info(f"[CardAdvisorService] Tool called — naver_blog_search | query: {query}")
     try:
         return _log_and_format(search_blog(query, display=5), "naver_blog_search")
     except NaverSearchError as exc:
-        logger.warning("naver_blog_search failed: %s", exc)
+        logger.warning(f"[CardAdvisorService] naver_blog_search failed: {exc}")
         return f"검색 실패: {exc}"
 
 
@@ -174,11 +171,11 @@ def naver_web_search(query: str) -> str:
     네이버 웹 검색으로 공식 페이지와 뉴스를 검색합니다.
     카드사 공식 신청 페이지, 발급 조건, 공지사항 등 공식 출처 정보를 찾을 때 사용하세요.
     """
-    logger.info("Tool called — naver_web_search | query: %s", query)
+    logger.info(f"[CardAdvisorService] Tool called — naver_web_search | query: {query}")
     try:
         return _log_and_format(search_web(query, display=5), "naver_web_search")
     except NaverSearchError as exc:
-        logger.warning("naver_web_search failed: %s", exc)
+        logger.warning(f"[CardAdvisorService] naver_web_search failed: {exc}")
         return f"검색 실패: {exc}"
 
 
@@ -188,11 +185,11 @@ def tavily_web_search(query: str) -> str:
     Tavily 웹 검색으로 공식 페이지와 뉴스를 검색합니다.
     카드사 공식 신청 페이지, 발급 조건, 공지사항 등 공식 출처 정보를 찾을 때 사용하세요.
     """
-    logger.info("Tool called — tavily_web_search | query: %s", query)
+    logger.info(f"[CardAdvisorService] Tool called — tavily_web_search | query: {query}")
     try:
         return _log_and_format(tavily_search(query, max_results=5), "tavily_web_search")
     except WebSearchError as exc:
-        logger.warning("tavily_web_search failed: %s", exc)
+        logger.warning(f"[CardAdvisorService] tavily_web_search failed: {exc}")
         return f"검색 실패: {exc}"
 
 
@@ -202,11 +199,11 @@ def duckduckgo_web_search(query: str) -> str:
     DuckDuckGo 웹 검색으로 공식 페이지와 뉴스를 검색합니다.
     카드사 공식 신청 페이지, 발급 조건, 공지사항 등 공식 출처 정보를 찾을 때 사용하세요.
     """
-    logger.info("Tool called — duckduckgo_web_search | query: %s", query)
+    logger.info(f"[CardAdvisorService] Tool called — duckduckgo_web_search | query: {query}")
     try:
         return _log_and_format(duckduckgo_search(query, max_results=5), "duckduckgo_web_search")
     except WebSearchError as exc:
-        logger.warning("duckduckgo_web_search failed: %s", exc)
+        logger.warning(f"[CardAdvisorService] duckduckgo_web_search failed: {exc}")
         return f"검색 실패: {exc}"
 
 
@@ -216,11 +213,11 @@ def serper_web_search(query: str) -> str:
     Serper(Google) 웹 검색으로 공식 페이지와 뉴스를 검색합니다.
     카드사 공식 신청 페이지, 발급 조건, 공지사항 등 공식 출처 정보를 찾을 때 사용하세요.
     """
-    logger.info("Tool called — serper_web_search | query: %s", query)
+    logger.info(f"[CardAdvisorService] Tool called — serper_web_search | query: {query}")
     try:
         return _log_and_format(serper_search(query, max_results=5), "serper_web_search")
     except WebSearchError as exc:
-        logger.warning("serper_web_search failed: %s", exc)
+        logger.warning(f"[CardAdvisorService] serper_web_search failed: {exc}")
         return f"검색 실패: {exc}"
 
 
@@ -263,7 +260,7 @@ def _load_card_info(card_company: str, card_name: str) -> str:
     company_dir = MARKDOWN_DIR / normalized_company / "terms"
 
     if not company_dir.exists():
-        logger.error("Company directory not found: %s", company_dir)
+        logger.error(f"[CardAdvisorService] 카드사 디렉토리를 찾을 수 없음: {company_dir}")
         return f"해당 카드사({card_company})의 데이터를 찾을 수 없어."
 
     # Fuzzy matching by checking if card_name is included in the filename
@@ -275,10 +272,10 @@ def _load_card_info(card_company: str, card_name: str) -> str:
             break
 
     if not target_file:
-        logger.warning("No matching markdown file for card: %s in %s", card_name, company_dir)
+        logger.warning(f"[CardAdvisorService] 일치하는 마크다운 파일을 찾을 수 없음: {card_name} in {company_dir}")
         return "카드 상세 약관 정보를 찾을 수 없어. 카드사 공식 홈페이지를 확인해봐야 할 것 같아."
 
-    logger.info("Loaded card info from: %s (%d chars)", target_file.name, target_file.stat().st_size)
+    logger.info(f"[CardAdvisorService] 카드 정보 로드 성공: {target_file.name} ({target_file.stat().st_size} chars)")
     return target_file.read_text(encoding="utf-8")
 
 
@@ -293,7 +290,7 @@ async def get_advice(
     """
     특정 신용카드에 대한 상세 정보(수수료, 후기 등)를 제공하는 어드바이저 서비스.
     """
-    logger.info("get_advice start | card=%s (%s) query_type=%s", card_name, card_company, query_type)
+    logger.info(f"[CardAdvisorService] get_advice 시작 | card={card_name} ({card_company}) query_type={query_type}")
 
     # 1. Load card markdown
     card_info = _load_card_info(card_company, card_name)
@@ -308,7 +305,7 @@ async def get_advice(
     llm = get_llm(model=MODEL, temperature=0.0)
     llm_with_tools = llm.bind_tools(tools)
     resilient_invoke = with_resilience(llm_with_tools.ainvoke)
-    logger.info("LLM initialised | model=%s | tools=%s", MODEL, [t.name for t in tools])
+    logger.info(f"[CardAdvisorService] LLM 초기화 완료 | model={MODEL} | tools={[t.name for t in tools]}")
 
     messages = [
         SystemMessage(content=_SYSTEM_PROMPT.format(
@@ -319,33 +316,33 @@ async def get_advice(
         )),
         HumanMessage(content=QUERIES[query_type]),
     ]
-    logger.info("Prompt built | user query: %s", QUERIES[query_type])
+    logger.info(f"[CardAdvisorService] 프롬프트 구성 완료 | 사용자 쿼리: {QUERIES[query_type][:50]}...")
 
     # 3. Agent loop — LLM decides whether to call the search tool
     turn = 0
     while True:
         turn += 1
-        logger.info("LLM invoke | turn=%d", turn)
+        logger.info(f"[CardAdvisorService] LLM 호출 시작 | turn={turn}")
         response = await resilient_invoke(messages)
         messages.append(response)
 
         if not response.tool_calls:
-            logger.info("No tool calls — generating final answer (turn=%d)", turn)
+            logger.info(f"[CardAdvisorService] 도구 호출 없음 — 최종 답변 생성 중 (turn={turn})")
             break
 
         _tools = {t.name: t for t in tools}
-        logger.info("%d tool call(s) requested", len(response.tool_calls))
+        logger.info(f"[CardAdvisorService] {len(response.tool_calls)}개의 도구 호출 요청됨")
         for tool_call in response.tool_calls:
             name = tool_call["name"]
-            logger.info("Executing tool: %s | args=%s", name, tool_call["args"])
+            logger.info(f"[CardAdvisorService] 도구 실행: {name} | args={tool_call['args']}")
             result = _tools[name].invoke(tool_call["args"])
             messages.append(ToolMessage(
                 content=result,
                 tool_call_id=tool_call["id"],
             ))
-            logger.info("Tool result received (%d chars)", len(result))
+            logger.info(f"[CardAdvisorService] 도구 실행 결과 수신 ({len(result)} chars)")
 
-    logger.info("get_advice complete | answer length=%d chars", len(str(response.content)))
+    logger.info(f"[CardAdvisorService] get_advice 완료 | 답변 길이={len(str(response.content))} chars")
     return str(response.content)
 
 

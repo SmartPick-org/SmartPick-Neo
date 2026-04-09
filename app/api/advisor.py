@@ -36,7 +36,6 @@ async def ask(payload: AdvisorRequest) -> AdvisorResponse:
     try:
         answer = await get_advice(
             card_name=payload.card_name,
-            card_company=payload.card_company,
             query_type=payload.query_type,
         )
     except Exception as exc:

@@ -1,11 +1,11 @@
 import json
-
 import pytest
 from fastapi.testclient import TestClient
 
 import app.api.card as card_api
+from app.core.config import get_llm
 from app.main import app as fastapi_app
-
+from app.core import dependencies
 
 client = TestClient(fastapi_app)
 
@@ -27,6 +27,13 @@ def _ranked_cards_for_tests() -> list[dict]:
     ]
 
 
+@pytest.fixture(autouse=True)
+def clear_dependency_overrides():
+    fastapi_app.dependency_overrides = {}
+    yield
+    fastapi_app.dependency_overrides = {}
+
+
 def test_recommend_input_value_error_total_budget() -> None:
     res = client.post(
         "/cards/recommend",
@@ -43,9 +50,6 @@ def test_recommend_llm_failure_fallback_success_200(monkeypatch: pytest.MonkeyPa
     ranked_cards = _ranked_cards_for_tests()
 
     class StubCardRecommendService:
-        def __init__(self, repo):
-            pass
-
         def filter_cards(self, total_budget: int, category_spending: dict) -> list[dict]:
             return [{"_dummy": True}]
 
@@ -56,14 +60,10 @@ def test_recommend_llm_failure_fallback_success_200(monkeypatch: pytest.MonkeyPa
             return ranked_cards[:top_n]
 
     class StubExplainService:
-        def __init__(self, llm):
-            pass
-
-        def explain(self, total_budget: int, category_spending: dict, ranked: list[dict], card_digest: str) -> str:
+        async def explain(self, total_budget: int, category_spending: dict, ranked: list[dict], card_digest: str) -> str:
             raise RuntimeError("LLM invoke failed")
 
-        @staticmethod
-        def build_recommended_cards(ranked: list[dict], explanation: str) -> list[dict]:
+        def build_recommended_cards(self, ranked: list[dict], explanation: str, digests: list[str]) -> list[dict]:
             cards = []
             for idx, card in enumerate(ranked or []):
                 cards.append(
@@ -80,10 +80,9 @@ def test_recommend_llm_failure_fallback_success_200(monkeypatch: pytest.MonkeyPa
                 )
             return cards
 
-    monkeypatch.setattr(card_api, "CardRecommendService", StubCardRecommendService)
-    monkeypatch.setattr(card_api, "ExplainService", StubExplainService)
+    fastapi_app.dependency_overrides[dependencies.get_recommend_service] = lambda: StubCardRecommendService()
+    fastapi_app.dependency_overrides[dependencies.get_explain_service] = lambda: StubExplainService()
     monkeypatch.setattr(card_api.DigestRepository, "get_digest", lambda self, _: "digest")
-    monkeypatch.setattr(card_api, "get_llm", lambda *args, **kwargs: object())
 
     res = client.post(
         "/cards/recommend",
@@ -101,9 +100,6 @@ def test_recommend_build_recommended_cards_keyerror_fallback_safe_builder_succes
     ranked_cards = _ranked_cards_for_tests()
 
     class StubCardRecommendService:
-        def __init__(self, repo):
-            pass
-
         def filter_cards(self, total_budget: int, category_spending: dict) -> list[dict]:
             return [{"_dummy": True}]
 
@@ -114,21 +110,15 @@ def test_recommend_build_recommended_cards_keyerror_fallback_safe_builder_succes
             return ranked_cards[:top_n]
 
     class StubExplainService:
-        def __init__(self, llm):
-            pass
-
-        def explain(self, total_budget: int, category_spending: dict, ranked: list[dict], card_digest: str) -> str:
-            # 설명은 정상적으로 만들었지만, build 단계에서 KeyError가 발생한다고 가정합니다.
+        async def explain(self, total_budget: int, category_spending: dict, ranked: list[dict], card_digest: str) -> str:
             return "OK_EXPLANATION"
 
-        @staticmethod
-        def build_recommended_cards(ranked: list[dict], explanation: str) -> list[dict]:
+        def build_recommended_cards(self, ranked: list[dict], explanation: str, digests: list[str]) -> list[dict]:
             raise KeyError("card_name")
 
-    monkeypatch.setattr(card_api, "CardRecommendService", StubCardRecommendService)
-    monkeypatch.setattr(card_api, "ExplainService", StubExplainService)
+    fastapi_app.dependency_overrides[dependencies.get_recommend_service] = lambda: StubCardRecommendService()
+    fastapi_app.dependency_overrides[dependencies.get_explain_service] = lambda: StubExplainService()
     monkeypatch.setattr(card_api.DigestRepository, "get_digest", lambda self, _: "digest")
-    monkeypatch.setattr(card_api, "get_llm", lambda *args, **kwargs: object())
 
     res = client.post(
         "/cards/recommend",
@@ -153,7 +143,11 @@ def test_qa_invalid_raw_data_value_error_400() -> None:
 
 
 def test_qa_llm_failure_returns_fallback_error_format_422(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(card_api, "get_llm", lambda *args, **kwargs: (_ for _ in ()).throw(RuntimeError("llm down")))
+    class StubExplainService:
+        async def answer_qa(self, raw_data: str, question: str) -> str:
+            raise RuntimeError("llm down")
+
+    fastapi_app.dependency_overrides[dependencies.get_explain_service] = lambda: StubExplainService()
 
     res = client.post(
         "/cards/qa",
@@ -164,4 +158,3 @@ def test_qa_llm_failure_returns_fallback_error_format_422(monkeypatch: pytest.Mo
     assert body["error_code"] == "LLM_UNAVAILABLE"
     assert body["fallback"] is True
     assert "message" in body
-

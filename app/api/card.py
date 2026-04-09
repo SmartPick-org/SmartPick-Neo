@@ -2,21 +2,21 @@ import json
 from loguru import logger
 from pathlib import Path
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
-from app.core.config import get_llm
+from app.core.config import DIGEST_DIR, DATASETS_DIR, get_llm
+from app.core.dependencies import (
+    get_digest_repository,
+    get_explain_service,
+    get_recommend_service,
+)
 from app.core.exceptions import LLMUnavailableError, NoCardsFoundError
-from app.repositories.card_repo import DatasetCardRepository
 from app.repositories.digest_repo import DigestRepository
 from app.schemas.recommend import QARequest, QAResponse, RecommendRequest, RecommendResponse
 from app.services.card_service import CardRecommendService
 from app.services.explain_service import ExplainService
 
 router = APIRouter(prefix="/cards", tags=["cards"])
-
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
-DATASETS_DIR = PROJECT_ROOT / "datasets" / "json_v3"
-DIGEST_DIR = PROJECT_ROOT / "datasets" / "digest"
 
 # Fallback 텍스트 — LLM이 죽어도 사용자는 카드 목록을 볼 수 있음
 _LLM_FALLBACK_EXPLAIN = (
@@ -46,7 +46,12 @@ def _safe_build_recommended_cards(ranked: list[dict], explanation: str) -> list[
 
 
 @router.post("/recommend", response_model=RecommendResponse)
-def recommend_cards(payload: RecommendRequest) -> RecommendResponse:
+async def recommend_cards(
+    payload: RecommendRequest,
+    recommend_service: CardRecommendService = Depends(get_recommend_service),
+    digest_repo: DigestRepository = Depends(get_digest_repository),
+    explain_service: ExplainService = Depends(get_explain_service),
+) -> RecommendResponse:
     # Pydantic 1차 검증 이후의 방어 로직 (강화)
     if payload.total_budget <= 0:
         raise ValueError("total_budget은 0보다 커야 합니다.")
@@ -54,18 +59,6 @@ def recommend_cards(payload: RecommendRequest) -> RecommendResponse:
         raise ValueError("category_spending은 비어 있을 수 없습니다.")
     if any(v is None or v <= 0 for v in payload.category_spending.values()):
         raise ValueError("category_spending의 각 값은 0보다 커야 합니다.")
-
-    card_repo = DatasetCardRepository(DATASETS_DIR)
-    digest_repo = DigestRepository(DIGEST_DIR)
-    recommend_service = CardRecommendService(card_repo)
-
-    explain_service: ExplainService | None = None
-    try:
-        explain_service = ExplainService(get_llm())
-    except Exception as e:
-        # LLM 자체 장애 → 서비스는 중단하지 않고 fallback 텍스트로 진행
-        logger.exception("[LLM init] ExplainService 생성 실패: %s", repr(e))
-        explain_service = None
 
     # 1. 필터링 — 조건에 맞는 카드가 없으면 404 반환
     filtered = recommend_service.filter_cards(payload.total_budget, payload.category_spending)
@@ -106,7 +99,7 @@ def recommend_cards(payload: RecommendRequest) -> RecommendResponse:
     explanation = _LLM_FALLBACK_EXPLAIN
     if explain_service is not None:
         try:
-            explanation = explain_service.explain(
+            explanation = await explain_service.explain(
                 payload.total_budget, payload.category_spending, ranked, top_digest
             )
             if not explanation or not explanation.strip():
@@ -127,7 +120,10 @@ def recommend_cards(payload: RecommendRequest) -> RecommendResponse:
 
 
 @router.post("/qa", response_model=QAResponse)
-def answer_qa(payload: QARequest) -> QAResponse:
+async def answer_qa(
+    payload: QARequest,
+    explain_service: ExplainService = Depends(get_explain_service),
+) -> QAResponse:
     # raw_data는 "추천 결과 원본 JSON 문자열"이라서, 최소한 JSON 파싱 가능 여부를 확인합니다.
     try:
         json.loads(payload.raw_data)
@@ -135,13 +131,7 @@ def answer_qa(payload: QARequest) -> QAResponse:
         raise ValueError("raw_data는 유효한 JSON 문자열이어야 합니다.") from e
 
     try:
-        explain_service = ExplainService(get_llm())
-    except Exception as e:
-        logger.exception("[QA] ExplainService 생성 실패: %s", repr(e))
-        raise LLMUnavailableError()
-
-    try:
-        answer = explain_service.answer_qa(payload.raw_data, payload.question)
+        answer = await explain_service.answer_qa(payload.raw_data, payload.question)
         if not answer or not answer.strip():
             raise LLMUnavailableError()
     except LLMUnavailableError:

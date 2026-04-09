@@ -19,11 +19,11 @@ import os
 from pathlib import Path
 from typing import Literal
 
-from dotenv import load_dotenv
-from langchain.chat_models import init_chat_model
 from langchain.tools import tool
 from langchain_core.messages import HumanMessage, SystemMessage, ToolMessage
 from langsmith import traceable
+
+from app.core.config import MARKDOWN_DIR, get_llm
 
 from app.tools.web_search import (
     search_blog,
@@ -37,8 +37,6 @@ from app.tools.web_search import (
 )
 
 # ===========================< Setting >============================
-load_dotenv(Path(__file__).resolve().parents[1] / ".env")
-
 logging.basicConfig(level=logging.INFO, format="[ADVISOR] %(levelname)s %(message)s")
 logger = logging.getLogger(__name__)
 
@@ -56,8 +54,6 @@ QueryType = Literal[
     "late_payment",
     "revolving",
 ]
-
-MARKDOWN_DIR = Path(__file__).resolve().parents[3] / "datasets" / "markdown"
 
 # ---------------------------------------------------------------------------
 # TODO: Replace this hardcoded path with dynamic lookup.
@@ -302,9 +298,9 @@ def run_advisor(
         if query_type == "reviews"
         else [ACTIVE_WEB_SEARCH_TOOL]
     )
-    llm = init_chat_model(model=MODEL, temperature=0.0)
+    llm = get_llm(model=MODEL, temperature=0.0)
     llm_with_tools = llm.bind_tools(tools)
-    logger.info("LLM initialised | model=%s | tools=%s", MODEL, [t.name for t in tools])
+    logger.info("LLM initialised (cached) | tools=%s", [t.name for t in tools])
 
     messages = [
         SystemMessage(content=_SYSTEM_PROMPT.format(

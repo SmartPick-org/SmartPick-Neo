@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import Iterable
 
 from dotenv import load_dotenv
+from functools import lru_cache
 from langchain.chat_models import init_chat_model
 
 
@@ -24,6 +25,12 @@ LLM_MAX_RETRIES = int(os.getenv("LLM_MAX_RETRIES", "2")) # Number of extra attem
 LLM_CB_FAILURE_THRESHOLD = int(os.getenv("LLM_CB_FAILURE_THRESHOLD", "5"))
 LLM_CB_RECOVERY_TIMEOUT = int(os.getenv("LLM_CB_RECOVERY_TIMEOUT", "60"))
 
+# --- Directory Settings ---
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+DATASETS_DIR = PROJECT_ROOT / "datasets" / "json_v3"
+DIGEST_DIR = PROJECT_ROOT / "datasets" / "digest"
+MARKDOWN_DIR = PROJECT_ROOT / "datasets" / "markdown"
+
 
 
 def init_env(project_root: Path | None = None) -> None:
@@ -42,6 +49,7 @@ def init_env(project_root: Path | None = None) -> None:
     os.environ.setdefault("LANGSMITH_ENDPOINT", "https://api.smith.langchain.com")
 
 
+@lru_cache()
 def get_llm(model: str = DEFAULT_MODEL, temperature: float = 0.0):
     init_env()
     return init_chat_model(

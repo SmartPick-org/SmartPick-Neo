@@ -10,8 +10,8 @@
   },
   "benefit_groups": [
     {
-      "group_id": "G_ZERO_ED3_POINT_ALL",
-      "group_name": "전 가맹점 M포인트 적립",
+      "group_id": "G_ZERO_ED3_POINT",
+      "group_name": "기본 M포인트 적립",
       "group_type": "SHARED_LIMIT",
       "limit_amount": null,
       "top_n_count": null
@@ -38,14 +38,15 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_ZERO_ED3_POINT_ALL",
+      "group_id": "G_ZERO_ED3_POINT",
       "ui_warnings": [
         "장기카드대출(카드론), 단기카드대출(현금서비스), 연회비, 제수수료, 이자 제외",
         "국제브랜드 수수료 및 해외서비스 수수료 제외",
-        "공과금 납부액(국세, 관세, 지방세 등) 제외",
-        "전기 요금, 도시가스 요금, 아파트 관리비, 부동산 임대료(월세) 제외",
+        "공과금 납부액(국세, 관세, 지방세, 지방세외수입, 상하수도요금, 벌과금, 과태료, 인지세, 송달료, 민원 발급 수수료 등) 제외",
+        "전기 요금, 도시가스 요금, 아파트 관리비, 부동산 임대료(월세), 자동납부서비스 이용 수수료, TV수신료 제외",
         "사립유치원 교육비, 초·중·고교 학교 납입금, 대학·대학원 등록금 납부 결제건 제외",
         "상품권 등 현금성 유가증권 구매 및 선불 카드 구매·충전 금액 제외",
         "건강보험, 국민연금, 고용보험, 산재보험 및 장애인 고용 부담금 제외",
@@ -64,9 +65,9 @@
       "category": "General",
       "sub_category": null,
       "source_benefit_id": null,
-      "content": "최대 50만 M포인트 선지급 후 카드 이용 시 적립되는 M포인트로 상환",
+      "content": "최대 50만 M포인트 먼저 받아 사용하고 카드 이용하며 적립되는 M포인트로 상환",
       "frequency": "ONCE",
-      "reward_type": "POINT",
+      "reward_type": "VOUCHER",
       "tier_conditions": [],
       "calculation_rule": {
         "calc_method": "FIXED_AMOUNT",
@@ -79,7 +80,8 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
       "group_id": null,
       "ui_warnings": [

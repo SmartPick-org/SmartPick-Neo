@@ -18,7 +18,7 @@
     },
     {
       "group_id": "G_SIMPLE_LOUNGE",
-      "group_name": "라운지 통합 한도",
+      "group_name": "공항라운지 통합 한도",
       "group_type": "SHARED_LIMIT",
       "limit_amount": 2,
       "top_n_count": null
@@ -30,21 +30,14 @@
       "category": "Travel",
       "sub_category": "lounge_valet",
       "source_benefit_id": null,
-      "content": "호텔 발레파킹 월 3회 무료",
+      "content": "인천공항 발레파킹 월 3회 무료",
       "frequency": "MONTHLY",
       "reward_type": "VOUCHER",
-      "tier_conditions": [
-        {
-          "min_prev_performance": 300000,
-          "monthly_limit": 3,
-          "reward_rate": null,
-          "fixed_amount": null
-        }
-      ],
+      "tier_conditions": [],
       "calculation_rule": {
         "calc_method": "FIXED_AMOUNT",
         "rate": null,
-        "fixed_amount": null,
+        "fixed_amount": 0,
         "monthly_limit": 3,
         "fallback_reward_rate": 0.0,
         "transaction_tiers": null
@@ -52,13 +45,13 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": 3
+        "max_count_per_month": 3,
+        "max_count_per_year": null
       },
       "group_id": "G_SIMPLE_PARKING",
       "ui_warnings": [
-        "1일 2~3시간까지 무료 주차 서비스 제공, 초과 시 별도 요금 부과",
-        "호텔 객실/매장 이용 영수증 필수 제시",
-        "연회 참석 및 국가 주요 행사 시 이용 불가"
+        "사전 예약 필요",
+        "초과 시 비용 발생"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -72,35 +65,28 @@
       "category": "Travel",
       "sub_category": "lounge_valet",
       "source_benefit_id": null,
-      "content": "공항 라운지 연 2회 무료 이용",
+      "content": "인천공항/김포공항 라운지 연 2회 무료",
       "frequency": "ANNUAL",
       "reward_type": "VOUCHER",
-      "tier_conditions": [
-        {
-          "min_prev_performance": 300000,
-          "monthly_limit": 2,
-          "reward_rate": null,
-          "fixed_amount": null
-        }
-      ],
+      "tier_conditions": [],
       "calculation_rule": {
         "calc_method": "FIXED_AMOUNT",
         "rate": null,
-        "fixed_amount": null,
-        "monthly_limit": 2,
+        "fixed_amount": 0,
+        "monthly_limit": null,
         "fallback_reward_rate": 0.0,
         "transaction_tiers": null
       },
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": 2
       },
       "group_id": "G_SIMPLE_LOUNGE",
       "ui_warnings": [
-        "동반자 입장 시 입장료 고객 부담",
-        "항공권 영문명과 카드 영문명 일치 필수",
-        "라운지 혼잡 시 이용 제한 가능"
+        "동반자 입장료 본인 부담",
+        "탑승권과 카드 영문명 일치 필요"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -110,25 +96,18 @@
       }
     },
     {
-      "benefit_id": "b_simple_airport_valet",
+      "benefit_id": "b_simple_hotel_parking",
       "category": "Travel",
       "sub_category": "lounge_valet",
       "source_benefit_id": null,
-      "content": "인천공항 발레파킹 월 3회 무료",
+      "content": "제휴 호텔 발레파킹 월 3회 무료",
       "frequency": "MONTHLY",
       "reward_type": "VOUCHER",
-      "tier_conditions": [
-        {
-          "min_prev_performance": 300000,
-          "monthly_limit": 3,
-          "reward_rate": null,
-          "fixed_amount": null
-        }
-      ],
+      "tier_conditions": [],
       "calculation_rule": {
         "calc_method": "FIXED_AMOUNT",
         "rate": null,
-        "fixed_amount": null,
+        "fixed_amount": 0,
         "monthly_limit": 3,
         "fallback_reward_rate": 0.0,
         "transaction_tiers": null
@@ -136,13 +115,13 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": 3
+        "max_count_per_month": 3,
+        "max_count_per_year": null
       },
       "group_id": "G_SIMPLE_PARKING",
       "ui_warnings": [
-        "사전 예약 필수, 현장 상황에 따라 당일 이용 가능",
-        "서비스 횟수 초과 시 별도 요금 부과",
-        "주차요금은 본인 부담"
+        "호텔 이용 영수증 제시 필요",
+        "초과 시 주차 요금 발생"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,

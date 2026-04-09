@@ -34,7 +34,47 @@ logger.add(
     level="INFO"
 )
 
-app = FastAPI()
+_DESCRIPTION = """
+## SmartPick-Neo API
+
+신용카드 혜택 계산 및 추천 서비스 백엔드 API입니다.
+
+### 주요 기능
+- **카드 추천** (`POST /cards/recommend`): 유저의 카테고리별 소비 패턴을 기반으로 최적 카드 Top 3를 추천합니다.
+- **영수증(Receipt) 조회**: 추천 응답의 `applied_benefits_trace` 배열에서 어떤 혜택이 얼마의 예산을 소모해 얼마를 할인했는지 확인할 수 있습니다.
+- **체크박스 재계산** (`POST /cards/recalculate`): 유저가 특정 혜택을 "현실적으로 쓸 일 없음"으로 체크 해제하면, 해당 혜택을 제외한 갱신된 합산과 순위를 즉각 반환합니다.
+- **카드 Q&A** (`POST /cards/qa`): 추천 결과 JSON을 바탕으로 자유 질문에 답변합니다.
+- **어드바이저** (`POST /advisor/ask`): 특정 카드의 수수료, 후기, 신청방법 등 상세 정보를 제공합니다.
+
+### 영수증 필드 안내 (`applied_benefits_trace`)
+| 필드 | 타입 | 설명 |
+|---|---|---|
+| `benefit_id` | string | 혜택 고유 ID — 체크박스 토글 키 |
+| `content` | string | 혜택 설명 (예: "DAY 음식점 10%") |
+| `applied_budget` | int | 이 혜택에 배정된 예산 (원) |
+| `yielded_discount` | int | 산출된 할인 금액 (원) |
+| `user_choice` | bool | 유저 포함 여부 (기본 `true`) |
+"""
+
+_TAGS = [
+    {
+        "name": "cards",
+        "description": "카드 추천, 영수증 조회, 체크박스 재계산, Q&A 엔드포인트",
+    },
+    {
+        "name": "advisor",
+        "description": "특정 카드의 수수료·후기·신청방법 등 상세 상담 엔드포인트",
+    },
+]
+
+app = FastAPI(
+    title="SmartPick-Neo API",
+    description=_DESCRIPTION,
+    version="1.3.0",
+    openapi_tags=_TAGS,
+    docs_url="/docs",
+    redoc_url="/redoc",
+)
 
 app.add_middleware(
     CORSMiddleware,

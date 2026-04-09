@@ -93,6 +93,7 @@ class CardRecommendService:
                             "min_spend_score": round(min_spend_score, 3),
                         },
                         "category_breakdown": result.get("category_breakdown", []),
+                        "applied_benefits_trace": result.get("applied_benefits_trace", []),
                         "benefit_details": result.get("benefit_details", []),
                         "annual_breakdown": result.get("annual_breakdown", []),
                         "warnings": result.get("warnings", []),

@@ -29,12 +29,15 @@ INF = float("inf")
 # =============================================================================
 # 유틸리티
 # =============================================================================
-def _pick(tier: dict | None, key: str, fallback=None):
-    """tier 사전에 값이 있으면 사용, 없으면 fallback."""
+def _pick(tier: dict | None, keys: str | list[str], fallback=None):
+    """tier 사전에 값이 있으면 사용, 없으면 fallback. keys는 단일 문자열 또는 리스트."""
     if tier is not None:
-        val = tier.get(key)
-        if val is not None:
-            return val
+        if isinstance(keys, str):
+            keys = [keys]
+        for key in keys:
+            val = tier.get(key)
+            if val is not None:
+                return val
     return fallback
 
 
@@ -145,7 +148,8 @@ class BenefitCalculator:
         tier = self._find_best_tier(tier_conditions, perf_for_tier)
 
         # --- 변수 확정 (tier 우선 → calc_rule fallback) ---
-        rate = _pick(tier, "rate", calc_rule.get("rate")) or 0.0
+        # reward_rate -> rate로 일원화하되 하이브리드 지원
+        rate = _pick(tier, ["rate", "reward_rate"], calc_rule.get("rate")) or 0.0
         fixed_amount = _pick(tier, "fixed_amount", calc_rule.get("fixed_amount")) or 0
         unit_amount = _pick(tier, "unit_amount", calc_rule.get("unit_amount")) or 0
         monthly_limit = (
@@ -162,10 +166,17 @@ class BenefitCalculator:
         max_payment_applied = trans_cond.get("max_payment_amount_applied") or INF
         max_count_day = trans_cond.get("max_count_per_day") or INF
         max_count_month = trans_cond.get("max_count_per_month") or INF
+        max_count_year = trans_cond.get("max_count_per_year") or INF
         day_of_week = trans_cond.get("day_of_week")
 
         # 요일 제한 반영 → 일별 횟수 × 해당 요일 수
         eff_days = _effective_days(day_of_week)
+        
+        # 연간 한도가 있을 경우 월간 평균으로 안분(Amortization)
+        if max_count_year < INF:
+            amortized_count_month = max_count_year / 12.0
+            max_count_month = min(max_count_month, amortized_count_month)
+
         max_monthly_txns = min(max_count_month, max_count_day * eff_days)
 
         # Platform bonus (추가 적립률)
@@ -183,6 +194,11 @@ class BenefitCalculator:
         raw_amount = 0.0
         used_budget = 0.0
         warnings: list[str] = list(benefit.get("ui_warnings") or [])
+
+        # 연간 한도 안분 시 투명성 메시지 추가
+        if max_count_year < INF:
+            limit_val = int(max_count_year) if max_count_year == int(max_count_year) else max_count_year
+            warnings.append(f"연간 {limit_val}회 제한 (월간 {limit_val/12:.2f}회로 안분 계산됨)")
 
         if calc_method == "RATE":
             total_rate = rate + add_rate
@@ -272,6 +288,7 @@ class BenefitCalculator:
 
         return {
             "benefit_id": benefit.get("benefit_id"),
+            "content": benefit.get("content", ""),
             "category": benefit.get("category"),
             "sub_category": benefit.get("sub_category"),
             "frequency": freq,
@@ -287,6 +304,7 @@ class BenefitCalculator:
     def _empty_record(benefit: dict) -> dict:
         return {
             "benefit_id": benefit.get("benefit_id"),
+            "content": benefit.get("content", ""),
             "category": benefit.get("category"),
             "sub_category": benefit.get("sub_category"),
             "frequency": benefit.get("frequency", "MONTHLY"),
@@ -312,6 +330,7 @@ class BenefitCalculator:
             "monthly_total_krw": 0,
             "annual_total_krw": 0,
             "category_breakdown": [],
+            "applied_benefits_trace": [],
             "annual_breakdown": [],
             "warnings": [reason],
             "fallback": True,
@@ -580,6 +599,19 @@ class BenefitCalculator:
             result["category_breakdown"].sort(
                 key=lambda x: (x["category"] == "All_Domestic", x["category"])
             )
+
+            # 영수증(Trace) — 계산에 참여한 개별 혜택의 산출 근거 (슬림)
+            result["applied_benefits_trace"] = [
+                {
+                    "benefit_id": r["benefit_id"],
+                    "content": r["content"],
+                    "applied_budget": r["used_budget"],
+                    "yielded_discount": r["amount_krw"],
+                    "user_choice": True,
+                }
+                for r in monthly_results
+                if r["amount_krw"] > 0
+            ]
 
             result["monthly_total_krw"] = round(
                 sum(r["amount_krw"] for r in monthly_results)

@@ -287,7 +287,7 @@ CONVERT_V3_PROMPT = """너는 신용카드 약관/설명서 마크다운을 읽�
         {{
           "min_prev_performance": 해당 구간 적용을 위한 전월 실적 하한 (원),
           "monthly_limit": 이 구간에서의 월 한도 (원),
-          "reward_rate": 할인/적립률 (예: 0.1 = 10%) 또는 null,
+          "rate": 할인/적립률 (예: 0.1 = 10%) 또는 null,
           "fixed_amount": 정액 금액 (원) 또는 null
         }}
       ],
@@ -304,7 +304,8 @@ CONVERT_V3_PROMPT = """너는 신용카드 약관/설명서 마크다운을 읽�
       "transaction_conditions": {{
         "min_payment_amount": 건당 최소 결제 요구 금액 (원, 없으면 0),
         "max_payment_amount_applied": 1회 결제 시 혜택 적용 최대 금액 또는 null,
-        "max_count_per_month": 월 최대 혜택 제공 횟수 또는 null
+        "max_count_per_month": 월 최대 혜택 제공 횟수 또는 null,
+        "max_count_per_year": 연간 최대 혜택 제공 횟수 또는 null
       }},
 
       "group_id": "benefit_groups의 group_id 참조 또는 null",
@@ -354,6 +355,7 @@ CONVERT_V3_PROMPT = """너는 신용카드 약관/설명서 마크다운을 읽�
    - "1회 승인금액 5만원까지 할인" → max_payment_amount_applied: 50000
    - "일 1회" → 해당 내용을 ui_warnings에 기재하되, 절대 max_count_per_month에 1을 할당하지 마라. (월간 제한 구문이 명시되어 있지 않다면 max_count_per_month: null)
    - "월 5회" → max_count_per_month: 5
+   - "연 3회" → max_count_per_year: 3 (매우 중요: 테마파크, 엔진오일 등 연간 단위 혜택은 반드시 기입)
 
 5. edge_case_flags:
    - 사용자가 선호영역을 선택해야 하면 requires_user_selection: true

@@ -8,7 +8,10 @@ from app.core.config import get_llm
 from app.core.exceptions import LLMUnavailableError, NoCardsFoundError
 from app.repositories.card_repo import DatasetCardRepository
 from app.repositories.digest_repo import DigestRepository
-from app.schemas.recommend import QARequest, QAResponse, RecommendRequest, RecommendResponse
+from app.schemas.recommend import (
+    QARequest, QAResponse, RecommendRequest, RecommendResponse,
+    RecalculateRequest, RecalculateResponse,
+)
 from app.services.card_service import CardRecommendService
 from app.services.explain_service import ExplainService
 
@@ -39,6 +42,7 @@ def _safe_build_recommended_cards(ranked: list[dict], explanation: str) -> list[
                 "minimum_performance": card.get("minimum_performance", 0),
                 "expected_monthly_benefit": card.get("expected_monthly_benefit", 0),
                 "category_breakdown": card.get("category_breakdown", []) or [],
+                "applied_benefits_trace": card.get("applied_benefits_trace", []) or [],
                 "explanation": explanation if idx == 0 else "",
             }
         )
@@ -166,3 +170,40 @@ async def answer_qa(payload: QARequest) -> QAResponse:
         raise LLMUnavailableError()
 
     return QAResponse(answer=answer)
+
+
+@router.post("/recalculate", response_model=RecalculateResponse)
+async def recalculate_benefits(payload: RecalculateRequest) -> RecalculateResponse:
+    """
+    유저 체크박스 상태를 반영하여 expected_monthly_benefit만 재계산합니다.
+    BenefitCalculator 재호출 없이 기존 trace 데이터의 합산만 변경합니다. (< 50ms)
+    
+    - **recommended_cards**: 기존 추천 결과 (applied_benefits_trace 포함)
+    - **excluded_benefit_ids**: 유저가 체크 해제한 benefit_id 목록
+    """
+    excluded = set(payload.excluded_benefit_ids)
+    updated_cards = []
+
+    for card in payload.recommended_cards:
+        new_total = 0
+        updated_trace = []
+        for t in card.applied_benefits_trace:
+            is_active = t.benefit_id not in excluded
+            updated_trace.append(t.model_copy(update={"user_choice": is_active}))
+            if is_active:
+                new_total += t.yielded_discount
+
+        updated_card = card.model_copy(update={
+            "applied_benefits_trace": updated_trace,
+            "expected_monthly_benefit": new_total,
+        })
+        updated_cards.append(updated_card)
+
+    # 순위 재조정 (expected_monthly_benefit 기준 내림차순)
+    updated_cards.sort(key=lambda c: c.expected_monthly_benefit, reverse=True)
+
+    logger.info(
+        f"[recalculate] excluded={len(excluded)}개 혜택 제외 | "
+        f"결과: {[(c.card_name, c.expected_monthly_benefit) for c in updated_cards]}"
+    )
+    return RecalculateResponse(recommended_cards=updated_cards)

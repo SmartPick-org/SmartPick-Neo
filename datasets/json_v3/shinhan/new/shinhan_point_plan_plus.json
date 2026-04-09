@@ -4,7 +4,7 @@
     "card_name": "신한카드 Point Plan+",
     "card_company": "신한카드",
     "annual_fee": 7000,
-    "minimum_performance": 0,
+    "minimum_performance": 400000,
     "reward_currency": "MY_SHINHAN_POINT",
     "currency_to_krw_rate": 1.0
   },
@@ -13,7 +13,7 @@
       "group_id": "G_PLANPLUS_DAILY",
       "group_name": "일상 생활비 적립 서비스",
       "group_type": "SHARED_LIMIT",
-      "limit_amount": 10000,
+      "limit_amount": 50000,
       "top_n_count": null
     },
     {
@@ -33,30 +33,30 @@
   ],
   "benefits": [
     {
-      "benefit_id": "b_planplus_daily_07_3pct",
+      "benefit_id": "b_planplus_daily_domestic",
       "category": "General",
       "sub_category": null,
       "source_benefit_id": null,
-      "content": "국내 건당 결제금액별 0.7~3% 포인트 적립",
+      "content": "국내 건당 결제금액별 0.7~3% 마이신한포인트 적립",
       "frequency": "MONTHLY",
       "reward_type": "POINT",
       "tier_conditions": [
         {
           "min_prev_performance": 400000,
           "monthly_limit": 10000,
-          "reward_rate": 0.007,
+          "rate": 0.007,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 800000,
           "monthly_limit": 30000,
-          "reward_rate": 0.007,
+          "rate": 0.007,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1200000,
           "monthly_limit": 50000,
-          "reward_rate": 0.007,
+          "rate": 0.007,
           "fixed_amount": null
         }
       ],
@@ -92,12 +92,13 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
       "group_id": "G_PLANPLUS_DAILY",
       "ui_warnings": [
-        "무이자할부 거래(슬림할부 등 부분 무이자, 일시불의 무이자할부 전환 포함)는 적립되지 않습니다.",
-        "포인트 사용 거래의 경우, 포인트 사용 금액을 제외한 결제금액을 기준으로 적립됩니다."
+        "무이자할부 거래는 적립되지 않음",
+        "포인트 사용 거래는 포인트 사용 금액을 제외한 결제금액을 기준으로 적립"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -118,19 +119,19 @@
         {
           "min_prev_performance": 400000,
           "monthly_limit": 10000,
-          "reward_rate": 0.005,
+          "rate": 0.005,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 800000,
           "monthly_limit": 30000,
-          "reward_rate": 0.005,
+          "rate": 0.005,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1200000,
           "monthly_limit": 50000,
-          "reward_rate": 0.005,
+          "rate": 0.005,
           "fixed_amount": null
         }
       ],
@@ -145,11 +146,13 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
       "group_id": "G_PLANPLUS_DAILY",
       "ui_warnings": [
-        "신한 SOL페이 추가 적립 기준 : 신한 슈퍼SOL로 결제 (터치결제, QR/바코드 결제, NFC결제 포함. 단, ARS결제, 일반결제, Smart결제는 추가 적립 제외)"
+        "신한 슈퍼SOL로 결제 시에만 추가 적립",
+        "ARS결제, 일반결제, Smart결제는 추가 적립 제외"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -163,26 +166,26 @@
       "category": "Travel",
       "sub_category": "overseas",
       "source_benefit_id": null,
-      "content": "해외 결제금액 1% 포인트 적립",
+      "content": "해외 일시불 결제금액에 대해 1% 마이신한포인트 적립",
       "frequency": "MONTHLY",
       "reward_type": "POINT",
       "tier_conditions": [
         {
           "min_prev_performance": 400000,
           "monthly_limit": 10000,
-          "reward_rate": 0.01,
+          "rate": 0.01,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 800000,
           "monthly_limit": 30000,
-          "reward_rate": 0.01,
+          "rate": 0.01,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1200000,
           "monthly_limit": 50000,
-          "reward_rate": 0.01,
+          "rate": 0.01,
           "fixed_amount": null
         }
       ],
@@ -197,12 +200,13 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
       "group_id": "G_PLANPLUS_DAILY",
       "ui_warnings": [
-        "해외 일시불 거래 후 할부로 전환(유이자 할부 전환 포함)하는 경우는 적립되지 않습니다.",
-        "해외 온라인 사이트에서 국내 가맹점(국내 전자지급 결제 대행사(PG사))으로 결제되는 경우는 적립되지 않습니다."
+        "해외겸용(VISA) 카드 발급 후 이용 시 적립",
+        "해외 일시불 거래 후 할부로 전환 시 적립되지 않음"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -212,24 +216,24 @@
       }
     },
     {
-      "benefit_id": "b_planplus_essential_weekend",
+      "benefit_id": "b_planplus_essential_food",
       "category": "Food",
-      "sub_category": "restaurant",
+      "sub_category": "general",
       "source_benefit_id": null,
-      "content": "주말 외식비 포인트 적립 (음식점)",
+      "content": "주말(토/일) 음식점/배달앱 건당 2만원 이상 결제 시 1천 마이신한포인트 적립",
       "frequency": "MONTHLY",
       "reward_type": "POINT",
       "tier_conditions": [
         {
           "min_prev_performance": 0,
           "monthly_limit": 2000,
-          "reward_rate": null,
+          "rate": null,
           "fixed_amount": 1000
         },
         {
           "min_prev_performance": 400000,
           "monthly_limit": 5000,
-          "reward_rate": null,
+          "rate": null,
           "fixed_amount": 1000
         }
       ],
@@ -244,12 +248,14 @@
       "transaction_conditions": {
         "min_payment_amount": 20000,
         "max_payment_amount_applied": null,
-        "max_count_per_month": 5
+        "max_count_per_month": 5,
+        "max_count_per_year": null
       },
       "group_id": "G_PLANPLUS_ESSENTIAL",
       "ui_warnings": [
-        "오프라인 매장에서 이용한 경우에만 적립됩니다.",
-        "커피 업종 제외"
+        "통합 일 1회 적용",
+        "커피 업종 제외",
+        "오프라인 가맹점에서만 적립"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -259,29 +265,23 @@
       }
     },
     {
-      "benefit_id": "b_planplus_essential_delivery",
-      "category": "Food",
-      "sub_category": "delivery",
+      "benefit_id": "b_planplus_essential_autopay",
+      "category": "Life",
+      "sub_category": "general",
       "source_benefit_id": null,
-      "content": "주말 외식비 포인트 적립 (배달앱)",
+      "content": "도시가스/전기요금, 이동통신요금 자동납부 시 2만원당 1천 마이신한포인트 적립",
       "frequency": "MONTHLY",
       "reward_type": "POINT",
       "tier_conditions": [
         {
-          "min_prev_performance": 0,
-          "monthly_limit": 2000,
-          "reward_rate": null,
-          "fixed_amount": 1000
-        },
-        {
           "min_prev_performance": 400000,
-          "monthly_limit": 5000,
-          "reward_rate": null,
+          "monthly_limit": 10000,
+          "rate": null,
           "fixed_amount": 1000
         }
       ],
       "calculation_rule": {
-        "calc_method": "FIXED_AMOUNT",
+        "calc_method": "FIXED_PER_VOLUME",
         "rate": null,
         "fixed_amount": 1000,
         "monthly_limit": null,
@@ -290,95 +290,15 @@
       },
       "transaction_conditions": {
         "min_payment_amount": 20000,
-        "max_payment_amount_applied": null,
-        "max_count_per_month": 5
-      },
-      "group_id": "G_PLANPLUS_ESSENTIAL",
-      "ui_warnings": [
-        "공식 배달앱에서 ‘앱 내 카드결제 > 신한 SOL페이’ 결제 시 적립",
-        "신한 SOL페이에서 ARS결제, 일반결제, Smart결제를 이용하실 경우에는 적립되지 않습니다."
-      ],
-      "edge_case_flags": {
-        "requires_user_selection": false,
-        "excludes_from_performance": false,
-        "special_month_bonus": null,
-        "escape_hatch_note": null
-      }
-    },
-    {
-      "benefit_id": "b_planplus_essential_utility",
-      "category": "Life",
-      "sub_category": "utility",
-      "source_benefit_id": null,
-      "content": "정기결제 자동납부 포인트 적립 (도시가스/전기요금)",
-      "frequency": "MONTHLY",
-      "reward_type": "POINT",
-      "tier_conditions": [
-        {
-          "min_prev_performance": 400000,
-          "monthly_limit": 5000,
-          "reward_rate": null,
-          "fixed_amount": 1000
-        }
-      ],
-      "calculation_rule": {
-        "calc_method": "FIXED_PER_VOLUME",
-        "rate": null,
-        "fixed_amount": 1000,
-        "monthly_limit": 5000,
-        "fallback_reward_rate": 0.0,
-        "transaction_tiers": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 20000,
         "max_payment_amount_applied": 100000,
-        "max_count_per_month": 1
+        "max_count_per_month": 1,
+        "max_count_per_year": null
       },
       "group_id": "G_PLANPLUS_ESSENTIAL",
       "ui_warnings": [
-        "도시가스/전기요금이 아파트관리비에 포함되어 결제되는 경우 적립되지 않습니다.",
-        "월 1건만 적립됩니다."
-      ],
-      "edge_case_flags": {
-        "requires_user_selection": false,
-        "excludes_from_performance": false,
-        "special_month_bonus": null,
-        "escape_hatch_note": null
-      }
-    },
-    {
-      "benefit_id": "b_planplus_essential_telecom",
-      "category": "Life",
-      "sub_category": "telecom",
-      "source_benefit_id": null,
-      "content": "정기결제 자동납부 포인트 적립 (이동통신요금)",
-      "frequency": "MONTHLY",
-      "reward_type": "POINT",
-      "tier_conditions": [
-        {
-          "min_prev_performance": 400000,
-          "monthly_limit": 5000,
-          "reward_rate": null,
-          "fixed_amount": 1000
-        }
-      ],
-      "calculation_rule": {
-        "calc_method": "FIXED_PER_VOLUME",
-        "rate": null,
-        "fixed_amount": 1000,
-        "monthly_limit": 5000,
-        "fallback_reward_rate": 0.0,
-        "transaction_tiers": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 20000,
-        "max_payment_amount_applied": 100000,
-        "max_count_per_month": 1
-      },
-      "group_id": "G_PLANPLUS_ESSENTIAL",
-      "ui_warnings": [
-        "순수 통신요금 자동납부 건만 적립되며, 약정금액 대납, 지점을 통한 월납, 알뜰폰 요금 등은 적립되지 않습니다.",
-        "월 1건만 적립됩니다."
+        "대상 영역별 각각 월 1회 적용",
+        "1회 승인금액 기준 10만원까지 적용",
+        "도시가스/전기요금이 아파트관리비에 포함 시 적립되지 않음"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -392,20 +312,20 @@
       "category": "Cultural",
       "sub_category": "ott",
       "source_benefit_id": null,
-      "content": "OTT 포인트 적립",
+      "content": "OTT 7천원 이상 자동납부 시 최대 2천 마이신한포인트 적립",
       "frequency": "MONTHLY",
       "reward_type": "POINT",
       "tier_conditions": [
         {
           "min_prev_performance": 400000,
           "monthly_limit": 1000,
-          "reward_rate": null,
+          "rate": null,
           "fixed_amount": 1000
         },
         {
           "min_prev_performance": 800000,
           "monthly_limit": 2000,
-          "reward_rate": null,
+          "rate": null,
           "fixed_amount": 2000
         }
       ],
@@ -420,12 +340,13 @@
       "transaction_conditions": {
         "min_payment_amount": 7000,
         "max_payment_amount_applied": null,
-        "max_count_per_month": 1
+        "max_count_per_month": 1,
+        "max_count_per_year": null
       },
       "group_id": "G_PLANPLUS_LEISURE",
       "ui_warnings": [
-        "공식 PC 홈페이지를 통한 정기결제(자동납부) 시에만 포인트 적립",
-        "1회성 일반구매 결제, 구글 플레이/애플 앱스토어 등 앱마켓을 통한 인앱결제, 통신 요금 포함(합산) 결제, 공식 모바일 홈페이지에서 구글 플레이/애플 앱스토어 등 앱마켓 가맹점으로 결제되는 경우는 적립되지 않습니다."
+        "통합 월 1회 적용",
+        "공식 PC 홈페이지를 통한 정기결제(자동납부) 시에만 적립"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,

@@ -43,6 +43,7 @@ def get_supabase() -> Client:
 BUCKET_MAP: dict[str, str] = {
     "digest": "Digest",
     "manual": "Markdown",
+    "terms": "Markdown",
 }
 
 # Digest 버킷 내 회사별 폴더 매핑 (파일명 prefix 기준)
@@ -73,7 +74,7 @@ def fetch_markdown_from_s3(file_path: str) -> str:
         print(f"[WARN] Unknown file path prefix '{prefix}' in: {file_path}")
         return ""
 
-    if prefix == "manual":
+    if prefix in ("manual", "terms"):
         bucket_path = file_path
     else:
         # Digest 버킷: {company}/{filename} 으로 변환

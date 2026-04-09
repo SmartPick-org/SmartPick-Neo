@@ -1,0 +1,311 @@
+{
+  "card_meta": {
+    "card_id": "shinhan_air_one",
+    "card_name": "신한카드 Air One",
+    "card_company": "신한카드",
+    "annual_fee": 49000,
+    "minimum_performance": 500000,
+    "reward_currency": "MILEAGE",
+    "currency_to_krw_rate": 15.0
+  },
+  "benefit_groups": [
+    {
+      "group_id": "G_AIRONE_MILEAGE",
+      "group_name": "마일리지 적립 통합 그룹",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": null,
+      "top_n_count": null
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_id": "b_airone_mileage_base",
+      "category": "General",
+      "sub_category": null,
+      "source_benefit_id": null,
+      "content": "국내 일시불/할부, 해외 일시불 이용금액 1천원당 1마일리지 적립",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": null,
+          "reward_rate": 0.001,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.001,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_AIRONE_MILEAGE",
+      "ui_warnings": [],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_airone_mileage_air_duty_free",
+      "category": "Travel",
+      "sub_category": "airline",
+      "source_benefit_id": null,
+      "content": "국내 항공/면세 업종 이용금액 1천원당 1마일리지 추가 적립 (월 2,000마일 한도)",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": 2000,
+          "reward_rate": 0.001,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.001,
+        "fixed_amount": null,
+        "monthly_limit": 2000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_AIRONE_MILEAGE",
+      "ui_warnings": [
+        "면세업종 가맹점은 오프라인 매장에 한하여 적용",
+        "추가적립 한도 초과 이용금액은 기본적립만 제공"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_airone_mileage_overseas",
+      "category": "Travel",
+      "sub_category": "overseas",
+      "source_benefit_id": null,
+      "content": "해외 일시불 이용금액 1천원당 1마일리지 추가 적립 (월 2,000마일 한도)",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": 2000,
+          "reward_rate": 0.001,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.001,
+        "fixed_amount": null,
+        "monthly_limit": 2000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_AIRONE_MILEAGE",
+      "ui_warnings": [
+        "추가적립 한도 초과 이용금액은 기본적립만 제공"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_airone_mileage_duty_free_online",
+      "category": "Shopping",
+      "sub_category": "duty_free",
+      "source_benefit_id": null,
+      "content": "신라면세점 온라인 이용금액 1천원당 1마일리지 추가 적립 (월 적립한도 없음)",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": null,
+          "reward_rate": 0.001,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.001,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_AIRONE_MILEAGE",
+      "ui_warnings": [
+        "신라트립 이용금액은 추가적립 대상 아님",
+        "간편결제로 결제 시 가맹점명이 간편결제명인 경우 서비스 적용 제외"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_airone_hotel_valet",
+      "category": "Travel",
+      "sub_category": "lounge_valet",
+      "source_benefit_id": null,
+      "content": "호텔 발레파킹 월 3회 (전월 실적 30만원 이상)",
+      "frequency": "MONTHLY",
+      "reward_type": "VOUCHER",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": 3,
+          "reward_rate": null,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": null,
+        "monthly_limit": 3,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": 3
+      },
+      "group_id": null,
+      "ui_warnings": [
+        "JW메리어트서울 호텔은 월 1회만 제공",
+        "본인 및 가족카드 제공 횟수 합산 기준",
+        "당일 이용 영수증 제시 필요",
+        "1일 2~3시간까지 무료 주차 제공, 초과 시 별도 요금 부과"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_airone_airport_lounge",
+      "category": "Travel",
+      "sub_category": "lounge_valet",
+      "source_benefit_id": null,
+      "content": "공항 라운지 연 2회 (전월 실적 30만원 이상)",
+      "frequency": "ANNUAL",
+      "reward_type": "VOUCHER",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": null,
+          "reward_rate": null,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": null,
+      "ui_warnings": [
+        "참여 라운지 전체 합산 연 2회",
+        "본인 및 가족카드 제공 횟수 합산 기준",
+        "동반자 입장 시 입장료 고객 부담",
+        "항공권, 여권, 카드 영문 이름 일치 필요"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_airone_airport_valet",
+      "category": "Travel",
+      "sub_category": "lounge_valet",
+      "source_benefit_id": null,
+      "content": "공항 발레파킹 월 3회 (전월 실적 30만원 이상)",
+      "frequency": "MONTHLY",
+      "reward_type": "VOUCHER",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "monthly_limit": 3,
+          "reward_rate": null,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": null,
+        "monthly_limit": 3,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": 3
+      },
+      "group_id": null,
+      "ui_warnings": [
+        "참여 공항 전체 합산 월 3회",
+        "본인 및 가족카드 제공 횟수 합산 기준",
+        "사전 예약 필요, 현장 상황에 따라 당일 이용 가능",
+        "서비스 제공 횟수 초과 시 발레파킹 비용 별도 부과"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    }
+  ]
+}

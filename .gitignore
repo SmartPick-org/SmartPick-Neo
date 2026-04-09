@@ -12,6 +12,10 @@ __pycache__/
 
 # Distribution / packaging
 .Python
+.claude
+.idea/
+.idea\workspace.xml
+*.gitignore
 build/
 develop-eggs/
 dist/
@@ -201,4 +205,7 @@ $RECYCLE.BIN/
 .venv
 /LLM_Advice
 /_*
+tests
+tmp
+
 # End of https://www.toptal.com/developers/gitignore/api/windows,python

@@ -52,12 +52,19 @@ async def recommend_cards(
     digest_repo: DigestRepository = Depends(get_digest_repository),
     explain_service: ExplainService = Depends(get_explain_service),
 ) -> RecommendResponse:
+    """
+    calculate_benefits가 코루틴(async)으로 변경되었으므로 엔드포인트도 async로 선언해야 함.
+    FastAPI는 async 라우트 핸들러를 기본적으로 지원하며 이벤트 루프에서 실행됨.
+    """
     # Pydantic 1차 검증 이후의 방어 로직 (강화)
     if payload.total_budget <= 0:
         raise ValueError("total_budget은 0보다 커야 합니다.")
     if not payload.category_spending:
         raise ValueError("category_spending은 비어 있을 수 없습니다.")
-    if any(v is None or v <= 0 for v in payload.category_spending.values()):
+    if any(
+        (v.get("total", 0) if isinstance(v, dict) else v) <= 0 
+        for v in payload.category_spending.values()
+    ):
         raise ValueError("category_spending의 각 값은 0보다 커야 합니다.")
 
     # 1. 필터링 — 조건에 맞는 카드가 없으면 404 반환
@@ -69,7 +76,7 @@ async def recommend_cards(
 
     # 2. 혜택 계산 & 랭킹
     try:
-        calc_results = recommend_service.calculate_benefits(
+        calc_results = await recommend_service.calculate_benefits(
             filtered, payload.total_budget, payload.category_spending
         )
     except KeyError as e:
@@ -124,6 +131,12 @@ async def answer_qa(
     payload: QARequest,
     explain_service: ExplainService = Depends(get_explain_service),
 ) -> QAResponse:
+    """
+    추천 결과 데이터(JSON)를 바탕으로 사용자의 자유 질문에 대해 답변합니다.
+    
+    - **raw_data**: 추천 결과로 반환된 전체 JSON 문자열 (계산 근거가 포함됨)
+    - **question**: 사용자가 입력한 자유 질문 (예: '왜 이 카드가 1순위야?')
+    """
     # raw_data는 "추천 결과 원본 JSON 문자열"이라서, 최소한 JSON 파싱 가능 여부를 확인합니다.
     try:
         json.loads(payload.raw_data)

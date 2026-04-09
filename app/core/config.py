@@ -5,6 +5,7 @@ from typing import Iterable
 from dotenv import load_dotenv
 from functools import lru_cache
 from langchain.chat_models import init_chat_model
+from langchain_upstage import ChatUpstage
 
 
 DEFAULT_MODEL = "solar-pro2"
@@ -52,6 +53,12 @@ def init_env(project_root: Path | None = None) -> None:
 @lru_cache()
 def get_llm(model: str = DEFAULT_MODEL, temperature: float = 0.0):
     init_env()
+    # solar 모델의 경우 ChatUpstage를 직접 사용
+    if "solar" in model.lower():
+        return ChatUpstage(model=model, 
+            temperature=temperature,
+            request_timeout=LLM_TIMEOUT
+            )
     return init_chat_model(
         model=model, 
         temperature=temperature,

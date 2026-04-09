@@ -1,0 +1,108 @@
+{
+  "card_meta": {
+    "card_id": "hyundai_m",
+    "card_name": "현대카드 M",
+    "card_company": "현대카드",
+    "annual_fee": 30000,
+    "minimum_performance": 500000,
+    "reward_currency": "M_POINT",
+    "currency_to_krw_rate": 0.666
+  },
+  "benefit_groups": [
+    {
+      "group_id": "G_HYUNDAI_M_POINT",
+      "group_name": "M포인트 통합 적립 한도",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": 10000,
+      "top_n_count": null
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_id": "b_hyundai_m_point_basic",
+      "category": "General",
+      "sub_category": null,
+      "source_benefit_id": null,
+      "content": "전월 이용 금액 50만원 이상 시 1.5% M포인트 적립",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": null,
+          "reward_rate": 0.015,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.015,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_HYUNDAI_M_POINT",
+      "ui_warnings": [
+        "네이버쇼핑의 경우 네이버 도메인(naver.com)으로 확인되는 가맹점에 한해 적립",
+        "쿠팡의 경우 쿠팡이츠 결제 건은 적립 제외",
+        "대상 온라인 쇼핑몰의 공식 홈페이지 및 앱 내 결제 건에 한해 적립 적용되며, 상품 선택 시 연결된 다른 사이트 및 앱에서 결제한 경우 적립 제외",
+        "적립 한도는 본인+가족 카드 합산 기준, 적립 한도 초과 시 기본 혜택 적립률 적용"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_hyundai_m_point_additional",
+      "category": "General",
+      "sub_category": null,
+      "source_benefit_id": null,
+      "content": "전월 이용 금액 100만원 이상 시 5% M포인트 적립",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 1000000,
+          "monthly_limit": 10000,
+          "reward_rate": 0.05,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.05,
+        "fixed_amount": null,
+        "monthly_limit": 10000,
+        "fallback_reward_rate": 0.015,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_HYUNDAI_M_POINT",
+      "ui_warnings": [
+        "추가 혜택 적용 시 기본 혜택은 중복 제공되지 않음",
+        "국제브랜드 수수료 및 해외서비스 수수료는 적립 제외",
+        "해외 가맹점 이용 시 별도의 수수료가 부과되니, 국제브랜드 수수료 관련 자세한 내용은 본 가이드북 ‘카드 이용 유의사항’ 참고",
+        "모든 가맹점은 현대카드 가맹점 등록 기준"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    }
+  ]
+}

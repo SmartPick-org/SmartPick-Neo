@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import logging
 import os
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Literal
 
@@ -96,13 +97,15 @@ QUERIES_STANDALONE: dict[str, str] = {
 
 QUERIES_DETAILS: dict[str, str] = {
     "credit_fees": (
-        "이 카드의 이용형태별 수수료율을 알려줘. "
-        "다음 항목을 각각 찾아서 정확한 수치와 함께 안내해줘: "
+        "이 카드의 이용형태별 수수료율을 안내해줘. "
+        "아래 항목 중 약관에 명시된 것만 골라서 수치와 함께 알려줘: "
         "① 일시불 수수료, "
         "② 할부 수수료율(연, 최저~최고), "
         "③ 단기카드대출(현금서비스) 수수료율(연, 최저~최고), "
-        "④ 일부결제금액이월약정(리볼빙) 수수료율(연, 최저~최고). "
-        "수수료율이 개인신용평점에 따라 달라지는 경우 그 사실도 안내해줘."
+        "④ 일부결제금액이월약정(리볼빙) 수수료율(연, 최저~최고), "
+        "⑤ 연체이자율. "
+        "항목이 약관에 없으면 그 항목은 목록에서 빼고, '확인 불가' 같은 말은 하지 마. "
+        "찾은 항목만 불릿 포인트로 정리해줘."
     ),
     "international_fees": (
         "이 카드의 해외 사용 수수료를 알려줘. "
@@ -133,6 +136,7 @@ QUERIES_DETAILS: dict[str, str] = {
 # Combined lookup used by run_advisor
 QUERIES: dict[str, str] = {**QUERIES_STANDALONE, **QUERIES_DETAILS}
 
+
 # ===========================< Search Tools >============================
 
 def _log_and_format(results: list[dict], source: str) -> str:
@@ -149,7 +153,7 @@ def naver_blog_search(query: str) -> str:
     실사용자 후기, 장단점, 개인 경험담 등 비공식 의견을 찾을 때 사용하세요.
     검색 쿼리는 카드명과 핵심 키워드를 포함한 자연어로 작성하세요.
     """
-    logger.info("Tool called — naver_blog_search | query: %s", query)
+    logger.info("Tool called -naver_blog_search | query: %s", query)
     try:
         return _log_and_format(search_blog(query, display=5), "naver_blog_search")
     except NaverSearchError as exc:
@@ -165,11 +169,11 @@ def web_search(query: str) -> str:
     웹 검색으로 공식 페이지와 뉴스를 검색합니다.
     카드사 공식 신청 페이지, 발급 조건, 공지사항 등 공식 출처 정보를 찾을 때 사용하세요.
     """
-    logger.info("Tool called — web_search | query: %s", query)
+    logger.info("Tool called -web_search | query: %s", query)
     try:
         return _log_and_format(search_web(query, display=5), "naver_web_search")
     except NaverSearchError as exc:
-        logger.warning("naver_web_search failed (%s) — falling back to Tavily", exc)
+        logger.warning("naver_web_search failed (%s) -falling back to Tavily", exc)
     try:
         return _log_and_format(tavily_search(query, max_results=5), "tavily_web_search")
     except WebSearchError as exc:
@@ -199,6 +203,60 @@ _SYSTEM_PROMPT = """
 """.strip()
 
 
+# ===========================< Advisor Cache >============================
+# 동일한 카드+질문 유형 조합에 대해 LLM을 반복 호출하지 않도록
+# Supabase에 결과를 단기 캐시로 저장함.
+# 카드 약관·수수료 정보는 자주 바뀌지 않지만 완전히 정적이지도 않으므로
+# 7일 후 만료시켜 오래된 정보가 계속 노출되는 것을 방지함.
+
+_CACHE_TTL_DAYS = 7
+
+
+def _cache_get(cache_key: str) -> str | None:
+    """캐시에서 유효한(7일 이내) 답변을 조회. 없거나 만료됐으면 None 반환."""
+    try:
+        supabase = get_supabase()
+        response = (
+            supabase.table("advisor_cache")
+            .select("answer, created_at")
+            .eq("cache_key", cache_key)
+            .single()
+            .execute()
+        )
+        if not response.data:
+            return None
+
+        # created_at 기준으로 만료 여부 확인
+        created_at = datetime.fromisoformat(response.data["created_at"])
+        if datetime.now(timezone.utc) - created_at > timedelta(days=_CACHE_TTL_DAYS):
+            # 만료된 항목을 지연 삭제 (별도 배치 없이 읽는 시점에 정리)
+            supabase.table("advisor_cache").delete().eq("cache_key", cache_key).execute()
+            logger.info("Cache expired and deleted | key=%s", cache_key)
+            return None
+
+        logger.info("Cache hit | key=%s", cache_key)
+        return response.data["answer"]
+    except Exception as exc:
+        # 캐시 조회 실패 시 에이전트를 정상 실행하도록 None 반환 (서비스 중단 방지)
+        logger.warning("Cache lookup failed (에이전트 정상 실행으로 계속): %s", exc)
+        return None
+
+
+def _cache_set(cache_key: str, answer: str) -> None:
+    """답변을 캐시에 저장. 동일 키가 이미 있으면 덮어씀(upsert)."""
+    try:
+        supabase = get_supabase()
+        supabase.table("advisor_cache").upsert({
+            "cache_key": cache_key,
+            "answer": answer,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+        }).execute()
+        logger.info("Cache set | key=%s", cache_key)
+    except Exception as exc:
+        # 캐시 저장 실패는 치명적이지 않으므로 경고만 기록하고 계속 진행
+        logger.warning("Cache write failed (결과는 정상 반환): %s", exc)
+
+
 # ===========================< Card Info Loader >============================
 
 def _load_card_info(card_name: str) -> str:
@@ -213,7 +271,7 @@ def _load_card_info(card_name: str) -> str:
         logger.error("No manual_file_path found for card: %s", card_name)
         return f"'{card_name}'에 대한 카드 파일 경로를 찾을 수 없어."
 
-    file_path = response.data["manual_file_path"]
+    file_path = response.data["manual_file_path"].replace("manual/", "terms/", 1)
     logger.info("Fetching card markdown from S3: %s", file_path)
     content = fetch_markdown_from_s3(file_path)
     if not content:
@@ -244,9 +302,14 @@ def run_advisor(
     """
     logger.info("run_advisor start | card=%s query_type=%s", card_name, query_type)
 
-    # 1. Load card markdown (file_path 제공 시 DB 조회 생략)
+    # 캐시 확인 -동일한 카드+질문 조합의 답변이 7일 이내에 생성된 경우 바로 반환
+    cache_key = f"{card_name}::{query_type}"
+    cached_answer = _cache_get(cache_key)
+    if cached_answer is not None:
+        return cached_answer
+
+    # 1. Load card terms markdown
     if file_path:
-        from app.core.database import fetch_markdown_from_s3
         logger.info("Loading card info directly from S3: %s", file_path)
         card_info = fetch_markdown_from_s3(file_path)
         if not card_info:
@@ -274,7 +337,7 @@ def run_advisor(
     ]
     logger.info("Prompt built | user query: %s", QUERIES[query_type])
 
-    # 3. Agent loop — LLM decides whether to call the search tool
+    # 3. Agent loop -LLM decides whether to call the search tool
     turn = 0
     while True:
         turn += 1
@@ -283,7 +346,7 @@ def run_advisor(
         messages.append(response)
 
         if not response.tool_calls:
-            logger.info("No tool calls — generating final answer (turn=%d)", turn)
+            logger.info("No tool calls -generating final answer (turn=%d)", turn)
             break
 
         _tools = {t.name: t for t in tools}
@@ -298,33 +361,9 @@ def run_advisor(
             ))
             logger.info("Tool result received (%d chars)", len(result))
 
-    logger.info("run_advisor complete | answer length=%d chars", len(str(response.content)))
-    return str(response.content)
+    answer = str(response.content)
+    logger.info("run_advisor complete | answer length=%d chars", len(answer))
 
-
-# ===========================< Test Run >============================
-
-if __name__ == "__main__":
-    from app.core.database import fetch_markdown_from_s3
-
-    TEST_CARD_NAME = "KB국민 굿데이올림카드"
-    TEST_FILE_PATH = "manual/kb_GoodDay.md"
-
-    # 1. Fetch markdown from S3
-    print(f"\n{'='*60}")
-    print(f"[1] S3 fetch: {TEST_FILE_PATH}")
-    print("="*60)
-    content = fetch_markdown_from_s3(TEST_FILE_PATH)
-    if content:
-        print(f"OK — {len(content)} chars fetched")
-        print(f"Preview:\n{content[:300]}")
-    else:
-        print("FAIL — empty content returned")
-        raise SystemExit(1)
-
-    # 2. Run the full advisor agent
-    print(f"\n{'='*60}")
-    print(f"[2] Running advisor agent — how_to_apply")
-    print("="*60)
-    answer = run_advisor(TEST_CARD_NAME, "how_to_apply", file_path=TEST_FILE_PATH)
-    print(answer)
+    # 생성된 답변을 캐시에 저장 -동일 조합의 다음 요청은 LLM 호출 없이 바로 반환됨
+    _cache_set(cache_key, answer)
+    return answer

@@ -1,0 +1,97 @@
+{
+  "card_meta": {
+    "card_id": "hyundai_zero_ed3_point_sc",
+    "card_name": "현대카드 ZERO Edition3 포인트형 (SC제일은행)",
+    "card_company": "현대카드",
+    "annual_fee": 10000,
+    "minimum_performance": 0,
+    "reward_currency": "M_POINT",
+    "currency_to_krw_rate": 0.666
+  },
+  "benefit_groups": [
+    {
+      "group_id": "G_ZERO_ED3_POINT_ALL",
+      "group_name": "전 가맹점 M포인트 적립",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": null,
+      "top_n_count": null
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_id": "b_zero_ed3_point_1_2pct",
+      "category": "General",
+      "sub_category": null,
+      "source_benefit_id": null,
+      "content": "국내외 가맹점 이용 금액의 1.2% M포인트 적립",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.012,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_ZERO_ED3_POINT_ALL",
+      "ui_warnings": [
+        "장기카드대출(카드론), 단기카드대출(현금서비스), 연회비, 제수수료, 이자 제외",
+        "국제브랜드 수수료 및 해외서비스 수수료 제외",
+        "공과금 납부액(국세, 관세, 지방세 등) 제외",
+        "전기 요금, 도시가스 요금, 아파트 관리비, 부동산 임대료(월세) 제외",
+        "사립유치원 교육비, 초·중·고교 학교 납입금, 대학·대학원 등록금 납부 결제건 제외",
+        "상품권 등 현금성 유가증권 구매 및 선불 카드 구매·충전 금액 제외",
+        "건강보험, 국민연금, 고용보험, 산재보험 및 장애인 고용 부담금 제외",
+        "고속도로 통행 요금, 후불하이패스카드 이용 금액, 고속버스(차내 단말기 및 고속버스 앱 결제 포함) 제외",
+        "현대카드의 모든 할인 및 무이자 할부 서비스 적용된 결제 건의 전체 이용 금액액 제외"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_zero_ed3_emergency_point",
+      "category": "General",
+      "sub_category": null,
+      "source_benefit_id": null,
+      "content": "최대 50만 M포인트 선지급 후 카드 이용 시 적립되는 M포인트로 상환",
+      "frequency": "ONCE",
+      "reward_type": "POINT",
+      "tier_conditions": [],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": 500000,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": null,
+      "ui_warnings": [
+        "보유한 M포인트로 우선 상환 후 잔액은 1 M포인트 = 1원으로 환산하여 청구",
+        "상환되지 못한 긴급적립 M포인트가 남아있을 경우 별도 현금 청구"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": true,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    }
+  ]
+}

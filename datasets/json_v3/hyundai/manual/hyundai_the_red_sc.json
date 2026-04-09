@@ -1,0 +1,230 @@
+{
+  "card_meta": {
+    "card_id": "hyundai_the_red_sc",
+    "card_name": "현대카드 the Red (SC제일은행)",
+    "card_company": "현대카드",
+    "annual_fee": 300000,
+    "minimum_performance": 500000,
+    "reward_currency": "M_POINT",
+    "currency_to_krw_rate": 0.666
+  },
+  "benefit_groups": [
+    {
+      "group_id": "G_THE_RED_ANNUAL_BONUS",
+      "group_name": "연간 보너스 혜택",
+      "group_type": "USER_CHOICE_ONE",
+      "limit_amount": null,
+      "top_n_count": null
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_id": "b_the_red_mpoint_1_5pct",
+      "category": "General",
+      "sub_category": null,
+      "source_benefit_id": null,
+      "content": "국내외 가맹점 1.5% M포인트 적립",
+      "frequency": "MONTHLY",
+      "reward_type": "POINT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": null,
+          "reward_rate": 0.015,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.015,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": null,
+      "ui_warnings": [
+        "전월 이용 금액 50만원 이상 시 혜택 제공",
+        "신규 발급 시 카드 수령 등록월 다음 달 이용 건까지는 전월 실적 조건 미적용"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_the_red_annual_bonus",
+      "category": "General",
+      "sub_category": null,
+      "source_benefit_id": null,
+      "content": "연간 보너스(쇼핑/여행/호텔/골프 바우처 또는 M포인트 10만 포인트)",
+      "frequency": "ANNUAL",
+      "reward_type": "VOUCHER",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 0,
+          "monthly_limit": null,
+          "reward_rate": null,
+          "fixed_amount": 300000
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": 300000,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_THE_RED_ANNUAL_BONUS",
+      "ui_warnings": [
+        "카드 상태가 정상인 경우에 한해 본인 카드 결제 시에만 사용 가능",
+        "바우처는 권면 금액 이상 결제 시 사용 가능하며, 초과 금액은 카드로 결제 필수",
+        "바우처 유효 기간은 카드 발급 확정월 포함 12개월",
+        "바우처는 현금 교환, 타인에게 양도 및 판매 불가",
+        "연간 보너스로 교환한 M포인트로 M 긴급적립 상환 불가"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": true,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_the_red_lounge_10x",
+      "category": "Travel",
+      "sub_category": "lounge_valet",
+      "source_benefit_id": null,
+      "content": "전 세계 1,000여 개 공항 라운지 무료 이용(연 10회)",
+      "frequency": "ANNUAL",
+      "reward_type": "VOUCHER",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": 10,
+          "reward_rate": null,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": null,
+      "ui_warnings": [
+        "전월 이용 금액 50만원 이상 시 이용 가능",
+        "연간 10회 한도"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_the_red_valet_10x",
+      "category": "Travel",
+      "sub_category": "lounge_valet",
+      "source_benefit_id": null,
+      "content": "공항 및 특급호텔 발레파킹 무료 이용(월 10회)",
+      "frequency": "MONTHLY",
+      "reward_type": "VOUCHER",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 500000,
+          "monthly_limit": 10,
+          "reward_rate": null,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": null,
+      "ui_warnings": [
+        "전월 이용 금액 50만원 이상 시 이용 가능",
+        "월 10회 한도"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_the_red_metal_plate",
+      "category": "General",
+      "sub_category": null,
+      "source_benefit_id": null,
+      "content": "메탈 플레이트 제공(발급 수수료 10만원 또는 10만 M포인트 결제)",
+      "frequency": "ONCE",
+      "reward_type": "VOUCHER",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 0,
+          "monthly_limit": null,
+          "reward_rate": null,
+          "fixed_amount": 100000
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": 100000,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": null,
+      "ui_warnings": [
+        "본인 회원 신청 시 제공",
+        "재발급 및 갱신 시 동일 적용"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": true,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    }
+  ]
+}

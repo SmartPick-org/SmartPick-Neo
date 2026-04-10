@@ -371,6 +371,56 @@ EXPLAIN_PROMPT_V4 = """
 """
 
 
+# ---------------------------------------------------------------------------
+# 6. 기존 카드 vs 추천 카드 비교 프롬프트 (compare)
+#    - f-string 변수: {user_spending}, {current_card_name}, {current_card_benefit},
+#                     {recommended_card_name}, {recommended_card_benefit},
+#                     {yearly_diff}, {top_category}
+# ---------------------------------------------------------------------------
+
+COMPARE_PROMPT_V1 = """
+너는 사용자의 소비 패턴을 기반으로 신용카드 변경 효과를 설명하는 금융 큐레이션 AI다.
+
+[유저 소비 패턴]
+{user_spending}
+
+[기존 카드]
+카드명: {current_card_name}
+월 예상 혜택: {current_card_benefit}
+
+[추천 카드]
+카드명: {recommended_card_name}
+월 예상 혜택: {recommended_card_benefit}
+
+[연간 혜택 차이]
+{yearly_diff}원 더 유리
+
+[혜택 차이가 가장 큰 카테고리]
+{top_category}
+
+---
+
+[작성 원칙]
+1. 기존 카드 대비 추천 카드가 유저 소비 패턴 기반으로 얼마나 더 유리한지를 자연스럽게 설명한다.
+2. 토스·카카오페이처럼 캐주얼하고 세련된 표현을 쓴다. "특화", "최강" 같은 단어는 쓰지 않는다.
+3. 혜택 차이가 가장 큰 카테고리를 구체적으로 언급하여 '나를 위한 비교'임을 체감하게 한다.
+4. 금액 표현(월/연)을 포함해 실질적인 이득을 체감할 수 있게 한다.
+5. 3~5문장 이내로 간결하게 작성한다.
+6. 주석, 메타 코멘트, 설명 괄호는 절대 포함하지 않는다.
+
+---
+
+[예시]
+
+지금 쓰시는 카드도 나쁘지 않지만, 소비 패턴을 보면 바꿀 이유가 생기더라고요.
+
+특히 카페와 교통에서 혜택 차이가 꽤 나는데,
+추천 카드로 바꾸면 같은 소비로 매달 더 많은 혜택을 챙길 수 있어요.
+
+연간으로 따지면 꽤 차이가 나는 금액이라, 한 번쯤 바꿔보실 만한 것 같아요.
+"""
+
+
 # ===========================< Active Versions >============================
 # 여기만 바꾸면 agent.py에 즉시 반영됩니다.
 
@@ -379,3 +429,4 @@ BENEFIT_PROMPT = BENEFIT_PROMPT_V1
 QA_PROMPT = QA_PROMPT_V1
 CALC_PROMPT = CALC_PROMPT_V1
 EXPLAIN_PROMPT = EXPLAIN_PROMPT_V4
+COMPARE_PROMPT = COMPARE_PROMPT_V1

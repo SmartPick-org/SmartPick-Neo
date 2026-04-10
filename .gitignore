@@ -13,6 +13,7 @@ __pycache__/
 # Distribution / packaging
 .Python
 .claude
+.omc/
 .idea/
 .idea\workspace.xml
 *.gitignore

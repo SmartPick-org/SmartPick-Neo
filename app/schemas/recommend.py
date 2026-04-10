@@ -101,6 +101,52 @@ class RecommendResponse(BaseModel):
     explanation: str = Field(..., description="이 카드가 1순위로 추천된 이유", examples=["이 카드는 커피, 교통, 쇼핑에서 높은 할인 혜택을 제공합니다."])
 
 
+class CompareRequest(BaseModel):
+    total_budget: int = Field(..., description="월 총 소비 금액", examples=[500000])
+    category_spending: Dict[CategoryEnum, Union[int, Dict[str, Union[int, str]]]] = Field(
+        ...,
+        description="카테고리별 월 소비 금액 (RecommendRequest와 동일한 형식)",
+        examples=[{"Coffee": 50000, "Traffic": 100000}],
+    )
+    current_card_id: str = Field(..., description="비교할 기존 카드 ID", examples=["shinhan_mr_life"])
+
+    @model_validator(mode="after")
+    def validate_sub_categories(self) -> 'CompareRequest':
+        if not self.category_spending:
+            return self
+
+        for cat, amount_info in self.category_spending.items():
+            if isinstance(amount_info, dict):
+                if "total" not in amount_info:
+                    raise ValueError(f"Category '{cat.value}' must contain a 'total' key.")
+
+                from app.schemas.enums import SubCategoryEnum
+                for sub_key in amount_info.keys():
+                    if sub_key == "total":
+                        continue
+                    try:
+                        SubCategoryEnum(sub_key)
+                    except ValueError:
+                        raise ValueError(f"Invalid sub_category '{sub_key}' in category '{cat.value}'.")
+        return self
+
+
+class CategoryComparison(BaseModel):
+    category: str = Field(..., description="카테고리명", examples=["Coffee"])
+    current_benefit: int = Field(..., description="기존 카드 월 혜택 금액", examples=[2000])
+    recommended_benefit: int = Field(..., description="추천 카드 월 혜택 금액", examples=[5000])
+    diff: int = Field(..., description="추천 카드 혜택 - 기존 카드 혜택", examples=[3000])
+
+
+class CompareResponse(BaseModel):
+    current_card: RecommendCard = Field(..., description="기존 카드 혜택 계산 결과")
+    recommended_card: RecommendCard = Field(..., description="1순위 추천 카드")
+    monthly_diff: int = Field(..., description="월 혜택 차이 (추천 - 기존)", examples=[15000])
+    yearly_diff: int = Field(..., description="연간 혜택 차이 (추천 - 기존)", examples=[180000])
+    category_comparison: List[CategoryComparison] = Field(..., description="카테고리별 혜택 비교")
+    explanation: str = Field(..., description="비교 큐레이션 텍스트")
+
+
 class QARequest(BaseModel):
     raw_data: str = Field(..., description="추천 결과 원본 JSON 문자열")
     question: str = Field(..., description="유저 질문")

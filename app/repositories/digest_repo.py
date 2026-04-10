@@ -66,7 +66,7 @@ class DigestRepository:
         if company_dir:
             local_dir = self.digest_dir / company_dir
             if local_dir.exists():
-                for md_file in local_dir.glob("*.md"):
+                for md_file in local_dir.glob("**/*.md"):
                     if card_id.replace("_", "") in md_file.stem.replace("_", "").replace(" ", "").lower():
                         logger.info(
                             "[DigestRepository] 로컬 파일에서 digest 로드 성공 | card={} | file={}",

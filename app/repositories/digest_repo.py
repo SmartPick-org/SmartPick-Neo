@@ -41,12 +41,12 @@ class DigestRepository:
                 supabase = get_supabase()
                 response = (
                     supabase.table("cards")
-                    .select("file_path")
+                    .select("digest_file_path")
                     .eq("card_name", card_name)
                     .single()
                     .execute()
                 )
-                file_path: str = (response.data or {}).get("file_path", "")
+                file_path: str = (response.data or {}).get("digest_file_path", "")
                 if file_path:
                     content = fetch_markdown_from_s3(file_path)
                     if content:

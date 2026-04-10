@@ -20,5 +20,5 @@ jobs:
             cd /home/ubuntu/SmartPick-Neo
             git pull origin ${{ github.ref_name }}
             git checkout ${{ github.ref_name }}
-            /home/ubuntu/.local/bin/uv sync
+            /home/ubuntu/.local/bin/uv sync --no-group dev
             sudo systemctl restart smartpick

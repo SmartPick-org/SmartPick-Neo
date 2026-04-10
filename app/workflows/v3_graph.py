@@ -1,3 +1,5 @@
+import asyncio
+
 from loguru import logger
 from typing import Annotated, Dict, List, Literal, NotRequired, Optional, TypedDict, Any
 
@@ -118,7 +120,7 @@ def build_graph(
         digests = []
         top_digest = ""
         try:
-            digests = [digest_repo.get_digest(card.get("_card_data", {})) for card in ranked]
+            digests = list(await asyncio.gather(*[digest_repo.get_digest(card.get("_card_data", {})) for card in ranked]))
             top_digest = digests[0] if digests else ""
         except Exception as e:
             logger.warning("[rank_and_explain_node] digest 로드 실패: %s", repr(e))

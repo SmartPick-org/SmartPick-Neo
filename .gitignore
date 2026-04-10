@@ -206,7 +206,6 @@ $RECYCLE.BIN/
 .venv
 /LLM_Advice
 /_*
-tests
 tmp
 
 # npm cache

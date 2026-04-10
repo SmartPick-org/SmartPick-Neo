@@ -16,7 +16,6 @@ from __future__ import annotations
 
 import os
 from datetime import datetime, timedelta, timezone
-from pathlib import Path
 from typing import Literal
 
 from loguru import logger
@@ -27,7 +26,7 @@ from langchain_core.messages import HumanMessage, SystemMessage, ToolMessage
 from langsmith import traceable
 from app.core.resilience import with_resilience
 
-from app.core.database import fetch_markdown_from_s3, get_supabase
+from app.core.database import get_supabase
 from app.tools.web_search import (
     search_blog,
     search_web,
@@ -54,7 +53,6 @@ QueryType = Literal[
     "revolving",
 ]
 
-MARKDOWN_DIR = Path(__file__).resolve().parents[2] / "datasets" / "markdown_upstage"
 
 # ===========================< Button Queries (반말) >============================
 # UI 버튼 구조:
@@ -257,53 +255,15 @@ def _cache_set(cache_key: str, answer: str) -> None:
 
 # ===========================< Card Info Loader >============================
 
-def _local_load_card_info(card_name: str) -> str:
-    """
-    DB/S3를 사용할 수 없을 때 로컬 datasets/markdown_upstage 폴더에서 일치하는 마크다운 파일을 로드합니다.
-    """
-    target_file = None
-    if MARKDOWN_DIR.exists():
-        company_dirs = [d for d in MARKDOWN_DIR.iterdir() if d.is_dir()]
-        for d in company_dirs:
-            terms_dir = d / "terms"
-            if not terms_dir.exists():
-                continue
-            for file in terms_dir.glob("*.md"):
-                if card_name.replace(" ", "") in file.name.replace(" ", ""):
-                    target_file = file
-                    break
-            if target_file:
-                break
-
-    if not target_file:
-        logger.warning(f"[CardAdvisorService] 일치하는 마크다운 파일을 로컬에서도 찾을 수 없음: {card_name}")
-        return "카드 상세 약관 정보를 찾을 수 없어. 카드사 공식 홈페이지를 확인해봐야 할 것 같아."
-
-    logger.info(f"[CardAdvisorService] 로컬 카드 정보 로드 성공: {target_file.name} ({target_file.stat().st_size} chars)")
-    return target_file.read_text(encoding="utf-8")
+_terms_repo = None
 
 
-def _load_card_info(card_name: str) -> str:
-    try:
-        supabase = get_supabase()
-        response = supabase.table("cards").select("manual_file_path").eq("card_name", card_name).single().execute()
-        
-        if not response.data or not response.data.get("manual_file_path"):
-            logger.warning(f"[CardAdvisorService] No manual_file_path found in DB for card: {card_name}")
-            return _local_load_card_info(card_name)
-
-        file_path = response.data["manual_file_path"].replace("manual/", "terms/", 1)
-        logger.info(f"[CardAdvisorService] Fetching card markdown from S3: {file_path}")
-        content = fetch_markdown_from_s3(file_path)
-        if not content:
-            logger.warning(f"[CardAdvisorService] S3 파일 찾을 수 없음, 로컬으로 fallback 시도: {file_path}")
-            return _local_load_card_info(card_name)
-            
-        logger.info(f"[CardAdvisorService] Loaded card info from S3: {file_path} ({len(content)} chars)")
-        return content
-    except Exception as exc:
-        logger.warning(f"[CardAdvisorService] DB lookup failed or S3 failed, falling back to local: {exc}")
-        return _local_load_card_info(card_name)
+def _get_terms_repo():
+    global _terms_repo
+    if _terms_repo is None:
+        from app.repositories.terms_repo import TermsRepository
+        _terms_repo = TermsRepository()
+    return _terms_repo
 
 
 
@@ -313,16 +273,15 @@ def _load_card_info(card_name: str) -> str:
 async def get_advice(
     card_name: str,
     query_type: QueryType,
-    file_path: str | None = None,
 ) -> str:
     """
     특정 신용카드에 대한 상세 정보(수수료, 후기 등)를 제공하는 어드바이저 서비스.
+    cards 테이블에서 terms_file_path를 조회해 Supabase storage에서 마크다운을 로드합니다.
     LLM이 필요하다고 판단할 때만 naver_blog_search 툴을 호출합니다.
 
     Args:
         card_name  : 카드 이름  (예: "현대카드 M")
         query_type : 질문 유형
-        file_path  : S3 파일 경로 (제공 시 DB 조회 생략, 예: "manual/kb_GoodDay.md")
 
     Returns:
         LLM이 생성한 답변 문자열
@@ -335,14 +294,8 @@ async def get_advice(
     if cached_answer is not None:
         return cached_answer
 
-    # 1. Load card terms markdown
-    if file_path:
-        logger.info("Loading card info directly from S3: %s", file_path)
-        card_info = fetch_markdown_from_s3(file_path)
-        if not card_info:
-            card_info = f"카드 파일을 S3에서 불러올 수 없어: {file_path}"
-    else:
-        card_info = _load_card_info(card_name)
+    # 1. cards 테이블에서 terms_file_path 조회 → Supabase storage에서 마크다운 로드
+    card_info = await _get_terms_repo().get_terms(card_name)
 
     # 2. Build LLM with tools
     # naver_blog_search is only relevant for reviews; all other queries use web search only

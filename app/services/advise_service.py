@@ -16,7 +16,6 @@ from __future__ import annotations
 
 import os
 from datetime import datetime, timedelta, timezone
-from pathlib import Path
 from typing import Literal
 
 from loguru import logger
@@ -28,6 +27,7 @@ from langsmith import traceable
 from app.core.resilience import with_resilience
 
 from app.core.database import fetch_markdown_from_s3, get_supabase
+from app.core.discord import notify_discord
 from app.tools.web_search import (
     search_blog,
     search_web,
@@ -54,7 +54,6 @@ QueryType = Literal[
     "revolving",
 ]
 
-MARKDOWN_DIR = Path(__file__).resolve().parents[2] / "datasets" / "markdown_upstage"
 
 # ===========================< Button Queries (반말) >============================
 # UI 버튼 구조:
@@ -257,53 +256,43 @@ def _cache_set(cache_key: str, answer: str) -> None:
 
 # ===========================< Card Info Loader >============================
 
-def _local_load_card_info(card_name: str) -> str:
+async def _load_card_info(card_name: str) -> str:
     """
-    DB/S3를 사용할 수 없을 때 로컬 datasets/markdown_upstage 폴더에서 일치하는 마크다운 파일을 로드합니다.
+    cards 테이블에서 file_path를 조회하고 Supabase storage에서 마크다운을 로드합니다.
+    실패 시 Discord로 알림을 전송하고 예외를 발생시킵니다.
     """
-    target_file = None
-    if MARKDOWN_DIR.exists():
-        company_dirs = [d for d in MARKDOWN_DIR.iterdir() if d.is_dir()]
-        for d in company_dirs:
-            terms_dir = d / "terms"
-            if not terms_dir.exists():
-                continue
-            for file in terms_dir.glob("*.md"):
-                if card_name.replace(" ", "") in file.name.replace(" ", ""):
-                    target_file = file
-                    break
-            if target_file:
-                break
-
-    if not target_file:
-        logger.warning(f"[CardAdvisorService] 일치하는 마크다운 파일을 로컬에서도 찾을 수 없음: {card_name}")
-        return "카드 상세 약관 정보를 찾을 수 없어. 카드사 공식 홈페이지를 확인해봐야 할 것 같아."
-
-    logger.info(f"[CardAdvisorService] 로컬 카드 정보 로드 성공: {target_file.name} ({target_file.stat().st_size} chars)")
-    return target_file.read_text(encoding="utf-8")
-
-
-def _load_card_info(card_name: str) -> str:
     try:
         supabase = get_supabase()
-        response = supabase.table("cards").select("manual_file_path").eq("card_name", card_name).single().execute()
-        
-        if not response.data or not response.data.get("manual_file_path"):
-            logger.warning(f"[CardAdvisorService] No manual_file_path found in DB for card: {card_name}")
-            return _local_load_card_info(card_name)
-
-        file_path = response.data["manual_file_path"].replace("manual/", "terms/", 1)
-        logger.info(f"[CardAdvisorService] Fetching card markdown from S3: {file_path}")
-        content = fetch_markdown_from_s3(file_path)
-        if not content:
-            logger.warning(f"[CardAdvisorService] S3 파일 찾을 수 없음, 로컬으로 fallback 시도: {file_path}")
-            return _local_load_card_info(card_name)
-            
-        logger.info(f"[CardAdvisorService] Loaded card info from S3: {file_path} ({len(content)} chars)")
-        return content
+        response = supabase.table("cards").select("file_path").eq("card_name", card_name).single().execute()
     except Exception as exc:
-        logger.warning(f"[CardAdvisorService] DB lookup failed or S3 failed, falling back to local: {exc}")
-        return _local_load_card_info(card_name)
+        logger.error(f"[CardAdvisorService] cards 테이블 DB 조회 실패 | card={card_name} | error={exc}")
+        await notify_discord(exc, context=f"_load_card_info — DB lookup | card={card_name}")
+        raise RuntimeError(f"카드 정보 DB 조회 실패: {card_name}") from exc
+
+    if not response.data or not response.data.get("file_path"):
+        exc = RuntimeError(f"cards 테이블에 '{card_name}' 항목 없음 또는 file_path 미설정")
+        logger.error(f"[CardAdvisorService] {exc}")
+        await notify_discord(exc, context=f"_load_card_info — missing file_path | card={card_name}")
+        raise exc
+
+    file_path = response.data["file_path"]
+    logger.info(f"[CardAdvisorService] Fetching card markdown from Supabase storage: {file_path}")
+
+    try:
+        content = fetch_markdown_from_s3(file_path)
+    except Exception as exc:
+        logger.error(f"[CardAdvisorService] Supabase storage 다운로드 예외 | path={file_path} | error={exc}")
+        await notify_discord(exc, context=f"_load_card_info — storage download | card={card_name} path={file_path}")
+        raise RuntimeError(f"Supabase storage 다운로드 실패: {file_path}") from exc
+
+    if not content:
+        exc = RuntimeError(f"Supabase storage에서 빈 파일 반환 또는 파일 없음: {file_path}")
+        logger.error(f"[CardAdvisorService] {exc}")
+        await notify_discord(exc, context=f"_load_card_info — empty content | card={card_name} path={file_path}")
+        raise exc
+
+    logger.info(f"[CardAdvisorService] Loaded card info from Supabase storage: {file_path} ({len(content)} chars)")
+    return content
 
 
 
@@ -313,16 +302,15 @@ def _load_card_info(card_name: str) -> str:
 async def get_advice(
     card_name: str,
     query_type: QueryType,
-    file_path: str | None = None,
 ) -> str:
     """
     특정 신용카드에 대한 상세 정보(수수료, 후기 등)를 제공하는 어드바이저 서비스.
+    cards 테이블에서 file_path를 조회해 Supabase storage에서 마크다운을 로드합니다.
     LLM이 필요하다고 판단할 때만 naver_blog_search 툴을 호출합니다.
 
     Args:
         card_name  : 카드 이름  (예: "현대카드 M")
         query_type : 질문 유형
-        file_path  : S3 파일 경로 (제공 시 DB 조회 생략, 예: "manual/kb_GoodDay.md")
 
     Returns:
         LLM이 생성한 답변 문자열
@@ -335,14 +323,8 @@ async def get_advice(
     if cached_answer is not None:
         return cached_answer
 
-    # 1. Load card terms markdown
-    if file_path:
-        logger.info("Loading card info directly from S3: %s", file_path)
-        card_info = fetch_markdown_from_s3(file_path)
-        if not card_info:
-            card_info = f"카드 파일을 S3에서 불러올 수 없어: {file_path}"
-    else:
-        card_info = _load_card_info(card_name)
+    # 1. cards 테이블에서 file_path 조회 → Supabase storage에서 마크다운 로드
+    card_info = await _load_card_info(card_name)
 
     # 2. Build LLM with tools
     # naver_blog_search is only relevant for reviews; all other queries use web search only

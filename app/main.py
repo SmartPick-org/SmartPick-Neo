@@ -34,7 +34,11 @@ logger.add(
     level="INFO"
 )
 
-app = FastAPI()
+app = FastAPI(
+    title="SmartPick API",
+    version="1.0.0",
+    description="신용카드 추천 및 어드바이저 서비스 API",
+)
 
 app.add_middleware(
     CORSMiddleware,
@@ -44,8 +48,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(card_router)
-app.include_router(advisor_router)
+app.include_router(card_router, prefix="/api/v1")
+app.include_router(advisor_router, prefix="/api/v1")
 
 
 # ---------------------------------------------------------------------------

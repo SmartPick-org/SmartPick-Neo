@@ -26,8 +26,7 @@ from langchain_core.messages import HumanMessage, SystemMessage, ToolMessage
 from langsmith import traceable
 from app.core.resilience import with_resilience
 
-from app.core.database import fetch_markdown_from_s3, get_supabase
-from app.core.discord import notify_discord
+from app.core.database import get_supabase
 from app.tools.web_search import (
     search_blog,
     search_web,
@@ -256,43 +255,15 @@ def _cache_set(cache_key: str, answer: str) -> None:
 
 # ===========================< Card Info Loader >============================
 
-async def _load_card_info(card_name: str) -> str:
-    """
-    cards 테이블에서 file_path를 조회하고 Supabase storage에서 마크다운을 로드합니다.
-    실패 시 Discord로 알림을 전송하고 예외를 발생시킵니다.
-    """
-    try:
-        supabase = get_supabase()
-        response = supabase.table("cards").select("file_path").eq("card_name", card_name).single().execute()
-    except Exception as exc:
-        logger.error(f"[CardAdvisorService] cards 테이블 DB 조회 실패 | card={card_name} | error={exc}")
-        await notify_discord(exc, context=f"_load_card_info — DB lookup | card={card_name}")
-        raise RuntimeError(f"카드 정보 DB 조회 실패: {card_name}") from exc
+_terms_repo = None
 
-    if not response.data or not response.data.get("file_path"):
-        exc = RuntimeError(f"cards 테이블에 '{card_name}' 항목 없음 또는 file_path 미설정")
-        logger.error(f"[CardAdvisorService] {exc}")
-        await notify_discord(exc, context=f"_load_card_info — missing file_path | card={card_name}")
-        raise exc
 
-    file_path = response.data["file_path"]
-    logger.info(f"[CardAdvisorService] Fetching card markdown from Supabase storage: {file_path}")
-
-    try:
-        content = fetch_markdown_from_s3(file_path)
-    except Exception as exc:
-        logger.error(f"[CardAdvisorService] Supabase storage 다운로드 예외 | path={file_path} | error={exc}")
-        await notify_discord(exc, context=f"_load_card_info — storage download | card={card_name} path={file_path}")
-        raise RuntimeError(f"Supabase storage 다운로드 실패: {file_path}") from exc
-
-    if not content:
-        exc = RuntimeError(f"Supabase storage에서 빈 파일 반환 또는 파일 없음: {file_path}")
-        logger.error(f"[CardAdvisorService] {exc}")
-        await notify_discord(exc, context=f"_load_card_info — empty content | card={card_name} path={file_path}")
-        raise exc
-
-    logger.info(f"[CardAdvisorService] Loaded card info from Supabase storage: {file_path} ({len(content)} chars)")
-    return content
+def _get_terms_repo():
+    global _terms_repo
+    if _terms_repo is None:
+        from app.repositories.terms_repo import TermsRepository
+        _terms_repo = TermsRepository()
+    return _terms_repo
 
 
 
@@ -305,7 +276,7 @@ async def get_advice(
 ) -> str:
     """
     특정 신용카드에 대한 상세 정보(수수료, 후기 등)를 제공하는 어드바이저 서비스.
-    cards 테이블에서 file_path를 조회해 Supabase storage에서 마크다운을 로드합니다.
+    cards 테이블에서 terms_file_path를 조회해 Supabase storage에서 마크다운을 로드합니다.
     LLM이 필요하다고 판단할 때만 naver_blog_search 툴을 호출합니다.
 
     Args:
@@ -323,8 +294,8 @@ async def get_advice(
     if cached_answer is not None:
         return cached_answer
 
-    # 1. cards 테이블에서 file_path 조회 → Supabase storage에서 마크다운 로드
-    card_info = await _load_card_info(card_name)
+    # 1. cards 테이블에서 terms_file_path 조회 → Supabase storage에서 마크다운 로드
+    card_info = await _get_terms_repo().get_terms(card_name)
 
     # 2. Build LLM with tools
     # naver_blog_search is only relevant for reviews; all other queries use web search only

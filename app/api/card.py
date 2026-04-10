@@ -1,3 +1,4 @@
+import asyncio
 import json
 from loguru import logger
 from pathlib import Path
@@ -101,7 +102,7 @@ async def recommend_cards(payload: RecommendRequest) -> RecommendResponse:
     digests = []
     try:
         # 모든 카드의 Digest를 시도하여 상세 내역 생성에 대비
-        digests = [digest_repo.get_digest(card.get("_card_data", {})) for card in ranked]
+        digests = list(await asyncio.gather(*[digest_repo.get_digest(card.get("_card_data", {})) for card in ranked]))
         top_digest = digests[0] if digests else ""
     except Exception as e:
         logger.warning("[recommend_cards] digest 로드 실패: %s", repr(e))

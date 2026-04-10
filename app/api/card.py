@@ -1,13 +1,19 @@
 import json
+import os
 from loguru import logger
 from pathlib import Path
 
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException, Query
 
 from app.core.config import get_llm
 from app.core.exceptions import LLMUnavailableError, NoCardsFoundError
-from app.repositories.card_repo import DatasetCardRepository
+from app.repositories.card_repo import DatasetCardRepository, DBCardRepository
 from app.repositories.digest_repo import DigestRepository
+from app.schemas.card_catalog import (
+    CardCatalogItem,
+    CardCatalogResponse,
+    CardDetailResponse,
+)
 from app.schemas.recommend import QARequest, QAResponse, RecommendRequest, RecommendResponse
 from app.services.card_service import CardRecommendService
 from app.services.explain_service import ExplainService
@@ -22,6 +28,96 @@ DIGEST_DIR = PROJECT_ROOT / "datasets" / "digest"
 _LLM_FALLBACK_EXPLAIN = (
     "AI 설명 생성에 실패했습니다. 아래 카드 목록은 혜택 계산 결과 기준으로 정렬되었습니다."
 )
+
+def _get_card_repository():
+    """
+    카드 목록을 제공할 소스를 선택합니다.
+    - 기본: 레포 내 datasets/json_v3
+    - 선택: Supabase(DB) (CARD_DATA_SOURCE=db)
+    """
+    source = (os.getenv("CARD_DATA_SOURCE") or "dataset").strip().lower()
+    if source == "db":
+        return DBCardRepository()
+    return DatasetCardRepository(DATASETS_DIR)
+
+
+def _to_catalog_item(card: dict) -> CardCatalogItem:
+    meta = card.get("card_meta", {}) or {}
+    categories = card.get("_card_categories", set()) or set()
+    categories_list = sorted([str(c) for c in categories if c])
+    return CardCatalogItem(
+        card_id=str(meta.get("card_id", "") or ""),
+        card_name=str(meta.get("card_name", "") or ""),
+        card_company=str(meta.get("card_company", "") or ""),
+        annual_fee=int(meta.get("annual_fee", 0) or 0),
+        minimum_performance=int(meta.get("minimum_performance", 0) or 0),
+        categories=categories_list,
+    )
+
+
+@router.get("", response_model=CardCatalogResponse)
+def list_cards(
+    q: str | None = Query(default=None, description="카드명/카드사 검색어"),
+    company: str | None = Query(default=None, description="카드사 필터"),
+    category: list[str] | None = Query(default=None, description="카테고리 필터(다중)"),
+    offset: int = Query(default=0, ge=0),
+    limit: int = Query(default=50, ge=1, le=200),
+) -> CardCatalogResponse:
+    """
+    프론트의 '기존 카드 선택' 드롭다운/검색 UI를 실데이터로 채우기 위한 카탈로그 API.
+    - GET /cards (router prefix=/cards + path="") 형태로 노출됩니다.
+    """
+    repo = _get_card_repository()
+    all_cards = repo.list_cards()
+
+    q_norm = (q or "").strip().lower()
+    company_norm = (company or "").strip().lower()
+    categories_norm = {c.strip().lower() for c in (category or []) if c and c.strip()}
+
+    items: list[CardCatalogItem] = []
+    for card in all_cards:
+        item = _to_catalog_item(card)
+        if not item.card_id or not item.card_name:
+            continue
+
+        if q_norm:
+            hay = f"{item.card_name} {item.card_company}".lower()
+            if q_norm not in hay:
+                continue
+        if company_norm and company_norm not in item.card_company.lower():
+            continue
+        if categories_norm:
+            item_categories = {c.lower() for c in item.categories}
+            if not (item_categories & categories_norm):
+                continue
+
+        items.append(item)
+
+    total = len(items)
+    paged = items[offset : offset + limit]
+    return CardCatalogResponse(cards=paged, total=total, offset=offset, limit=limit)
+
+
+@router.get("/{card_id}", response_model=CardDetailResponse)
+def get_card_detail(card_id: str) -> CardDetailResponse:
+    repo = _get_card_repository()
+    for card in repo.list_cards():
+        meta = card.get("card_meta", {}) or {}
+        if str(meta.get("card_id", "") or "") == str(card_id):
+            item = _to_catalog_item(card)
+            return CardDetailResponse(
+                card_id=item.card_id,
+                card_name=item.card_name,
+                card_company=item.card_company,
+                annual_fee=item.annual_fee,
+                minimum_performance=item.minimum_performance,
+                categories=item.categories,
+                card_meta=meta,
+                benefits=card.get("benefits", []) or [],
+                benefit_groups=card.get("benefit_groups", []) or [],
+                file_path=card.get("_file_path"),
+            )
+    raise HTTPException(status_code=404, detail="카드를 찾을 수 없습니다.")
 
 
 def _safe_build_recommended_cards(ranked: list[dict], explanation: str) -> list[dict]:
@@ -60,7 +156,7 @@ async def recommend_cards(payload: RecommendRequest) -> RecommendResponse:
     ):
         raise ValueError("category_spending의 각 값은 0보다 커야 합니다.")
 
-    card_repo = DatasetCardRepository(DATASETS_DIR)
+    card_repo = _get_card_repository()
     digest_repo = DigestRepository(DIGEST_DIR)
     recommend_service = CardRecommendService(card_repo)
 

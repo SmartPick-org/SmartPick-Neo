@@ -209,4 +209,7 @@ $RECYCLE.BIN/
 tests
 tmp
 
+# npm cache
+.npm-cache/
+
 # End of https://www.toptal.com/developers/gitignore/api/windows,python

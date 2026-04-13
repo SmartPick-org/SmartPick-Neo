@@ -12,7 +12,7 @@ from app.api.card import router as card_router
 from app.api.advisor import router as advisor_router
 from app.core.discord import notify_discord
 from app.core.exceptions import BusinessException, SystemException
-from app.core.config import LOGTAIL_SOURCE_TOKEN
+from app.core.config import LOGTAIL_SOURCE_TOKEN, LOGTAIL_HOST
 
 # ---------------------------------------------------------------------------
 # 전역 로깅 설정 (민감 정보 보호 및 파일 저장)
@@ -37,9 +37,25 @@ logger.add(
 )
 
 # Better Stack (Logtail) 로깅
+# LogtailHandler는 표준 logging.Handler이므로 loguru 레코드를 LogRecord로 변환하는 브릿지 필요
 if LOGTAIL_SOURCE_TOKEN:
-    _logtail_handler = LogtailHandler(source_token=LOGTAIL_SOURCE_TOKEN)
-    logger.add(_logtail_handler, level="INFO", diagnose=False, backtrace=False)
+    import logging
+    _logtail_handler = LogtailHandler(source_token=LOGTAIL_SOURCE_TOKEN, host=LOGTAIL_HOST) if LOGTAIL_HOST else LogtailHandler(source_token=LOGTAIL_SOURCE_TOKEN)
+
+    def _logtail_sink(message):
+        record = message.record
+        log_record = logging.LogRecord(
+            name=record["name"],
+            level=getattr(logging, record["level"].name, logging.INFO),
+            pathname=str(record["file"].path),
+            lineno=record["line"],
+            msg=record["message"],
+            args=(),
+            exc_info=record["exception"],
+        )
+        _logtail_handler.emit(log_record)
+
+    logger.add(_logtail_sink, level="INFO")
 else:
     logger.warning("LOGTAIL_SOURCE_TOKEN not set — Better Stack logging disabled")
 

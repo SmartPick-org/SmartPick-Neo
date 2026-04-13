@@ -19,7 +19,7 @@ from app.core.config import LOGTAIL_SOURCE_TOKEN
 # ---------------------------------------------------------------------------
 logger.remove()  # 기본 핸들러 제거
 logger.add(
-    sys.stdout, 
+    sys.stdout,
     diagnose=False,  # 운영 필수: 예외 발생 시 로컬 변수 평문 노출 차단
     backtrace=True,
     format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>"
@@ -36,9 +36,14 @@ logger.add(
     level="INFO"
 )
 
-# BetterStack 로깅 (원격 로그 저장)
-if LOGTAIL_SOURCE_TOKEN:
-    logger.add(LogtailHandler(source_token=LOGTAIL_SOURCE_TOKEN), level="INFO")
+# Better Stack (Logtail) 로깅
+_logtail_token = os.environ.get("LOGTAIL_SOURCE_TOKEN", "")
+if _logtail_token:
+    from logtail import LogtailHandler
+    _logtail_handler = LogtailHandler(source_token=_logtail_token)
+    logger.add(_logtail_handler, level="INFO", diagnose=False, backtrace=False)
+else:
+    logger.warning("LOGTAIL_SOURCE_TOKEN not set — Better Stack logging disabled")
 
 app = FastAPI(
     title="SmartPick API",

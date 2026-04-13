@@ -9,12 +9,24 @@
 ## 1. 혜택 유형별 월간 계산 기본 공식
 
 ### 1-1. 비율 할인 및 적립 (Percentage Discount / Accumulation)
-가장 일반적인 형태의 혜택으로, 사용 금액에 비례하여 혜택을 제공하며 월 최대 한도가 존재할 수 있습니다.
+가장 일반적인 형태의 혜택으로, 사용 금액에 비례하여 혜택을 제공합니다. 단, 건당 결제 제한(`1회 최대 승인금액`)이나 월별/일별 횟수 제한이 있을 수 있습니다.
 
 * **입력 변수**: `spend_amount` (해당 업종 소비액)
-* **카드 변수**: `benefit_rate` (혜택 비율, 예: 10% = 0.1), `max_monthly_limit` (월 혜택 한도)
+* **카드 변수**: 
+  - `benefit_rate` (혜택 비율, 예: 10% = 0.1)
+  - `max_monthly_limit` (월 혜택 통합 한도)
+  - `max_spend_per_tx` (1회 최대 혜택 인정 결제금액, 예: 1회 5만원까지만 할인 적용)
+  - `max_count_per_month` (월 최대 혜택 제공 횟수)
+  - `max_count_per_day` (일일 통제 횟수)
+* **최적화 가정**: 
+  사용자는 `max_count_per_day` 제한에 걸리지 않도록 서로 다른 날짜에 가장 이상적으로 나누어 결제했다고 가정합니다. 단, 아무리 쪼개어 결제하더라도 월 횟수 상 고객이 혜택을 받을 수 있는 '실효 최대 금액(Effective Max Spend)' 한도를 절대 넘을 수 없습니다.
 * **공식**:
-  $$ Monthly\_Benefit = \min(spend\_amount \times benefit\_rate,\ max\_monthly\_limit) $$
+  $$ Effective\_Spend = 
+  \begin{cases} 
+  \min(spend\_amount,\ max\_spend\_per\_tx \times max\_count\_per\_month) & \text{if both exists} \\
+  spend\_amount & \text{otherwise}
+  \end{cases} $$
+  $$ Monthly\_Benefit = \min(Effective\_Spend \times benefit\_rate,\ max\_monthly\_limit) $$
 
 ### 1-2. 정액 할인 (Flat-Rate Discount)
 "1만원 이상 결제 시 5천원 할인"과 같이 건당 결제액 조건을 만족할 때 고정 금액을 할인해 주는 형태입니다.
@@ -36,6 +48,16 @@
   $$ Estimated\_Liters = \frac{spend\_amount}{avg\_gas\_price} $$
   $$ Monthly\_Benefit = \min(Estimated\_Liters \times discount\_per\_liter,\ max\_monthly\_limit) $$
 
+### 1-4. 한도 초과 시 기본 혜택 적용 (Fallback Rate / Overflow Handling)
+일부 카드의 특별 적립/할인은 한도를 초과할 경우 혜택이 0으로 끊기지 않고, **기본 비율(Base Rate)**로 전환되어 계속 산출됩니다. (예: `the Pink ed2` 특별 5% 적립 영역 한도 5만 포인트 초과 시, 초과 결제금액은 1.5% 기본 적립)
+
+* **카드 추가 변수**: `fallback_rate` (한도 초과 시 적용되는 기본 비율)
+* **초과 결제분 산출**:
+  $$ Max\_Spend\_For\_Special = \frac{max\_monthly\_limit}{benefit\_rate} $$
+  $$ Overflow\_Spend = \max(0,\ spend\_amount - Max\_Spend\_For\_Special) $$
+* **최종 환산 공식**:
+  $$ Monthly\_Benefit = \min(spend\_amount \times benefit\_rate,\ max\_monthly\_limit) + (Overflow\_Spend \times fallback\_rate) $$
+
 ---
 
 ## 2. 복합 조건 (상위 레이어 계산 공식)
@@ -55,10 +77,23 @@ M포인트, 마이신한포인트 등 쌓인 포인트를 실질적인 현금 �
   $$ Fiat\_Value = Total\_Points \times point\_conv\_rate $$
 
 ### 2-3. 필수 선택형 그룹 내결정 (Selective Group Optimization)
-A, B, C 그룹 중 택1 해야 하는 혜택의 경우, 각 그룹별 시뮬레이션 결과 중 최댓값을 반환합니다.
+A, B, C 그룹 중 택1 해야 하는 혜택의 경우, 유저의 실질적인 소비 카테고리와 매칭하여 시뮬레이션을 진행합니다. 이때 불필요한 연산을 막고 현실성을 높이기 위해, 해당하는 영역에 실제 소비가 없는 그룹은 원천적으로 배제(Filter)합니다.
 
+* **최적화 가정 및 선별 로직**:
+  - 사용자 소비 배열(`user_category_spend`)에 존재하는 업종이 하나라도 포함되어 있는 혜택 그룹만 시뮬레이션 대상(Candidate Groups)으로 선정합니다.
 * **공식**:
-  $$ Ultimate\_Benefit = \max( Group\_Benefit\_A,\ Group\_Benefit\_B,\ Group\_Benefit\_C ) $$
+  $$ Ultimate\_Benefit = \max_{G \in CandidateGroups}(Group\_Benefit\_G) $$
+  (단, 후보 그룹이 없을 시 최종 혜택은 0원)
+
+### 2-4. 전월 실적 구간(Tier) 연동 (Performance Tier Mapping)
+카드의 혜택 한도나 혜택 비율(할인율 등)이 '유저의 전월 실적(`total_monthly_spend`)'에 따라 계단식으로 달라지는 로직입니다. 계산을 수행하기 전, 카드에 정의된 티어 조건표를 확인해 적용될 실제 변수를 미리 확정 짓는 단계가 선행되어야 합니다.
+
+* **입력 변수**: `total_monthly_spend` (유저의 전월 총 사용액)
+* **카드 모델(Tiers)**: $T_1(30만), T_2(50만), T_3(100만)$ 등
+* **공식**:
+  $$ Target\_Tier = \arg\max_{T_i} (T_i.min\_prev\_performance) \quad \text{subject to} \quad T_i.min\_prev\_performance \le total\_monthly\_spend $$
+* 만약 $Target\_Tier$가 존재하지 않는다면 (최소 실적 미달), 해당 혜택 연산은 조기에 중단(Return 0)하거나, `fallback_rate`가 있다면 이를 대체 적용합니다.
+* 산출된 $Target\_Tier$ 안에 `benefit_rate`나 `monthly_benefit_limit` 등의 값이 별도로 존재한다면, 이 값들이 기존 `1. 기본 공식`의 카드 측 기본 변수들을 덮어씌워 사용됩니다.
 
 ---
 

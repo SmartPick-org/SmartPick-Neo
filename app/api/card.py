@@ -340,7 +340,7 @@ async def compare_cards(payload: CompareRequest) -> CompareResponse:
         logger.exception("[compare_cards] calculate_benefits ValueError: %s", repr(e))
         raise ValueError(str(e))
 
-    ranked = recommend_service.rank_top(calc_results, top_n=1)
+    ranked = recommend_service.rank_top(calc_results, top_n=len(calc_results))
     if not ranked:
         raise NoCardsFoundError("혜택 계산 결과가 없습니다.")
 
@@ -428,9 +428,19 @@ async def compare_cards(payload: CompareRequest) -> CompareResponse:
     current_card_schema = _build_recommend_card(current_result, current_explain)
     recommended_card_schema = _build_recommend_card(recommended_result, recommended_explain)
 
+    # 8. recommended_cards 배열 구성
+    # 조건: expected_monthly_benefit > 0 AND > 기존 카드 월 혜택, 내림차순 정렬
+    recommended_cards_list = [
+        _build_recommend_card(r, explain_service._format_card_detail(r, rank=idx + 1) if explain_service else "")
+        for idx, r in enumerate(ranked)
+        if r.get("expected_monthly_benefit", 0) > 0
+        and r.get("expected_monthly_benefit", 0) > current_monthly
+    ]
+
     return CompareResponse(
         current_card=current_card_schema,
         recommended_card=recommended_card_schema,
+        recommended_cards=recommended_cards_list,
         monthly_diff=monthly_diff,
         yearly_diff=yearly_diff,
         category_comparison=category_comparison,

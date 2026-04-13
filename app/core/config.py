@@ -6,6 +6,8 @@ from dotenv import load_dotenv
 from langchain.chat_models import init_chat_model
 from langchain_upstage import ChatUpstage
 
+# .env를 모듈 로드 시점에 즉시 반영 (LOGTAIL_SOURCE_TOKEN 등 상수가 올바르게 읽히도록)
+load_dotenv(Path(__file__).resolve().parents[2] / ".env")
 
 DEFAULT_MODEL = "solar-pro2"
 REQUIRED_KEYS: Iterable[str] = (

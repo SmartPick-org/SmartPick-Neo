@@ -37,10 +37,8 @@ logger.add(
 )
 
 # Better Stack (Logtail) 로깅
-_logtail_token = os.environ.get("LOGTAIL_SOURCE_TOKEN", "")
-if _logtail_token:
-    from logtail import LogtailHandler
-    _logtail_handler = LogtailHandler(source_token=_logtail_token)
+if LOGTAIL_SOURCE_TOKEN:
+    _logtail_handler = LogtailHandler(source_token=LOGTAIL_SOURCE_TOKEN)
     logger.add(_logtail_handler, level="INFO", diagnose=False, backtrace=False)
 else:
     logger.warning("LOGTAIL_SOURCE_TOKEN not set — Better Stack logging disabled")

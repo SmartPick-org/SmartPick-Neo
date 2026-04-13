@@ -1,6 +1,5 @@
 import asyncio
 import json
-import os
 from loguru import logger
 from pathlib import Path
 
@@ -8,7 +7,7 @@ from fastapi import APIRouter, HTTPException, Query
 
 from app.core.config import get_llm
 from app.core.exceptions import LLMUnavailableError, NoCardsFoundError
-from app.repositories.card_repo import DatasetCardRepository, DBCardRepository
+from app.repositories.card_repo import FallbackCardRepository
 from app.repositories.digest_repo import DigestRepository
 from app.schemas.card_catalog import (
     CardCatalogItem,
@@ -31,7 +30,7 @@ from app.services.explain_service import ExplainService
 router = APIRouter(prefix="/cards", tags=["cards"])
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
-DATASETS_DIR = PROJECT_ROOT / "datasets" / "json_v3"
+DATASETS_DIR = PROJECT_ROOT / "datasets" / "json"
 DIGEST_DIR = PROJECT_ROOT / "datasets" / "digest"
 
 # Fallback 텍스트 — LLM이 죽어도 사용자는 카드 목록을 볼 수 있음
@@ -44,15 +43,7 @@ _LLM_FALLBACK_COMPARE = (
 )
 
 def _get_card_repository():
-    """
-    카드 목록을 제공할 소스를 선택합니다.
-    - 기본: 레포 내 datasets/json_v3
-    - 선택: Supabase(DB) (CARD_DATA_SOURCE=db)
-    """
-    source = (os.getenv("CARD_DATA_SOURCE") or "dataset").strip().lower()
-    if source == "db":
-        return DBCardRepository()
-    return DatasetCardRepository(DATASETS_DIR)
+    return FallbackCardRepository(DATASETS_DIR)
 
 
 def _to_catalog_item(card: dict) -> CardCatalogItem:

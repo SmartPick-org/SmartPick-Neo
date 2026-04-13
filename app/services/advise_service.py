@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import os
 from datetime import datetime, timedelta, timezone
+from pathlib import Path
 from typing import Literal
 
 from loguru import logger
@@ -256,13 +257,14 @@ def _cache_set(cache_key: str, answer: str) -> None:
 # ===========================< Card Info Loader >============================
 
 _terms_repo = None
+_TERMS_DIR = Path(__file__).resolve().parents[2] / "datasets" / "terms"
 
 
 def _get_terms_repo():
     global _terms_repo
     if _terms_repo is None:
         from app.repositories.terms_repo import TermsRepository
-        _terms_repo = TermsRepository()
+        _terms_repo = TermsRepository(_TERMS_DIR)
     return _terms_repo
 
 

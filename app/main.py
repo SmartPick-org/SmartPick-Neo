@@ -1,6 +1,7 @@
 import os
 import sys
 from loguru import logger
+from logtail import LogtailHandler
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -11,6 +12,7 @@ from app.api.card import router as card_router
 from app.api.advisor import router as advisor_router
 from app.core.discord import notify_discord
 from app.core.exceptions import BusinessException, SystemException
+from app.core.config import LOGTAIL_SOURCE_TOKEN
 
 # ---------------------------------------------------------------------------
 # 전역 로깅 설정 (민감 정보 보호 및 파일 저장)
@@ -26,13 +28,17 @@ logger.add(
 # 파일 로깅 (로컬 및 단일 서버용)
 os.makedirs("logs", exist_ok=True)
 logger.add(
-    "logs/smartpick_{time}.log", 
-    rotation="10 MB", 
-    retention="10 days", 
+    "logs/smartpick_{time}.log",
+    rotation="10 MB",
+    retention="10 days",
     diagnose=False,  # 여기도 동일하게 지역 변수 가리기 적용
     backtrace=True,
     level="INFO"
 )
+
+# BetterStack 로깅 (원격 로그 저장)
+if LOGTAIL_SOURCE_TOKEN:
+    logger.add(LogtailHandler(source_token=LOGTAIL_SOURCE_TOKEN), level="INFO")
 
 app = FastAPI(
     title="SmartPick API",

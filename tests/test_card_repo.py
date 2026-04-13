@@ -30,9 +30,9 @@ def _write_card_json(path: Path, card_id: str, card_name: str, company: str, ben
 # ---------------------------------------------------------------------------
 
 def test_list_cards_loads_json_files(tmp_path):
-    """Reads all JSON files under the datasets dir and returns CardData list."""
-    _write_card_json(tmp_path / "hyundai" / "hyundai_x.json", "hyundai_x", "현대카드 X", "현대카드")
-    _write_card_json(tmp_path / "kb" / "kb_star.json", "kb_star", "KB스타카드", "KB국민카드")
+    """Reads all JSON files directly under the datasets dir and returns CardData list."""
+    _write_card_json(tmp_path / "hyundai_x.json", "hyundai_x", "현대카드 X", "현대카드")
+    _write_card_json(tmp_path / "kb_star.json", "kb_star", "KB스타카드", "KB국민카드")
 
     repo = DatasetCardRepository(tmp_path)
     cards = repo.list_cards()
@@ -54,7 +54,7 @@ def test_list_cards_skips_json_without_card_name(tmp_path):
 
 def test_list_cards_attaches_file_path(tmp_path):
     """Each card has a _file_path key pointing to the source JSON."""
-    json_path = tmp_path / "hyundai" / "hyundai_x.json"
+    json_path = tmp_path / "hyundai_x.json"
     _write_card_json(json_path, "hyundai_x", "현대카드 X", "현대카드")
 
     repo = DatasetCardRepository(tmp_path)
@@ -73,7 +73,7 @@ def test_list_cards_extracts_benefit_categories(tmp_path):
         {"category": "Coffee", "calculation_rule": {"calc_method": "RATE"}, "transaction_conditions": {}, "edge_case_flags": {}},
         {"category": "Shopping", "calculation_rule": {"calc_method": "RATE"}, "transaction_conditions": {}, "edge_case_flags": {}},
     ]
-    _write_card_json(tmp_path / "hyundai" / "card.json", "hyundai_x", "현대카드 X", "현대카드", benefits=benefits)
+    _write_card_json(tmp_path / "card.json", "hyundai_x", "현대카드 X", "현대카드", benefits=benefits)
 
     repo = DatasetCardRepository(tmp_path)
     card = repo.list_cards()[0]
@@ -87,7 +87,7 @@ def test_list_cards_includes_general_category(tmp_path):
     benefits = [
         {"category": "General", "calculation_rule": {"calc_method": "RATE"}, "transaction_conditions": {}, "edge_case_flags": {}},
     ]
-    _write_card_json(tmp_path / "hyundai" / "card.json", "hyundai_x", "현대카드 X", "현대카드", benefits=benefits)
+    _write_card_json(tmp_path / "card.json", "hyundai_x", "현대카드 X", "현대카드", benefits=benefits)
 
     repo = DatasetCardRepository(tmp_path)
     card = repo.list_cards()[0]

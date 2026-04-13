@@ -8,15 +8,15 @@ from unittest.mock import AsyncMock, MagicMock, patch
 from app.repositories.digest_repo import DigestRepository
 
 
-def _card(card_id: str = "hyundai_z_family", card_name: str = "현대카드 Z family", company: str = "현대카드") -> dict:
-    return {"card_meta": {"card_id": card_id, "card_name": card_name, "card_company": company}}
+def _card(card_id: str = "hyundai_z_family", card_name: str = "현대카드 Z family", company: str = "현대카드", card_slug: str = "hyundai_z_family") -> dict:
+    return {"card_meta": {"card_id": card_id, "card_name": card_name, "card_company": company, "card_slug": card_slug}}
 
 
-def _make_local_digest(tmp_path: Path, subfolder: str = "manual", filename: str = "hyundai_z_family.md", content: str = "# Digest") -> Path:
-    """Create a digest dir matching the real nested layout: digest/{company}/{subfolder}/{filename}."""
+def _make_local_digest(tmp_path: Path, card_slug: str = "hyundai_z_family", content: str = "# Digest") -> Path:
+    """Create a flat digest dir: digest/{card_slug}.md."""
     digest_dir = tmp_path / "digest"
-    md_file = digest_dir / "hyundai" / subfolder / filename
-    md_file.parent.mkdir(parents=True)
+    md_file = digest_dir / f"{card_slug}.md"
+    md_file.parent.mkdir(parents=True, exist_ok=True)
     md_file.write_text(content, encoding="utf-8")
     return digest_dir
 
@@ -26,8 +26,8 @@ def _make_local_digest(tmp_path: Path, subfolder: str = "manual", filename: str 
 # ---------------------------------------------------------------------------
 
 @pytest.mark.asyncio
-async def test_local_fallback_finds_file_in_subdirectory(tmp_path):
-    """Recursive glob finds .md files nested inside manual/ subdir."""
+async def test_local_fallback_finds_file_by_card_slug(tmp_path):
+    """Local fallback finds {card_slug}.md directly in the digest dir."""
     digest_dir = _make_local_digest(tmp_path, content="# Z Family")
     repo = DigestRepository(digest_dir)
 
@@ -39,16 +39,16 @@ async def test_local_fallback_finds_file_in_subdirectory(tmp_path):
 
 
 @pytest.mark.asyncio
-async def test_local_fallback_finds_file_in_alternative_subfolder(tmp_path):
-    """Works regardless of the subfolder name (manuals/, new/, etc.)."""
-    digest_dir = _make_local_digest(tmp_path, subfolder="new", content="# New Digest")
+async def test_local_fallback_finds_file_for_different_slug(tmp_path):
+    """Local fallback correctly resolves files for different card slugs."""
+    digest_dir = _make_local_digest(tmp_path, card_slug="kb_star_plus", content="# KB Star Plus")
     repo = DigestRepository(digest_dir)
 
     with patch("app.repositories.digest_repo._USE_SUPABASE", False), \
          patch("app.core.discord.notify_discord", new=AsyncMock()):
-        result = await repo.get_digest(_card())
+        result = await repo.get_digest(_card(card_slug="kb_star_plus", card_name="KB스타플러스카드"))
 
-    assert result == "# New Digest"
+    assert result == "# KB Star Plus"
 
 
 @pytest.mark.asyncio
@@ -98,7 +98,8 @@ async def test_supabase_success_returns_content_without_local_read(tmp_path):
 
     with patch("app.repositories.digest_repo._USE_SUPABASE", True), \
          patch("app.core.database.get_supabase", return_value=mock_supabase), \
-         patch("app.core.database.fetch_markdown_from_s3", return_value="supabase content"):
+         patch("app.core.database.fetch_markdown_from_s3", return_value="supabase content"), \
+         patch("app.core.discord.notify_discord", new=AsyncMock()):
         result = await repo.get_digest(_card())
 
     assert result == "supabase content"
@@ -136,7 +137,8 @@ async def test_supabase_empty_file_path_falls_back_to_local(tmp_path):
 
     with patch("app.repositories.digest_repo._USE_SUPABASE", True), \
          patch("app.core.database.get_supabase", return_value=mock_supabase), \
-         patch("app.core.database.fetch_markdown_from_s3", return_value=""):
+         patch("app.core.database.fetch_markdown_from_s3", return_value=""), \
+         patch("app.core.discord.notify_discord", new=AsyncMock()):
         result = await repo.get_digest(_card())
 
     assert result == "local content"

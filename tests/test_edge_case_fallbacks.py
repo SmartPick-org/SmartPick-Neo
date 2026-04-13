@@ -50,6 +50,9 @@ def test_recommend_llm_failure_fallback_success_200(monkeypatch: pytest.MonkeyPa
     ranked_cards = _ranked_cards_for_tests()
 
     class StubCardRecommendService:
+        def __init__(self, repo):
+            pass
+
         def filter_cards(self, total_budget: int, category_spending: dict) -> list[dict]:
             return [{"_dummy": True}]
 
@@ -106,6 +109,9 @@ def test_recommend_build_recommended_cards_keyerror_fallback_safe_builder_succes
     ranked_cards = _ranked_cards_for_tests()
 
     class StubCardRecommendService:
+        def __init__(self, repo):
+            pass
+
         def filter_cards(self, total_budget: int, category_spending: dict) -> list[dict]:
             return [{"_dummy": True}]
 

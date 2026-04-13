@@ -1,11 +1,9 @@
 import asyncio
 import json
 from loguru import logger
-from pathlib import Path
-
 from fastapi import APIRouter, Depends, HTTPException, Query
 
-from app.core.config import DIGEST_DIR, DATASETS_DIR, get_llm
+from app.core.config import get_llm
 from app.core.dependencies import (
     get_digest_repository,
     get_explain_service,
@@ -34,9 +32,7 @@ from app.services.explain_service import ExplainService
 
 router = APIRouter(prefix="/cards", tags=["cards"])
 
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
-DATASETS_DIR = PROJECT_ROOT / "datasets" / "json"
-DIGEST_DIR = PROJECT_ROOT / "datasets" / "digest"
+from app.core.config import DATASETS_DIR, DIGEST_DIR
 
 # Fallback 텍스트 — LLM이 죽어도 사용자는 카드 목록을 볼 수 있음
 _LLM_FALLBACK_EXPLAIN = (

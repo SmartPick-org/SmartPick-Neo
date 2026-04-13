@@ -31,6 +31,10 @@ LLM_CB_RECOVERY_TIMEOUT = int(os.getenv("LLM_CB_RECOVERY_TIMEOUT", "60"))
 LOGTAIL_SOURCE_TOKEN: str | None = os.getenv("LOGTAIL_SOURCE_TOKEN")
 LOGTAIL_HOST: str | None = os.getenv("LOGTAIL_HOST")
 
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+DATASETS_DIR = PROJECT_ROOT / "datasets" / "json"
+DIGEST_DIR = PROJECT_ROOT / "datasets" / "digest"
+
 
 
 def init_env(project_root: Path | None = None) -> None:

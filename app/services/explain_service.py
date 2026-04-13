@@ -125,12 +125,28 @@ class ExplainService:
             f"→ 추천: {recommended_card_result.get('card_name')} | 연간 차이: {yearly_diff:,}원"
         )
 
+        def _breakdown_to_str(breakdowns: list) -> str:
+            lines = []
+            for cb in breakdowns:
+                if cb["monthly_discount_krw"] > 0:
+                    lines.append(f"- {cb['category']}: {cb['monthly_discount_krw']:,}원")
+                    if cb.get("discount_info"):
+                        for sub, amt in cb["discount_info"].items():
+                            sub_name = sub.replace("sub_category_", "")
+                            lines.append(f"  └ {sub_name}: {amt:,}원")
+            return "\n".join(lines) if lines else "혜택 없음"
+
+        current_breakdown_str = _breakdown_to_str(current_card_result.get("category_breakdown", []))
+        recommended_breakdown_str = _breakdown_to_str(recommended_card_result.get("category_breakdown", []))
+
         compare_prompt = COMPARE_PROMPT.format(
             user_spending=user_spending,
             current_card_name=current_card_result.get("card_name", ""),
             current_card_benefit=f"월 약 {current_monthly:,}원",
+            current_breakdown=current_breakdown_str,
             recommended_card_name=recommended_card_result.get("card_name", ""),
             recommended_card_benefit=f"월 약 {recommended_monthly:,}원",
+            recommended_breakdown=recommended_breakdown_str,
             yearly_diff=f"{yearly_diff:,}",
             top_category=top_category or "전반적인 카테고리",
         )

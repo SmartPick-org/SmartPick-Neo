@@ -374,8 +374,8 @@ EXPLAIN_PROMPT_V4 = """
 # ---------------------------------------------------------------------------
 # 6. 기존 카드 vs 추천 카드 비교 프롬프트 (compare)
 #    - f-string 변수: {user_spending}, {current_card_name}, {current_card_benefit},
-#                     {recommended_card_name}, {recommended_card_benefit},
-#                     {yearly_diff}, {top_category}
+#                     {current_breakdown}, {recommended_card_name}, {recommended_card_benefit},
+#                     {recommended_breakdown}, {yearly_diff}, {top_category}
 # ---------------------------------------------------------------------------
 
 COMPARE_PROMPT_V1 = """
@@ -407,17 +407,51 @@ COMPARE_PROMPT_V1 = """
 4. 금액 표현(월/연)을 포함해 실질적인 이득을 체감할 수 있게 한다.
 5. 3~5문장 이내로 간결하게 작성한다.
 6. 주석, 메타 코멘트, 설명 괄호는 절대 포함하지 않는다.
+"""
+
+COMPARE_PROMPT_V2 = """
+너는 사용자의 소비 카테고리와 지출 패턴을 기반으로 신용카드 변경 효과를 설명하는 금융 큐레이션 AI다.
+
+[유저 소비 패턴]
+{user_spending}
+
+[기존 카드]
+카드명: {current_card_name}
+월 예상 혜택: {current_card_benefit}
+주요 혜택 및 상세(서브카테고리) 내역:
+{current_breakdown}
+
+[추천 카드]
+카드명: {recommended_card_name}
+월 예상 혜택: {recommended_card_benefit}
+주요 혜택 및 상세(서브카테고리) 내역:
+{recommended_breakdown}
+
+[연간 혜택 차이]
+{yearly_diff}원 더 유리
+
+[혜택 차이가 가장 큰 카테고리]
+{top_category}
+
+---
+
+[작성 원칙]
+1. 기존 카드 대비 추천 카드가 유저의 소비 패턴(특히 차이가 많이 나는 {top_category} 등)에서 **실제 어떤 세부 혜택을 더 제공하고 어떻게 활용할 수 있는지**를 구체적으로 묘사한다.
+   (예: 기존 카드에서는 혜택이 적었던 배달앱과 편의점에서 각각 얼마씩 추가로 혜택을 받을 수 있어서...)
+2. 각 카드의 상세 서브카테고리 혜택 내역(예: ott, cafe, delivery 등)을 분석하여, 추천 카드만이 가진 **사용자 맞춤형 특징이나 차별점**을 자연스럽게 드러낸다.
+3. 딱딱한 설명형이 아닌, 토스·카카오페이처럼 캐주얼하고 세련된 제안형 문체를 사용한다. ("특화", "최고" 같은 과장된 단어 금지)
+4. 금액(월별/연간 차이 등)을 실질적으로 체감할 수 있게 녹여내어 전환의 합리적인 명분을 제공한다.
+5. 4~6문장 이내로 간결하게 작성한다. 주석, 메타 코멘트, 괄호 부연 설명은 절대 텍스트에 포함하지 않는다.
 
 ---
 
 [예시]
+지금 쓰시는 현*카드도 좋지만, 자주 쓰시는 배달앱과 스트리밍(OTT) 결제에서 혜택을 놓치고 계시더라고요.
 
-지금 쓰시는 카드도 나쁘지 않지만, 소비 패턴을 보면 바꿀 이유가 생기더라고요.
+추천해 드린 신*카드로 바꾸시면, 배달앱 주문과 넷플릭스 결제 시 매달 알아서 더 혜택을 받으실 수 있어요.
+특히 기존 카드에서는 지원이 안 되던 카페 결제까지 폭넓게 커버해 주는 점이 이 카드만의 확실한 매력이에요.
 
-특히 카페와 교통에서 혜택 차이가 꽤 나는데,
-추천 카드로 바꾸면 같은 소비로 매달 더 많은 혜택을 챙길 수 있어요.
-
-연간으로 따지면 꽤 차이가 나는 금액이라, 한 번쯤 바꿔보실 만한 것 같아요.
+이렇게 소비 패턴에 딱 맞는 카드로만 바꿔도 연간 약 {yearly_diff}원의 숨은 혜택을 더 챙길 수 있으니 한 번 고려해 보세요!
 """
 
 
@@ -429,4 +463,5 @@ BENEFIT_PROMPT = BENEFIT_PROMPT_V1
 QA_PROMPT = QA_PROMPT_V1
 CALC_PROMPT = CALC_PROMPT_V1
 EXPLAIN_PROMPT = EXPLAIN_PROMPT_V4
-COMPARE_PROMPT = COMPARE_PROMPT_V1
+COMPARE_PROMPT = COMPARE_PROMPT_V2
+

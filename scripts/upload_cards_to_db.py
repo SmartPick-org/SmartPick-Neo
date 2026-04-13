@@ -69,6 +69,7 @@ def map_card_meta(card_id: str, meta: dict) -> dict:
         "digest_file_path": f"digest/{card_id}.md",
         # manual_file_path: JSON에 없음. null로 두고 별도 운영 작업으로 채움
         "manual_file_path": None,
+        "terms_file_path": f"terms/{card_id}.md"
     }
 
 

@@ -30,7 +30,7 @@ LLM_CB_RECOVERY_TIMEOUT = int(os.getenv("LLM_CB_RECOVERY_TIMEOUT", "60"))
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DATASETS_DIR = PROJECT_ROOT / "datasets" / "json_v3"
 DIGEST_DIR = PROJECT_ROOT / "datasets" / "digest"
-MARKDOWN_DIR = PROJECT_ROOT / "datasets" / "markdown"
+MARKDOWN_DIR = PROJECT_ROOT / "datasets" / "markdown_upstage"
 
 
 

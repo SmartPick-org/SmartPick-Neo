@@ -140,7 +140,8 @@ class CategoryComparison(BaseModel):
 
 class CompareResponse(BaseModel):
     current_card: RecommendCard = Field(..., description="기존 카드 혜택 계산 결과")
-    recommended_card: RecommendCard = Field(..., description="1순위 추천 카드")
+    recommended_cards: List[RecommendCard] = Field(..., description="추천 카드 목록 (내림차순)")
+    recommended_card: RecommendCard = Field(..., description="1순위 추천 카드 (하위 호환성 유지용)")
     monthly_diff: int = Field(..., description="월 혜택 차이 (추천 - 기존)", examples=[15000])
     yearly_diff: int = Field(..., description="연간 혜택 차이 (추천 - 기존)", examples=[180000])
     category_comparison: List[CategoryComparison] = Field(..., description="카테고리별 혜택 비교")

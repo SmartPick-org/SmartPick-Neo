@@ -193,7 +193,7 @@ class ExplainService:
         
         return "\n".join(lines)
 
-    def build_recommended_cards(self, ranked: List[dict], explanation: str, card_digests: List[str]) -> List[dict]:
+    def build_recommended_cards(self, ranked: List[dict], explanation: str) -> List[dict]:
         """
         모든 추천 카드에 대해 explanation 필드를 상세화합니다.
         각 카드의 explanation 필드에는 해당 카드의 상세 내역(detail_text)만 포함됩니다.

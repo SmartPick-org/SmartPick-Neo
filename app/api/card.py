@@ -199,15 +199,12 @@ async def recommend_cards(payload: RecommendRequest) -> RecommendResponse:
         raise NoCardsFoundError("혜택 계산 결과가 없습니다.")
 
     # 3. LLM 설명 생성 — 실패해도 카드 목록은 반환 (Graceful Degradation)
-    digests = []
+    # 랭킹 완료 후 1위 카드의 digest만 가져옴
+    top_digest = ""
     try:
-        # 모든 카드의 Digest를 시도하여 상세 내역 생성에 대비
-        digests = list(await asyncio.gather(*[digest_repo.get_digest(card.get("_card_data", {})) for card in ranked]))
-        top_digest = digests[0] if digests else ""
+        top_digest = await digest_repo.get_digest(ranked[0].get("_card_data", {}))
     except Exception as e:
         logger.warning("[recommend_cards] digest 로드 실패: %s", repr(e))
-        top_digest = ""
-        digests = [""] * len(ranked)
 
     explanation = _LLM_FALLBACK_EXPLAIN
     if explain_service is not None:
@@ -223,7 +220,7 @@ async def recommend_cards(payload: RecommendRequest) -> RecommendResponse:
 
     try:
         # 상세 Tracing 기능이 포함된 빌더 호출
-        recommended_cards = explain_service.build_recommended_cards(ranked, explanation, digests)
+        recommended_cards = explain_service.build_recommended_cards(ranked, explanation)
     except Exception as e:
         logger.warning("[recommend_cards] 상세 빌더 실패, 안전 빌더 사용: %s", repr(e))
         recommended_cards = _safe_build_recommended_cards(ranked, explanation)

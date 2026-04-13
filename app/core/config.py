@@ -25,6 +25,8 @@ LLM_MAX_RETRIES = int(os.getenv("LLM_MAX_RETRIES", "2")) # Number of extra attem
 LLM_CB_FAILURE_THRESHOLD = int(os.getenv("LLM_CB_FAILURE_THRESHOLD", "5"))
 LLM_CB_RECOVERY_TIMEOUT = int(os.getenv("LLM_CB_RECOVERY_TIMEOUT", "60"))
 
+LOGTAIL_SOURCE_TOKEN: str | None = os.getenv("LOGTAIL_SOURCE_TOKEN")
+
 
 
 def init_env(project_root: Path | None = None) -> None:

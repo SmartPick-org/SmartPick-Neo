@@ -1,6 +1,7 @@
 import os
 import sys
 from loguru import logger
+from logtail import LogtailHandler
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -11,6 +12,7 @@ from app.api.card import router as card_router
 from app.api.advisor import router as advisor_router
 from app.core.discord import notify_discord
 from app.core.exceptions import BusinessException, SystemException
+from app.core.config import LOGTAIL_SOURCE_TOKEN
 
 # ---------------------------------------------------------------------------
 # 전역 로깅 설정 (민감 정보 보호 및 파일 저장)

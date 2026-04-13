@@ -26,6 +26,7 @@ from langsmith import traceable
 
 from app.core.config import get_llm
 from app.core.database import get_supabase
+from app.core.resilience import with_resilience
 from app.tools.web_search import (
     search_blog,
     search_web,
@@ -215,7 +216,7 @@ def _cache_get(cache_key: str) -> str | None:
             supabase.table("advisor_cache")
             .select("answer, created_at")
             .eq("cache_key", cache_key)
-            .single()
+            .maybe_single()
             .execute()
         )
         if not response.data:

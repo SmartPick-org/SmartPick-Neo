@@ -155,6 +155,24 @@
       "accessCount": 6,
       "lastAccessed": 1775799620254,
       "type": "file"
+    },
+    {
+      "path": "app/api/card.py",
+      "accessCount": 1,
+      "lastAccessed": 1775806461021,
+      "type": "file"
+    },
+    {
+      "path": "app/services/explain_service.py",
+      "accessCount": 1,
+      "lastAccessed": 1775806461731,
+      "type": "file"
+    },
+    {
+      "path": "app/main.py",
+      "accessCount": 1,
+      "lastAccessed": 1775808325623,
+      "type": "file"
     }
   ],
   "userDirectives": []

@@ -3,9 +3,14 @@ import json
 from loguru import logger
 from pathlib import Path
 
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query
 
-from app.core.config import get_llm
+from app.core.config import DIGEST_DIR, DATASETS_DIR, get_llm
+from app.core.dependencies import (
+    get_digest_repository,
+    get_explain_service,
+    get_recommend_service,
+)
 from app.core.exceptions import LLMUnavailableError, NoCardsFoundError
 from app.repositories.card_repo import FallbackCardRepository
 from app.repositories.digest_repo import DigestRepository
@@ -147,9 +152,16 @@ def _safe_build_recommended_cards(ranked: list[dict], explanation: str) -> list[
 
 
 @router.post("/recommend", response_model=RecommendResponse)
-# calculate_benefits가 코루틴(async)으로 변경되었으므로 엔드포인트도 async로 선언해야 함.
-# FastAPI는 async 라우트 핸들러를 기본적으로 지원하며 이벤트 루프에서 실행됨.
-async def recommend_cards(payload: RecommendRequest) -> RecommendResponse:
+async def recommend_cards(
+    payload: RecommendRequest,
+    recommend_service: CardRecommendService = Depends(get_recommend_service),
+    digest_repo: DigestRepository = Depends(get_digest_repository),
+    explain_service: ExplainService = Depends(get_explain_service),
+) -> RecommendResponse:
+    """
+    calculate_benefits가 코루틴(async)으로 변경되었으므로 엔드포인트도 async로 선언해야 함.
+    FastAPI는 async 라우트 핸들러를 기본적으로 지원하며 이벤트 루프에서 실행됨.
+    """
     # Pydantic 1차 검증 이후의 방어 로직 (강화)
     if payload.total_budget <= 0:
         raise ValueError("total_budget은 0보다 커야 합니다.")
@@ -230,7 +242,10 @@ async def recommend_cards(payload: RecommendRequest) -> RecommendResponse:
 
 
 @router.post("/qa", response_model=QAResponse)
-async def answer_qa(payload: QARequest) -> QAResponse:
+async def answer_qa(
+    payload: QARequest,
+    explain_service: ExplainService = Depends(get_explain_service),
+) -> QAResponse:
     """
     추천 결과 데이터(JSON)를 바탕으로 사용자의 자유 질문에 대해 답변합니다.
     
@@ -242,12 +257,6 @@ async def answer_qa(payload: QARequest) -> QAResponse:
         json.loads(payload.raw_data)
     except Exception as e:
         raise ValueError("raw_data는 유효한 JSON 문자열이어야 합니다.") from e
-
-    try:
-        explain_service = ExplainService(get_llm())
-    except Exception as e:
-        logger.exception("[QA] ExplainService 생성 실패: %s", repr(e))
-        raise LLMUnavailableError()
 
     try:
         answer = await explain_service.answer_qa(payload.raw_data, payload.question)

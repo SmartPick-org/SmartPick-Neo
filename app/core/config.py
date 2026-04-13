@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import Iterable
 
 from dotenv import load_dotenv
+from functools import lru_cache
 from langchain.chat_models import init_chat_model
 from langchain_upstage import ChatUpstage
 
@@ -48,6 +49,7 @@ def init_env(project_root: Path | None = None) -> None:
     os.environ.setdefault("LANGSMITH_ENDPOINT", "https://api.smith.langchain.com")
 
 
+@lru_cache()
 def get_llm(model: str = DEFAULT_MODEL, temperature: float = 0.0):
     init_env()
     # solar 모델의 경우 ChatUpstage를 직접 사용

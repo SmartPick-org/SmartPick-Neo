@@ -1,11 +1,11 @@
 import json
-
 import pytest
 from fastapi.testclient import TestClient
 
 import app.api.card as card_api
+from app.core.config import get_llm
 from app.main import app as fastapi_app
-
+from app.core import dependencies
 
 client = TestClient(fastapi_app)
 
@@ -27,6 +27,13 @@ def _ranked_cards_for_tests() -> list[dict]:
     ]
 
 
+@pytest.fixture(autouse=True)
+def clear_dependency_overrides():
+    fastapi_app.dependency_overrides = {}
+    yield
+    fastapi_app.dependency_overrides = {}
+
+
 def test_recommend_input_value_error_total_budget() -> None:
     res = client.post(
         "/api/v1/cards/recommend",
@@ -43,9 +50,6 @@ def test_recommend_llm_failure_fallback_success_200(monkeypatch: pytest.MonkeyPa
     ranked_cards = _ranked_cards_for_tests()
 
     class StubCardRecommendService:
-        def __init__(self, repo):
-            pass
-
         def filter_cards(self, total_budget: int, category_spending: dict) -> list[dict]:
             return [{"_dummy": True}]
 
@@ -102,9 +106,6 @@ def test_recommend_build_recommended_cards_keyerror_fallback_safe_builder_succes
     ranked_cards = _ranked_cards_for_tests()
 
     class StubCardRecommendService:
-        def __init__(self, repo):
-            pass
-
         def filter_cards(self, total_budget: int, category_spending: dict) -> list[dict]:
             return [{"_dummy": True}]
 
@@ -154,7 +155,11 @@ def test_qa_invalid_raw_data_value_error_400() -> None:
 
 
 def test_qa_llm_failure_returns_fallback_error_format_422(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(card_api, "get_llm", lambda *args, **kwargs: (_ for _ in ()).throw(RuntimeError("llm down")))
+    class StubExplainService:
+        async def answer_qa(self, raw_data: str, question: str) -> str:
+            raise RuntimeError("llm down")
+
+    fastapi_app.dependency_overrides[dependencies.get_explain_service] = lambda: StubExplainService()
 
     res = client.post(
         "/api/v1/cards/qa",
@@ -165,4 +170,3 @@ def test_qa_llm_failure_returns_fallback_error_format_422(monkeypatch: pytest.Mo
     assert body["error_code"] == "LLM_UNAVAILABLE"
     assert body["fallback"] is True
     assert "message" in body
-

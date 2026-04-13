@@ -20,12 +20,9 @@ from pathlib import Path
 from typing import Literal
 
 from loguru import logger
-
-from app.core.config import get_llm
 from langchain.tools import tool
 from langchain_core.messages import HumanMessage, SystemMessage, ToolMessage
 from langsmith import traceable
-from app.core.resilience import with_resilience
 
 from app.core.database import get_supabase
 from app.tools.web_search import (
@@ -290,7 +287,7 @@ async def get_advice(
     """
     logger.info(f"[CardAdvisorService] get_advice 시작 | card={card_name} query_type={query_type}")
 
-    # 캐시 확인 -동일한 카드+질문 조합의 답변이 7일 이내에 생성된 경우 바로 반환
+    # 캐시 확인 -동일한 카드+질문 유형 조합의 답변이 7일 이내에 생성된 경우 바로 반환
     cache_key = f"{card_name}::{query_type}"
     cached_answer = _cache_get(cache_key)
     if cached_answer is not None:
@@ -309,7 +306,7 @@ async def get_advice(
     llm = get_llm(model=MODEL, temperature=0.0)
     llm_with_tools = llm.bind_tools(tools)
     resilient_invoke = with_resilience(llm_with_tools.ainvoke)
-    logger.info(f"[CardAdvisorService] LLM 초기화 완료 | model={MODEL} | tools={[t.name for t in tools]}")
+    logger.info(f"[CardAdvisorService] LLM 초기화 완료 (cached) | model={MODEL} | tools={[t.name for t in tools]}")
 
     messages = [
         SystemMessage(content=_SYSTEM_PROMPT.format(
@@ -356,14 +353,24 @@ async def get_advice(
 
 if __name__ == "__main__":
     import asyncio
+    import time
+    from app.core.logger import init_logger
+
+    init_logger()  # 로컬 테스트 시에도 JSON 로거 적용
+
     TEST_CARD_NAME = "KB 국민 굿데이 카드"
 
     async def run_test():
-        print(f"\n{'='*60}")
-        print(f"Testing get_advice for {TEST_CARD_NAME}...")
-        print("="*60)
+        logger.info(f"Testing get_advice for {TEST_CARD_NAME}...")
+        start_time = time.perf_counter()
+        
         answer = await get_advice(TEST_CARD_NAME, "how_to_apply")
-        print("\nAnswer:\n", answer)
-        print()
+        
+        latency = (time.perf_counter() - start_time) * 1000
+        logger.info(
+            "Test Finished", 
+            latency_ms=round(latency, 2), 
+            answer=answer
+        )
 
     asyncio.run(run_test())

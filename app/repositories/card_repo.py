@@ -37,9 +37,9 @@ class DatasetCardRepository(CardRepository):
                 card_categories: set[str] = set()
                 for benefit in adapted.get("benefits", []):
                     category = benefit.get("category", "")
-                    if category and category not in ("All_Domestic", "General"):
+                    if category and category != "General":
                         card_categories.add(category)
-                    elif category in ("All_Domestic", "General"):
+                    elif category == "General":
                         card_categories.add(category)
                 adapted["_card_categories"] = card_categories
 

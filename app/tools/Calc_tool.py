@@ -508,11 +508,11 @@ class BenefitCalculator:
                 )
                 return result
 
-            # ── 혜택별 계산 (All_Domestic을 마지막에 → Waterfall) ──
+            # ── 혜택별 계산 (General을 마지막에 → Waterfall) ──
             sorted_benefits = sorted(
                 self.benefits,
                 key=lambda x: (
-                    1 if x.get("category") == "All_Domestic" else 0,
+                    1 if x.get("category") == "General" else 0,
                     x.get("benefit_id", ""),
                 ),
             )
@@ -528,7 +528,7 @@ class BenefitCalculator:
                 freq = b.get("frequency", "MONTHLY")
 
                 # 예산 결정
-                if cat == "All_Domestic":
+                if cat == "General":
                     budget = remaining_total
                 else:
                     info = user_budgets.get(cat, 0)
@@ -555,7 +555,7 @@ class BenefitCalculator:
                     continue
 
                 # Waterfall: 사용된 예산만큼 잔여 총액에서 차감
-                if cat != "All_Domestic" and calc_result["used_budget"] > 0:
+                if cat != "General" and calc_result["used_budget"] > 0:
                     remaining_total -= calc_result["used_budget"]
                     remaining_total = max(remaining_total, 0)
 
@@ -595,9 +595,9 @@ class BenefitCalculator:
                 )
 
 
-            # 유저가 선택한 카테고리 순서대로 정렬 (All_Domestic 마지막)
+            # 유저가 선택한 카테고리 순서대로 정렬 (General 마지막)
             result["category_breakdown"].sort(
-                key=lambda x: (x["category"] == "All_Domestic", x["category"])
+                key=lambda x: (x["category"] == "General", x["category"])
             )
 
             # 영수증(Trace) — 계산에 참여한 개별 혜택의 산출 근거 (슬림)
@@ -726,8 +726,8 @@ if __name__ == "__main__":
                 },
             },
             {
-                "benefit_id": "b_all_domestic",
-                "category": "All_Domestic",
+                "benefit_id": "b_general",
+                "category": "General",
                 "content": "전 가맹점 1% 적립",
                 "frequency": "MONTHLY",
                 "reward_type": "POINT",

@@ -1,5 +1,5 @@
 """
-json_v3 → Supabase DB 업로더
+json → Supabase DB 업로더
 
 키 매핑:
   [cards 테이블]
@@ -42,7 +42,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-JSON_V3_DIR = ROOT / "datasets" / "json_v3"
+JSON_V3_DIR = ROOT / "datasets" / "json"
 
 
 # ---------------------------------------------------------------------------
@@ -158,7 +158,7 @@ def upload_json_file(db, json_path: Path, dry_run: bool) -> bool:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="json_v3 → Supabase DB 업로더")
+    parser = argparse.ArgumentParser(description="json → Supabase DB 업로더")
     parser.add_argument("--company", type=str, help="특정 카드사만 처리 (e.g. hyundai, kb, shinhan)")
     parser.add_argument("--dry-run", action="store_true", help="DB에 실제로 쓰지 않고 매핑 결과만 출력")
     args = parser.parse_args()

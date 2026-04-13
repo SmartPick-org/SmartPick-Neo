@@ -1,0 +1,179 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1775789021753,
+  "projectRoot": "/Users/ayeon/Documents/workspace/smartpick_re/SmartPick-Neo",
+  "techStack": {
+    "languages": [
+      {
+        "name": "Python",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "pyproject.toml"
+        ]
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "fastapi",
+        "version": null,
+        "category": "backend"
+      },
+      {
+        "name": "pytest",
+        "version": null,
+        "category": "testing"
+      }
+    ],
+    "packageManager": null,
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": "pytest",
+    "lintCommand": "ruff check",
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "app",
+      "scripts",
+      "tests"
+    ],
+    "gitBranches": {
+      "defaultBranch": "main",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "_temp": {
+      "path": "_temp",
+      "purpose": null,
+      "fileCount": 2,
+      "lastAccessed": 1775789021624,
+      "keyFiles": [
+        "multi_category.txt",
+        "prompt_block_check.txt"
+      ]
+    },
+    "app": {
+      "path": "app",
+      "purpose": "Application code",
+      "fileCount": 4,
+      "lastAccessed": 1775789021625,
+      "keyFiles": [
+        "__init__.py",
+        "config.py",
+        "main.py",
+        "prompts.py"
+      ]
+    },
+    "datasets": {
+      "path": "datasets",
+      "purpose": null,
+      "fileCount": 2,
+      "lastAccessed": 1775789021625,
+      "keyFiles": [
+        "Master_Schema_v2.json",
+        "merged_card_benefits.json"
+      ]
+    },
+    "logs": {
+      "path": "logs",
+      "purpose": null,
+      "fileCount": 13,
+      "lastAccessed": 1775789021626,
+      "keyFiles": [
+        "smartpick_2026-04-09_14-35-40_287784.log",
+        "smartpick_2026-04-09_14-38-01_851968.log",
+        "smartpick_2026-04-09_14-38-48_495702.log",
+        "smartpick_2026-04-09_14-52-35_295721.log",
+        "smartpick_2026-04-09_15-47-29_647753.log"
+      ]
+    },
+    "scripts": {
+      "path": "scripts",
+      "purpose": "Build/utility scripts",
+      "fileCount": 10,
+      "lastAccessed": 1775789021628,
+      "keyFiles": [
+        "convert_json.py",
+        "generate_digest.py",
+        "generate_json_v3.py",
+        "generate_json_v4.py",
+        "generate_json_v5.py"
+      ]
+    },
+    "tests": {
+      "path": "tests",
+      "purpose": "Test files",
+      "fileCount": 6,
+      "lastAccessed": 1775789021628,
+      "keyFiles": [
+        "conftest.py",
+        "test_adapters.py",
+        "test_calc_tool_subcat.py",
+        "test_card_service.py",
+        "test_edge_case_fallbacks.py"
+      ]
+    },
+    "app/api": {
+      "path": "app/api",
+      "purpose": "API routes",
+      "fileCount": 2,
+      "lastAccessed": 1775789021631,
+      "keyFiles": [
+        "advisor.py",
+        "card.py"
+      ]
+    },
+    "app/schemas": {
+      "path": "app/schemas",
+      "purpose": "Schema definitions",
+      "fileCount": 4,
+      "lastAccessed": 1775789021631,
+      "keyFiles": [
+        "card_catalog.py",
+        "cards.py",
+        "enums.py"
+      ]
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "app/prompts.py",
+      "accessCount": 6,
+      "lastAccessed": 1775799620254,
+      "type": "file"
+    },
+    {
+      "path": "app/api/card.py",
+      "accessCount": 1,
+      "lastAccessed": 1775806461021,
+      "type": "file"
+    },
+    {
+      "path": "app/services/explain_service.py",
+      "accessCount": 1,
+      "lastAccessed": 1775806461731,
+      "type": "file"
+    },
+    {
+      "path": "app/main.py",
+      "accessCount": 1,
+      "lastAccessed": 1775808325623,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}

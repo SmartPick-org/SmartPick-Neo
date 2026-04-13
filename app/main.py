@@ -1,6 +1,7 @@
 import os
 import sys
 from loguru import logger
+from logtail import LogtailHandler
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -11,6 +12,7 @@ from app.api.card import router as card_router
 from app.api.advisor import router as advisor_router
 from app.core.discord import notify_discord
 from app.core.exceptions import BusinessException, SystemException
+from app.core.config import LOGTAIL_SOURCE_TOKEN, LOGTAIL_HOST
 
 # ---------------------------------------------------------------------------
 # 전역 로깅 설정 (민감 정보 보호 및 파일 저장)
@@ -20,7 +22,34 @@ from app.core.middleware import logging_middleware
 
 init_logger()
 
-app = FastAPI()
+# Better Stack (Logtail) 로깅
+# LogtailHandler는 표준 logging.Handler이므로 loguru 레코드를 LogRecord로 변환하는 브릿지 필요
+if LOGTAIL_SOURCE_TOKEN:
+    import logging
+    _logtail_handler = LogtailHandler(source_token=LOGTAIL_SOURCE_TOKEN, host=LOGTAIL_HOST) if LOGTAIL_HOST else LogtailHandler(source_token=LOGTAIL_SOURCE_TOKEN)
+
+    def _logtail_sink(message):
+        record = message.record
+        log_record = logging.LogRecord(
+            name=record["name"],
+            level=getattr(logging, record["level"].name, logging.INFO),
+            pathname=str(record["file"].path),
+            lineno=record["line"],
+            msg=record["message"],
+            args=(),
+            exc_info=record["exception"],
+        )
+        _logtail_handler.emit(log_record)
+
+    logger.add(_logtail_sink, level="INFO")
+else:
+    logger.warning("LOGTAIL_SOURCE_TOKEN not set — Better Stack logging disabled")
+
+app = FastAPI(
+    title="SmartPick API",
+    version="1.0.0",
+    description="신용카드 추천 및 어드바이저 서비스 API",
+)
 
 app.middleware("http")(logging_middleware)
 
@@ -32,8 +61,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(card_router)
-app.include_router(advisor_router)
+app.include_router(card_router, prefix="/api/v1")
+app.include_router(advisor_router, prefix="/api/v1")
 
 
 # ---------------------------------------------------------------------------

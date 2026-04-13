@@ -1,8 +1,9 @@
+import asyncio
 import json
 from loguru import logger
 from pathlib import Path
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException, Query
 
 from app.core.config import DIGEST_DIR, DATASETS_DIR, get_llm
 from app.core.dependencies import (
@@ -11,17 +12,122 @@ from app.core.dependencies import (
     get_recommend_service,
 )
 from app.core.exceptions import LLMUnavailableError, NoCardsFoundError
+from app.repositories.card_repo import FallbackCardRepository
 from app.repositories.digest_repo import DigestRepository
-from app.schemas.recommend import QARequest, QAResponse, RecommendRequest, RecommendResponse
+from app.schemas.card_catalog import (
+    CardCatalogItem,
+    CardCatalogResponse,
+    CardDetailResponse,
+)
+from app.schemas.recommend import (
+    CategoryComparison,
+    CompareRequest,
+    CompareResponse,
+    QARequest,
+    QAResponse,
+    RecommendCard,
+    RecommendRequest,
+    RecommendResponse,
+)
 from app.services.card_service import CardRecommendService
 from app.services.explain_service import ExplainService
 
 router = APIRouter(prefix="/cards", tags=["cards"])
 
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+DATASETS_DIR = PROJECT_ROOT / "datasets" / "json"
+DIGEST_DIR = PROJECT_ROOT / "datasets" / "digest"
+
 # Fallback 텍스트 — LLM이 죽어도 사용자는 카드 목록을 볼 수 있음
 _LLM_FALLBACK_EXPLAIN = (
     "AI 설명 생성에 실패했습니다. 아래 카드 목록은 혜택 계산 결과 기준으로 정렬되었습니다."
 )
+
+_LLM_FALLBACK_COMPARE = (
+    "AI 비교 설명 생성에 실패했습니다. 혜택 계산 결과를 직접 확인해 주세요."
+)
+
+def _get_card_repository():
+    return FallbackCardRepository(DATASETS_DIR)
+
+
+def _to_catalog_item(card: dict) -> CardCatalogItem:
+    meta = card.get("card_meta", {}) or {}
+    categories = card.get("_card_categories", set()) or set()
+    categories_list = sorted([str(c) for c in categories if c])
+    return CardCatalogItem(
+        card_id=str(meta.get("card_id", "") or ""),
+        card_name=str(meta.get("card_name", "") or ""),
+        card_company=str(meta.get("card_company", "") or ""),
+        annual_fee=int(meta.get("annual_fee", 0) or 0),
+        minimum_performance=int(meta.get("minimum_performance", 0) or 0),
+        categories=categories_list,
+    )
+
+
+@router.get("", response_model=CardCatalogResponse)
+def list_cards(
+    q: str | None = Query(default=None, description="카드명/카드사 검색어"),
+    company: str | None = Query(default=None, description="카드사 필터"),
+    category: list[str] | None = Query(default=None, description="카테고리 필터(다중)"),
+    offset: int = Query(default=0, ge=0),
+    limit: int = Query(default=50, ge=1, le=200),
+) -> CardCatalogResponse:
+    """
+    프론트의 '기존 카드 선택' 드롭다운/검색 UI를 실데이터로 채우기 위한 카탈로그 API.
+    - GET /cards (router prefix=/cards + path="") 형태로 노출됩니다.
+    """
+    repo = _get_card_repository()
+    all_cards = repo.list_cards()
+
+    q_norm = (q or "").strip().lower()
+    company_norm = (company or "").strip().lower()
+    categories_norm = {c.strip().lower() for c in (category or []) if c and c.strip()}
+
+    items: list[CardCatalogItem] = []
+    for card in all_cards:
+        item = _to_catalog_item(card)
+        if not item.card_id or not item.card_name:
+            continue
+
+        if q_norm:
+            hay = f"{item.card_name} {item.card_company}".lower()
+            if q_norm not in hay:
+                continue
+        if company_norm and company_norm not in item.card_company.lower():
+            continue
+        if categories_norm:
+            item_categories = {c.lower() for c in item.categories}
+            if not (item_categories & categories_norm):
+                continue
+
+        items.append(item)
+
+    total = len(items)
+    paged = items[offset : offset + limit]
+    return CardCatalogResponse(cards=paged, total=total, offset=offset, limit=limit)
+
+
+@router.get("/{card_id}", response_model=CardDetailResponse)
+def get_card_detail(card_id: str) -> CardDetailResponse:
+    repo = _get_card_repository()
+    for card in repo.list_cards():
+        meta = card.get("card_meta", {}) or {}
+        if str(meta.get("card_id", "") or "") == str(card_id):
+            item = _to_catalog_item(card)
+            return CardDetailResponse(
+                card_id=item.card_id,
+                card_name=item.card_name,
+                card_company=item.card_company,
+                annual_fee=item.annual_fee,
+                minimum_performance=item.minimum_performance,
+                categories=item.categories,
+                card_meta=meta,
+                benefits=card.get("benefits", []) or [],
+                benefit_groups=card.get("benefit_groups", []) or [],
+                file_path=card.get("_file_path"),
+            )
+    raise HTTPException(status_code=404, detail="카드를 찾을 수 없습니다.")
 
 
 def _safe_build_recommended_cards(ranked: list[dict], explanation: str) -> list[dict]:
@@ -67,6 +173,18 @@ async def recommend_cards(
     ):
         raise ValueError("category_spending의 각 값은 0보다 커야 합니다.")
 
+    card_repo = _get_card_repository()
+    digest_repo = DigestRepository(DIGEST_DIR)
+    recommend_service = CardRecommendService(card_repo)
+
+    explain_service: ExplainService | None = None
+    try:
+        explain_service = ExplainService(get_llm())
+    except Exception as e:
+        # LLM 자체 장애 → 서비스는 중단하지 않고 fallback 텍스트로 진행
+        logger.exception("[LLM init] ExplainService 생성 실패: %s", repr(e))
+        explain_service = None
+
     # 1. 필터링 — 조건에 맞는 카드가 없으면 404 반환
     filtered = recommend_service.filter_cards(payload.total_budget, payload.category_spending)
     if not filtered:
@@ -87,21 +205,18 @@ async def recommend_cards(
         logger.exception("[recommend_cards] calculate_benefits ValueError: %s", repr(e))
         raise ValueError(str(e))
 
-    ranked = recommend_service.rank_top(calc_results, top_n=3)
+    ranked = recommend_service.rank_top(calc_results, top_n=len(calc_results))
 
     if not ranked:
         raise NoCardsFoundError("혜택 계산 결과가 없습니다.")
 
     # 3. LLM 설명 생성 — 실패해도 카드 목록은 반환 (Graceful Degradation)
-    digests = []
+    # 랭킹 완료 후 1위 카드의 digest만 가져옴
+    top_digest = ""
     try:
-        # 모든 카드의 Digest를 시도하여 상세 내역 생성에 대비
-        digests = [digest_repo.get_digest(card.get("_card_data", {})) for card in ranked]
-        top_digest = digests[0] if digests else ""
+        top_digest = await digest_repo.get_digest(ranked[0].get("_card_data", {}))
     except Exception as e:
         logger.warning("[recommend_cards] digest 로드 실패: %s", repr(e))
-        top_digest = ""
-        digests = [""] * len(ranked)
 
     explanation = _LLM_FALLBACK_EXPLAIN
     if explain_service is not None:
@@ -117,7 +232,7 @@ async def recommend_cards(
 
     try:
         # 상세 Tracing 기능이 포함된 빌더 호출
-        recommended_cards = explain_service.build_recommended_cards(ranked, explanation, digests)
+        recommended_cards = explain_service.build_recommended_cards(ranked, explanation)
     except Exception as e:
         logger.warning("[recommend_cards] 상세 빌더 실패, 안전 빌더 사용: %s", repr(e))
         recommended_cards = _safe_build_recommended_cards(ranked, explanation)
@@ -158,3 +273,191 @@ async def answer_qa(
         raise LLMUnavailableError()
 
     return QAResponse(answer=answer)
+
+
+def _build_recommend_card(card_result: dict, explanation: str) -> RecommendCard:
+    """calc result dict → RecommendCard 스키마 변환 헬퍼"""
+    return RecommendCard(
+        card_name=card_result.get("card_name", ""),
+        card_company=card_result.get("card_company", ""),
+        card_id=card_result.get("card_id", ""),
+        annual_fee=card_result.get("annual_fee", 0),
+        minimum_performance=card_result.get("minimum_performance", 0),
+        expected_monthly_benefit=card_result.get("expected_monthly_benefit", 0),
+        category_breakdown=card_result.get("category_breakdown", []),
+        explanation=explanation,
+    )
+
+
+@router.post("/compare", response_model=CompareResponse)
+async def compare_cards(payload: CompareRequest) -> CompareResponse:
+    """
+    기존 카드 vs 1순위 추천 카드 혜택 비교.
+
+    - **current_card_id**: 유저가 현재 사용 중인 카드 ID (GET /cards 에서 확인 가능)
+    - **total_budget / category_spending**: recommend와 동일한 소비 패턴 입력
+    """
+    card_repo = _get_card_repository()
+
+    # 1. current_card_id로 카드 원본 데이터 찾기
+    current_card_raw: dict | None = None
+    for card in card_repo.list_cards():
+        meta = card.get("card_meta", {}) or {}
+        if str(meta.get("card_id", "") or "") == payload.current_card_id:
+            current_card_raw = card
+            break
+
+    if current_card_raw is None:
+        raise HTTPException(status_code=404, detail=f"카드 ID '{payload.current_card_id}'를 찾을 수 없습니다.")
+
+    recommend_service = CardRecommendService(card_repo)
+
+    explain_service: ExplainService | None = None
+    try:
+        explain_service = ExplainService(get_llm())
+    except Exception as e:
+        logger.exception("[compare_cards] ExplainService 생성 실패: %s", repr(e))
+        explain_service = None
+
+    # 2. 전체 카드 필터링 + 혜택 계산 + 랭킹 (recommend 로직 재사용)
+    filtered = recommend_service.filter_cards(payload.total_budget, payload.category_spending)
+    if not filtered:
+        raise NoCardsFoundError(
+            f"월 {payload.total_budget:,}원 예산 및 선택 카테고리 조건에 맞는 카드가 없습니다."
+        )
+
+    try:
+        calc_results = await recommend_service.calculate_benefits(
+            filtered, payload.total_budget, payload.category_spending
+        )
+    except KeyError as e:
+        logger.exception("[compare_cards] calculate_benefits KeyError: %s", repr(e))
+        raise ValueError("혜택 계산에 필요한 데이터가 누락되었습니다.") from e
+    except ValueError as e:
+        logger.exception("[compare_cards] calculate_benefits ValueError: %s", repr(e))
+        raise ValueError(str(e))
+
+    ranked = recommend_service.rank_top(calc_results, top_n=len(calc_results))
+    if not ranked:
+        raise NoCardsFoundError("혜택 계산 결과가 없습니다.")
+
+    recommended_result = ranked[0]
+
+    # 3. 기존 카드 혜택 계산 (필터 통과 여부와 무관하게 단독 계산)
+    try:
+        current_calc = await recommend_service.calculate_benefits(
+            [current_card_raw], payload.total_budget, payload.category_spending
+        )
+        current_result = current_calc[0] if current_calc else {}
+        if current_result and current_result.get("expected_monthly_benefit", 0) == 0:
+            if not current_result.get("warnings"):
+                current_result["warnings"] = ["전월 실적 미달 등의 사유로 혜택이 0원으로 산출되었습니다."]
+    except Exception as e:
+        logger.warning("[compare_cards] 기존 카드 혜택 계산 실패: %s", repr(e))
+        current_result = {
+            "card_name": (current_card_raw.get("card_meta", {}) or {}).get("card_name", ""),
+            "card_company": (current_card_raw.get("card_meta", {}) or {}).get("card_company", ""),
+            "card_id": payload.current_card_id,
+            "annual_fee": (current_card_raw.get("card_meta", {}) or {}).get("annual_fee", 0),
+            "minimum_performance": (current_card_raw.get("card_meta", {}) or {}).get("minimum_performance", 0),
+            "expected_monthly_benefit": 0,
+            "category_breakdown": [],
+        }
+
+    # 4. 월/연 혜택 차이 계산
+    current_monthly = current_result.get("expected_monthly_benefit", 0)
+    recommended_monthly = recommended_result.get("expected_monthly_benefit", 0)
+    monthly_diff = recommended_monthly - current_monthly
+    yearly_diff = monthly_diff * 12
+
+    # 5. 카테고리별 비교 계산
+    current_breakdown_map: dict[str, int] = {
+        cb["category"]: cb["monthly_discount_krw"]
+        for cb in current_result.get("category_breakdown", [])
+    }
+    recommended_breakdown_map: dict[str, int] = {
+        cb["category"]: cb["monthly_discount_krw"]
+        for cb in recommended_result.get("category_breakdown", [])
+    }
+
+    all_categories = set(current_breakdown_map.keys()) | set(recommended_breakdown_map.keys())
+    # 유저가 입력한 카테고리 순서로 정렬
+    user_cat_strs = [
+        cat.value if hasattr(cat, "value") else str(cat)
+        for cat in payload.category_spending.keys()
+    ]
+    ordered_cats = [c for c in user_cat_strs if c in all_categories] + \
+                   [c for c in all_categories if c not in user_cat_strs]
+
+    category_comparison = [
+        CategoryComparison(
+            category=cat,
+            current_benefit=current_breakdown_map.get(cat, 0),
+            recommended_benefit=recommended_breakdown_map.get(cat, 0),
+            diff=recommended_breakdown_map.get(cat, 0) - current_breakdown_map.get(cat, 0),
+        )
+        for cat in ordered_cats
+    ]
+
+    # 6. ExplainService로 설명 빌더 (fallback graceful degradation)
+    current_explain = ""
+    
+    # 0원 혜택에 대한 친절한 요약 설명
+    if current_result.get("expected_monthly_benefit", 0) == 0:
+        warnings = current_result.get("warnings", [])
+        if warnings:
+            current_explain = "⚠️ " + " / ".join(warnings)
+
+    recommended_cards_schema = []
+    if explain_service is not None:
+        try:
+            if not current_explain:
+                current_explain = explain_service._format_card_detail(current_result, rank=0)
+            
+            for i, r_result in enumerate(ranked):
+                r_exp = explain_service._format_card_detail(r_result, rank=i+1)
+                recommended_cards_schema.append(_build_recommend_card(r_result, r_exp))
+        except Exception as e:
+            logger.warning("[compare_cards] _format_card_detail 실패: %s", repr(e))
+    
+    # LLM 실패 혹은 explain_service 없을 때 fallback
+    if not recommended_cards_schema:
+        recommended_cards_schema = [_build_recommend_card(r, "") for r in ranked]
+    
+    recommended_card_schema = recommended_cards_schema[0]
+
+    # 7. LLM 비교 큐레이션 텍스트 생성
+    explanation = _LLM_FALLBACK_COMPARE
+    if explain_service is not None:
+        try:
+            explanation = await explain_service.compare(
+                payload.total_budget,
+                payload.category_spending,
+                current_result,
+                recommended_result,
+            )
+            if not explanation or not explanation.strip():
+                explanation = _LLM_FALLBACK_COMPARE
+        except Exception as e:
+            logger.warning("[compare_cards] compare() 실패, Fallback 텍스트 사용: %s", repr(e))
+            explanation = _LLM_FALLBACK_COMPARE
+
+    current_card_schema = _build_recommend_card(current_result, current_explain)
+
+    # 8. recommended_cards 배열 필터링
+    # 조건: expected_monthly_benefit > 0 AND > 기존 카드 월 혜택, 내림차순 정렬
+    filtered_recommended_cards = [
+        card for card in recommended_cards_schema
+        if card.expected_monthly_benefit > 0
+        and card.expected_monthly_benefit > current_monthly
+    ]
+
+    return CompareResponse(
+        current_card=current_card_schema,
+        recommended_cards=filtered_recommended_cards,
+        recommended_card=recommended_card_schema,
+        monthly_diff=monthly_diff,
+        yearly_diff=yearly_diff,
+        category_comparison=category_comparison,
+        explanation=explanation,
+    )

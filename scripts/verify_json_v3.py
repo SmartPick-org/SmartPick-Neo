@@ -1,7 +1,7 @@
 """
 JSON v3 검증 스크립트
 
-생성된 json_v3/ 파일들의 스키마 정합성 + 마크다운 원문 대비 누락/오류를 검증합니다.
+생성된 json/ 파일들의 스키마 정합성 + 마크다운 원문 대비 누락/오류를 검증합니다.
 
 사용법: python -m scripts.verify_json_v3
 옵션:
@@ -21,8 +21,8 @@ from dotenv import load_dotenv
 ROOT = Path(__file__).resolve().parents[1]
 load_dotenv(ROOT / ".env")
 
-JSON_V3_DIR = ROOT / "datasets" / "json_v3"
-MD_DIR = ROOT / "datasets" / "markdown_upstage"
+JSON_V3_DIR = ROOT / "datasets" / "json"
+MD_DIR = ROOT / "datasets" / "terms"
 
 # ===========================< 스키마 검증 >============================
 
@@ -245,7 +245,7 @@ def main():
 
     json_files = list(JSON_V3_DIR.rglob("*.json"))
     if not json_files:
-        print("[ERROR] json_v3/ 디렉토리에 JSON 파일이 없습니다.")
+        print("[ERROR] json/ 디렉토리에 JSON 파일이 없습니다.")
         return
 
     # 필터링

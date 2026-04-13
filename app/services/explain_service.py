@@ -3,7 +3,7 @@ from loguru import logger
 
 from langchain_core.messages import HumanMessage, SystemMessage
 
-from app.prompts import EXPLAIN_PROMPT, QA_PROMPT
+from app.prompts import COMPARE_PROMPT, EXPLAIN_PROMPT, QA_PROMPT
 
 
 class ExplainService:
@@ -90,6 +90,74 @@ class ExplainService:
             logger.exception(f"[ExplainService] answer_qa 처리 중 오류 발생: {e}")
             raise
 
+    async def compare(
+        self,
+        total_budget: int,
+        category_spending: Dict[str, Any],
+        current_card_result: dict,
+        recommended_card_result: dict,
+    ) -> str:
+        """
+        기존 카드와 추천 카드를 비교하는 큐레이션 텍스트를 생성합니다.
+        """
+        user_spending = self.build_user_spending(total_budget, category_spending)
+
+        current_monthly = current_card_result.get("expected_monthly_benefit", 0)
+        recommended_monthly = recommended_card_result.get("expected_monthly_benefit", 0)
+        yearly_diff = (recommended_monthly - current_monthly) * 12
+
+        # 혜택 차이가 가장 큰 카테고리 찾기
+        top_category = ""
+        max_diff = 0
+        current_breakdown = {
+            cb["category"]: cb["monthly_discount_krw"]
+            for cb in current_card_result.get("category_breakdown", [])
+        }
+        for cb in recommended_card_result.get("category_breakdown", []):
+            cat = cb["category"]
+            diff = cb["monthly_discount_krw"] - current_breakdown.get(cat, 0)
+            if diff > max_diff:
+                max_diff = diff
+                top_category = cat
+
+        logger.info(
+            f"[ExplainService] compare 시작 | 기존: {current_card_result.get('card_name')} "
+            f"→ 추천: {recommended_card_result.get('card_name')} | 연간 차이: {yearly_diff:,}원"
+        )
+
+        def _breakdown_to_str(breakdowns: list) -> str:
+            lines = []
+            for cb in breakdowns:
+                if cb["monthly_discount_krw"] > 0:
+                    lines.append(f"- {cb['category']}: {cb['monthly_discount_krw']:,}원")
+                    if cb.get("discount_info"):
+                        for sub, amt in cb["discount_info"].items():
+                            sub_name = sub.replace("sub_category_", "")
+                            lines.append(f"  └ {sub_name}: {amt:,}원")
+            return "\n".join(lines) if lines else "혜택 없음"
+
+        current_breakdown_str = _breakdown_to_str(current_card_result.get("category_breakdown", []))
+        recommended_breakdown_str = _breakdown_to_str(recommended_card_result.get("category_breakdown", []))
+
+        compare_prompt = COMPARE_PROMPT.format(
+            user_spending=user_spending,
+            current_card_name=current_card_result.get("card_name", ""),
+            current_card_benefit=f"월 약 {current_monthly:,}원",
+            current_breakdown=current_breakdown_str,
+            recommended_card_name=recommended_card_result.get("card_name", ""),
+            recommended_card_benefit=f"월 약 {recommended_monthly:,}원",
+            recommended_breakdown=recommended_breakdown_str,
+            yearly_diff=f"{yearly_diff:,}",
+            top_category=top_category or "전반적인 카테고리",
+        )
+        try:
+            response = await self._resilient_invoke([SystemMessage(content=compare_prompt)])
+            logger.info(f"[ExplainService] compare 완료 | 답변 길이: {len(str(response.content))} chars")
+            return response.content
+        except Exception as e:
+            logger.exception(f"[ExplainService] compare 처리 중 오류 발생: {e}")
+            raise
+
     @staticmethod
     def _round_to_thousands(amount: int) -> str:
         """100원 단위에서 반올림하여 1,000원 단위로 표기 (예: 28500 -> 약 29,000)"""
@@ -125,7 +193,7 @@ class ExplainService:
         
         return "\n".join(lines)
 
-    def build_recommended_cards(self, ranked: List[dict], explanation: str, card_digests: List[str]) -> List[dict]:
+    def build_recommended_cards(self, ranked: List[dict], explanation: str) -> List[dict]:
         """
         모든 추천 카드에 대해 explanation 필드를 상세화합니다.
         각 카드의 explanation 필드에는 해당 카드의 상세 내역(detail_text)만 포함됩니다.

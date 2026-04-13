@@ -42,8 +42,8 @@ def main():
     else:
         out_base = ROOT / "datasets"
         
-    md_dir = out_base / "markdown_upstage"
-    json_dir = out_base / "json_v3"
+    md_dir = out_base / "terms"
+    json_dir = out_base / "json"
     digest_dir = out_base / "digest"
     
     # generate_json_v3, generate_digest 스크립트 내부의 전역 변수 동적 수정

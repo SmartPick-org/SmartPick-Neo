@@ -9,7 +9,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
@@ -19,6 +18,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd /home/ubuntu/SmartPick-Neo
-            git pull origin main
-            uv sync
+            git pull origin ${{ github.ref_name }}
+            git checkout ${{ github.ref_name }}
+            /home/ubuntu/.local/bin/uv sync --no-group dev
             sudo systemctl restart smartpick

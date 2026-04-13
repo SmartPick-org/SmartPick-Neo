@@ -13,6 +13,7 @@ __pycache__/
 # Distribution / packaging
 .Python
 .claude
+.omc/
 .idea/
 .idea\workspace.xml
 *.gitignore
@@ -205,7 +206,9 @@ $RECYCLE.BIN/
 .venv
 /LLM_Advice
 /_*
-tests
 tmp
+
+# npm cache
+.npm-cache/
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,python

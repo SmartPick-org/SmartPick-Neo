@@ -24,6 +24,7 @@ from langchain.tools import tool
 from langchain_core.messages import HumanMessage, SystemMessage, ToolMessage
 from langsmith import traceable
 
+from app.core.config import get_llm
 from app.core.database import get_supabase
 from app.tools.web_search import (
     search_blog,

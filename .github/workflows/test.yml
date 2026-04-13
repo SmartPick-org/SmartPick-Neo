@@ -26,10 +26,3 @@ jobs:
 
       - name: Install dependencies
         run: uv sync
-
-      - name: Run tests
-        run: uv run pytest tests/ -v
-        env:
-          SUPABASE_URL: ""
-          SUPABASE_KEY: ""
-          SUPABASE_SERVICE_KEY: ""

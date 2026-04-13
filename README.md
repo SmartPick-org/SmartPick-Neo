@@ -78,6 +78,19 @@ npm run dev
 NEXT_PUBLIC_API_BASE=http://localhost:8000
 ```
 
+## 상수 관리
+### 상수 위치 가이드
+
+| 파일 | 상수 | 의미 |
+|---|---|---|
+| `app/core/config.py` | `LLM_TIMEOUT`, `LLM_MAX_RETRIES`, `LLM_CB_FAILURE_THRESHOLD` 등 | LLM 연결 관련 설정값. `.env`로 오버라이드 가능 |
+| `app/tools/Calc_tool.py` | `DEFAULT_FUEL_PRICE_PER_LITER`, `DAYS_PER_MONTH` | 혜택 계산 기준값 (휘발유 단가, 월 기준일수) |
+| `app/services/card_service.py` | `_CONCURRENCY_LIMIT` | asyncio 동시 계산 카드 수 상한 |
+| `app/services/advise_service.py` | `_CACHE_TTL_DAYS` | 상담 캐시 유효 기간 |
+| `app/core/resilience.py` | `wait_exponential(multiplier, min, max)` | 재시도 백오프 파라미터 |
+
+> **변경 시 참고:** LLM 동작 관련(타임아웃, 재시도)은 `app/core/config.py` 또는 `.env` 우선 확인. 계산 로직 관련(유가, 일수)은 `app/tools/Calc_tool.py` 상단 상수 블록 확인.
+
 ## 자주 발생하는 실행 오류
 
 - `uv run ./apps/backend/agent/agent.py`처럼 스크립트 경로로 실행하면 import 오류가 발생할 수 있습니다.

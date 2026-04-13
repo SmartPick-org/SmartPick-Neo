@@ -1,6 +1,7 @@
 import os
 import sys
 from loguru import logger
+from logtail import LogtailHandler
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -11,13 +12,14 @@ from app.api.card import router as card_router
 from app.api.advisor import router as advisor_router
 from app.core.discord import notify_discord
 from app.core.exceptions import BusinessException, SystemException
+from app.core.config import LOGTAIL_SOURCE_TOKEN, LOGTAIL_HOST
 
 # ---------------------------------------------------------------------------
 # 전역 로깅 설정 (민감 정보 보호 및 파일 저장)
 # ---------------------------------------------------------------------------
 logger.remove()  # 기본 핸들러 제거
 logger.add(
-    sys.stdout, 
+    sys.stdout,
     diagnose=False,  # 운영 필수: 예외 발생 시 로컬 변수 평문 노출 차단
     backtrace=True,
     format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>"
@@ -26,13 +28,36 @@ logger.add(
 # 파일 로깅 (로컬 및 단일 서버용)
 os.makedirs("logs", exist_ok=True)
 logger.add(
-    "logs/smartpick_{time}.log", 
-    rotation="10 MB", 
-    retention="10 days", 
+    "logs/smartpick_{time}.log",
+    rotation="10 MB",
+    retention="10 days",
     diagnose=False,  # 여기도 동일하게 지역 변수 가리기 적용
     backtrace=True,
     level="INFO"
 )
+
+# Better Stack (Logtail) 로깅
+# LogtailHandler는 표준 logging.Handler이므로 loguru 레코드를 LogRecord로 변환하는 브릿지 필요
+if LOGTAIL_SOURCE_TOKEN:
+    import logging
+    _logtail_handler = LogtailHandler(source_token=LOGTAIL_SOURCE_TOKEN, host=LOGTAIL_HOST) if LOGTAIL_HOST else LogtailHandler(source_token=LOGTAIL_SOURCE_TOKEN)
+
+    def _logtail_sink(message):
+        record = message.record
+        log_record = logging.LogRecord(
+            name=record["name"],
+            level=getattr(logging, record["level"].name, logging.INFO),
+            pathname=str(record["file"].path),
+            lineno=record["line"],
+            msg=record["message"],
+            args=(),
+            exc_info=record["exception"],
+        )
+        _logtail_handler.emit(log_record)
+
+    logger.add(_logtail_sink, level="INFO")
+else:
+    logger.warning("LOGTAIL_SOURCE_TOKEN not set — Better Stack logging disabled")
 
 app = FastAPI(
     title="SmartPick API",

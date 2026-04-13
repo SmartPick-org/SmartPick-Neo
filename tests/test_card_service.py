@@ -1,5 +1,7 @@
 from typing import Dict, List
 
+import pytest
+
 from app.services.card_service import CardRecommendService
 
 
@@ -73,7 +75,8 @@ def test_filter_cards_by_performance_and_category():
     assert "CardB" not in names
 
 
-def test_calculate_benefits_aggregates_and_sorts(monkeypatch):
+@pytest.mark.asyncio
+async def test_calculate_benefits_aggregates_and_sorts(monkeypatch):
     cards = [
         {
             "card_meta": {"card_name": "CardA", "card_company": "C1", "annual_fee": 1000, "card_id": "a"},
@@ -88,7 +91,7 @@ def test_calculate_benefits_aggregates_and_sorts(monkeypatch):
 
     monkeypatch.setattr("app.services.card_service.BenefitCalculator", FakeBenefitCalculator)
 
-    results = service.calculate_benefits(cards, 500000, {"Coffee": 50000, "Shopping": 100000})
+    results = await service.calculate_benefits(cards, 500000, {"Coffee": 50000, "Shopping": 100000})
 
     assert results[0]["card_name"] == "CardB"
     assert results[0]["expected_monthly_benefit"] == 3000
@@ -128,7 +131,8 @@ def test_filter_cards_with_empty_spending_only_allows_general():
     assert names == ["GeneralCard"]
 
 
-def test_calculate_benefits_handles_zero_budget_and_sparse_result(monkeypatch):
+@pytest.mark.asyncio
+async def test_calculate_benefits_handles_zero_budget_and_sparse_result(monkeypatch):
     cards = [
         {
             "card_meta": {"card_name": "Sparse", "card_company": "C1", "annual_fee": 0, "card_id": "x"},
@@ -138,7 +142,7 @@ def test_calculate_benefits_handles_zero_budget_and_sparse_result(monkeypatch):
     service = CardRecommendService(FakeRepo(cards))
     monkeypatch.setattr("app.services.card_service.BenefitCalculator", FakeBenefitCalculatorSparse)
 
-    results = service.calculate_benefits(cards, 0, {})
+    results = await service.calculate_benefits(cards, 0, {})
     result = results[0]
 
     assert result["expected_monthly_benefit"] == 1200

@@ -1,6 +1,6 @@
 def adapt_v3_for_calculator(card_data: dict) -> dict:
     """
-    json_v3 스키마를 BenefitCalculator가 기대하는 형식으로 어댑팅합니다.
+    json 스키마를 BenefitCalculator가 기대하는 형식으로 어댑팅합니다.
 
     주요 변환:
     - FIXED_PER_VOLUME → PER_UNIT + unit_label/unit_amount 추가

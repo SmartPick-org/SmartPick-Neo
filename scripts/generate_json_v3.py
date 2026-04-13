@@ -1,7 +1,7 @@
 """
 마크다운 기반 카드 JSON v3 생성 스크립트
 
-markdown_upstage/ 하위의 마크다운 파일들을 카드별로 그룹핑한 뒤,
+terms/ 하위의 마크다운 파일들을 카드별로 그룹핑한 뒤,
 LLM(solar-pro2)으로 v3 스키마 JSON을 생성합니다.
 
 사용법: python -m scripts.generate_json_v3
@@ -37,8 +37,8 @@ load_dotenv(ROOT / ".env")
 MODEL = "solar-pro2"
 llm = init_chat_model(model=MODEL, temperature=0.0)
 
-MD_DIR = ROOT / "datasets" / "markdown_upstage"
-DST_DIR = ROOT / "datasets" / "json_v3"
+MD_DIR = ROOT / "datasets" / "terms"
+DST_DIR = ROOT / "datasets" / "json"
 
 # ===========================< 카드 그룹핑 >============================
 
@@ -220,7 +220,7 @@ def normalize_card_key(company: str, filename: str) -> str:
 
 def group_markdown_files() -> dict[str, dict]:
     """
-    markdown_upstage/ 하위 파일들을 카드 키별로 그룹핑합니다.
+    terms/ 하위 파일들을 카드 키별로 그룹핑합니다.
 
     Returns:
         {card_key: {"company": str, "company_kr": str, "files": [Path, ...]}}

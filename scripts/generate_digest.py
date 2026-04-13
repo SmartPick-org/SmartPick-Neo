@@ -26,7 +26,7 @@ load_dotenv(ROOT / ".env")
 MODEL = "solar-pro2"
 llm = init_chat_model(model=MODEL, temperature=0.0)
 
-SRC_DIR = ROOT / "datasets" / "json_v3"
+SRC_DIR = ROOT / "datasets" / "json"
 DST_DIR = ROOT / "datasets" / "digest"
 
 # ===========================< LLM 프롬프트 >============================

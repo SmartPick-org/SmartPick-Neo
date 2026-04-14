@@ -11,11 +11,16 @@ def _enrich_benefit_details(benefit_details: list[dict], raw_benefits: list[dict
     """
     Calc_tool이 반환한 benefit_details에 카드 JSON의 content 필드를 보강합니다.
     benefit_id를 키로 join하며, content가 없는 경우 빈 문자열로 처리합니다.
+    benefit_id가 None인 항목은 BenefitReceiptItem 스키마 검증 실패를 유발하므로 제외합니다.
     """
     content_map = {b["benefit_id"]: b.get("content", "") for b in raw_benefits if b.get("benefit_id")}
+    valid = [bd for bd in benefit_details if bd.get("benefit_id") is not None]
+    skipped = len(benefit_details) - len(valid)
+    if skipped:
+        logger.debug("[_enrich_benefit_details] benefit_id=None 항목 %d개 제외", skipped)
     return [
         {**bd, "content": content_map.get(bd.get("benefit_id", ""), "")}
-        for bd in benefit_details
+        for bd in valid
     ]
 
 # 동시에 실행할 카드 혜택 계산의 최대 개수.

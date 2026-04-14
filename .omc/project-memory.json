@@ -152,8 +152,8 @@
   "hotPaths": [
     {
       "path": "app/tools/Calc_tool.py",
-      "accessCount": 21,
-      "lastAccessed": 1776151655503,
+      "accessCount": 27,
+      "lastAccessed": 1776152097038,
       "type": "file"
     },
     {
@@ -164,8 +164,8 @@
     },
     {
       "path": "app/services/card_service.py",
-      "accessCount": 8,
-      "lastAccessed": 1776151715818,
+      "accessCount": 9,
+      "lastAccessed": 1776152113743,
       "type": "file"
     },
     {

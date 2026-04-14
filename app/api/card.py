@@ -234,20 +234,7 @@ async def recommend_cards(
         logger.warning("[recommend_cards] 상세 빌더 실패, 안전 빌더 사용: %s", repr(e))
         recommended_cards = _safe_build_recommended_cards(ranked, explanation)
 
-    import pprint
-    from pydantic import ValidationError
-
-    logger.debug("[recommend_cards] recommended_cards raw data:\n%s", pprint.pformat(recommended_cards))
-
-    try:
-        return RecommendResponse(recommended_cards=recommended_cards, explanation=explanation)
-    except ValidationError as e:
-        logger.error("[RecommendResponse] ValidationError 발생!")
-        logger.error("[RecommendResponse] 에러 상세:\n%s", e.json(indent=2))
-        for i, card in enumerate(recommended_cards):
-            logger.error("[RecommendResponse] cards[%d] category_breakdown: %s", i, card.get("category_breakdown"))
-            logger.error("[RecommendResponse] cards[%d] benefit_receipt (first 3): %s", i, card.get("benefit_receipt", [])[:3])
-        raise
+    return RecommendResponse(recommended_cards=recommended_cards, explanation=explanation)
 
 
 @router.post("/qa", response_model=QAResponse)

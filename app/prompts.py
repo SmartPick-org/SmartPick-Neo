@@ -469,6 +469,7 @@ COMPARE_PROMPT_V2 = """
 
 
 # ===========================< Active Versions >============================
+
 # 여기만 바꾸면 agent.py에 즉시 반영됩니다.
 
 ANALYZE_PROMPT = ANALYZE_PROMPT_V1

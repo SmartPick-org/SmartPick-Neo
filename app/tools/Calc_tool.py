@@ -415,6 +415,7 @@ class BenefitCalculator:
         self,
         user_budgets: dict,
         user_total_spend: int | None = None,
+        excluded_benefit_ids: set[str] | None = None,
     ) -> dict:
         """
         유저의 카테고리별 예산을 받아 해당 카드의 이론상 최대 할인 금액을 산출합니다.
@@ -476,6 +477,7 @@ class BenefitCalculator:
                 "monthly_total_krw": 0,
                 "annual_total_krw": 0,
                 "category_breakdown": [],
+                "benefit_details": [],
                 "annual_breakdown": [],
                 "warnings": [],
             }
@@ -490,8 +492,9 @@ class BenefitCalculator:
                 return result
 
             # ── 혜택별 계산 (All_Domestic을 마지막에 → Waterfall) ──
+            _excluded = excluded_benefit_ids or set()
             sorted_benefits = sorted(
-                self.benefits,
+                [b for b in self.benefits if b.get("benefit_id") not in _excluded],
                 key=lambda x: (
                     1 if x.get("category") == "All_Domestic" else 0,
                     x.get("benefit_id", ""),
@@ -549,6 +552,11 @@ class BenefitCalculator:
 
             # ── 그룹 한도 처리 ──
             self._apply_group_limits(monthly_results)
+
+            # ── 개별 혜택 상세 (영수증용) — 그룹 한도 적용 후 최종 금액 기준 ──
+            result["benefit_details"] = [
+                r for r in monthly_results if r["amount_krw"] > 0
+            ]
 
             # ── 카테고리별 합산 ──
             cat_totals: dict[str, dict] = defaultdict(

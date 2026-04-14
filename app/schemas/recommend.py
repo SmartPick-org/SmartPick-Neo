@@ -5,8 +5,29 @@ from pydantic import BaseModel, Field, model_validator
 from app.schemas.enums import CategoryEnum, SubCategoryEnum
 
 
+class BenefitReceiptItem(BaseModel):
+    benefit_id: str = Field(..., description="혜택 고유 ID", examples=["shinhan_mr_life_b001"])
+    content: str = Field(..., description="혜택 설명 (카드사 원문)", examples=["배달앱 5% 할인 (월 최대 5,000원)"])
+    category: str = Field(..., description="카테고리", examples=["Food"])
+    sub_category: str | None = Field(None, description="서브 카테고리", examples=["delivery"])
+    amount_krw: int = Field(..., description="사용자 소비액 기반 계산된 혜택 금액", examples=[4500])
+    warnings: List[str] = Field(default_factory=list, description="주의사항", examples=[["1회 1만원 이상 결제 시 적용"]])
+
+
 class RecommendRequest(BaseModel):
     total_budget: int = Field(..., description="월 총 소비 금액", examples=[500000])
+    excluded_benefit_ids: List[str] | None = Field(
+        None,
+        description="계산에서 제외할 혜택 ID 목록. 혜택 영수증에서 체크 해제한 항목을 전달합니다.",
+        examples=[["shinhan_mr_life_b003", "shinhan_mr_life_b007"]],
+    )
+    top_n: int = Field(
+        5,
+        ge=1,
+        le=10,
+        description="반환할 추천 카드 수 (기본 5장, 최대 10장)",
+        examples=[5],
+    )
     category_spending: Dict[CategoryEnum, Union[int, Dict[str, Union[int, str]]]] = Field(
         ..., 
         description="""카테고리별 월 소비 금액 데이터입니다.
@@ -94,6 +115,10 @@ class RecommendCard(BaseModel):
     expected_monthly_benefit: int = Field(..., description="기대 월 할인/적립 금액", examples=[10000])
     category_breakdown: List[CategoryBreakdown] = Field(..., description="카테고리별 할인/적립 금액")
     explanation: str = Field(..., description="이 카드의 주요 혜택 및 주의 사항", examples=["[1순위] 신한카드 Mr.Life (신한카드)\n연회비: 15,000원 | 월 예상 할인: 약 99,000원 | 연 순이익 추정: 1,185,000원\n  - Food: 70,000원\n    ⚠ 1회 승인금액 1만원까지 할인 적용(1회 최대 1천원 할인)\n    ⚠ 신규 발급 회원은 카드사용 등록월 익월말까지 실적 상관없이 할인 제공\n"])
+    benefit_receipt: List[BenefitReceiptItem] = Field(
+        default_factory=list,
+        description="혜택 영수증 — 유저 소비액 기반으로 계산된 개별 혜택 목록 (amount_krw > 0인 항목만 포함)",
+    )
 
 
 class RecommendResponse(BaseModel):

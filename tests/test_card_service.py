@@ -17,7 +17,7 @@ class FakeBenefitCalculator:
     def __init__(self, card: dict):
         self.card = card
 
-    def calculate(self, category_spending: Dict[str, int], user_total_spend: int) -> dict:
+    def calculate(self, category_spending: Dict[str, int], user_total_spend: int = None, excluded_benefit_ids=None) -> dict:
         name = self.card["card_meta"]["card_name"]
         if name == "CardA":
             return {
@@ -44,7 +44,7 @@ class FakeBenefitCalculatorSparse:
     def __init__(self, card: dict):
         self.card = card
 
-    def calculate(self, category_spending: Dict[str, int], user_total_spend: int) -> dict:
+    def calculate(self, category_spending: Dict[str, int], user_total_spend: int = None, excluded_benefit_ids=None) -> dict:
         return {
             "monthly_total_krw": 1200,
         }

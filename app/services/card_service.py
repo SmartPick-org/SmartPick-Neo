@@ -6,6 +6,18 @@ from app.repositories.card_repo import CardRepository
 from app.tools.Calc_tool import BenefitCalculator
 from loguru import logger
 
+
+def _enrich_benefit_details(benefit_details: list[dict], raw_benefits: list[dict]) -> list[dict]:
+    """
+    Calc_tool이 반환한 benefit_details에 카드 JSON의 content 필드를 보강합니다.
+    benefit_id를 키로 join하며, content가 없는 경우 빈 문자열로 처리합니다.
+    """
+    content_map = {b["benefit_id"]: b.get("content", "") for b in raw_benefits if b.get("benefit_id")}
+    return [
+        {**bd, "content": content_map.get(bd.get("benefit_id", ""), "")}
+        for bd in benefit_details
+    ]
+
 # 동시에 실행할 카드 혜택 계산의 최대 개수.
 # 이 제한이 없으면 asyncio.gather가 N개의 카드를 한 번에 실행해
 # 이벤트 루프나 DB/외부 API 등 하위 리소스에 과부하를 줄 수 있음.
@@ -40,6 +52,7 @@ class CardRecommendService:
         cards: List[CardData],
         total_budget: int,
         category_spending: Dict[str, Any],
+        excluded_benefit_ids: list[str] | None = None,
     ) -> List[dict]:
         user_categories = {cat.value if hasattr(cat, 'value') else str(cat) for cat in category_spending.keys()}
         spending_str_keys = {cat.value if hasattr(cat, 'value') else str(cat): val for cat, val in category_spending.items()}
@@ -60,7 +73,12 @@ class CardRecommendService:
                     card_meta = card.get("card_meta", {})
                     card_name = card_meta.get("card_name", "?")
                     calculator = BenefitCalculator(card)
-                    result = calculator.calculate(spending_str_keys, user_total_spend=total_budget)
+                    _excluded_set = set(excluded_benefit_ids) if excluded_benefit_ids else None
+                    result = calculator.calculate(
+                        spending_str_keys,
+                        user_total_spend=total_budget,
+                        excluded_benefit_ids=_excluded_set,
+                    )
 
                     monthly = result.get("monthly_total_krw", 0)
                     annual_extra = result.get("annual_total_krw", 0)
@@ -93,7 +111,10 @@ class CardRecommendService:
                             "min_spend_score": round(min_spend_score, 3),
                         },
                         "category_breakdown": result.get("category_breakdown", []),
-                        "benefit_details": result.get("benefit_details", []),
+                        "benefit_details": _enrich_benefit_details(
+                            result.get("benefit_details", []),
+                            card.get("benefits", []),
+                        ),
                         "annual_breakdown": result.get("annual_breakdown", []),
                         "warnings": result.get("warnings", []),
                         "_card_data": card,

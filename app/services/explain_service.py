@@ -213,6 +213,7 @@ class ExplainService:
                 "expected_monthly_benefit": card["expected_monthly_benefit"],
                 "category_breakdown": card["category_breakdown"],
                 "explanation": final_explanation,
+                "benefit_receipt": card.get("benefit_details", []),
             })
         return results
 

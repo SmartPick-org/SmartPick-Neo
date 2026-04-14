@@ -56,7 +56,7 @@ def test_recommend_llm_failure_fallback_success_200(monkeypatch: pytest.MonkeyPa
         def filter_cards(self, total_budget: int, category_spending: dict) -> list[dict]:
             return [{"_dummy": True}]
 
-        async def calculate_benefits(self, cards, total_budget: int, category_spending: dict) -> list[dict]:
+        async def calculate_benefits(self, cards, total_budget: int, category_spending: dict, excluded_benefit_ids=None) -> list[dict]:
             return [{"_calc_dummy": True}]
 
         def rank_top(self, calc_results: list[dict], top_n: int = 3) -> list[dict]:
@@ -70,7 +70,7 @@ def test_recommend_llm_failure_fallback_success_200(monkeypatch: pytest.MonkeyPa
             raise RuntimeError("LLM invoke failed")
 
         @staticmethod
-        def build_recommended_cards(ranked: list[dict], explanation: str, digests: list[str]) -> list[dict]:
+        def build_recommended_cards(ranked: list[dict], explanation: str) -> list[dict]:
             cards = []
             for idx, card in enumerate(ranked or []):
                 cards.append(
@@ -115,7 +115,7 @@ def test_recommend_build_recommended_cards_keyerror_fallback_safe_builder_succes
         def filter_cards(self, total_budget: int, category_spending: dict) -> list[dict]:
             return [{"_dummy": True}]
 
-        async def calculate_benefits(self, cards, total_budget: int, category_spending: dict) -> list[dict]:
+        async def calculate_benefits(self, cards, total_budget: int, category_spending: dict, excluded_benefit_ids=None) -> list[dict]:
             return [{"_calc_dummy": True}]
 
         def rank_top(self, calc_results: list[dict], top_n: int = 3) -> list[dict]:
@@ -130,7 +130,7 @@ def test_recommend_build_recommended_cards_keyerror_fallback_safe_builder_succes
             return "OK_EXPLANATION"
 
         @staticmethod
-        def build_recommended_cards(ranked: list[dict], explanation: str, digests: list[str]) -> list[dict]:
+        def build_recommended_cards(ranked: list[dict], explanation: str) -> list[dict]:
             raise KeyError("card_name")
 
     from unittest.mock import AsyncMock

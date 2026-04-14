@@ -191,7 +191,8 @@ async def recommend_cards(
     # 2. 혜택 계산 & 랭킹
     try:
         calc_results = await recommend_service.calculate_benefits(
-            filtered, payload.total_budget, payload.category_spending
+            filtered, payload.total_budget, payload.category_spending,
+            excluded_benefit_ids=payload.excluded_benefit_ids,
         )
     except KeyError as e:
         # 필수 데이터 누락 등 → raw 500 방지
@@ -201,7 +202,7 @@ async def recommend_cards(
         logger.exception("[recommend_cards] calculate_benefits ValueError: %s", repr(e))
         raise ValueError(str(e))
 
-    ranked = recommend_service.rank_top(calc_results, top_n=len(calc_results))
+    ranked = recommend_service.rank_top(calc_results, top_n=payload.top_n)
 
     if not ranked:
         raise NoCardsFoundError("혜택 계산 결과가 없습니다.")

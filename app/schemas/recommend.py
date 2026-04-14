@@ -107,23 +107,23 @@ class CategoryBreakdown(BaseModel):
 
 
 class RecommendCard(BaseModel):
-    card_name: str = Field(..., description="카드 이름", examples=["현대카드 T3 Edition2"])
-    card_company: str = Field(..., description="카드 회사", examples=["현대카드"])
-    card_id: str = Field(..., description="카드 고유 식별자", examples=["shinhan_mr_life"])
-    annual_fee: int = Field(..., description="연회비", examples=[10000])
-    minimum_performance: int = Field(..., description="전월 실적", examples=[100000])
-    expected_monthly_benefit: int = Field(..., description="기대 월 할인/적립 금액", examples=[10000])
-    category_breakdown: List[CategoryBreakdown] = Field(..., description="카테고리별 할인/적립 금액")
-    explanation: str = Field(..., description="이 카드의 주요 혜택 및 주의 사항", examples=["[1순위] 신한카드 Mr.Life (신한카드)\n연회비: 15,000원 | 월 예상 할인: 약 99,000원 | 연 순이익 추정: 1,185,000원\n  - Food: 70,000원\n    ⚠ 1회 승인금액 1만원까지 할인 적용(1회 최대 1천원 할인)\n    ⚠ 신규 발급 회원은 카드사용 등록월 익월말까지 실적 상관없이 할인 제공\n"])
-    benefit_receipt: List[BenefitReceiptItem] = Field(
+    card_name: str = Field(None, description="카드 이름", examples=["현대카드 T3 Edition2"])
+    card_company: str = Field(None, description="카드 회사", examples=["현대카드"])
+    card_id: str = Field(None, description="카드 고유 식별자", examples=["shinhan_mr_life"])
+    annual_fee: int = Field(None, description="연회비", examples=[10000])
+    minimum_performance: int = Field(None, description="전월 실적", examples=[100000])
+    expected_monthly_benefit: int = Field(None, description="기대 월 할인/적립 금액", examples=[10000])
+    category_breakdown: List[CategoryBreakdown] = Field(None, description="카테고리별 할인/적립 금액")
+    explanation: str = Field(None, description="이 카드의 주요 혜택 및 주의 사항", examples=["[1순위] 신한카드 Mr.Life (신한카드)\n연회비: 15,000원 | 월 예상 할인: 약 99,000원 | 연 순이익 추정: 1,185,000원\n  - Food: 70,000원\n    ⚠ 1회 승인금액 1만원까지 할인 적용(1회 최대 1천원 할인)\n    ⚠ 신규 발급 회원은 카드사용 등록월 익월말까지 실적 상관없이 할인 제공\n"])
+    benefit_receipt: List[BenefitReceiptItem] = Field( 
         default_factory=list,
         description="혜택 영수증 — 유저 소비액 기반으로 계산된 개별 혜택 목록 (amount_krw > 0인 항목만 포함)",
     )
 
 
 class RecommendResponse(BaseModel):
-    recommended_cards: List[RecommendCard] = Field(..., description="추천 카드 목록")
-    explanation: str = Field(..., description="이 카드가 1순위로 추천된 이유", examples=["이 카드는 커피, 교통, 쇼핑에서 높은 할인 혜택을 제공합니다."])
+    recommended_cards: List[RecommendCard] = Field(None, description="추천 카드 목록")
+    explanation: str = Field(None, description="이 카드가 1순위로 추천된 이유", examples=["이 카드는 커피, 교통, 쇼핑에서 높은 할인 혜택을 제공합니다."])
 
 
 class CompareRequest(BaseModel):

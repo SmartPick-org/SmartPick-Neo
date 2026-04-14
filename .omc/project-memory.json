@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "lastScanned": 1775789021753,
+  "lastScanned": 1776066544676,
   "projectRoot": "/Users/ayeon/Documents/workspace/smartpick_re/SmartPick-Neo",
   "techStack": {
     "languages": [
@@ -60,7 +60,7 @@
       "path": "_temp",
       "purpose": null,
       "fileCount": 2,
-      "lastAccessed": 1775789021624,
+      "lastAccessed": 1776066544642,
       "keyFiles": [
         "multi_category.txt",
         "prompt_block_check.txt"
@@ -70,7 +70,7 @@
       "path": "app",
       "purpose": "Application code",
       "fileCount": 4,
-      "lastAccessed": 1775789021625,
+      "lastAccessed": 1776066544650,
       "keyFiles": [
         "__init__.py",
         "config.py",
@@ -82,7 +82,7 @@
       "path": "datasets",
       "purpose": null,
       "fileCount": 2,
-      "lastAccessed": 1775789021625,
+      "lastAccessed": 1776066544650,
       "keyFiles": [
         "Master_Schema_v2.json",
         "merged_card_benefits.json"
@@ -91,8 +91,8 @@
     "logs": {
       "path": "logs",
       "purpose": null,
-      "fileCount": 13,
-      "lastAccessed": 1775789021626,
+      "fileCount": 126,
+      "lastAccessed": 1776066544651,
       "keyFiles": [
         "smartpick_2026-04-09_14-35-40_287784.log",
         "smartpick_2026-04-09_14-38-01_851968.log",
@@ -104,8 +104,8 @@
     "scripts": {
       "path": "scripts",
       "purpose": "Build/utility scripts",
-      "fileCount": 10,
-      "lastAccessed": 1775789021628,
+      "fileCount": 11,
+      "lastAccessed": 1776066544652,
       "keyFiles": [
         "convert_json.py",
         "generate_digest.py",
@@ -117,21 +117,21 @@
     "tests": {
       "path": "tests",
       "purpose": "Test files",
-      "fileCount": 6,
-      "lastAccessed": 1775789021628,
+      "fileCount": 10,
+      "lastAccessed": 1776066544652,
       "keyFiles": [
         "conftest.py",
         "test_adapters.py",
         "test_calc_tool_subcat.py",
-        "test_card_service.py",
-        "test_edge_case_fallbacks.py"
+        "test_card_repo.py",
+        "test_card_service.py"
       ]
     },
     "app/api": {
       "path": "app/api",
       "purpose": "API routes",
       "fileCount": 2,
-      "lastAccessed": 1775789021631,
+      "lastAccessed": 1776066544652,
       "keyFiles": [
         "advisor.py",
         "card.py"
@@ -141,7 +141,7 @@
       "path": "app/schemas",
       "purpose": "Schema definitions",
       "fileCount": 4,
-      "lastAccessed": 1775789021631,
+      "lastAccessed": 1776066544652,
       "keyFiles": [
         "card_catalog.py",
         "cards.py",
@@ -151,28 +151,88 @@
   },
   "hotPaths": [
     {
-      "path": "app/prompts.py",
-      "accessCount": 6,
-      "lastAccessed": 1775799620254,
+      "path": "app/tools/Calc_tool.py",
+      "accessCount": 21,
+      "lastAccessed": 1776151655503,
       "type": "file"
     },
     {
       "path": "app/api/card.py",
-      "accessCount": 1,
-      "lastAccessed": 1775806461021,
+      "accessCount": 11,
+      "lastAccessed": 1776151693712,
+      "type": "file"
+    },
+    {
+      "path": "app/services/card_service.py",
+      "accessCount": 8,
+      "lastAccessed": 1776151715818,
+      "type": "file"
+    },
+    {
+      "path": "app/schemas/recommend.py",
+      "accessCount": 7,
+      "lastAccessed": 1776151635462,
       "type": "file"
     },
     {
       "path": "app/services/explain_service.py",
+      "accessCount": 4,
+      "lastAccessed": 1776151704795,
+      "type": "file"
+    },
+    {
+      "path": "tests/test_benefit_receipt.py",
+      "accessCount": 3,
+      "lastAccessed": 1776141308277,
+      "type": "file"
+    },
+    {
+      "path": "tests/test_edge_case_fallbacks.py",
+      "accessCount": 3,
+      "lastAccessed": 1776141408415,
+      "type": "file"
+    },
+    {
+      "path": "tests/test_card_service.py",
+      "accessCount": 3,
+      "lastAccessed": 1776141421280,
+      "type": "file"
+    },
+    {
+      "path": "app",
+      "accessCount": 2,
+      "lastAccessed": 1776151665176,
+      "type": "directory"
+    },
+    {
+      "path": "tests/test_calc_tool_subcat.py",
       "accessCount": 1,
-      "lastAccessed": 1775806461731,
+      "lastAccessed": 1776141105058,
+      "type": "file"
+    },
+    {
+      "path": "tests/conftest.py",
+      "accessCount": 1,
+      "lastAccessed": 1776141105079,
+      "type": "file"
+    },
+    {
+      "path": "app/schemas/enums.py",
+      "accessCount": 1,
+      "lastAccessed": 1776141672003,
       "type": "file"
     },
     {
       "path": "app/main.py",
       "accessCount": 1,
-      "lastAccessed": 1775808325623,
+      "lastAccessed": 1776149219302,
       "type": "file"
+    },
+    {
+      "path": "",
+      "accessCount": 1,
+      "lastAccessed": 1776151640588,
+      "type": "directory"
     }
   ],
   "userDirectives": []

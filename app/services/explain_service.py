@@ -203,7 +203,19 @@ class ExplainService:
         for idx, card in enumerate(ranked):
             rank = idx + 1
             final_explanation = self._format_card_detail(card, rank)
-            
+
+            benefit_receipt = card.get("benefit_details", [])
+            category_breakdown = card["category_breakdown"]
+
+            logger.debug(
+                "[build_recommended_cards] cards[%d] '%s' — category_breakdown: %s",
+                idx, card.get("card_name"), category_breakdown,
+            )
+            logger.debug(
+                "[build_recommended_cards] cards[%d] '%s' — benefit_receipt (count=%d, first 3): %s",
+                idx, card.get("card_name"), len(benefit_receipt), benefit_receipt[:3],
+            )
+
             results.append({
                 "card_name": card["card_name"],
                 "card_company": card["card_company"],
@@ -211,9 +223,9 @@ class ExplainService:
                 "annual_fee": card["annual_fee"],
                 "minimum_performance": card["minimum_performance"],
                 "expected_monthly_benefit": card["expected_monthly_benefit"],
-                "category_breakdown": card["category_breakdown"],
+                "category_breakdown": category_breakdown,
                 "explanation": final_explanation,
-                "benefit_receipt": card.get("benefit_details", []),
+                "benefit_receipt": benefit_receipt,
             })
         return results
 

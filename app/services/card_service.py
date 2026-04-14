@@ -96,6 +96,20 @@ class CardRecommendService:
                     min_perf = card_meta.get("minimum_performance", 0)
                     min_spend_score = min_perf / total_budget if total_budget > 0 else 1.0
 
+                    _category_breakdown = result.get("category_breakdown", [])
+                    _benefit_details = _enrich_benefit_details(
+                        result.get("benefit_details", []),
+                        card.get("benefits", []),
+                    )
+                    logger.debug(
+                        "[_compute] '%s' category_breakdown: %s",
+                        card_name, _category_breakdown,
+                    )
+                    logger.debug(
+                        "[_compute] '%s' benefit_details (count=%d, first 3): %s",
+                        card_name, len(_benefit_details), _benefit_details[:3],
+                    )
+
                     return {
                         "card_name": card_name,
                         "card_company": card_meta.get("card_company", ""),
@@ -110,11 +124,8 @@ class CardRecommendService:
                             "coverage_score": round(coverage_score, 3),
                             "min_spend_score": round(min_spend_score, 3),
                         },
-                        "category_breakdown": result.get("category_breakdown", []),
-                        "benefit_details": _enrich_benefit_details(
-                            result.get("benefit_details", []),
-                            card.get("benefits", []),
-                        ),
+                        "category_breakdown": _category_breakdown,
+                        "benefit_details": _benefit_details,
                         "annual_breakdown": result.get("annual_breakdown", []),
                         "warnings": result.get("warnings", []),
                         "_card_data": card,

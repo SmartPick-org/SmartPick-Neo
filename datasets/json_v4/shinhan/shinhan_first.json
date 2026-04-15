@@ -1,0 +1,988 @@
+{
+  "card_meta": {
+    "card_id": "shinhan_first",
+    "card_name": "신한카드 처음",
+    "card_company": "SHINHAN",
+    "annual_fee_domestic": 15000,
+    "annual_fee_international": 18000,
+    "minimum_performance": 300000,
+    "performance_excluded_categories": [
+      "Fuel",
+      "Tax",
+      "Insurance_Tax",
+      "Housing",
+      "Daily_Service"
+    ]
+  },
+  "benefit_groups": [
+    {
+      "group_id": "G_TODAY_5",
+      "group_name": "오늘도 5% 적립 그룹",
+      "group_type": "SHARED_LIMIT",
+      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
+      "choices": null,
+      "monthly_limit": 10000,
+      "annual_limit": 120000,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_DAILY_5",
+      "group_name": "일상 속 5% 적립 그룹",
+      "group_type": "SHARED_LIMIT",
+      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
+      "choices": null,
+      "monthly_limit": 50000,
+      "annual_limit": 600000,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_BILL_20",
+      "group_name": "정기결제 최대 20% 적립 그룹",
+      "group_type": "SHARED_LIMIT",
+      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
+      "choices": null,
+      "monthly_limit": 30000,
+      "annual_limit": 360000,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_BONUS",
+      "group_name": "소비관리 보너스 적립 그룹",
+      "group_type": "SHARED_LIMIT",
+      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
+      "choices": null,
+      "monthly_limit": 10000,
+      "annual_limit": 120000,
+      "top_n_count": null
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_id": "B_TODAY_5_FOOD",
+      "group_id": "G_TODAY_5",
+      "selective_choice": null,
+      "category": "Food",
+      "sub_category": "restaurant",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "M_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.05,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": 10000,
+        "annual_benefit_limit": 120000
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": 10000,
+        "max_count_per_day": 1,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": true,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 5000,
+          "group_monthly_limit": 5000
+        },
+        {
+          "min_prev_performance": 500000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 10000,
+          "group_monthly_limit": 10000
+        },
+        {
+          "min_prev_performance": 1000000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 20000,
+          "group_monthly_limit": 20000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "오프라인 매장 이용 시에만 적립됩니다. (온라인쇼핑 제외)",
+          "배달앱을 통한 거래는 적립되지 않습니다."
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_TODAY_5_CAFE",
+      "group_id": "G_TODAY_5",
+      "selective_choice": null,
+      "category": "Coffee",
+      "sub_category": "cafe",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "M_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.05,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": 10000,
+        "annual_benefit_limit": 120000
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": 10000,
+        "max_count_per_day": 1,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": true,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 5000,
+          "group_monthly_limit": 5000
+        },
+        {
+          "min_prev_performance": 500000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 10000,
+          "group_monthly_limit": 10000
+        },
+        {
+          "min_prev_performance": 1000000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 20000,
+          "group_monthly_limit": 20000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "오프라인 매장 이용 시에만 적립됩니다. (온라인쇼핑 제외)"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_TODAY_5_CONVENIENCE",
+      "group_id": "G_TODAY_5",
+      "selective_choice": null,
+      "category": "Shopping",
+      "sub_category": "convenience",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "M_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.05,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": 10000,
+        "annual_benefit_limit": 120000
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": 10000,
+        "max_count_per_day": 1,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": true,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 5000,
+          "group_monthly_limit": 5000
+        },
+        {
+          "min_prev_performance": 500000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 10000,
+          "group_monthly_limit": 10000
+        },
+        {
+          "min_prev_performance": 1000000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 20000,
+          "group_monthly_limit": 20000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "오프라인 매장 이용 시에만 적립됩니다. (온라인쇼핑 제외)"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_TODAY_5_ONLINE",
+      "group_id": "G_TODAY_5",
+      "selective_choice": null,
+      "category": "Shopping",
+      "sub_category": "online",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "M_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.05,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": 10000,
+        "annual_benefit_limit": 120000
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": 10000,
+        "max_count_per_day": 1,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": true,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 5000,
+          "group_monthly_limit": 5000
+        },
+        {
+          "min_prev_performance": 500000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 10000,
+          "group_monthly_limit": 10000
+        },
+        {
+          "min_prev_performance": 1000000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 20000,
+          "group_monthly_limit": 20000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "온라인쇼핑 제외"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_DAILY_5_LIFE",
+      "group_id": "G_DAILY_5",
+      "selective_choice": null,
+      "category": "Life",
+      "sub_category": "daily_service",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "M_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.05,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": 50000,
+        "annual_benefit_limit": 600000
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": 50000,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": true,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 5000,
+          "group_monthly_limit": 5000
+        },
+        {
+          "min_prev_performance": 500000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 10000,
+          "group_monthly_limit": 10000
+        },
+        {
+          "min_prev_performance": 1000000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 20000,
+          "group_monthly_limit": 20000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "올리브영(온·오프라인), 다이소(오프라인), 오늘의집(온라인)"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_DAILY_5_TRAVEL",
+      "group_id": "G_DAILY_5",
+      "selective_choice": null,
+      "category": "Travel",
+      "sub_category": "general",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "M_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.05,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": 50000,
+        "annual_benefit_limit": 600000
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": 50000,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": true,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 5000,
+          "group_monthly_limit": 5000
+        },
+        {
+          "min_prev_performance": 500000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 10000,
+          "group_monthly_limit": 10000
+        },
+        {
+          "min_prev_performance": 1000000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 20000,
+          "group_monthly_limit": 20000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "택시, KTX, 해외 일시불(해외이용/직구 포함)"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_DAILY_5_FASHION",
+      "group_id": "G_DAILY_5",
+      "selective_choice": null,
+      "category": "Shopping",
+      "sub_category": "general",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "M_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.05,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": 50000,
+        "annual_benefit_limit": 600000
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": 50000,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": true,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 5000,
+          "group_monthly_limit": 5000
+        },
+        {
+          "min_prev_performance": 500000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 10000,
+          "group_monthly_limit": 10000
+        },
+        {
+          "min_prev_performance": 1000000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 20000,
+          "group_monthly_limit": 20000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "공식 홈페이지 또는 모바일앱 이용 시에만 제공됩니다."
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_BILL_10_TELECOM",
+      "group_id": "G_BILL_20",
+      "selective_choice": null,
+      "category": "Life",
+      "sub_category": "telecom",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "M_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.1,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": 30000,
+        "annual_benefit_limit": 360000
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": 30000,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": false,
+        "requires_auto_payment": true
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "benefit_rate": 0.1,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 5000,
+          "group_monthly_limit": 5000
+        },
+        {
+          "min_prev_performance": 500000,
+          "benefit_rate": 0.1,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 10000,
+          "group_monthly_limit": 10000
+        },
+        {
+          "min_prev_performance": 1000000,
+          "benefit_rate": 0.1,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 20000,
+          "group_monthly_limit": 20000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "SKT, KT, LGU+"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_BILL_15_OTT",
+      "group_id": "G_BILL_20",
+      "selective_choice": null,
+      "category": "Cultural",
+      "sub_category": "ott",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "M_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.15,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": 30000,
+        "annual_benefit_limit": 360000
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": true,
+        "requires_auto_payment": true
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "benefit_rate": 0.15,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 5000,
+          "group_monthly_limit": 5000
+        },
+        {
+          "min_prev_performance": 500000,
+          "benefit_rate": 0.15,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 10000,
+          "group_monthly_limit": 10000
+        },
+        {
+          "min_prev_performance": 1000000,
+          "benefit_rate": 0.15,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 20000,
+          "group_monthly_limit": 20000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "넷플릭스, 유튜브 프리미엄, 티빙, 디즈니+, SPOTV NOW"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_BILL_20_MEMBERSHIP",
+      "group_id": "G_BILL_20",
+      "selective_choice": null,
+      "category": "General",
+      "sub_category": null,
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "M_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.2,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": 30000,
+        "annual_benefit_limit": 360000
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": true,
+        "requires_auto_payment": true
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "benefit_rate": 0.2,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 5000,
+          "group_monthly_limit": 5000
+        },
+        {
+          "min_prev_performance": 500000,
+          "benefit_rate": 0.2,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 10000,
+          "group_monthly_limit": 10000
+        },
+        {
+          "min_prev_performance": 1000000,
+          "benefit_rate": 0.2,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 20000,
+          "group_monthly_limit": 20000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "쿠팡 와우 멤버십, 네이버플러스 멤버십"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_BONUS_PLAN",
+      "group_id": "G_BONUS",
+      "selective_choice": null,
+      "category": "General",
+      "sub_category": null,
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "M_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "FLAT_RATE",
+        "calc_type_description": "FLAT_RATE: 1-2 공식(정액)",
+        "benefit_rate": null,
+        "flat_discount": 500,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": 10000,
+        "annual_benefit_limit": 120000
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": 1,
+        "max_count_per_year": 12,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "benefit_rate": null,
+          "flat_discount": 500,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 3000,
+          "group_monthly_limit": 3000
+        },
+        {
+          "min_prev_performance": 500000,
+          "benefit_rate": null,
+          "flat_discount": 5000,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 6000,
+          "group_monthly_limit": 6000
+        },
+        {
+          "min_prev_performance": 1000000,
+          "benefit_rate": null,
+          "flat_discount": 10000,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 10000,
+          "group_monthly_limit": 10000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "매월 1일~5일 설정한 '목표 소비 금액' 달성 시 포인트 적립",
+          "이번 달 이용금액이 설정 목표 금액 ±5만원 이내인 경우 달성으로 인정",
+          "목표 금액 설정 시 500포인트 적립 + 달성 시 5,000포인트 적립 (30~50만원 구간은 최대 3,000포인트)"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_BONUS_IMMEDIATE",
+      "group_id": "G_BONUS",
+      "selective_choice": null,
+      "category": "General",
+      "sub_category": null,
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "M_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.003,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": 10000,
+        "annual_benefit_limit": 120000
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "benefit_rate": 0.003,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 3000,
+          "group_monthly_limit": 3000
+        },
+        {
+          "min_prev_performance": 500000,
+          "benefit_rate": 0.003,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 6000,
+          "group_monthly_limit": 6000
+        },
+        {
+          "min_prev_performance": 1000000,
+          "benefit_rate": 0.003,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 10000,
+          "group_monthly_limit": 10000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "이번 달 일시불 이용금액을 이번 달에 '즉시결제' 시 0.3% 적립"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    }
+  ]
+}

@@ -46,7 +46,7 @@ load_dotenv(ROOT / ".env")
 MODEL = "solar-pro2"
 llm = init_chat_model(model=MODEL, temperature=0.0)
 
-MD_DIR = ROOT / "datasets" / "markdown_upstage"
+MD_DIR = ROOT / "datasets" / "gemini_md"
 DST_DIR = ROOT / "datasets" / "json_v4"
 SCHEMA_PATH = ROOT / "calc_refactor" / "Calculator_Schema.json"
 
@@ -95,7 +95,7 @@ CONVERT_V4_PROMPT_TEMPLATE = """너는 신용카드 약관/설명서 마크다�
 1. calculation_rule 작성 지침:
    - "비율 할인/적립(예: 10%)" → PERCENTAGE (benefit_rate = 0.10)
    - "정액 할인(예: 5천원 할인)" → FLAT_RATE (flat_discount = 5000)
-   - "리터당 N원 할인" → UNIT_BASED (discount_per_unit = 60, unit_label = "liter")
+   - "리터당 N원 할인" 또는 "리터당 N점 적립" → UNIT_BASED (discount_per_unit = 60, unit_label = "liter")
    - "한도 초과 시 1.5% 기본 적립" → fallback_rate: 0.015
 
 2. transaction_conditions (제약 조건 추출):
@@ -107,7 +107,24 @@ CONVERT_V4_PROMPT_TEMPLATE = """너는 신용카드 약관/설명서 마크다�
 3. indirect_benefit_metadata (비경제적 혜택 처리):
    - 공항 라운지 무료, 발레파킹 무료, 바우처 등 직접적인 할인액/포인트 적립이 아닌 혜택은 reward_type: "INDIRECT" 로 할당하고 해당 메타데이터 필드를 채울 것.
 
-4. 복합 카테고리 혜택 분할: 동일한 혜택이 여러 성격이 다른 카테고리에 적용될 경우 카테고리마다 benefits 배열 요소를 분할하여 작성하라.
+4. 복합 카테고리 혜택 분할 및 그룹 한도(SHARED_LIMIT) 분리 지침:
+   - 동일한 혜택(행)이 여러 성격이 다른 카테고리(예: 배달, 커피)에 적용될 경우 카테고리마다 benefits 배열 요소를 분할하여 작성하라.
+   - 이렇게 하나의 혜택 항목(행)이 여러 카테고리로 분리될 경우, 분리된 혜택들은 한도를 공유하므로 반드시 하나의 통합 `group_id`로 묶어야 한다.
+   - 반면 서로 다른 별개의 혜택 항목들(각자의 행)은 한도 부분에 명시적으로 "5천원 (통합)", "통합 1만원" 처럼 서로 공유함이 적혀있는 경우에만 같은 `group_id`로 묶어라.
+   - "(위와 동일)", "건당 한도" 수준의 단순 텍스트는 개별 한도라는 의미이므로 같은 그룹으로 묶지 말고 개별 한도(`group_id = null` 내지 각자의 고유 그룹)로 분리하라.
+
+5. 범용 포인트 명칭 및 단위 사용 지침 (환각 방지 원칙 - 절대 위반 금지):
+   - reward_unit의 currency는 원문에 기재된 현금/포인트 이름(예: 마이신한포인트, 포인트리 등)을 사용하되, 가장 일반적인 "점/원", "마일리지" 등의 단위는 무조건 "POINT", "KRW", "MILEAGE" 등으로 작성하며 currency_to_krw_rate는 1.0으로 고정한다.
+   - 현대카드의 전용 혜택임이 원문에서 명확히 드러나는 상황("M포인트 적립")에서만 M_POINT 및 원문에 명시된 환산비율(예: 0.666)을 사용하라. 
+   - 다른 카드사(KB국민카드, 신한카드 등) 문서에서 점수(점)를 마주치더라도 절대 M_POINT를 넣지 마라. (환각 금지)
+
+6. 패키지형 선택 혜택 및 공유 한도의 직교 태그(Orthogonal Tags) 파싱 지침 (최우선순위 적용):
+   - 마크다운 원문에 `[그룹이름:선택지명]` (예: `[선택그룹1:선택지A]`) 처럼 배타적 패키지 선택을 지시하는 태그가 존재할 경우:
+     * `benefit_groups`에 `group_type: "SELECTIVE_GROUP"` 객체를 만들고 하위 `choices` 배열에 구조화된 패키지 정보(choice_id, choice_name)를 구성하라.
+     * 매칭되는 해당 `benefits` 항목 내부에 `selective_choice: {{ "group_id": "생성된 그룹 ID", "choice_id": "선택지의 ID" }}` 를 반드시 부여하라.
+     * 절대! 이 배타적 선택형 패키지 혜택들을 `tier_conditions` (전월실적 구간 등) 로 오해하여 병합해서는 안 된다. 서로 철저히 다른 스키마 객체로 분리하여야 한다.
+   - 원문에 `[한도공유_이름]` 처럼 공유 한도를 특정하는 직교 태그가 병행 표기되어 있을 경우:
+     * 관련된 혜택들의 `group_id` 필드(공유 한도 ID)를 똑같이 부여하여 강제로 한도를 공유시키고, `benefit_groups` 에 `SHARED_LIMIT` 객체를 별도로 등록하라.
 
 결과는 설명이나 주석 없이 오로지 JSON만 반환하라.
 

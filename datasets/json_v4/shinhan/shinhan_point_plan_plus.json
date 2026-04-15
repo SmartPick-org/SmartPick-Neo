@@ -1,0 +1,1143 @@
+{
+  "card_meta": {
+    "card_id": "shinhan_point_plan_plus",
+    "card_name": "신한카드 Point Plan+",
+    "card_company": "SHINHAN",
+    "annual_fee_domestic": 30000,
+    "annual_fee_international": 33000,
+    "minimum_performance": 0,
+    "performance_excluded_categories": [
+      "Fuel",
+      "Tax",
+      "Education",
+      "Hospital",
+      "Pharmacy",
+      "Utility",
+      "Insurance_Tax",
+      "Office",
+      "Transit"
+    ]
+  },
+  "benefit_groups": [
+    {
+      "group_id": "G_DAILY_LIFE",
+      "group_name": "일상 생활비 적립 그룹",
+      "group_type": "SHARED_LIMIT",
+      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
+      "choices": null,
+      "monthly_limit": null,
+      "annual_limit": null,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_ESSENTIAL_FOOD",
+      "group_name": "필수 생활비 (주말 외식비) 그룹",
+      "group_type": "SHARED_LIMIT",
+      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
+      "choices": null,
+      "monthly_limit": null,
+      "annual_limit": null,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_ESSENTIAL_BILL",
+      "group_name": "필수 생활비 (정기결제) 그룹",
+      "group_type": "SHARED_LIMIT",
+      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
+      "choices": null,
+      "monthly_limit": null,
+      "annual_limit": null,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_LEISURE_OTT",
+      "group_name": "여가 생활비 (OTT) 그룹",
+      "group_type": "SHARED_LIMIT",
+      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
+      "choices": null,
+      "monthly_limit": null,
+      "annual_limit": null,
+      "top_n_count": null
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_id": "B_DAILY_LIFE_01",
+      "group_id": "G_DAILY_LIFE",
+      "selective_choice": null,
+      "category": "General",
+      "sub_category": null,
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "MY_SHINHAN_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.007,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": 30000,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 0,
+          "benefit_rate": 0.007,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": null
+        },
+        {
+          "min_prev_performance": 30000,
+          "benefit_rate": 0.01,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": null
+        },
+        {
+          "min_prev_performance": 100000,
+          "benefit_rate": 0.015,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": null
+        },
+        {
+          "min_prev_performance": 300000,
+          "benefit_rate": 0.02,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": null
+        },
+        {
+          "min_prev_performance": 1000000,
+          "benefit_rate": 0.03,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": null
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "신한 SOL페이 결제 시 0.5% 추가 적립 (ARS, 일반결제 등 제외)"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_DAILY_LIFE_02",
+      "group_id": "G_DAILY_LIFE",
+      "selective_choice": null,
+      "category": "General",
+      "sub_category": null,
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "MY_SHINHAN_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.01,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 30000,
+        "max_tx_spend_allowed": 100000,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 30000,
+          "benefit_rate": 0.01,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": null
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "신한 SOL페이 결제 시 0.5% 추가 적립 (ARS, 일반결제 등 제외)"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_DAILY_LIFE_03",
+      "group_id": "G_DAILY_LIFE",
+      "selective_choice": null,
+      "category": "General",
+      "sub_category": null,
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "MY_SHINHAN_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.015,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 100000,
+        "max_tx_spend_allowed": 300000,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 100000,
+          "benefit_rate": 0.015,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": null
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "신한 SOL페이 결제 시 0.5% 추가 적립 (ARS, 일반결제 등 제외)"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_DAILY_LIFE_04",
+      "group_id": "G_DAILY_LIFE",
+      "selective_choice": null,
+      "category": "General",
+      "sub_category": null,
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "MY_SHINHAN_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.02,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 300000,
+        "max_tx_spend_allowed": 1000000,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "benefit_rate": 0.02,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": null
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "신한 SOL페이 결제 시 0.5% 추가 적립 (ARS, 일반결제 등 제외)"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_DAILY_LIFE_05",
+      "group_id": "G_DAILY_LIFE",
+      "selective_choice": null,
+      "category": "General",
+      "sub_category": null,
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "MY_SHINHAN_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.03,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 1000000,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 1000000,
+          "benefit_rate": 0.03,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": null
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "신한 SOL페이 결제 시 0.5% 추가 적립 (ARS, 일반결제 등 제외)"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_DAILY_LIFE_06",
+      "group_id": "G_DAILY_LIFE",
+      "selective_choice": null,
+      "category": "General",
+      "sub_category": null,
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "MY_SHINHAN_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.005,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": true,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 0,
+          "benefit_rate": 0.005,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": null
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "신한 SOL페이 결제 시 0.5% 추가 적립 (ARS, 일반결제 등 제외)"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_DAILY_LIFE_07",
+      "group_id": "G_DAILY_LIFE",
+      "selective_choice": null,
+      "category": "General",
+      "sub_category": null,
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "MY_SHINHAN_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.01,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": true,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 30000,
+          "benefit_rate": 0.01,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": null
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "신한 SOL페이 결제 시 0.5% 추가 적립 (ARS, 일반결제 등 제외)"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_DAILY_LIFE_08",
+      "group_id": "G_DAILY_LIFE",
+      "selective_choice": null,
+      "category": "General",
+      "sub_category": null,
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "MY_SHINHAN_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.015,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": true,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 100000,
+          "benefit_rate": 0.015,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": null
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "신한 SOL페이 결제 시 0.5% 추가 적립 (ARS, 일반결제 등 제외)"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_DAILY_LIFE_09",
+      "group_id": "G_DAILY_LIFE",
+      "selective_choice": null,
+      "category": "General",
+      "sub_category": null,
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "MY_SHINHAN_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.02,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": true,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 300000,
+          "benefit_rate": 0.02,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": null
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "신한 SOL페이 결제 시 0.5% 추가 적립 (ARS, 일반결제 등 제외)"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_DAILY_LIFE_10",
+      "group_id": "G_DAILY_LIFE",
+      "selective_choice": null,
+      "category": "General",
+      "sub_category": null,
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "MY_SHINHAN_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.03,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": true,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 1000000,
+          "benefit_rate": 0.03,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": null
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "신한 SOL페이 결제 시 0.5% 추가 적립 (ARS, 일반결제 등 제외)"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_DAILY_LIFE_11",
+      "group_id": "G_DAILY_LIFE",
+      "selective_choice": null,
+      "category": "General",
+      "sub_category": null,
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "MY_SHINHAN_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.01,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": true,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 0,
+          "benefit_rate": 0.01,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": null
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "해외(일시불) 이용 금액 대상"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_ESSENTIAL_FOOD_01",
+      "group_id": "G_ESSENTIAL_FOOD",
+      "selective_choice": null,
+      "category": "Food",
+      "sub_category": "restaurant",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "MY_SHINHAN_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "FLAT_RATE",
+        "calc_type_description": "FLAT_RATE: 1-2 공식(정액)",
+        "benefit_rate": null,
+        "flat_discount": 1000,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": 2000,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 20000,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": 2,
+        "max_count_per_year": null,
+        "day_of_week": [
+          "SAT",
+          "SUN"
+        ],
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": true,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 0,
+          "benefit_rate": null,
+          "flat_discount": 1000,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 2000,
+          "group_monthly_limit": null
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "음식점: 한식, 일식, 양식, 중식, 뷔페, 맥주홀, 일반대중음식, 패스트푸드, 제과점",
+          "배달앱: 배달의민족, 요기요, 땡겨요 (공식 앱 내 '신한 SOL페이' 결제 시 한함)"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_ESSENTIAL_FOOD_02",
+      "group_id": "G_ESSENTIAL_FOOD",
+      "selective_choice": null,
+      "category": "Food",
+      "sub_category": "delivery",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "MY_SHINHAN_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "FLAT_RATE",
+        "calc_type_description": "FLAT_RATE: 1-2 공식(정액)",
+        "benefit_rate": null,
+        "flat_discount": 1000,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": 5000,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 20000,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": 5,
+        "max_count_per_year": null,
+        "day_of_week": [
+          "SAT",
+          "SUN"
+        ],
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": true,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 40000,
+          "benefit_rate": null,
+          "flat_discount": 1000,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 5000,
+          "group_monthly_limit": null
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "배달앱: 배달의민족, 요기요, 땡겨요 (공식 앱 내 '신한 SOL페이' 결제 시 한함)"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_ESSENTIAL_BILL_01",
+      "group_id": "G_ESSENTIAL_BILL",
+      "selective_choice": null,
+      "category": "Life",
+      "sub_category": "telecom",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "MY_SHINHAN_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "UNIT_BASED",
+        "calc_type_description": "UNIT_BASED: 1-3 공식(단위비례)",
+        "benefit_rate": null,
+        "flat_discount": null,
+        "discount_per_unit": 1000,
+        "unit_label": "20000",
+        "fallback_rate": null,
+        "monthly_benefit_limit": 5000,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": 100000,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": false,
+        "requires_auto_payment": true
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 40000,
+          "benefit_rate": null,
+          "flat_discount": null,
+          "discount_per_unit": 1000,
+          "monthly_benefit_limit": 5000,
+          "group_monthly_limit": 10000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "대상: 도시가스/전기요금, 이동통신요금(SKT, KT, LGU+)"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_ESSENTIAL_BILL_02",
+      "group_id": "G_ESSENTIAL_BILL",
+      "selective_choice": null,
+      "category": "Life",
+      "sub_category": "utility",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "MY_SHINHAN_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "UNIT_BASED",
+        "calc_type_description": "UNIT_BASED: 1-3 공식(단위비례)",
+        "benefit_rate": null,
+        "flat_discount": null,
+        "discount_per_unit": 1000,
+        "unit_label": "20000",
+        "fallback_rate": null,
+        "monthly_benefit_limit": 5000,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": 100000,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": false,
+        "requires_auto_payment": true
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 40000,
+          "benefit_rate": null,
+          "flat_discount": null,
+          "discount_per_unit": 1000,
+          "monthly_benefit_limit": 5000,
+          "group_monthly_limit": 10000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "대상: 도시가스/전기요금, 이동통신요금(SKT, KT, LGU+)"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_LEISURE_OTT_01",
+      "group_id": "G_LEISURE_OTT",
+      "selective_choice": null,
+      "category": "Cultural",
+      "sub_category": "ott",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "MY_SHINHAN_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "FLAT_RATE",
+        "calc_type_description": "FLAT_RATE: 1-2 공식(정액)",
+        "benefit_rate": null,
+        "flat_discount": 1000,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": 2000,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 7000,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": 2,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": true,
+        "requires_auto_payment": true
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 40000,
+          "benefit_rate": null,
+          "flat_discount": 1000,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 2000,
+          "group_monthly_limit": null
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "넷플릭스, 유튜브 프리미엄, 티빙 7천원 이상 자동납부 시",
+          "공식 PC 홈페이지를 통한 정기결제 시에만 적립"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_LEISURE_OTT_02",
+      "group_id": "G_LEISURE_OTT",
+      "selective_choice": null,
+      "category": "Cultural",
+      "sub_category": "ott",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "MY_SHINHAN_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "FLAT_RATE",
+        "calc_type_description": "FLAT_RATE: 1-2 공식(정액)",
+        "benefit_rate": null,
+        "flat_discount": 2000,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": 2000,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 7000,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": 1,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": true,
+        "requires_auto_payment": true
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 80000,
+          "benefit_rate": null,
+          "flat_discount": 2000,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 2000,
+          "group_monthly_limit": null
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "넷플릭스, 유튜브 프리미엄, 티빙 7천원 이상 자동납부 시",
+          "공식 PC 홈페이지를 통한 정기결제 시에만 적립"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    }
+  ]
+}

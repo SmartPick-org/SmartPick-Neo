@@ -1,0 +1,1199 @@
+{
+  "card_meta": {
+    "card_id": "shinhan_discount_plan_plus",
+    "card_name": "신한카드 Discount Plan+",
+    "card_company": "SHINHAN",
+    "annual_fee_domestic": 50000,
+    "annual_fee_international": 50000,
+    "minimum_performance": 400000,
+    "performance_excluded_categories": [
+      "Cash_Service",
+      "Card_Loan",
+      "Annual_Fee",
+      "Fees_Interest",
+      "Gift_Card",
+      "Tax",
+      "Insurance",
+      "Apartment_Fee",
+      "School_Fee",
+      "Public_Utilities",
+      "Voucher",
+      "Canceled_Transactions",
+      "Railway"
+    ]
+  },
+  "benefit_groups": [
+    {
+      "group_id": "G_TIME_PLAN",
+      "group_name": "Time Plan",
+      "group_type": "SHARED_LIMIT",
+      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
+      "choices": null,
+      "monthly_limit": null,
+      "annual_limit": null,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_DAILY_PLAN",
+      "group_name": "Daily Plan",
+      "group_type": "SHARED_LIMIT",
+      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
+      "choices": null,
+      "monthly_limit": null,
+      "annual_limit": null,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_MONTHLY_PLAN",
+      "group_name": "Monthly Plan",
+      "group_type": "SHARED_LIMIT",
+      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
+      "choices": null,
+      "monthly_limit": null,
+      "annual_limit": null,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_ANNUAL_PLAN",
+      "group_name": "Annual Plan",
+      "group_type": "SHARED_LIMIT",
+      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
+      "choices": null,
+      "monthly_limit": null,
+      "annual_limit": null,
+      "top_n_count": null
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_id": "B_TIME_PLAN_DAY_CAFE",
+      "group_id": "G_TIME_PLAN",
+      "selective_choice": null,
+      "category": "Coffee",
+      "sub_category": "cafe",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.1,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 10000,
+        "max_tx_spend_allowed": 10000,
+        "max_count_per_day": 1,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": "07:00",
+          "end": "15:00"
+        },
+        "requires_offline": true,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "benefit_rate": 0.1,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 5000,
+          "group_monthly_limit": 5000
+        },
+        {
+          "min_prev_performance": 800000,
+          "benefit_rate": 0.1,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 10000,
+          "group_monthly_limit": 10000
+        },
+        {
+          "min_prev_performance": 1200000,
+          "benefit_rate": 0.1,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 15000,
+          "group_monthly_limit": 15000
+        },
+        {
+          "min_prev_performance": 1800000,
+          "benefit_rate": 0.1,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 20000,
+          "group_monthly_limit": 20000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등은 할인 적용 제외"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_TIME_PLAN_DAY_RESTAURANT",
+      "group_id": "G_TIME_PLAN",
+      "selective_choice": null,
+      "category": "Food",
+      "sub_category": "restaurant",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.1,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 10000,
+        "max_tx_spend_allowed": 10000,
+        "max_count_per_day": 1,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": "07:00",
+          "end": "15:00"
+        },
+        "requires_offline": true,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "benefit_rate": 0.1,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 5000,
+          "group_monthly_limit": 5000
+        },
+        {
+          "min_prev_performance": 800000,
+          "benefit_rate": 0.1,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 10000,
+          "group_monthly_limit": 10000
+        },
+        {
+          "min_prev_performance": 1200000,
+          "benefit_rate": 0.1,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 15000,
+          "group_monthly_limit": 15000
+        },
+        {
+          "min_prev_performance": 1800000,
+          "benefit_rate": 0.1,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 20000,
+          "group_monthly_limit": 20000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등은 할인 적용 제외"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_TIME_PLAN_NIGHT_CONVENIENCE",
+      "group_id": "G_TIME_PLAN",
+      "selective_choice": null,
+      "category": "Shopping",
+      "sub_category": "convenience",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.1,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 10000,
+        "max_tx_spend_allowed": 10000,
+        "max_count_per_day": 1,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": "18:00",
+          "end": "22:00"
+        },
+        "requires_offline": true,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "benefit_rate": 0.1,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 5000,
+          "group_monthly_limit": 5000
+        },
+        {
+          "min_prev_performance": 800000,
+          "benefit_rate": 0.1,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 10000,
+          "group_monthly_limit": 10000
+        },
+        {
+          "min_prev_performance": 1200000,
+          "benefit_rate": 0.1,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 15000,
+          "group_monthly_limit": 15000
+        },
+        {
+          "min_prev_performance": 1800000,
+          "benefit_rate": 0.1,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 20000,
+          "group_monthly_limit": 20000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등은 할인 적용 제외"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_TIME_PLAN_NIGHT_DELIVERY",
+      "group_id": "G_TIME_PLAN",
+      "selective_choice": null,
+      "category": "Food",
+      "sub_category": "delivery",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.1,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 10000,
+        "max_tx_spend_allowed": 10000,
+        "max_count_per_day": 1,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": "18:00",
+          "end": "22:00"
+        },
+        "requires_offline": false,
+        "requires_online": true,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "benefit_rate": 0.1,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 5000,
+          "group_monthly_limit": 5000
+        },
+        {
+          "min_prev_performance": 800000,
+          "benefit_rate": 0.1,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 10000,
+          "group_monthly_limit": 10000
+        },
+        {
+          "min_prev_performance": 1200000,
+          "benefit_rate": 0.1,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 15000,
+          "group_monthly_limit": 15000
+        },
+        {
+          "min_prev_performance": 1800000,
+          "benefit_rate": 0.1,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 20000,
+          "group_monthly_limit": 20000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등은 할인 적용 제외"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_DAILY_PLAN_SHOPPING",
+      "group_id": "G_DAILY_PLAN",
+      "selective_choice": null,
+      "category": "Shopping",
+      "sub_category": "general",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.1,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 50000,
+        "max_tx_spend_allowed": 50000,
+        "max_count_per_day": 1,
+        "max_count_per_month": 5,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": null,
+        "requires_offline": true,
+        "requires_online": true,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "benefit_rate": 0.1,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 15000,
+          "group_monthly_limit": 15000
+        },
+        {
+          "min_prev_performance": 800000,
+          "benefit_rate": 0.1,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 25000,
+          "group_monthly_limit": 25000
+        },
+        {
+          "min_prev_performance": 1200000,
+          "benefit_rate": 0.1,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 35000,
+          "group_monthly_limit": 35000
+        },
+        {
+          "min_prev_performance": 1800000,
+          "benefit_rate": 0.1,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 50000,
+          "group_monthly_limit": 50000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등은 할인 적용 제외"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_DAILY_PLAN_MOVEMENT",
+      "group_id": "G_DAILY_PLAN",
+      "selective_choice": null,
+      "category": "Traffic",
+      "sub_category": "general",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.05,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 50000,
+        "max_tx_spend_allowed": 50000,
+        "max_count_per_day": 1,
+        "max_count_per_month": 5,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": null,
+        "requires_offline": true,
+        "requires_online": true,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 15000,
+          "group_monthly_limit": 15000
+        },
+        {
+          "min_prev_performance": 800000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 25000,
+          "group_monthly_limit": 25000
+        },
+        {
+          "min_prev_performance": 1200000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 35000,
+          "group_monthly_limit": 35000
+        },
+        {
+          "min_prev_performance": 1800000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 50000,
+          "group_monthly_limit": 50000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등은 할인 적용 제외"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_DAILY_PLAN_LIFE",
+      "group_id": "G_DAILY_PLAN",
+      "selective_choice": null,
+      "category": "Life",
+      "sub_category": "general",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.05,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 50000,
+        "max_tx_spend_allowed": 50000,
+        "max_count_per_day": 1,
+        "max_count_per_month": 5,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": null,
+        "requires_offline": true,
+        "requires_online": true,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 15000,
+          "group_monthly_limit": 15000
+        },
+        {
+          "min_prev_performance": 800000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 25000,
+          "group_monthly_limit": 25000
+        },
+        {
+          "min_prev_performance": 1200000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 35000,
+          "group_monthly_limit": 35000
+        },
+        {
+          "min_prev_performance": 1800000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 50000,
+          "group_monthly_limit": 50000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등은 할인 적용 제외"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_MONTHLY_PLAN_REGULAR",
+      "group_id": "G_MONTHLY_PLAN",
+      "selective_choice": null,
+      "category": "Life",
+      "sub_category": "general",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.1,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": null,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": null,
+        "requires_offline": false,
+        "requires_online": true,
+        "requires_auto_payment": true
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "benefit_rate": 0.1,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 5000,
+          "group_monthly_limit": 5000
+        },
+        {
+          "min_prev_performance": 800000,
+          "benefit_rate": 0.1,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 10000,
+          "group_monthly_limit": 10000
+        },
+        {
+          "min_prev_performance": 1200000,
+          "benefit_rate": 0.1,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 15000,
+          "group_monthly_limit": 15000
+        },
+        {
+          "min_prev_performance": 1800000,
+          "benefit_rate": 0.1,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 20000,
+          "group_monthly_limit": 20000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등은 할인 적용 제외"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_MONTHLY_PLAN_DIGITAL",
+      "group_id": "G_MONTHLY_PLAN",
+      "selective_choice": null,
+      "category": "Cultural",
+      "sub_category": "ott",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.2,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": null,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": null,
+        "requires_offline": false,
+        "requires_online": true,
+        "requires_auto_payment": true
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "benefit_rate": 0.2,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 5000,
+          "group_monthly_limit": 5000
+        },
+        {
+          "min_prev_performance": 800000,
+          "benefit_rate": 0.2,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 10000,
+          "group_monthly_limit": 10000
+        },
+        {
+          "min_prev_performance": 1200000,
+          "benefit_rate": 0.2,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 15000,
+          "group_monthly_limit": 15000
+        },
+        {
+          "min_prev_performance": 1800000,
+          "benefit_rate": 0.2,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 20000,
+          "group_monthly_limit": 20000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등은 할인 적용 제외"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_MONTHLY_PLAN_FITNESS",
+      "group_id": "G_MONTHLY_PLAN",
+      "selective_choice": null,
+      "category": "EduHealth",
+      "sub_category": "fitness",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.05,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": null,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": null,
+        "requires_offline": true,
+        "requires_online": true,
+        "requires_auto_payment": true
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 5000,
+          "group_monthly_limit": 5000
+        },
+        {
+          "min_prev_performance": 800000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 10000,
+          "group_monthly_limit": 10000
+        },
+        {
+          "min_prev_performance": 1200000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 15000,
+          "group_monthly_limit": 15000
+        },
+        {
+          "min_prev_performance": 1800000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 20000,
+          "group_monthly_limit": 20000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등은 할인 적용 제외"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_MONTHLY_PLAN_MOVIE",
+      "group_id": "G_MONTHLY_PLAN",
+      "selective_choice": null,
+      "category": "Cultural",
+      "sub_category": "cinema",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "FLAT_RATE",
+        "calc_type_description": "FLAT_RATE: 1-2 공식(정액)",
+        "benefit_rate": null,
+        "flat_discount": 5000,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": 5000,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 12000,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": 1,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": null,
+        "requires_offline": true,
+        "requires_online": true,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "benefit_rate": null,
+          "flat_discount": 5000,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 5000,
+          "group_monthly_limit": 5000
+        },
+        {
+          "min_prev_performance": 800000,
+          "benefit_rate": null,
+          "flat_discount": 5000,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 5000,
+          "group_monthly_limit": 5000
+        },
+        {
+          "min_prev_performance": 1200000,
+          "benefit_rate": null,
+          "flat_discount": 5000,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 5000,
+          "group_monthly_limit": 5000
+        },
+        {
+          "min_prev_performance": 1800000,
+          "benefit_rate": null,
+          "flat_discount": 5000,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 5000,
+          "group_monthly_limit": 5000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등은 할인 적용 제외"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_MONTHLY_REWARD",
+      "group_id": "G_MONTHLY_PLAN",
+      "selective_choice": null,
+      "category": "General",
+      "sub_category": null,
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "FLAT_RATE",
+        "calc_type_description": "FLAT_RATE: 1-2 공식(정액)",
+        "benefit_rate": null,
+        "flat_discount": 3000,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": 3000,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": null,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": null,
+        "requires_offline": false,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 1500000,
+          "benefit_rate": null,
+          "flat_discount": 3000,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 3000,
+          "group_monthly_limit": 3000
+        },
+        {
+          "min_prev_performance": 1800000,
+          "benefit_rate": null,
+          "flat_discount": 5000,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 5000,
+          "group_monthly_limit": 5000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등은 할인 적용 제외"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_ANNUAL_PLAN_GROCERY",
+      "group_id": "G_ANNUAL_PLAN",
+      "selective_choice": null,
+      "category": "Shopping",
+      "sub_category": "mart",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "FLAT_RATE",
+        "calc_type_description": "FLAT_RATE: 1-2 공식(정액)",
+        "benefit_rate": null,
+        "flat_discount": 30000,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": 30000
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 30000,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": 1,
+        "day_of_week": null,
+        "time_of_day": null,
+        "requires_offline": true,
+        "requires_online": true,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": null,
+      "conditional_metadata": {
+        "warnings": [
+          "무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등은 할인 적용 제외"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_ANNUAL_PLAN_MAINTENANCE",
+      "group_id": "G_ANNUAL_PLAN",
+      "selective_choice": null,
+      "category": "Traffic",
+      "sub_category": "maintenance",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "FLAT_RATE",
+        "calc_type_description": "FLAT_RATE: 1-2 공식(정액)",
+        "benefit_rate": null,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": null,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": 1,
+        "day_of_week": null,
+        "time_of_day": null,
+        "requires_offline": true,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": null,
+      "conditional_metadata": {
+        "warnings": [
+          "무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등은 할인 적용 제외"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": "정비 할인 (예: 스피드메이트 엔진오일 교환 등)",
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_ANNUAL_PLAN_THEME_PARK",
+      "group_id": "G_ANNUAL_PLAN",
+      "selective_choice": null,
+      "category": "Cultural",
+      "sub_category": "theme_park",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.5,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": null,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": 1,
+        "day_of_week": null,
+        "time_of_day": null,
+        "requires_offline": true,
+        "requires_online": true,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": null,
+      "conditional_metadata": {
+        "warnings": [
+          "무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등은 할인 적용 제외"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": [
+          "에버랜드",
+          "롯데월드"
+        ],
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    }
+  ]
+}

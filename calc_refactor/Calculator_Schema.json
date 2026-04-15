@@ -15,6 +15,7 @@
       "group_name": "[String] 그룹명 (UI 노출용)",
       "group_type": "[Enum] SHARED_LIMIT | SELECTIVE_GROUP | AUTO_TOP_N",
       "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식). SELECTIVE_GROUP: 필수 선택형 (2-3 공식). AUTO_TOP_N: 상위 이용금액 자동 추출",
+      "choices": "[Array<Object>|Null] SELECTIVE_GROUP일 경우 하위 선택지/패키지 목록. 예: [{\"choice_id\": \"CHOICE_1\", \"choice_name\": \"선택지 1 (주유강화)\"}]",
       "monthly_limit": "[Integer|Null] 이 그룹에 속한 혜택들의 월 통합 최대 한도 (원 단위 캡)",
       "annual_limit": "[Integer|Null] 이 그룹 전체의 연간 통합 한도 상한액 (3 연간 확장 캡). 제한 없으면 null",
       "top_n_count": "[Integer|Null] AUTO_TOP_N일 경우 선택될 상위 혜택 개수"
@@ -24,7 +25,12 @@
   "benefits": [
     {
       "benefit_id": "[String] 개별 혜택 고유 식별자",
-      "group_id": "[String|Null] 소속된 benefit_groups의 group_id. 단독 풀이면 null",
+      "group_id": "[String|Null] 소속된 benefit_groups의 group_id. 한도를 공유하는 공유 그룹(SHARED_LIMIT)이거나 AUTO_TOP_N일 때만 사용. 단독 풀이면 null",
+      "selective_choice": {
+        "description": "이 혜택이 선택형 패키지에 속하는 경우 명시 (없으면 null)",
+        "group_id": "[String|Null] 이 혜택이 속한 SELECTIVE_GROUP의 group_id",
+        "choice_id": "[String|Null] 해당 그룹 내에서 어느 패키지/선택지에 속하는지 식별자 (예: CHOICE_1)"
+      },
       "category": "[Enum] 엔진과 프론트엔드가 약속한 표준 카테고리 (예: Coffee, Convenience_Store 등)",
       
       "reward_type": "[Enum] DIRECT_FINANCIAL (할인,결제일차감,포인트적립) | INDIRECT (라운지,발렛,할인권 바우처 등)",

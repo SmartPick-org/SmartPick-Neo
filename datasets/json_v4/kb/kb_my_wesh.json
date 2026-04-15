@@ -1,0 +1,516 @@
+{
+  "card_meta": {
+    "card_id": "kb_my_wesh",
+    "card_name": "KB국민 My WE:SH(마이 위시) 카드",
+    "card_company": "KB",
+    "annual_fee_domestic": 15000,
+    "annual_fee_international": 15000,
+    "minimum_performance": 400000,
+    "performance_excluded_categories": [
+      "KB Pay",
+      "Food",
+      "Convenience_Store",
+      "Telecom",
+      "OTT",
+      "Delivery",
+      "Coffee",
+      "Taxi",
+      "Cinema",
+      "Beauty",
+      "Leisure_Sports",
+      "Books",
+      "Cash_Service",
+      "Card_Loan",
+      "Gift_Card",
+      "Apartment_Fee",
+      "School_Fee",
+      "Government_Subsidy",
+      "Tuition",
+      "Tax",
+      "Public_Fee",
+      "Insurance",
+      "Fee_Interest",
+      "Late_Fee",
+      "Annual_Fee",
+      "Transportation",
+      "Vending_Machine"
+    ]
+  },
+  "benefit_groups": [
+    {
+      "group_id": "G_SHARED_COMMUNICATION_OTT",
+      "group_name": "통신OTT 통합 한도",
+      "group_type": "SHARED_LIMIT",
+      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
+      "choices": null,
+      "monthly_limit": 5000,
+      "annual_limit": null,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_SELECTIVE_1",
+      "group_name": "필수 선택 1",
+      "group_type": "SELECTIVE_GROUP",
+      "group_type_description": "SELECTIVE_GROUP: 필수 선택형 (2-3 공식)",
+      "choices": [
+        {
+          "choice_id": "CHOICE_EAT",
+          "choice_name": "먹는데 진심"
+        },
+        {
+          "choice_id": "CHOICE_PLAY",
+          "choice_name": "노는데 진심"
+        },
+        {
+          "choice_id": "CHOICE_MANAGE",
+          "choice_name": "관리에 진심"
+        }
+      ],
+      "monthly_limit": null,
+      "annual_limit": null,
+      "top_n_count": null
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_id": "B_KB_PAY",
+      "group_id": null,
+      "selective_choice": null,
+      "category": "General",
+      "sub_category": null,
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.1,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": 5000,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": 2500,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [],
+      "conditional_metadata": {
+        "warnings": [
+          "할인 받은 이용건 취소 시 할인한도가 즉시 복원되지 않을 수 있음",
+          "무이자할부, 단기카드대출, 장기카드대출, 상품권 및 선불카드 구입/충전금액, 아파트관리비, 초·중·고교 납입금, 정부지원금, 대학(원) 등록금, 국세, 지방세, 공과금, 4대 사회보험료, 각종 수수료 및 이자, 연체료, 연회비, 신차구매청구 할인 전표 전체, 취소금액 제외"
+        ],
+        "excludes_from_performance": true,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_FOOD_CONVENIENCE",
+      "group_id": null,
+      "selective_choice": null,
+      "category": "Food",
+      "sub_category": "general",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.1,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": 5000,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": 2500,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [],
+      "conditional_metadata": {
+        "warnings": [
+          "할인 받은 이용건 취소 시 할인한도가 즉시 복원되지 않을 수 있음",
+          "무이자할부, 단기카드대출, 장기카드대출, 상품권 및 선불카드 구입/충전금액, 아파트관리비, 초·중·고교 납입금, 정부지원금, 대학(원) 등록금, 국세, 지방세, 공과금, 4대 사회보험료, 각종 수수료 및 이자, 연체료, 연회비, 신차구매청구 할인 전표 전체, 취소금액 제외"
+        ],
+        "excludes_from_performance": true,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_TELECOM",
+      "group_id": "G_SHARED_COMMUNICATION_OTT",
+      "selective_choice": null,
+      "category": "Life",
+      "sub_category": "telecom",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.1,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": 2500,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": false,
+        "requires_auto_payment": true
+      },
+      "tier_conditions": [],
+      "conditional_metadata": {
+        "warnings": [
+          "할인 받은 이용건 취소 시 할인한도가 즉시 복원되지 않을 수 있음",
+          "무이자할부, 단기카드대출, 장기카드대출, 상품권 및 선불카드 구입/충전금액, 아파트관리비, 초·중·고교 납입금, 정부지원금, 대학(원) 등록금, 국세, 지방세, 공과금, 4대 사회보험료, 각종 수수료 및 이자, 연체료, 연회비, 신차구매청구 할인 전표 전체, 취소금액 제외"
+        ],
+        "excludes_from_performance": true,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_OTT",
+      "group_id": "G_SHARED_COMMUNICATION_OTT",
+      "selective_choice": null,
+      "category": "Cultural",
+      "sub_category": "ott",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.3,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": 2500,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": true,
+        "requires_auto_payment": true
+      },
+      "tier_conditions": [],
+      "conditional_metadata": {
+        "warnings": [
+          "할인 받은 이용건 취소 시 할인한도가 즉시 복원되지 않을 수 있음",
+          "무이자할부, 단기카드대출, 장기카드대출, 상품권 및 선불카드 구입/충전금액, 아파트관리비, 초·중·고교 납입금, 정부지원금, 대학(원) 등록금, 국세, 지방세, 공과금, 4대 사회보험료, 각종 수수료 및 이자, 연체료, 연회비, 신차구매청구 할인 전표 전체, 취소금액 제외"
+        ],
+        "excludes_from_performance": true,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_DELIVERY_COFFEE",
+      "group_id": null,
+      "selective_choice": {
+        "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
+        "group_id": "G_SELECTIVE_1",
+        "choice_id": "CHOICE_EAT"
+      },
+      "category": "Food",
+      "sub_category": "delivery",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.05,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": 5000,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": true,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [],
+      "conditional_metadata": {
+        "warnings": [
+          "할인 받은 이용건 취소 시 할인한도가 즉시 복원되지 않을 수 있음",
+          "무이자할부, 단기카드대출, 장기카드대출, 상품권 및 선불카드 구입/충전금액, 아파트관리비, 초·중·고교 납입금, 정부지원금, 대학(원) 등록금, 국세, 지방세, 공과금, 4대 사회보험료, 각종 수수료 및 이자, 연체료, 연회비, 신차구매청구 할인 전표 전체, 취소금액 제외"
+        ],
+        "excludes_from_performance": true,
+        "special_multiplier": 2.0
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_TAXI_CINEMA",
+      "group_id": null,
+      "selective_choice": {
+        "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
+        "group_id": "G_SELECTIVE_1",
+        "choice_id": "CHOICE_PLAY"
+      },
+      "category": "Traffic",
+      "sub_category": "taxi",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.05,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": 5000,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": true,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [],
+      "conditional_metadata": {
+        "warnings": [
+          "할인 받은 이용건 취소 시 할인한도가 즉시 복원되지 않을 수 있음",
+          "무이자할부, 단기카드대출, 장기카드대출, 상품권 및 선불카드 구입/충전금액, 아파트관리비, 초·중·고교 납입금, 정부지원금, 대학(원) 등록금, 국세, 지방세, 공과금, 4대 사회보험료, 각종 수수료 및 이자, 연체료, 연회비, 신차구매청구 할인 전표 전체, 취소금액 제외"
+        ],
+        "excludes_from_performance": true,
+        "special_multiplier": 2.0
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_CINEMA",
+      "group_id": null,
+      "selective_choice": {
+        "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
+        "group_id": "G_SELECTIVE_1",
+        "choice_id": "CHOICE_PLAY"
+      },
+      "category": "Cultural",
+      "sub_category": "cinema",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.3,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": 5000,
+        "annual_benefit_limit": 20000
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": 4,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": true,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [],
+      "conditional_metadata": {
+        "warnings": [
+          "할인 받은 이용건 취소 시 할인한도가 즉시 복원되지 않을 수 있음",
+          "무이자할부, 단기카드대출, 장기카드대출, 상품권 및 선불카드 구입/충전금액, 아파트관리비, 초·중·고교 납입금, 정부지원금, 대학(원) 등록금, 국세, 지방세, 공과금, 4대 사회보험료, 각종 수수료 및 이자, 연체료, 연회비, 신차구매청구 할인 전표 전체, 취소금액 제외"
+        ],
+        "excludes_from_performance": true,
+        "special_multiplier": 2.0
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_BEAUTY_SPORT",
+      "group_id": null,
+      "selective_choice": {
+        "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
+        "group_id": "G_SELECTIVE_1",
+        "choice_id": "CHOICE_MANAGE"
+      },
+      "category": "Life",
+      "sub_category": "daily_service",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.05,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": 10000,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": true,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [],
+      "conditional_metadata": {
+        "warnings": [
+          "할인 받은 이용건 취소 시 할인한도가 즉시 복원되지 않을 수 있음",
+          "무이자할부, 단기카드대출, 장기카드대출, 상품권 및 선불카드 구입/충전금액, 아파트관리비, 초·중·고교 납입금, 정부지원금, 대학(원) 등록금, 국세, 지방세, 공과금, 4대 사회보험료, 각종 수수료 및 이자, 연체료, 연회비, 신차구매청구 할인 전표 전체, 취소금액 제외"
+        ],
+        "excludes_from_performance": true,
+        "special_multiplier": 2.0
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    }
+  ]
+}

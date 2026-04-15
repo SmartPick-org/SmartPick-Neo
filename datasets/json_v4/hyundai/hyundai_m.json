@@ -1,0 +1,303 @@
+{
+  "card_meta": {
+    "card_id": "hyundai_m",
+    "card_name": "현대카드 M",
+    "card_company": "HYUNDAI",
+    "annual_fee_domestic": 30000,
+    "annual_fee_international": null,
+    "minimum_performance": 500000,
+    "performance_excluded_categories": [
+      "Loan",
+      "Cash_Service",
+      "Annual_Fee",
+      "Fee",
+      "Interest",
+      "Tax",
+      "Public_Fee",
+      "Gift_Card",
+      "Prepaid_Card",
+      "Electricity",
+      "Gas",
+      "TV_Reception_Fee",
+      "Apartment_Management_Fee",
+      "Real_Estate_Rent",
+      "School_Fee",
+      "University_Tuition",
+      "Insurance",
+      "Highway_Toll",
+      "Postpaid_Highpass",
+      "Express_Bus",
+      "Discounted_Transaction"
+    ]
+  },
+  "benefit_groups": [
+    {
+      "group_id": "G_SHARED_5P",
+      "group_name": "추가 혜택 (특별 적립) 통합 한도",
+      "group_type": "SHARED_LIMIT",
+      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
+      "choices": null,
+      "monthly_limit": 10000,
+      "annual_limit": null,
+      "top_n_count": null
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_id": "B_1_5P_ALL",
+      "group_id": null,
+      "selective_choice": null,
+      "category": "General",
+      "sub_category": null,
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "M_POINT",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.015,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 500000,
+          "benefit_rate": 0.015,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": null
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "전월 이용 금액 50만원 미만 시 신규 발급 혜택으로 발급월 다음 달까지 제공"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_5P_ONLINE",
+      "group_id": "G_SHARED_5P",
+      "selective_choice": null,
+      "category": "Shopping",
+      "sub_category": "online",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "M_POINT",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.05,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": 0.015,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": true,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 1000000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": 10000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "쿠팡이츠 결제 건 및 공식 앱/홈페이지 외 연결 결제 건 등은 추가 적립 제외",
+          "월 1만 M포인트 한도 초과 시 기본 1.5% 적립 적용",
+          "신규 발급 시 발급월 다음 달까지는 전월 100만원 미만 시에도 제공"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": [
+          "네이버쇼핑",
+          "쿠팡",
+          "G마켓",
+          "옥션",
+          "11번가",
+          "SSG.COM",
+          "컬리"
+        ],
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_5P_RESTAURANT",
+      "group_id": "G_SHARED_5P",
+      "selective_choice": null,
+      "category": "Food",
+      "sub_category": "restaurant",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "M_POINT",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.05,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": 0.015,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": true,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 1000000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": 10000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "월 1만 M포인트 한도 초과 시 기본 1.5% 적립 적용",
+          "신규 발급 시 발급월 다음 달까지는 전월 100만원 미만 시에도 제공"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_5P_OVERSEAS",
+      "group_id": "G_SHARED_5P",
+      "selective_choice": null,
+      "category": "Travel",
+      "sub_category": "overseas",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "M_POINT",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.05,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": 0.015,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 1000000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": 10000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "월 1만 M포인트 한도 초과 시 기본 1.5% 적립 적용",
+          "신규 발급 시 발급월 다음 달까지는 전월 100만원 미만 시에도 제공"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    }
+  ]
+}

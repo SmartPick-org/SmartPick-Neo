@@ -1,0 +1,801 @@
+{
+  "card_meta": {
+    "card_id": "kb_tantan_road_mizmr",
+    "card_name": "KB 탄탄대로 Biz카드 (KB 탄탄대로 MizMr 외)",
+    "card_company": "KB",
+    "annual_fee_domestic": 15000,
+    "annual_fee_international": 15000,
+    "minimum_performance": 400000,
+    "performance_excluded_categories": [
+      "Fuel",
+      "Mart",
+      "Online",
+      "Daily_Service",
+      "Telecom",
+      "Utility"
+    ]
+  },
+  "benefit_groups": [
+    {
+      "group_id": "G_SELECTIVE_1",
+      "group_name": "탄탄대로 Biz Favorite 선택 서비스",
+      "group_type": "SELECTIVE_GROUP",
+      "group_type_description": "SELECTIVE_GROUP: 필수 선택형 (2-3 공식)",
+      "choices": [
+        {
+          "choice_id": "CHOICE_1",
+          "choice_name": "선택지1 (주유/마트/쇼핑 기본형)"
+        },
+        {
+          "choice_id": "CHOICE_2",
+          "choice_name": "선택지2 (주유 강화형)"
+        },
+        {
+          "choice_id": "CHOICE_3",
+          "choice_name": "선택지3 (마트 강화형)"
+        },
+        {
+          "choice_id": "CHOICE_4",
+          "choice_name": "선택지4 (쇼핑 강화형)"
+        }
+      ],
+      "monthly_limit": null,
+      "annual_limit": null,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_SHARED_LIMIT_1",
+      "group_name": "Biz Basic 서비스 공유 한도",
+      "group_type": "SHARED_LIMIT",
+      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
+      "choices": null,
+      "monthly_limit": 5000,
+      "annual_limit": null,
+      "top_n_count": null
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_id": "B_FUEL_1",
+      "group_id": "G_SELECTIVE_1",
+      "selective_choice": {
+        "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
+        "group_id": "G_SELECTIVE_1",
+        "choice_id": "CHOICE_1"
+      },
+      "category": "Shopping",
+      "sub_category": "Fuel",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "POINT",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "UNIT_BASED",
+        "calc_type_description": "UNIT_BASED: 1-3 공식(단위비례)",
+        "benefit_rate": null,
+        "flat_discount": null,
+        "discount_per_unit": 100,
+        "unit_label": "liter",
+        "fallback_rate": null,
+        "monthly_benefit_limit": 200000,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 10000,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": true,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "benefit_rate": null,
+          "flat_discount": null,
+          "discount_per_unit": 100,
+          "monthly_benefit_limit": 200000,
+          "group_monthly_limit": null
+        },
+        {
+          "min_prev_performance": 800000,
+          "benefit_rate": null,
+          "flat_discount": null,
+          "discount_per_unit": 130,
+          "monthly_benefit_limit": 300000,
+          "group_monthly_limit": null
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "전월 실적 산정에서 제외되는 혜택",
+          "SK, GS주유소 (LPG 포함)"
+        ],
+        "excludes_from_performance": true,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_FUEL_2",
+      "group_id": "G_SELECTIVE_1",
+      "selective_choice": {
+        "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
+        "group_id": "G_SELECTIVE_1",
+        "choice_id": "CHOICE_2"
+      },
+      "category": "Shopping",
+      "sub_category": "Fuel",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "POINT",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "UNIT_BASED",
+        "calc_type_description": "UNIT_BASED: 1-3 공식(단위비례)",
+        "benefit_rate": null,
+        "flat_discount": null,
+        "discount_per_unit": 130,
+        "unit_label": "liter",
+        "fallback_rate": null,
+        "monthly_benefit_limit": 200000,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 10000,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": true,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "benefit_rate": null,
+          "flat_discount": null,
+          "discount_per_unit": 130,
+          "monthly_benefit_limit": 200000,
+          "group_monthly_limit": null
+        },
+        {
+          "min_prev_performance": 800000,
+          "benefit_rate": null,
+          "flat_discount": null,
+          "discount_per_unit": 130,
+          "monthly_benefit_limit": 300000,
+          "group_monthly_limit": null
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "전월 실적 산정에서 제외되는 혜택",
+          "SK, GS주유소 (LPG 포함)"
+        ],
+        "excludes_from_performance": true,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_MART_1",
+      "group_id": "G_SELECTIVE_1",
+      "selective_choice": {
+        "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
+        "group_id": "G_SELECTIVE_1",
+        "choice_id": "CHOICE_1"
+      },
+      "category": "Shopping",
+      "sub_category": "Mart",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "POINT",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.1,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": 10000,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 10000,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": true,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "benefit_rate": 0.1,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 10000,
+          "group_monthly_limit": null
+        },
+        {
+          "min_prev_performance": 800000,
+          "benefit_rate": 0.1,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 15000,
+          "group_monthly_limit": null
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "전월 실적 산정에서 제외되는 혜택",
+          "이마트, 홈플러스, 롯데마트 및 하나로식자재매장"
+        ],
+        "excludes_from_performance": true,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_MART_2",
+      "group_id": "G_SELECTIVE_1",
+      "selective_choice": {
+        "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
+        "group_id": "G_SELECTIVE_1",
+        "choice_id": "CHOICE_3"
+      },
+      "category": "Shopping",
+      "sub_category": "Mart",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "POINT",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.2,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": 15000,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 10000,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": true,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "benefit_rate": 0.2,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 15000,
+          "group_monthly_limit": null
+        },
+        {
+          "min_prev_performance": 800000,
+          "benefit_rate": 0.2,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 30000,
+          "group_monthly_limit": null
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "전월 실적 산정에서 제외되는 혜택",
+          "이마트, 홈플러스, 롯데마트 및 하나로식자재매장"
+        ],
+        "excludes_from_performance": true,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_ONLINE_1",
+      "group_id": "G_SELECTIVE_1",
+      "selective_choice": {
+        "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
+        "group_id": "G_SELECTIVE_1",
+        "choice_id": "CHOICE_1"
+      },
+      "category": "Shopping",
+      "sub_category": "Online",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "POINT",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.1,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": 10000,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 10000,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": true,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "benefit_rate": 0.1,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 10000,
+          "group_monthly_limit": null
+        },
+        {
+          "min_prev_performance": 800000,
+          "benefit_rate": 0.1,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 15000,
+          "group_monthly_limit": null
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "전월 실적 산정에서 제외되는 혜택",
+          "G마켓, 옥션, 11번가, 인터파크, 롯데닷컴, 신세계몰"
+        ],
+        "excludes_from_performance": true,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_ONLINE_2",
+      "group_id": "G_SELECTIVE_1",
+      "selective_choice": {
+        "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
+        "group_id": "G_SELECTIVE_1",
+        "choice_id": "CHOICE_4"
+      },
+      "category": "Shopping",
+      "sub_category": "Online",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "POINT",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.2,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": 15000,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 10000,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": true,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "benefit_rate": 0.2,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 15000,
+          "group_monthly_limit": null
+        },
+        {
+          "min_prev_performance": 800000,
+          "benefit_rate": 0.2,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 30000,
+          "group_monthly_limit": null
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "전월 실적 산정에서 제외되는 혜택",
+          "G마켓, 옥션, 11번가, 인터파크, 롯데닷컴, 신세계몰"
+        ],
+        "excludes_from_performance": true,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_DAILY_SERVICE",
+      "group_id": "G_SHARED_LIMIT_1",
+      "selective_choice": null,
+      "category": "Life",
+      "sub_category": "Daily_Service",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "POINT",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.05,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": 5000,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": null,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": true,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 5000,
+          "group_monthly_limit": 5000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "정수기렌탈, 보안 및 용역, 문구 및 사무용기기"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_TELECOM_UTILITY",
+      "group_id": "G_SHARED_LIMIT_1",
+      "selective_choice": null,
+      "category": "Life",
+      "sub_category": "Telecom",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "POINT",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.05,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": 5000,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": null,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": true,
+        "requires_auto_payment": true
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 5000,
+          "group_monthly_limit": 5000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "건강, 고용, 산재, 국민연금, 통신요금, 전기수도요금",
+          "통신요금에서 알뜰폰 이용금액은 제외"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_UTILITY",
+      "group_id": "G_SHARED_LIMIT_1",
+      "selective_choice": null,
+      "category": "Life",
+      "sub_category": "Utility",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "POINT",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.05,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": 5000,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": null,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": true,
+        "requires_auto_payment": true
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 5000,
+          "group_monthly_limit": 5000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "건강, 고용, 산재, 국민연금, 통신요금, 전기수도요금"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_ONLINE_MALL",
+      "group_id": "G_SHARED_LIMIT_1",
+      "selective_choice": null,
+      "category": "Shopping",
+      "sub_category": "Online",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "POINT",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.05,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": 5000,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": null,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": true,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 5000,
+          "group_monthly_limit": 5000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "SK행복스토어, 플러스 O2O"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_MYBIZ",
+      "group_id": null,
+      "selective_choice": null,
+      "category": "General",
+      "sub_category": null,
+      "reward_type": "INDIRECT",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": null,
+        "calc_type_description": null,
+        "benefit_rate": null,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": null,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [],
+      "conditional_metadata": {
+        "warnings": [
+          "사업지원",
+          "전자세금계산서 무료발행, 부가세 환급지원 등"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": "전자세금계산서 무료발행, 부가세 환급지원 등",
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    }
+  ]
+}

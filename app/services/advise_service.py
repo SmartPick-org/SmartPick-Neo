@@ -14,6 +14,7 @@ LLM이 네이버 블로그 검색 툴을 직접 사용할지 판단합니다.
 
 from __future__ import annotations
 
+import asyncio
 import os
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -93,8 +94,8 @@ QUERIES_STANDALONE: dict[str, str] = {
 
 QUERIES_DETAILS: dict[str, str] = {
     "credit_fees": (
-        "이 카드의 이용형태별 수수료율을 안내해줘. "
-        "아래 항목 중 약관에 명시된 것만 골라서 수치와 함께 알려줘: "
+        "이 카드의 연회비와 이용형태별 수수료율을 안내해줘. "
+        "아래 항목 중 수치와 함께 알려줘: "
         "① 일시불 수수료, "
         "② 할부 수수료율(연, 최저~최고), "
         "③ 단기카드대출(현금서비스) 수수료율(연, 최저~최고), "
@@ -181,12 +182,11 @@ def web_search(query: str) -> str:
 
 _SYSTEM_PROMPT = """
 너는 {card_name} 전문 상담사야.
-사용자 질문에 대해 아래 [카드 공식 정보]를 우선 참고해서 답해줘.
-공식 정보만으로 부족하다고 판단되면 아래 툴을 자유롭게 활용해:
+사용자 질문에 대해 아래 공식 문서를 우선 참고해서 답해줘.
+공식 문서만으로 부족하다고 판단되면 아래 툴을 자유롭게 활용해:
 - naver_blog_search: 실사용자 후기, 개인 경험담 등 비공식 의견이 필요할 때
 - web_search: 공식 신청 페이지, 발급 조건 등 공식 출처 정보가 필요할 때
 
-[카드 공식 정보]
 {card_info}
 
 [답변 규칙]
@@ -197,6 +197,19 @@ _SYSTEM_PROMPT = """
 - 반말로 친근하게 답해줘
 - 답변 마지막에 공식 채널(앱, 홈페이지)을 안내해줘 (단, 본문에서 이미 언급한 URL·채널은 중복 표기하지 마)
 """.strip()
+
+
+def _build_card_info(manual: str, terms: str) -> str:
+    """manual과 terms를 조합해 시스템 프롬프트에 삽입할 card_info 블록을 만듭니다."""
+    if not manual and not terms:
+        return "(제공된 공식 문서가 없습니다. 검색 툴을 활용해서 답해줘.)"
+
+    parts: list[str] = []
+    if manual:
+        parts.append(f"[카드 상품 정보]\n{manual}")
+    if terms:
+        parts.append(f"[약관 정보]\n{terms}")
+    return "\n\n".join(parts)
 
 
 # ===========================< Advisor Cache >============================
@@ -256,15 +269,25 @@ def _cache_set(cache_key: str, answer: str) -> None:
 # ===========================< Card Info Loader >============================
 
 _terms_repo = None
-_TERMS_DIR = Path(__file__).resolve().parents[2] / "datasets" / "terms"
+_manual_repo = None
 
 
 def _get_terms_repo():
     global _terms_repo
     if _terms_repo is None:
+        from app.core.config import TERMS_DIR
         from app.repositories.terms_repo import TermsRepository
-        _terms_repo = TermsRepository(_TERMS_DIR)
+        _terms_repo = TermsRepository(TERMS_DIR)
     return _terms_repo
+
+
+def _get_manual_repo():
+    global _manual_repo
+    if _manual_repo is None:
+        from app.core.config import MANUALS_DIR
+        from app.repositories.manual_repo import ManualRepository
+        _manual_repo = ManualRepository(MANUALS_DIR)
+    return _manual_repo
 
 
 
@@ -295,8 +318,12 @@ async def get_advice(
     if cached_answer is not None:
         return cached_answer
 
-    # 1. cards 테이블에서 terms_file_path 조회 → Supabase storage에서 마크다운 로드
-    card_info = await _get_terms_repo().get_terms(card_name)
+    # 1. 상품설명서(manual) + 약관(terms) 병렬 로드
+    manual, terms = await asyncio.gather(
+        _get_manual_repo().get_manual(card_name),
+        _get_terms_repo().get_terms(card_name),
+    )
+    card_info = _build_card_info(manual, terms)
 
     # 2. Build LLM with tools
     # naver_blog_search is only relevant for reviews; all other queries use web search only

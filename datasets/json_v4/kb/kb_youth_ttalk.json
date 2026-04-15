@@ -1,0 +1,340 @@
+{
+  "card_meta": {
+    "card_id": "kb_youth_ttalk",
+    "card_name": "KB 청춘대로 톡톡카드",
+    "card_company": "KB",
+    "annual_fee_domestic": 10000,
+    "annual_fee_international": 12000,
+    "minimum_performance": 300000,
+    "performance_excluded_categories": [
+      "Fuel",
+      "Tax"
+    ]
+  },
+  "benefit_groups": [
+    {
+      "group_id": "G_SHARED_5000",
+      "group_name": "대중교통/택시/통신 통합 한도",
+      "group_type": "SHARED_LIMIT",
+      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
+      "monthly_limit": 5000,
+      "annual_limit": null,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_SELECTIVE_1",
+      "group_name": "간편결제 통합 한도",
+      "group_type": "SELECTIVE_GROUP",
+      "group_type_description": "SELECTIVE_GROUP: 필수 선택형 (2-3 공식)",
+      "monthly_limit": 5000,
+      "annual_limit": null,
+      "top_n_count": null
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_id": "B_STARBUCKS_50",
+      "group_id": null,
+      "category": "Coffee",
+      "sub_category": "cafe",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.5,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": 0.0,
+        "monthly_benefit_limit": 10000,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": true,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [],
+      "conditional_metadata": {
+        "warnings": [
+          "상품권 구매 및 건물 내 임대매장 제외"
+        ],
+        "excludes_from_performance": true,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_FASTFOOD_20",
+      "group_id": null,
+      "category": "Food",
+      "sub_category": "fast_food",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.2,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": 0.0,
+        "monthly_benefit_limit": 5000,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": true,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [],
+      "conditional_metadata": {
+        "warnings": [
+          "맥도날드, 버거킹, 롯데리아 등 (상품권 및 임대매장 제외)"
+        ],
+        "excludes_from_performance": true,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_PAY_10",
+      "group_id": "G_SELECTIVE_1",
+      "category": "General",
+      "sub_category": null,
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.1,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": 0.0,
+        "monthly_benefit_limit": 5000,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": true,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [],
+      "conditional_metadata": {
+        "warnings": [
+          "KB Pay, 삼성/네이버/카카오페이 등 (타 서비스와 중복 적용 가능)"
+        ],
+        "excludes_from_performance": true,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_PUBLIC_10",
+      "group_id": "G_SHARED_5000",
+      "category": "Traffic",
+      "sub_category": "transit",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.1,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": 0.0,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": true,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [],
+      "conditional_metadata": {
+        "warnings": [
+          "시외/고속버스 제외"
+        ],
+        "excludes_from_performance": true,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_TAXI_10",
+      "group_id": "G_SHARED_5000",
+      "category": "Traffic",
+      "sub_category": "taxi",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.1,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": 0.0,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": true,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [],
+      "conditional_metadata": {
+        "warnings": null,
+        "excludes_from_performance": true,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_TELECOM_10",
+      "group_id": "G_SHARED_5000",
+      "category": "Life",
+      "sub_category": "telecom",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.1,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": 0.0,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": false,
+        "requires_auto_payment": true
+      },
+      "tier_conditions": [],
+      "conditional_metadata": {
+        "warnings": [
+          "알뜰폰 제외"
+        ],
+        "excludes_from_performance": true,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    }
+  ]
+}

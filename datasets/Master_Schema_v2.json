@@ -22,7 +22,7 @@
     {
       "benefit_id": "[String] 개별 혜택 고유 식별자",
       "category": "[Enum] 엔진과 프론트엔드가 약속한 표준 카테고리",
-      "category_description": "예시: Coffee, Dining_FNB, Convenience_Store, Online_Shopping, Fuel, Public_Transport, Telecom, OTT_Streaming, Membership_Subscription, Department_Store, Mart, Hospital_Pharmacy, Academy, Beauty, Overseas, Duty_Free, Airline, Hotel, All_Domestic 등",
+      "category_description": "예시: Coffee, Dining_FNB, Convenience_Store, Online_Shopping, Fuel, Public_Transport, Telecom, OTT_Streaming, Membership_Subscription, Department_Store, Mart, Hospital_Pharmacy, Academy, Beauty, Overseas, Duty_Free, Airline, Hotel, General 등",
       "content": "[String] 약관 원문 (LLM 추론 근거 및 디버깅용)",
       "frequency": "[Enum] 혜택 발생 주기 (MONTHLY | ANNUAL | ONCE | QUARTERLY)",
       "reward_type": "[Enum] DISCOUNT(청구할인) | POINT(포인트/마일리지 적립) | CASHBACK(캐시백) | VOUCHER(바우처/상품권)",

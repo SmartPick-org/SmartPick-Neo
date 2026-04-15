@@ -2,107 +2,170 @@
   "card_meta": {
     "card_id": "hyundai_digital_lover",
     "card_name": "현대카드 DIGITAL LOVER",
-    "card_company": "현대카드",
-    "annual_fee": 20000,
+    "card_company": "HYUNDAI",
+    "annual_fee_domestic": 20000,
+    "annual_fee_international": null,
     "minimum_performance": 500000,
-    "reward_currency": "KRW",
-    "currency_to_krw_rate": 1.0
+    "performance_excluded_categories": [
+      "Cash_Advance",
+      "Card_Loan",
+      "Interest",
+      "Fees",
+      "Tax",
+      "Utility",
+      "Management_Fee",
+      "Tuition",
+      "Gift_Card",
+      "Insurance",
+      "Toll",
+      "Highway_Bus",
+      "Discounted_Transactions"
+    ]
   },
   "benefit_groups": [
     {
-      "group_id": "G_DL_STREAMING",
-      "group_name": "디지털 스트리밍 서비스 할인",
-      "group_type": "USER_CHOICE_ONE",
-      "limit_amount": 10000,
+      "group_id": "G_STREAMING",
+      "group_name": "디지털 스트리밍 서비스 할인 그룹",
+      "group_type": "SHARED_LIMIT",
+      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
+      "choices": null,
+      "monthly_limit": 10000,
+      "annual_limit": null,
       "top_n_count": null
     },
     {
-      "group_id": "G_DL_PAYMENT",
-      "group_name": "온라인 간편결제서비스 할인",
+      "group_id": "G_PAYMENT",
+      "group_name": "온라인 간편결제서비스 할인 그룹",
       "group_type": "SHARED_LIMIT",
-      "limit_amount": 10000,
+      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
+      "choices": null,
+      "monthly_limit": 10000,
+      "annual_limit": null,
       "top_n_count": null
     }
   ],
   "benefits": [
     {
-      "benefit_id": "b_dl_streaming_10000",
+      "benefit_id": "B_STREAMING_001",
+      "group_id": "G_STREAMING",
+      "selective_choice": null,
       "category": "Cultural",
-      "subcategory": "OTT_Subscription",
-      "content": "넷플릭스, 유튜브 프리미엄, 멜론, 지니, 디즈니+ 중 택 1 서비스 이용 요금 청구 할인",
-      "frequency": "MONTHLY",
-      "reward_type": "DISCOUNT",
+      "sub_category": "ott",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "FLAT_RATE",
+        "calc_type_description": "FLAT_RATE: 1-2 공식(정액)",
+        "benefit_rate": null,
+        "flat_discount": 10000,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": 10000,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 10000,
+        "max_tx_spend_allowed": 10000,
+        "max_count_per_day": null,
+        "max_count_per_month": 1,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": true,
+        "requires_auto_payment": false
+      },
       "tier_conditions": [
         {
           "min_prev_performance": 500000,
-          "monthly_limit": 10000,
-          "reward_rate": null,
-          "fixed_amount": 10000
+          "benefit_rate": null,
+          "flat_discount": 10000,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 10000,
+          "group_monthly_limit": 10000
         }
       ],
-      "calculation_rule": {
-        "calc_method": "FIXED_AMOUNT",
-        "rate": null,
-        "fixed_amount": 10000,
-        "monthly_limit": 10000,
-        "fallback_reward_rate": 0.0,
-        "transaction_tiers": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_payment_amount_applied": null,
-        "max_count_per_month": 1
-      },
-      "group_id": "G_DL_STREAMING",
-      "ui_warnings": [
-        "할부, 리볼빙 이용 시 최초 결제일자에 실적 포함",
-        "전월 이용 금액 50만원 미만 시 할인 제외"
-      ],
-      "edge_case_flags": {
-        "requires_user_selection": true,
+      "conditional_metadata": {
+        "warnings": [
+          "통신요금 내 합산 청취, 앱스토어 결제 등 가맹점 구분이 불가한 경우 할인 제외",
+          "신규 발급 혜택: 발급월 기준 다음 달 이용 건까지는 전월 50만원 미만도 제공"
+        ],
         "excludes_from_performance": false,
-        "special_month_bonus": null,
-        "escape_hatch_note": null
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
       }
     },
     {
-      "benefit_id": "b_dl_payment_5pct",
+      "benefit_id": "B_PAYMENT_001",
+      "group_id": "G_PAYMENT",
+      "selective_choice": null,
       "category": "Shopping",
-      "subcategory": "Online",
-      "content": "삼성페이, 네이버페이, 카카오페이, SSG페이, 스마일페이, 쿠페이 온라인 가맹점 결제 건 5% 청구 할인",
-      "frequency": "MONTHLY",
-      "reward_type": "DISCOUNT",
+      "sub_category": "online",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.05,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": 10000,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 10000,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": true,
+        "requires_auto_payment": false
+      },
       "tier_conditions": [
         {
           "min_prev_performance": 500000,
-          "monthly_limit": 10000,
-          "reward_rate": 0.05,
-          "fixed_amount": null
+          "benefit_rate": 0.05,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 10000,
+          "group_monthly_limit": 10000
         }
       ],
-      "calculation_rule": {
-        "calc_method": "RATE",
-        "rate": 0.05,
-        "fixed_amount": null,
-        "monthly_limit": 10000,
-        "fallback_reward_rate": 0.0,
-        "transaction_tiers": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_payment_amount_applied": null,
-        "max_count_per_month": null
-      },
-      "group_id": "G_DL_PAYMENT",
-      "ui_warnings": [
-        "할부, 리볼빙 이용 시 최초 결제일자에 실적 포함",
-        "전월 이용 금액 50만원 미만 시 할인 제외"
-      ],
-      "edge_case_flags": {
-        "requires_user_selection": false,
+      "conditional_metadata": {
+        "warnings": [
+          "오프라인 가맹점 및 디지털 스트리밍 서비스 이용요금 결제 시 할인 제외"
+        ],
         "excludes_from_performance": false,
-        "special_month_bonus": null,
-        "escape_hatch_note": null
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
       }
     }
   ]

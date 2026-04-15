@@ -119,6 +119,62 @@ General, Shopping, Traffic, Food, Coffee, Cultural, Travel, Life, EduHealth, Oth
 """
 
 
+DIGEST_PROMPT_FROM_MD = """너는 신용카드 혜택 정보를 간결하고 구조화된 마크다운 요약본으로 변환하는 금융 데이터 요약 전문가이다.
+
+아래는 카드 약관 PDF에서 추출한 원문 마크다운이다. 이를 읽고, 카드 추천 시스템의 LLM이 빠르게 이해할 수 있는 Compact Digest 마크다운으로 변환하라.
+
+[출력 형식]
+
+# 카드명
+연회비: 국내 X원 / 해외 Y원 (또는 단일 금액)
+전월 실적: X원 이상 (특이 조건 있으면 괄호로 표기)
+
+## 서브카테고리_한글명 (카테고리/sub_category) — 혜택유형 비율/금액
+혜택 내용 1줄 요약
+- 실적구간별 한도 (있으면)
+⚠ 주의사항/제외조건 (있으면)
+
+[카테고리 영문 키워드 매핑]
+반드시 아래 키워드 중 하나를 괄호 안에 표기할 것:
+General, Shopping, Traffic, Food, Coffee, Cultural, Travel, Life, EduHealth, Others
+
+[sub_category 매핑]
+카테고리 뒤에 슬래시로 구분하여 세부 분류를 표기.
+예: (Traffic/transit), (Traffic/fuel), (Shopping/mart), (Life/telecom)
+세부 분류가 명확하지 않으면 카테고리만 표기: (General), (Others)
+
+[서브카테고리 한글명]
+## 섹션 제목에 해당 혜택의 실질적인 한글 서브카테고리 명칭을 사용.
+예: "대중교통", "주유", "택시", "편의점", "공과금", "항공 마일리지", "공항 라운지"
+
+[규칙]
+1. 각 혜택을 ## 섹션으로 구분한다.
+2. 혜택유형은 "청구할인", "포인트적립", "캐시백" 등 원문 그대로 간결하게 표기한다.
+3. 할인율/적립률이 있으면 퍼센트로 표기한다. 정액이면 금액을 표기한다.
+4. 실적 구간별로 한도가 다르면 구간별로 나열한다.
+5. 통합 한도를 공유하는 혜택들은 [통합한도 공유]로 명시한다.
+6. 계산 불가능한 혜택(라운지, 이벤트, 선지급 등)은 맨 아래 "기타 혜택"으로 묶어 1줄씩 표기한다.
+7. 원문에 없는 정보는 절대 추가하지 마라.
+8. 설명 없이 마크다운만 출력하라. 코드블록(```)으로 감싸지 마라.
+
+[입력 데이터]
+{card_data}
+"""
+
+
+def generate_digest_from_markdown(src_path: Path) -> str:
+    """하나의 카드 마크다운(PDF 원문 추출본)을 compact digest 마크다운으로 변환합니다."""
+    raw_text = src_path.read_text(encoding="utf-8")
+    prompt = DIGEST_PROMPT_FROM_MD.format(card_data=raw_text)
+
+    try:
+        response = llm.invoke([SystemMessage(content=prompt)]).content
+        return response if isinstance(response, str) else str(response)
+    except Exception as e:
+        print(f"    [ERROR] LLM 변환 실패: {e}")
+        return ""
+
+
 def generate_digest(src_path: Path, use_sub_category: bool = True) -> str:
     """하나의 카드 JSON을 compact digest 마크다운으로 변환합니다."""
     raw_text = src_path.read_text(encoding="utf-8")

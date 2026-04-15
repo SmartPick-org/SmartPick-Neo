@@ -142,6 +142,7 @@ def _safe_build_recommended_cards(ranked: list[dict], explanation: str) -> list[
                 "expected_monthly_benefit": card.get("expected_monthly_benefit", 0),
                 "category_breakdown": card.get("category_breakdown", []) or [],
                 "explanation": explanation if idx == 0 else "",
+                "benefit_receipt": card.get("benefit_details", []),
             }
         )
     return cards

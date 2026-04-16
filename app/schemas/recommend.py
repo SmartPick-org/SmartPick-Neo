@@ -246,8 +246,30 @@ class RecalculateRequest(BaseModel):
                 {
                     "total_budget": 500000,
                     "category_spending": {"Food": 300000, "Shopping": 200000},
-                    "recommended_cards": " [ ... 추천 API의 응답 결과 ... ] ",
-                    "excluded_benefit_ids": ["B_BEAUTY_001"]
+                    "recommended_cards": [
+                        {
+                            "card_name": "신한카드 Mr.Life",
+                            "card_company": "신한카드",
+                            "card_id": "shinhan_mr_life",
+                            "annual_fee": 15000,
+                            "minimum_performance": 300000,
+                            "expected_monthly_benefit": 99000,
+                            "category_breakdown": [
+                                {"category": "Food", "monthly_discount_krw": 70000, "discount_info": {}, "warnings": []}
+                            ],
+                            "applied_benefits_trace": [
+                                {
+                                    "benefit_id": "shinhan_mr_life_b_food_restaurant",
+                                    "content": "DAY(07~15시) 음식점 10% 할인",
+                                    "applied_budget": 210000,
+                                    "yielded_discount": 21000,
+                                    "user_choice": True,
+                                }
+                            ],
+                            "explanation": "[1순위] 신한카드 Mr.Life (신한카드)\n연회비: 15,000원 | ...",
+                        }
+                    ],
+                    "excluded_benefit_ids": ["B_BEAUTY_001"],
                 }
             ]
         }
@@ -265,17 +287,64 @@ class RecalculateResponse(BaseModel):
         description="순위 재조정된 카드 목록. `applied_benefits_trace` 의 `user_choice` 필드가 갱신된 상태입니다."
     )
 
+    model_config = {
+        "json_schema_extra": {
+            "examples": [
+                {
+                    "recommended_cards": [
+                        {
+                            "card_name": "신한카드 Mr.Life",
+                            "card_company": "신한카드",
+                            "card_id": "shinhan_mr_life",
+                            "annual_fee": 15000,
+                            "minimum_performance": 300000,
+                            "expected_monthly_benefit": 84000,
+                            "category_breakdown": [
+                                {"category": "Food", "monthly_discount_krw": 70000, "discount_info": {}, "warnings": []}
+                            ],
+                            "applied_benefits_trace": [
+                                {
+                                    "benefit_id": "shinhan_mr_life_b_food_restaurant",
+                                    "content": "DAY(07~15시) 음식점 10% 할인",
+                                    "applied_budget": 210000,
+                                    "yielded_discount": 21000,
+                                    "user_choice": True,
+                                },
+                                {
+                                    "benefit_id": "B_BEAUTY_001",
+                                    "content": "뷰티 5% 할인",
+                                    "applied_budget": 150000,
+                                    "yielded_discount": 15000,
+                                    "user_choice": False,
+                                },
+                            ],
+                            "explanation": "[1순위] 신한카드 Mr.Life (신한카드)\n...",
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+
 
 class QARequest(BaseModel):
     raw_data: str = Field(..., description="추천 결과 원본 JSON 문자열")
-    question: str = Field(..., description="유저 질문")
+    question: str = Field(
+        ...,
+        description="유저 질문 (자연어)",
+        examples=["왜 이 카드가 1순위야?"],
+    )
 
     def masked_dict(self) -> dict:
         data = self.model_dump()
         # raw_data는 내용이 길고 사용자 예산을 포함할 수 있으므로 절삭/마스킹
-        data["raw_data"] = "[MASKED_JSON_DATA]" 
+        data["raw_data"] = "[MASKED_JSON_DATA]"
         return data
 
 
 class QAResponse(BaseModel):
-    answer: str = Field(..., description="답변")
+    answer: str = Field(
+        ...,
+        description="LLM이 raw_data를 참고해 생성한 자연어 답변",
+        examples=["1순위 카드인 신한카드 Mr.Life는 식비(restaurant) 비중이 큰 소비 패턴에서 ..."],
+    )

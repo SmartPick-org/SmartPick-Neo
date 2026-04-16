@@ -1,5 +1,5 @@
 """
-v4 스키마 기반 BenefitCalculator / CardRecommendService / ExplainService 회귀 테스트.
+v4 스키마 기반 BenefitCalculator / CardRecommendService 회귀 테스트.
 
 v3 → v4 이관 후 달라진 계약:
 - 계산기 입력 필드: `calc_method` → `calc_type: "PERCENTAGE"`, `rate` → `benefit_rate`,
@@ -8,12 +8,12 @@ v3 → v4 이관 후 달라진 계약:
   항목 필드 `amount_krw` → `yielded_discount`, 슬림화로 `category`/`sub_category` 제외
 - 카드 메타: `annual_fee` → `annual_fee_domestic`
 - `_enrich_benefit_details`: content가 없으면 `[카테고리] N% 혜택` 형태로 fallback 생성
+- RecommendCard에서 `benefit_receipt`/`BenefitReceiptItem` 삭제 — applied_benefits_trace로 일원화
 """
 
 import pytest
 from app.tools.Calc_tool import BenefitCalculator
 from app.services.card_service import CardRecommendService, _enrich_benefit_details
-from app.services.explain_service import ExplainService
 
 
 # ─────────────────────────────────────────────
@@ -258,82 +258,10 @@ class TestEnrichBenefitDetails:
 
 
 # ═════════════════════════════════════════════
-# 4. ExplainService.build_recommended_cards — benefit_receipt 포함
+# 4. (구) benefit_receipt 테스트 — 스키마에서 필드가 제거되면서 함께 삭제됨
+#    RecommendCard에 benefit_receipt / BenefitReceiptItem 클래스가 더 이상 존재하지 않습니다.
+#    build_recommended_cards의 출력은 applied_benefits_trace로 대체되었습니다.
 # ═════════════════════════════════════════════
-
-class TestBuildRecommendedCards:
-    """build_recommended_cards()가 benefit_receipt를 올바르게 포함하는지 검증."""
-
-    def _make_ranked_card(self, benefit_details: list[dict] | None = None) -> dict:
-        default_details = [
-            {"benefit_id": "b001", "category": "Coffee", "sub_category": "cafe",
-             "amount_krw": 5000, "content": "카페 10% 할인", "warnings": []},
-            {"benefit_id": "b002", "category": "Food",   "sub_category": "delivery",
-             "amount_krw": 5000, "content": "배달앱 5% 할인",  "warnings": []},
-            {"benefit_id": "b003", "category": "Shopping", "sub_category": None,
-             "amount_krw": 2400, "content": "쇼핑 3% 할인",   "warnings": ["전월 실적 30만원 이상"]},
-        ]
-        return {
-            "card_name": "테스트카드",
-            "card_company": "테스트카드사",
-            "card_id": "test_card",
-            "annual_fee": 15000,
-            "minimum_performance": 300000,
-            "expected_monthly_benefit": 12400,
-            "expected_yearly_benefit": 148800,
-            "category_breakdown": [
-                {"category": "Coffee", "monthly_discount_krw": 5000, "discount_info": {}, "warnings": []},
-                {"category": "Food",   "monthly_discount_krw": 5000, "discount_info": {}, "warnings": []},
-                {"category": "Shopping","monthly_discount_krw": 2400,"discount_info": {}, "warnings": []},
-            ],
-            "benefit_details": benefit_details if benefit_details is not None else default_details,
-        }
-
-    def _get_service(self, monkeypatch) -> ExplainService:
-        """LLM 없이 ExplainService 인스턴스를 만든다."""
-        monkeypatch.setattr(
-            "app.services.explain_service.ExplainService.__init__",
-            lambda self, llm: setattr(self, "_resilient_invoke", None),
-        )
-        return ExplainService(llm=None)  # type: ignore[arg-type]
-
-    def test_benefit_receipt_included(self, monkeypatch):
-        svc = self._get_service(monkeypatch)
-        ranked = [self._make_ranked_card()]
-        cards = svc.build_recommended_cards(ranked, explanation="테스트")
-        assert "benefit_receipt" in cards[0]
-
-    def test_benefit_receipt_count_matches(self, monkeypatch):
-        svc = self._get_service(monkeypatch)
-        ranked = [self._make_ranked_card()]
-        cards = svc.build_recommended_cards(ranked, explanation="테스트")
-        assert len(cards[0]["benefit_receipt"]) == 3
-
-    def test_benefit_receipt_fields(self, monkeypatch):
-        svc = self._get_service(monkeypatch)
-        ranked = [self._make_ranked_card()]
-        cards = svc.build_recommended_cards(ranked, explanation="테스트")
-        first = cards[0]["benefit_receipt"][0]
-        assert first["benefit_id"] == "b001"
-        assert first["amount_krw"] == 5000
-        assert first["content"] == "카페 10% 할인"
-
-    def test_benefit_receipt_empty_when_no_details(self, monkeypatch):
-        svc = self._get_service(monkeypatch)
-        ranked = [self._make_ranked_card(benefit_details=[])]
-        cards = svc.build_recommended_cards(ranked, explanation="테스트")
-        assert cards[0]["benefit_receipt"] == []
-
-    def test_multiple_cards_each_have_benefit_receipt(self, monkeypatch):
-        svc = self._get_service(monkeypatch)
-        card2 = self._make_ranked_card()
-        card2["card_id"] = "test_card_2"
-        ranked = [self._make_ranked_card(), card2]
-        cards = svc.build_recommended_cards(ranked, explanation="테스트")
-        assert len(cards) == 2
-        for c in cards:
-            assert "benefit_receipt" in c
-            assert len(c["benefit_receipt"]) == 3
 
 
 # ═════════════════════════════════════════════
@@ -447,56 +375,27 @@ async def test_calculate_benefits_excluded_ids_none(monkeypatch):
 class TestEndToEndBenefitReceipt:
     """실제 BenefitCalculator → _enrich_benefit_details → build_recommended_cards 파이프라인."""
 
-    def test_full_pipeline_no_exclusion(self, monkeypatch):
-        """제외 없는 전체 파이프라인 — 3개 혜택 모두 benefit_receipt에 포함."""
+    def test_full_pipeline_no_exclusion(self):
+        """
+        제외 없는 전체 파이프라인:
+        BenefitCalculator.calculate() → _enrich_benefit_details() 결과에
+        3개 혜택의 yielded_discount와 enrich된 content가 모두 담겨야 한다.
+        (v4 스키마 이관 후 benefit_receipt 필드는 제거되어 applied_benefits_trace로 검증)
+        """
         calc = BenefitCalculator(CARD_MULTI)
         result = calc.calculate(SPENDING, TOTAL_BUDGET)
         enriched = _enrich_benefit_details(
             result["applied_benefits_trace"], RAW_BENEFITS_CONTENT
         )
 
-        # build_recommended_cards는 `benefit_details` 키를 기대
-        # (CardRecommendService가 applied_benefits_trace를 그대로 전달하는지 여부는
-        #  explain_service의 build 규약에 따름 — 여기서는 enriched를 기대 포맷으로 넘김)
-        details_for_builder = []
-        for e in enriched:
-            details_for_builder.append({
-                "benefit_id": e["benefit_id"],
-                "category": e.get("category", ""),
-                "sub_category": e.get("sub_category"),
-                "amount_krw": e["yielded_discount"],
-                "content": e["content"],
-                "warnings": e.get("warnings", []),
-            })
+        assert len(enriched) == 3
 
-        ranked_card = {
-            "card_name": CARD_MULTI["card_meta"]["card_name"],
-            "card_company": CARD_MULTI["card_meta"]["card_company"],
-            "card_id": CARD_MULTI["card_meta"]["card_id"],
-            "annual_fee": CARD_MULTI["card_meta"]["annual_fee_domestic"],
-            "minimum_performance": CARD_MULTI["card_meta"]["minimum_performance"],
-            "expected_monthly_benefit": result["monthly_total_krw"],
-            "expected_yearly_benefit": result["annual_total_krw"],
-            "category_breakdown": result.get("category_breakdown", []),
-            "benefit_details": details_for_builder,
-        }
-
-        monkeypatch.setattr(
-            "app.services.explain_service.ExplainService.__init__",
-            lambda self, llm: setattr(self, "_resilient_invoke", None),
-        )
-        svc = ExplainService(llm=None)  # type: ignore
-        cards = svc.build_recommended_cards([ranked_card], explanation="설명")
-
-        receipt = cards[0]["benefit_receipt"]
-        assert len(receipt) == 3
-
-        by_id = {r["benefit_id"]: r for r in receipt}
-        assert by_id["b001"]["amount_krw"] == 5000
+        by_id = {r["benefit_id"]: r for r in enriched}
+        assert by_id["b001"]["yielded_discount"] == 5000
         assert by_id["b001"]["content"] == "카페 10% 할인 (월 최대 5,000원)"
-        assert by_id["b002"]["amount_krw"] == 5000
+        assert by_id["b002"]["yielded_discount"] == 5000
         assert by_id["b002"]["content"] == "배달앱 5% 할인"
-        assert by_id["b003"]["amount_krw"] == 2400
+        assert by_id["b003"]["yielded_discount"] == 2400
         assert by_id["b003"]["content"] == "국내 일반 쇼핑 3% 할인"
 
     def test_full_pipeline_with_exclusion(self):

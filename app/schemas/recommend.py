@@ -271,7 +271,6 @@ class RecalculateRequest(BaseModel):
                                 }
                             ],
                             "explanation": "[1순위] 신한카드 Mr.Life (신한카드)\n연회비: 15,000원 | ...",
-                            "benefit_receipt": [],
                         }
                     ],
                     "excluded_benefit_ids": ["B_BEAUTY_001"],
@@ -324,7 +323,6 @@ class RecalculateResponse(BaseModel):
                                 },
                             ],
                             "explanation": "[1순위] 신한카드 Mr.Life (신한카드)\n...",
-                            "benefit_receipt": [],
                         }
                     ]
                 }

@@ -1,11 +1,10 @@
-import asyncio
 import json
 from abc import ABC, abstractmethod
 from pathlib import Path
 
 from loguru import logger
 
-from app.core.discord import notify_discord
+from app.core.discord import notify_discord_sync
 from app.domain.adapters import adapt_v3_for_calculator
 from app.domain.models import CardData
 
@@ -170,16 +169,16 @@ class FallbackCardRepository(CardRepository):
                 return cards
             exc = RuntimeError("DB에서 카드 0개 반환")
             logger.warning("[FallbackCardRepository] {} → 로컬 데이터셋으로 폴백", exc)
-            try:
-                asyncio.ensure_future(notify_discord(exc, context="FallbackCardRepository.list_cards — DB returned 0 cards"))
-            except RuntimeError:
-                pass
+            notify_discord_sync(
+                exc,
+                context="FallbackCardRepository.list_cards — DB returned 0 cards",
+            )
         except Exception as e:
             logger.warning(f"[FallbackCardRepository] DB 조회 실패: {e} → 로컬 데이터셋으로 폴백")
-            try:
-                asyncio.ensure_future(notify_discord(e, context="FallbackCardRepository.list_cards — DB fetch failed"))
-            except RuntimeError:
-                pass
+            notify_discord_sync(
+                e,
+                context="FallbackCardRepository.list_cards — DB fetch failed",
+            )
 
         self._cache = DatasetCardRepository(self._datasets_dir).list_cards()
         return self._cache

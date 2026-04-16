@@ -195,7 +195,7 @@ class ExplainService:
         # 월 예상 할인은 1000원 단위 반올림 적용
         monthly_benefit = self._round_to_thousands(card['expected_monthly_benefit'])
         # 연간 혜택은 이미 원 단위이므로 콤마 포맷팅만 (회원님 예시 참고)
-        yearly_benefit = f"{card['expected_yearly_benefit']:,}원"
+        yearly_benefit = f"{card.get('expected_yearly_benefit', 0):,}원"
         
         lines.append(f"연회비: {annual_fee} | 월 예상 할인: {monthly_benefit} | 연 순이익 추정: {yearly_benefit}")
         
@@ -228,6 +228,7 @@ class ExplainService:
                 "annual_fee": card["annual_fee"],
                 "minimum_performance": card["minimum_performance"],
                 "expected_monthly_benefit": card["expected_monthly_benefit"],
+                "expected_yearly_benefit": card.get("expected_yearly_benefit", 0),
                 "category_breakdown": card["category_breakdown"],
                 "applied_benefits_trace": card.get("applied_benefits_trace", []),
                 "explanation": final_explanation,

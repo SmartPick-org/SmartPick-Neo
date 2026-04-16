@@ -25,6 +25,14 @@ DEFAULT_FUEL_PRICE_PER_LITER = 1_600  # 기준 휘발유 가격 (원/리터)
 DAYS_PER_MONTH = 30
 INF = float("inf")
 
+# 새 Calculator_Schema 포맷의 calc_type 값을 기존 calc_method 값으로 매핑
+_CALC_TYPE_MAP = {
+    "PERCENTAGE": "RATE",
+    "FLAT_RATE": "FIXED_AMOUNT",
+    "UNIT_BASED": "PER_UNIT",
+    "FULL_COVER": "MAX_COVER_UP_TO_LIMIT",
+}
+
 
 # =============================================================================
 # 유틸리티
@@ -87,7 +95,7 @@ class BenefitCalculator:
         # benefit 레벨 제외 (excludes_from_performance / category_excludes_from_performance)
         already_excluded = set(self._perf_excluded_cats)
         for b in self.benefits:
-            flags = b.get("edge_case_flags") or {}
+            flags = b.get("edge_case_flags") or b.get("conditional_metadata") or {}
             cat = b.get("category")
             if cat and cat not in already_excluded:
                 if flags.get("excludes_from_performance") or flags.get(
@@ -131,7 +139,7 @@ class BenefitCalculator:
         calc_rule = benefit.get("calculation_rule") or {}
         trans_cond = benefit.get("transaction_conditions") or {}
         tier_conditions = benefit.get("tier_conditions") or []
-        edge_flags = benefit.get("edge_case_flags") or {}
+        edge_flags = benefit.get("edge_case_flags") or benefit.get("conditional_metadata") or {}
         reward_unit = benefit.get("reward_unit") or {}
         freq = benefit.get("frequency", "MONTHLY")
 
@@ -147,23 +155,40 @@ class BenefitCalculator:
 
         tier = self._find_best_tier(tier_conditions, perf_for_tier)
 
-        # --- 변수 확정 (tier 우선 → calc_rule fallback) ---
-        # reward_rate -> rate로 일원화하되 하이브리드 지원
-        rate = _pick(tier, ["rate", "reward_rate"], calc_rule.get("rate")) or 0.0
-        fixed_amount = _pick(tier, "fixed_amount", calc_rule.get("fixed_amount")) or 0
-        unit_amount = _pick(tier, "unit_amount", calc_rule.get("unit_amount")) or 0
+        # --- 변수 확정 (tier 우선 → calc_rule fallback, 구/신 필드명 모두 지원) ---
+        rate = (
+            _pick(tier, ["rate", "reward_rate", "benefit_rate"])
+            or calc_rule.get("rate") or calc_rule.get("benefit_rate")
+            or 0.0
+        )
+        fixed_amount = (
+            _pick(tier, ["fixed_amount", "flat_discount"])
+            or calc_rule.get("fixed_amount") or calc_rule.get("flat_discount")
+            or 0
+        )
+        unit_amount = (
+            _pick(tier, ["unit_amount", "discount_per_unit"])
+            or calc_rule.get("unit_amount") or calc_rule.get("discount_per_unit")
+            or 0
+        )
         monthly_limit = (
-            _pick(tier, "monthly_limit", calc_rule.get("monthly_limit")) or INF
+            _pick(tier, ["monthly_limit", "monthly_benefit_limit"])
+            or calc_rule.get("monthly_limit") or calc_rule.get("monthly_benefit_limit")
+            or INF
         )
         monthly_usage_limit = (
             _pick(tier, "monthly_usage_limit", calc_rule.get("monthly_usage_limit"))
             or INF
         )
-        fallback_rate = calc_rule.get("fallback_reward_rate") or 0.0
+        fallback_rate = (
+            calc_rule.get("fallback_reward_rate") or calc_rule.get("fallback_rate") or 0.0
+        )
 
         # --- Transaction conditions ---
         min_payment = trans_cond.get("min_payment_amount") or 0
-        max_payment_applied = trans_cond.get("max_payment_amount_applied") or INF
+        max_payment_applied = (
+            trans_cond.get("max_payment_amount_applied") or trans_cond.get("max_tx_spend_allowed") or INF
+        )
         max_count_day = trans_cond.get("max_count_per_day") or INF
         max_count_month = trans_cond.get("max_count_per_month") or INF
         max_count_year = trans_cond.get("max_count_per_year") or INF
@@ -190,10 +215,14 @@ class BenefitCalculator:
             return self._empty_record(benefit)
 
         # --- 계산 ---
-        calc_method = calc_rule.get("calc_method", "RATE")
+        calc_method = (
+            calc_rule.get("calc_method")
+            or _CALC_TYPE_MAP.get(calc_rule.get("calc_type", ""), "RATE")
+        )
         raw_amount = 0.0
         used_budget = 0.0
-        warnings: list[str] = list(benefit.get("ui_warnings") or [])
+        _cond_meta = benefit.get("conditional_metadata") or {}
+        warnings: list[str] = list(benefit.get("ui_warnings") or _cond_meta.get("warnings") or [])
 
         # 연간 한도 안분 시 투명성 메시지 추가
         if max_count_year < INF:
@@ -612,7 +641,7 @@ class BenefitCalculator:
             result["applied_benefits_trace"] = [
                 {
                     "benefit_id": r["benefit_id"],
-                    "content": r["content"],
+                    "content": r.get("content", ""),
                     "applied_budget": r["used_budget"],
                     "yielded_discount": r["amount_krw"],
                     "user_choice": True,

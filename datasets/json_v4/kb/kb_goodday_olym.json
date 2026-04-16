@@ -120,6 +120,7 @@
     },
     {
       "benefit_id": "B_MART_1",
+      "content": "대형마트 10% 청구할인",
       "group_id": "G_SHARED_LIMIT_1",
       "selective_choice": null,
       "category": "Shopping",
@@ -197,6 +198,7 @@
     },
     {
       "benefit_id": "B_TELECOM_1",
+      "content": "통신 10% 청구할인",
       "group_id": "G_SHARED_LIMIT_1",
       "selective_choice": null,
       "category": "Life",
@@ -274,6 +276,7 @@
     },
     {
       "benefit_id": "B_PUBLIC_1",
+      "content": "대중교통 10% 청구할인",
       "group_id": "G_SHARED_LIMIT_1",
       "selective_choice": null,
       "category": "Traffic",
@@ -351,6 +354,7 @@
     },
     {
       "benefit_id": "B_OVERSEA_1",
+      "content": "해외이용(해외직구) 5% 할인 캐시백",
       "group_id": "G_SHARED_LIMIT_1",
       "selective_choice": null,
       "category": "Travel",
@@ -428,6 +432,7 @@
     },
     {
       "benefit_id": "B_FOOD_1",
+      "content": "음식 10% 청구할인",
       "group_id": "G_SHARED_LIMIT_2",
       "selective_choice": null,
       "category": "Food",
@@ -497,6 +502,7 @@
     },
     {
       "benefit_id": "B_COFFEE_1",
+      "content": "커피전문점 10% 청구할인",
       "group_id": "G_SHARED_LIMIT_2",
       "selective_choice": null,
       "category": "Coffee",
@@ -564,6 +570,7 @@
     },
     {
       "benefit_id": "B_CONVENIENCE_1",
+      "content": "편의점 10% 청구할인",
       "group_id": "G_SHARED_LIMIT_2",
       "selective_choice": null,
       "category": "Shopping",
@@ -631,6 +638,7 @@
     },
     {
       "benefit_id": "B_PHARMACY_1",
+      "content": "약국 10% 청구할인",
       "group_id": "G_SHARED_LIMIT_2",
       "selective_choice": null,
       "category": "EduHealth",
@@ -698,6 +706,7 @@
     },
     {
       "benefit_id": "B_EDU_1",
+      "content": "학원 10% 청구할인",
       "group_id": "G_SHARED_LIMIT_2",
       "selective_choice": null,
       "category": "EduHealth",
@@ -759,6 +768,7 @@
     },
     {
       "benefit_id": "B_FITNESS_1",
+      "content": "피트니스 10% 청구할인",
       "group_id": "G_SHARED_LIMIT_2",
       "selective_choice": null,
       "category": "EduHealth",

@@ -51,6 +51,7 @@
   "benefits": [
     {
       "benefit_id": "B_BASIC_1_5",
+      "content": "전월 이용 금액 50만원 이상 시 국내외 가맹점 1.5% M포인트 적립",
       "group_id": null,
       "selective_choice": null,
       "category": "General",

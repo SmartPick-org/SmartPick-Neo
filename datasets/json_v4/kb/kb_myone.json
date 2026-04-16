@@ -103,6 +103,7 @@
     },
     {
       "benefit_id": "B_FAMILYRESTAURANT_001",
+      "content": "아웃백, VIPS, TGIF 청구할인",
       "group_id": "G_SHARED_A",
       "selective_choice": null,
       "category": "Food",
@@ -225,6 +226,7 @@
     },
     {
       "benefit_id": "B_TELECOM_001",
+      "content": "이동통신요금 자동이체 시 정액할인",
       "group_id": null,
       "selective_choice": null,
       "category": "Life",

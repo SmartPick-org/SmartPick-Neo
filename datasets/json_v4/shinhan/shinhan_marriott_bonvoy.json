@@ -344,6 +344,7 @@
     },
     {
       "benefit_id": "B_FREE_NIGHT_AWARD",
+      "content": "전세계 메리어트 참여 호텔 1박 무료 숙박권 (연 1회)",
       "group_id": null,
       "selective_choice": null,
       "category": "Travel",
@@ -571,6 +572,7 @@
     },
     {
       "benefit_id": "B_AIRPORT_LOUNGE",
+      "content": "공항 라운지 무료 이용 (연 4회)",
       "group_id": null,
       "selective_choice": null,
       "category": "Travel",

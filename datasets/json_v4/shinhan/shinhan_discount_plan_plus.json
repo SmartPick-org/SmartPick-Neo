@@ -62,6 +62,7 @@
   "benefits": [
     {
       "benefit_id": "B_TIME_PLAN_DAY_CAFE",
+      "content": "DAY(07~15시) 스타벅스, 투썸플레이스 등 카페 10% 할인",
       "group_id": "G_TIME_PLAN",
       "selective_choice": null,
       "category": "Coffee",
@@ -147,6 +148,7 @@
     },
     {
       "benefit_id": "B_TIME_PLAN_DAY_RESTAURANT",
+      "content": "DAY(07~15시) 음식점 10% 할인",
       "group_id": "G_TIME_PLAN",
       "selective_choice": null,
       "category": "Food",
@@ -232,6 +234,7 @@
     },
     {
       "benefit_id": "B_TIME_PLAN_NIGHT_CONVENIENCE",
+      "content": "NIGHT(18~22시) 편의점 10% 할인",
       "group_id": "G_TIME_PLAN",
       "selective_choice": null,
       "category": "Shopping",
@@ -317,6 +320,7 @@
     },
     {
       "benefit_id": "B_TIME_PLAN_NIGHT_DELIVERY",
+      "content": "NIGHT(18~22시) 배달앱 10% 할인",
       "group_id": "G_TIME_PLAN",
       "selective_choice": null,
       "category": "Food",
@@ -742,6 +746,7 @@
     },
     {
       "benefit_id": "B_MONTHLY_PLAN_MEMBERSHIP",
+      "content": "매월 1일 Time Plan, Daily Plan 서비스 2배 할인",
       "group_id": "G_MONTHLY_PLAN",
       "selective_choice": null,
       "category": "General",
@@ -827,6 +832,7 @@
     },
     {
       "benefit_id": "B_MONTHLY_PLAN_FITNESS",
+      "content": "정기결제 5% 할인 - 피트니스",
       "group_id": "G_MONTHLY_PLAN",
       "selective_choice": null,
       "category": "EduHealth",
@@ -912,6 +918,7 @@
     },
     {
       "benefit_id": "B_MONTHLY_PLAN_MOVIE",
+      "content": "영화 예매 5천원 할인",
       "group_id": "G_MONTHLY_PLAN",
       "selective_choice": null,
       "category": "Cultural",
@@ -997,6 +1004,7 @@
     },
     {
       "benefit_id": "B_MONTHLY_REWARD",
+      "content": "Monthly 리워드 5천원 캐시백",
       "group_id": "G_MONTHLY_PLAN",
       "selective_choice": null,
       "category": "General",
@@ -1066,6 +1074,7 @@
     },
     {
       "benefit_id": "B_ANNUAL_PLAN_GROCERY",
+      "content": "장보기 3만원 캐시백",
       "group_id": "G_ANNUAL_PLAN",
       "selective_choice": null,
       "category": "Shopping",
@@ -1188,6 +1197,7 @@
     },
     {
       "benefit_id": "B_ANNUAL_PLAN_THEME_PARK",
+      "content": "에버랜드, 롯데월드 자유이용권 50% 할인",
       "group_id": "G_ANNUAL_PLAN",
       "selective_choice": null,
       "category": "Cultural",

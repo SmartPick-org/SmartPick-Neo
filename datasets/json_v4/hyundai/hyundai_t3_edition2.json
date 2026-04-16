@@ -184,6 +184,7 @@
     },
     {
       "benefit_id": "B_MILEAGE_BONUS",
+      "content": "연간 2,400만원 이상 이용 시 보너스 마일리지",
       "group_id": "G_MILEAGE_BONUS",
       "selective_choice": null,
       "category": "Travel",
@@ -236,6 +237,7 @@
     },
     {
       "benefit_id": "B_ROAMING",
+      "content": "모바일 해외데이터 로밍 1일 이용권",
       "group_id": "G_TRAVEL_SERVICES",
       "selective_choice": null,
       "category": "Travel",
@@ -342,6 +344,7 @@
     },
     {
       "benefit_id": "B_PRIORITY_PASS",
+      "content": "Priority Pass카드 회원 본인 제공",
       "group_id": "G_PRIORITY_PASS",
       "selective_choice": null,
       "category": "Travel",
@@ -404,6 +407,7 @@
     },
     {
       "benefit_id": "B_STARBUCKS",
+      "content": "커피전문점 건당 500원 할인",
       "group_id": "G_PLATINUM_SERVICES",
       "selective_choice": null,
       "category": "Coffee",
@@ -560,6 +564,7 @@
     },
     {
       "benefit_id": "B_PARKING",
+      "content": "서울 및 대도시 제휴 주차장 주말 무료 주차",
       "group_id": "G_PLATINUM_SERVICES",
       "selective_choice": null,
       "category": "Traffic",

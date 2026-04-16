@@ -52,6 +52,7 @@
   "benefits": [
     {
       "benefit_id": "B_DAILY_LIFE_DOMESTIC",
+      "content": "국내 건당 결제금액별 0.5~3% 포인트 적립",
       "group_id": "G_DAILY_LIFE",
       "selective_choice": null,
       "category": "General",
@@ -146,6 +147,7 @@
     },
     {
       "benefit_id": "B_DAILY_LIFE_OVERSEA",
+      "content": "해외 결제금액 1% 포인트 적립",
       "group_id": "G_DAILY_LIFE",
       "selective_choice": null,
       "category": "Travel",

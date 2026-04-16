@@ -34,6 +34,7 @@
   "benefits": [
     {
       "benefit_id": "B_GENERAL_1_5",
+      "content": "국내외 가맹점 1.5% M포인트 적립",
       "group_id": null,
       "selective_choice": null,
       "category": "General",
@@ -95,6 +96,7 @@
     },
     {
       "benefit_id": "B_TRAVEL_5",
+      "content": "여행, 해외 영역 5% M포인트 적립",
       "group_id": "G_SHARED_TRAVEL_OVERSEAS",
       "selective_choice": null,
       "category": "Travel",

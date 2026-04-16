@@ -214,6 +214,7 @@
     },
     {
       "benefit_id": "B_TODAY_5_CONVENIENCE",
+      "content": "편의점 5% 마이신한포인트 적립",
       "group_id": "G_TODAY_5",
       "selective_choice": null,
       "category": "Shopping",
@@ -288,6 +289,7 @@
     },
     {
       "benefit_id": "B_TODAY_5_ONLINE",
+      "content": "온라인쇼핑 5% 마이신한포인트 적립",
       "group_id": "G_TODAY_5",
       "selective_choice": null,
       "category": "Shopping",
@@ -436,6 +438,7 @@
     },
     {
       "benefit_id": "B_DAILY_5_TRAVEL",
+      "content": "여행 5% 마이신한포인트 적립",
       "group_id": "G_DAILY_5",
       "selective_choice": null,
       "category": "Travel",
@@ -510,6 +513,7 @@
     },
     {
       "benefit_id": "B_DAILY_5_FASHION",
+      "content": "온라인쇼핑 5% 마이신한포인트 적립",
       "group_id": "G_DAILY_5",
       "selective_choice": null,
       "category": "Shopping",
@@ -584,6 +588,7 @@
     },
     {
       "benefit_id": "B_PERIODIC_10_TELECOM",
+      "content": "통신 10% 마이신한포인트 적립",
       "group_id": "G_PERIODIC_20",
       "selective_choice": null,
       "category": "Life",
@@ -658,6 +663,7 @@
     },
     {
       "benefit_id": "B_PERIODIC_15_OTT",
+      "content": "OTT 15% 마이신한포인트 적립",
       "group_id": "G_PERIODIC_20",
       "selective_choice": null,
       "category": "Cultural",
@@ -732,6 +738,7 @@
     },
     {
       "benefit_id": "B_PERIODIC_20_MEMBERSHIP",
+      "content": "멤버십 20% 마이신한포인트 적립",
       "group_id": "G_PERIODIC_20",
       "selective_choice": null,
       "category": "General",
@@ -806,6 +813,7 @@
     },
     {
       "benefit_id": "B_BONUS_PLAN",
+      "content": "계획소비 500포인트 적립",
       "group_id": "G_BONUS",
       "selective_choice": null,
       "category": "General",
@@ -882,6 +890,7 @@
     },
     {
       "benefit_id": "B_BONUS_IMMEDIATE",
+      "content": "즉시결제 0.3% 마이신한포인트 적립",
       "group_id": "G_BONUS",
       "selective_choice": null,
       "category": "General",

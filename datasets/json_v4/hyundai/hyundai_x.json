@@ -47,6 +47,7 @@
   "benefits": [
     {
       "benefit_id": "B_1",
+      "content": "국내외 가맹점 1% 청구 할인",
       "group_id": null,
       "selective_choice": null,
       "category": "General",
@@ -109,6 +110,7 @@
     },
     {
       "benefit_id": "B_2",
+      "content": "연간 누적 이용 금액 500만원당 2만원 캐시백",
       "group_id": "G_ANNUAL_CASHBACK",
       "selective_choice": null,
       "category": "General",
@@ -162,6 +164,7 @@
     },
     {
       "benefit_id": "B_3",
+      "content": "인천국제공항 라운지/발레파킹 무료 이용",
       "group_id": "G_SHARED_1",
       "selective_choice": null,
       "category": "Travel",
@@ -227,6 +230,7 @@
     },
     {
       "benefit_id": "B_4",
+      "content": "인천국제공항 라운지/발레파킹 무료 이용",
       "group_id": "G_SHARED_1",
       "selective_choice": null,
       "category": "Travel",

@@ -65,6 +65,7 @@
   "benefits": [
     {
       "benefit_id": "B_FUEL_10",
+      "content": "GS칼텍스, SK에너지, S-OIL, 에이치디현대오일뱅크 중 선택한 1개 정유사 주유 이용금액 10% 할인",
       "group_id": "G_SHARED_FUEL",
       "selective_choice": null,
       "category": "Traffic",
@@ -135,6 +136,7 @@
     },
     {
       "benefit_id": "B_MAINTENANCE_10",
+      "content": "스피드메이트 이용금액 10% 할인",
       "group_id": "G_SHARED_VEHICLE",
       "selective_choice": null,
       "category": "Traffic",
@@ -206,6 +208,7 @@
     },
     {
       "benefit_id": "B_PARKING_10",
+      "content": "전국 모든 주차장 10% 할인",
       "group_id": "G_SHARED_VEHICLE",
       "selective_choice": null,
       "category": "Traffic",
@@ -275,6 +278,7 @@
     },
     {
       "benefit_id": "B_CONVENIENCE_5",
+      "content": "GS25, CU 5% 할인",
       "group_id": "G_SHARED_LIFE",
       "selective_choice": null,
       "category": "Shopping",
@@ -345,6 +349,7 @@
     },
     {
       "benefit_id": "B_COFFEE_5",
+      "content": "스타벅스, 이디야 5% 할인",
       "group_id": "G_SHARED_LIFE",
       "selective_choice": null,
       "category": "Coffee",
@@ -417,6 +422,7 @@
     },
     {
       "benefit_id": "B_TAXI_5",
+      "content": "택시 5% 할인",
       "group_id": "G_SHARED_LIFE",
       "selective_choice": null,
       "category": "Traffic",
@@ -486,6 +492,7 @@
     },
     {
       "benefit_id": "B_CINEMA_5000",
+      "content": "롯데시네마 일반관 5천원 할인",
       "group_id": null,
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",

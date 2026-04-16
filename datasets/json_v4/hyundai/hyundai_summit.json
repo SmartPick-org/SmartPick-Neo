@@ -55,6 +55,7 @@
   "benefits": [
     {
       "benefit_id": "B_MPOINT_1_5",
+      "content": "국내외 가맹점 1.5% M포인트 적립",
       "group_id": null,
       "selective_choice": null,
       "category": "General",
@@ -116,6 +117,7 @@
     },
     {
       "benefit_id": "B_MPOINT_5_EDU",
+      "content": "학원/유치원 업종 5% M포인트 적립",
       "group_id": "G_SHARED_EDU_HOSPITAL_TRAVEL_GOLF",
       "selective_choice": null,
       "category": "EduHealth",
@@ -177,6 +179,7 @@
     },
     {
       "benefit_id": "B_MPOINT_5_HOSPITAL",
+      "content": "병원/약국 업종 5% M포인트 적립",
       "group_id": "G_SHARED_EDU_HOSPITAL_TRAVEL_GOLF",
       "selective_choice": null,
       "category": "EduHealth",
@@ -238,6 +241,7 @@
     },
     {
       "benefit_id": "B_MPOINT_5_TRAVEL",
+      "content": "국내 항공사/여행사/특급호텔 업종 5% M포인트 적립",
       "group_id": "G_SHARED_EDU_HOSPITAL_TRAVEL_GOLF",
       "selective_choice": null,
       "category": "Travel",
@@ -299,6 +303,7 @@
     },
     {
       "benefit_id": "B_MPOINT_5_GOLF",
+      "content": "골프장/골프연습장 업종 5% M포인트 적립",
       "group_id": "G_SHARED_EDU_HOSPITAL_TRAVEL_GOLF",
       "selective_choice": null,
       "category": "Cultural",
@@ -360,6 +365,7 @@
     },
     {
       "benefit_id": "B_VOUCHER_150000",
+      "content": "쇼핑, 고메, 트래블 영역에서 사용 또는 M포인트로 교환 가능한 15만원권 바우처 제공(연 1회)",
       "group_id": null,
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
@@ -437,6 +443,7 @@
     },
     {
       "benefit_id": "B_MPOINT_200000",
+      "content": "20만 M포인트 교환(연 1회)",
       "group_id": null,
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",

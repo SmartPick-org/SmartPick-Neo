@@ -47,6 +47,7 @@
   "benefits": [
     {
       "benefit_id": "B_BASIC_REWARD",
+      "content": "일시불·할부 이용금액의 1% 적립",
       "group_id": "G_SHARED_LIMIT_1",
       "selective_choice": null,
       "category": "General",
@@ -99,6 +100,7 @@
     },
     {
       "benefit_id": "B_ADDITIONAL_REWARD",
+      "content": "일시불·할부 이용금액의 0.5% 추가적립 (전월 300만원 이상 이용 시)",
       "group_id": "G_SHARED_LIMIT_1",
       "selective_choice": null,
       "category": "General",
@@ -226,6 +228,7 @@
     },
     {
       "benefit_id": "B_BONUS_REWARD",
+      "content": "분기당 일시불·할부 이용금액 1천만원 이상 이용 시 보너스 포인트 25,000포인트 적립",
       "group_id": null,
       "selective_choice": null,
       "category": "General",

@@ -77,6 +77,7 @@
   "benefits": [
     {
       "benefit_id": "B_ONLINE_1",
+      "content": "온라인쇼핑 10% 할인 (전월 실적 40만원 이상 시 월 5천원/80만원 이상 시 월 8천원 한도)",
       "group_id": "G_SHARED_LIMIT_1",
       "selective_choice": null,
       "category": "Shopping",

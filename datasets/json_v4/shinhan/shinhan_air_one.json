@@ -59,6 +59,7 @@
   "benefits": [
     {
       "benefit_id": "B_AIR_ONE_BASE",
+      "content": "국내 일시불/할부, 해외 일시불 이용금액 1천원당 1마일리지 적립",
       "group_id": "G_AIR_ONE_BASE",
       "selective_choice": null,
       "category": "General",
@@ -111,6 +112,7 @@
     },
     {
       "benefit_id": "B_AIR_ONE_AIRPORT",
+      "content": "국내 항공/면세 업종 이용금액 1천원당 1마일리지 추가 적립 (월 2,000마일 한도)",
       "group_id": "G_AIR_ONE_AIRPORT",
       "selective_choice": null,
       "category": "Travel",
@@ -163,6 +165,7 @@
     },
     {
       "benefit_id": "B_AIR_ONE_DUTY_FREE",
+      "content": "신라면세점 온라인(모바일 앱/웹/홈페이지) 이용금액 1천원당 1마일리지 추가 적립 (한도 없음)",
       "group_id": "G_AIR_ONE_DUTY_FREE",
       "selective_choice": null,
       "category": "Shopping",

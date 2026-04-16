@@ -53,6 +53,7 @@
   "benefits": [
     {
       "benefit_id": "B_KB_PAY",
+      "content": "KB Pay 10% 할인 (건당 한도 2,500원, 월 할인한도 5,000원)",
       "group_id": null,
       "selective_choice": null,
       "category": "General",
@@ -157,6 +158,7 @@
     },
     {
       "benefit_id": "B_TELECOM",
+      "content": "이동통신요금 (SKT/KT/LG U+/Liiv M) 10% 할인 (건당 한도 2,500원, 월 할인한도 5,000원)",
       "group_id": "G_COMMUNICATION_OTT",
       "selective_choice": null,
       "category": "Life",
@@ -209,6 +211,7 @@
     },
     {
       "benefit_id": "B_OTT",
+      "content": "OTT (넷플릭스/유튜브/웨이브/티빙/디즈니) 30% 할인 (건당 한도 2,500원, 월 할인한도 5,000원)",
       "group_id": "G_COMMUNICATION_OTT",
       "selective_choice": null,
       "category": "Cultural",
@@ -261,6 +264,7 @@
     },
     {
       "benefit_id": "B_DELIVERY_COFFEE",
+      "content": "베달(배민/요기요/마켓컬리) 5% 할인 (월 할인한도 5,000원)",
       "group_id": null,
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
@@ -317,6 +321,7 @@
     },
     {
       "benefit_id": "B_TAXI_COFFEE_MOVIE",
+      "content": "택시 5% 할인 (월 할인한도 5,000원)",
       "group_id": null,
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
@@ -373,6 +378,7 @@
     },
     {
       "benefit_id": "B_MOVIE",
+      "content": "영화(CGV/롯데시네마/메가박스) 30% 할인 (월 할인한도 5,000원, 연 4회/연 2만원 한도)",
       "group_id": null,
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
@@ -429,6 +435,7 @@
     },
     {
       "benefit_id": "B_BEAUTY_SPORT_BOOK",
+      "content": "미용실 5% 할인 (월 할인한도 10,000원)",
       "group_id": null,
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",

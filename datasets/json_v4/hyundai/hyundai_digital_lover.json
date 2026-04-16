@@ -45,6 +45,7 @@
   "benefits": [
     {
       "benefit_id": "B_STREAMING_1",
+      "content": "넷플릭스, 유튜브 프리미엄, 멜론, 지니, 디즈니+ 중 택 1 서비스 이용 요금 청구 할인",
       "group_id": "G_STREAMING",
       "selective_choice": null,
       "category": "Cultural",

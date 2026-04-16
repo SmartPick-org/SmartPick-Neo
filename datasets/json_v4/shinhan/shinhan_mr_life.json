@@ -46,6 +46,7 @@
   "benefits": [
     {
       "benefit_id": "B_MONTHLY_BILL_10",
+      "content": "전기요금, 도시가스요금 10% 할인",
       "group_id": "G_MONTHLY_BILL",
       "selective_choice": null,
       "category": "Life",
@@ -123,6 +124,7 @@
     },
     {
       "benefit_id": "B_MONTHLY_BILL_10_TELCO",
+      "content": "통신요금 10% 할인",
       "group_id": "G_MONTHLY_BILL",
       "selective_choice": null,
       "category": "Life",
@@ -200,6 +202,7 @@
     },
     {
       "benefit_id": "B_WEEKEND_MART_10",
+      "content": "3대 할인마트 10% 할인",
       "group_id": "G_WEEKEND_DISCOUNT",
       "selective_choice": null,
       "category": "Shopping",
@@ -362,6 +365,7 @@
     },
     {
       "benefit_id": "B_TIME_ALL_DAY_10",
+      "content": "편의점 10% 할인",
       "group_id": "G_TIME_DISCOUNT",
       "selective_choice": null,
       "category": "Shopping",
@@ -439,6 +443,7 @@
     },
     {
       "benefit_id": "B_TIME_ALL_DAY_10_HOSPITAL",
+      "content": "병원 10% 할인",
       "group_id": "G_TIME_DISCOUNT",
       "selective_choice": null,
       "category": "EduHealth",
@@ -517,6 +522,7 @@
     },
     {
       "benefit_id": "B_TIME_ALL_DAY_10_LAUNDRY",
+      "content": "세탁비 10% 할인",
       "group_id": "G_TIME_DISCOUNT",
       "selective_choice": null,
       "category": "Life",
@@ -594,6 +600,7 @@
     },
     {
       "benefit_id": "B_TIME_NIGHT_10_ONLINE",
+      "content": "온라인 쇼핑 10% 할인",
       "group_id": "G_TIME_DISCOUNT",
       "selective_choice": null,
       "category": "Shopping",
@@ -671,6 +678,7 @@
     },
     {
       "benefit_id": "B_TIME_NIGHT_10_TAXI",
+      "content": "택시 10% 할인",
       "group_id": "G_TIME_DISCOUNT",
       "selective_choice": null,
       "category": "Traffic",
@@ -749,6 +757,7 @@
     },
     {
       "benefit_id": "B_TIME_NIGHT_10_FOOD",
+      "content": "식음료 10% 할인",
       "group_id": "G_TIME_DISCOUNT",
       "selective_choice": null,
       "category": "Food",
@@ -826,6 +835,7 @@
     },
     {
       "benefit_id": "B_INTAKE_20",
+      "content": "인테이크몰 20% 할인",
       "group_id": null,
       "selective_choice": null,
       "category": "General",

@@ -141,6 +141,7 @@
     },
     {
       "benefit_id": "B_EASY_DELIVERY",
+      "content": "배달앱(배달의민족, 마켓컬리) 5% 포인트리 적립",
       "group_id": null,
       "selective_choice": null,
       "category": "Food",
@@ -210,6 +211,7 @@
     },
     {
       "benefit_id": "B_EASY_MART",
+      "content": "대형마트(이마트, 롯데마트, 홈플러스) 5% 포인트리 적립",
       "group_id": null,
       "selective_choice": null,
       "category": "Shopping",
@@ -279,6 +281,7 @@
     },
     {
       "benefit_id": "B_EASY_FUEL",
+      "content": "주유소/충전소(국내 SK, GS주유소) 5% 포인트리 적립",
       "group_id": null,
       "selective_choice": null,
       "category": "Traffic",
@@ -421,6 +424,7 @@
     },
     {
       "benefit_id": "B_BASIC_TRANSPORT",
+      "content": "대중교통(버스/지하철, 택시) 5% 포인트리 적립",
       "group_id": "G_SHARED_BASIC",
       "selective_choice": null,
       "category": "Traffic",
@@ -490,6 +494,7 @@
     },
     {
       "benefit_id": "B_BASIC_TELECOM",
+      "content": "이동통신(SKT, KT, LG U+) 요금 자동이체 5% 포인트리 적립",
       "group_id": "G_SHARED_BASIC",
       "selective_choice": null,
       "category": "Life",

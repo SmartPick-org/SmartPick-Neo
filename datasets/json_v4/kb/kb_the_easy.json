@@ -102,6 +102,7 @@
     },
     {
       "benefit_id": "B_002",
+      "content": "대형마트 3% 추가 적립",
       "group_id": "G_AUTO_TOP_N_1",
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
@@ -175,6 +176,7 @@
     },
     {
       "benefit_id": "B_003",
+      "content": "편의점 3% 추가 적립",
       "group_id": "G_AUTO_TOP_N_1",
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
@@ -248,6 +250,7 @@
     },
     {
       "benefit_id": "B_004",
+      "content": "커피 3% 추가 적립",
       "group_id": "G_AUTO_TOP_N_1",
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
@@ -321,6 +324,7 @@
     },
     {
       "benefit_id": "B_005",
+      "content": "주유 3% 추가 적립",
       "group_id": "G_AUTO_TOP_N_1",
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
@@ -394,6 +398,7 @@
     },
     {
       "benefit_id": "B_006",
+      "content": "미용 3% 추가 적립",
       "group_id": "G_AUTO_TOP_N_1",
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
@@ -540,6 +545,7 @@
     },
     {
       "benefit_id": "B_008",
+      "content": "학원 3% 추가 적립",
       "group_id": "G_AUTO_TOP_N_1",
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
@@ -613,6 +619,7 @@
     },
     {
       "benefit_id": "B_009",
+      "content": "대형마트 5% 추가 할인",
       "group_id": "G_AUTO_TOP_N_1",
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
@@ -686,6 +693,7 @@
     },
     {
       "benefit_id": "B_010",
+      "content": "편의점 5% 추가 할인",
       "group_id": "G_AUTO_TOP_N_1",
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
@@ -759,6 +767,7 @@
     },
     {
       "benefit_id": "B_011",
+      "content": "커피 5% 추가 할인",
       "group_id": "G_AUTO_TOP_N_1",
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
@@ -832,6 +841,7 @@
     },
     {
       "benefit_id": "B_012",
+      "content": "주유 5% 추가 할인",
       "group_id": "G_AUTO_TOP_N_1",
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
@@ -905,6 +915,7 @@
     },
     {
       "benefit_id": "B_013",
+      "content": "미용 5% 추가 할인",
       "group_id": "G_AUTO_TOP_N_1",
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
@@ -1051,6 +1062,7 @@
     },
     {
       "benefit_id": "B_015",
+      "content": "학원 5% 추가 할인",
       "group_id": "G_AUTO_TOP_N_1",
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",

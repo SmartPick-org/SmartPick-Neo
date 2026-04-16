@@ -56,6 +56,7 @@
   "benefits": [
     {
       "benefit_id": "B_TAX_7000",
+      "content": "국세/지방세 7천원 환급할인",
       "group_id": "G_SHARED_LIMIT",
       "selective_choice": {
         "description": null,
@@ -122,6 +123,7 @@
     },
     {
       "benefit_id": "B_INSURANCE_2000",
+      "content": "보험료 2천원 환급할인",
       "group_id": "G_SHARED_LIMIT",
       "selective_choice": {
         "description": null,
@@ -188,6 +190,7 @@
     },
     {
       "benefit_id": "B_TELECOM_1000",
+      "content": "이동통신요금 자동이체 시 1천원 환급할인",
       "group_id": "G_SHARED_LIMIT",
       "selective_choice": {
         "description": null,
@@ -255,6 +258,7 @@
     },
     {
       "benefit_id": "B_PUBLIC_5PERCENT",
+      "content": "후불교통(시내버스, 지하철) 5% 청구할인",
       "group_id": "G_SHARED_LIMIT",
       "selective_choice": null,
       "category": "Traffic",
@@ -396,6 +400,7 @@
     },
     {
       "benefit_id": "B_EVERLAND_50PERCENT",
+      "content": "에버랜드 50% 환급할인",
       "group_id": "G_SHARED_LIMIT",
       "selective_choice": null,
       "category": "Cultural",
@@ -459,6 +464,7 @@
     },
     {
       "benefit_id": "B_OUTBACK_10PERCENT",
+      "content": "아웃백 10% 환급할인",
       "group_id": "G_SHARED_LIMIT",
       "selective_choice": null,
       "category": "Food",
@@ -522,6 +528,7 @@
     },
     {
       "benefit_id": "B_DEPT_5PERCENT",
+      "content": "롯데,신세계, 현대백화점 5% 환급할인",
       "group_id": "G_SHARED_LIMIT",
       "selective_choice": null,
       "category": "Shopping",
@@ -585,6 +592,7 @@
     },
     {
       "benefit_id": "B_SK_RENTAL",
+      "content": "SK렌터카 할인(연 2회)",
       "group_id": null,
       "selective_choice": null,
       "category": "Travel",
@@ -690,6 +698,7 @@
     },
     {
       "benefit_id": "B_HAPPY_POINT",
+      "content": "해피포인트 5% 현장적립",
       "group_id": null,
       "selective_choice": null,
       "category": "General",

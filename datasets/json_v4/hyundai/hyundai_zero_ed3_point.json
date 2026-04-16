@@ -35,6 +35,7 @@
   "benefits": [
     {
       "benefit_id": "B_GENERAL_ACCUMULATION",
+      "content": "국내외 가맹점 이용 금액의 1.2% M포인트 적립",
       "group_id": "G_GENERAL_ACCUMULATION",
       "selective_choice": null,
       "category": "General",

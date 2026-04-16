@@ -50,6 +50,7 @@
   "benefits": [
     {
       "benefit_id": "B_DAILY_LIFE_01",
+      "content": "국내 건당 결제금액별 0.7~3% 마이신한포인트 적립",
       "group_id": "G_DAILY_LIFE",
       "selective_choice": null,
       "category": "General",
@@ -125,6 +126,7 @@
     },
     {
       "benefit_id": "B_DAILY_LIFE_02",
+      "content": "국내 건당 결제금액별 0.7~3% 마이신한포인트 적립",
       "group_id": "G_DAILY_LIFE",
       "selective_choice": null,
       "category": "General",
@@ -200,6 +202,7 @@
     },
     {
       "benefit_id": "B_DAILY_LIFE_03",
+      "content": "국내 건당 결제금액별 0.7~3% 마이신한포인트 적립",
       "group_id": "G_DAILY_LIFE",
       "selective_choice": null,
       "category": "General",
@@ -275,6 +278,7 @@
     },
     {
       "benefit_id": "B_DAILY_LIFE_04",
+      "content": "국내 건당 결제금액별 0.7~3% 마이신한포인트 적립",
       "group_id": "G_DAILY_LIFE",
       "selective_choice": null,
       "category": "General",
@@ -350,6 +354,7 @@
     },
     {
       "benefit_id": "B_DAILY_LIFE_05",
+      "content": "국내 건당 결제금액별 0.7~3% 마이신한포인트 적립",
       "group_id": "G_DAILY_LIFE",
       "selective_choice": null,
       "category": "General",
@@ -425,6 +430,7 @@
     },
     {
       "benefit_id": "B_ESSENTIAL_LIFE_01",
+      "content": "주말(토/일) 음식점/배달앱 건당 2만원 이상 결제 시 1천 마이신한포인트 적립",
       "group_id": "G_ESSENTIAL_LIFE",
       "selective_choice": null,
       "category": "Food",
@@ -495,6 +501,7 @@
     },
     {
       "benefit_id": "B_ESSENTIAL_LIFE_02",
+      "content": "도시가스/전기요금, 이동통신요금 자동납부 시 2만원당 1천 마이신한포인트 적립",
       "group_id": "G_ESSENTIAL_LIFE",
       "selective_choice": null,
       "category": "Life",
@@ -555,6 +562,7 @@
     },
     {
       "benefit_id": "B_ESSENTIAL_LIFE_03",
+      "content": "도시가스/전기요금, 이동통신요금 자동납부 시 2만원당 1천 마이신한포인트 적립",
       "group_id": "G_ESSENTIAL_LIFE",
       "selective_choice": null,
       "category": "Life",
@@ -615,6 +623,7 @@
     },
     {
       "benefit_id": "B_OTT_01",
+      "content": "OTT 7천원 이상 자동납부 시 최대 2천 마이신한포인트 적립",
       "group_id": "G_OTT",
       "selective_choice": null,
       "category": "Cultural",

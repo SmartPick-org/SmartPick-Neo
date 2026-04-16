@@ -220,6 +220,7 @@
     },
     {
       "benefit_id": "B_DAILY_5_CONVENIENCE",
+      "content": "편의점 5% 적립",
       "group_id": "G_DAILY_5",
       "selective_choice": null,
       "category": "Shopping",
@@ -273,6 +274,7 @@
     },
     {
       "benefit_id": "B_DAILY_5_FASTFOOD",
+      "content": "패스트푸드 5% 적립",
       "group_id": "G_DAILY_5",
       "selective_choice": null,
       "category": "Food",
@@ -322,6 +324,7 @@
     },
     {
       "benefit_id": "B_DAILY_5_CAFE",
+      "content": "카페 5% 적립",
       "group_id": "G_DAILY_5",
       "selective_choice": null,
       "category": "Coffee",
@@ -524,6 +527,7 @@
     },
     {
       "benefit_id": "B_LIFE_PHOTO",
+      "content": "사진관 1,000포인트 적립",
       "group_id": "G_PHOTO",
       "selective_choice": null,
       "category": "Cultural",
@@ -573,6 +577,7 @@
     },
     {
       "benefit_id": "B_LIFE_SHOPPING",
+      "content": "지그재그, 에이블리, 무신사/29CM(온라인) 3,000포인트 적립",
       "group_id": "G_SHOPPING",
       "selective_choice": null,
       "category": "Shopping",

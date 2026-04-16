@@ -42,6 +42,7 @@
   "benefits": [
     {
       "benefit_id": "B_STARBUCKS_50",
+      "content": "스타벅스 청구할인 50% (월 1만원 한도)",
       "group_id": null,
       "selective_choice": null,
       "category": "Coffee",
@@ -94,6 +95,7 @@
     },
     {
       "benefit_id": "B_FASTFOOD_20",
+      "content": "버거/패스트푸드 업종 청구할인 20% (월 5천원 한도)",
       "group_id": null,
       "selective_choice": null,
       "category": "Food",
@@ -146,6 +148,7 @@
     },
     {
       "benefit_id": "B_PAY_10",
+      "content": "간편결제(Pay) 청구할인 10% (월 5천원 한도)",
       "group_id": "G_SELECTIVE_PAY",
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
@@ -202,6 +205,7 @@
     },
     {
       "benefit_id": "B_TRANSIT_10",
+      "content": "대중교통 청구할인 10% (월 5천원 한도)",
       "group_id": "G_SHARED_TRAFFIC_COMM",
       "selective_choice": null,
       "category": "Traffic",
@@ -304,6 +308,7 @@
     },
     {
       "benefit_id": "B_TELECOM_10",
+      "content": "이동통신요금 청구할인 10% (월 5천원 한도)",
       "group_id": "G_SHARED_TRAFFIC_COMM",
       "selective_choice": null,
       "category": "Life",

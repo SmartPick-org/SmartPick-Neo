@@ -31,6 +31,7 @@
   "benefits": [
     {
       "benefit_id": "B_1_5P",
+      "content": "전월 이용 금액 50만원 이상 시 1.5% M포인트 적립",
       "group_id": null,
       "selective_choice": null,
       "category": "General",
@@ -92,6 +93,7 @@
     },
     {
       "benefit_id": "B_5P_ONLINE",
+      "content": "온라인 쇼핑몰(네이버쇼핑, 쿠팡, G마켓, 옥션, 11번가, SSG.COM, 컬리) 5% M포인트 적립",
       "group_id": "G_SHARED_5P",
       "selective_choice": null,
       "category": "Shopping",
@@ -157,6 +159,7 @@
     },
     {
       "benefit_id": "B_5P_FOOD",
+      "content": "일반음식점 5% M포인트 적립",
       "group_id": "G_SHARED_5P",
       "selective_choice": null,
       "category": "Food",
@@ -221,6 +224,7 @@
     },
     {
       "benefit_id": "B_5P_OVERSEAS",
+      "content": "해외 가맹점 5% M포인트 적립",
       "group_id": "G_SHARED_5P",
       "selective_choice": null,
       "category": "Travel",

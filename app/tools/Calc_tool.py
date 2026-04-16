@@ -16,14 +16,6 @@ DEFAULT_FUEL_PRICE_PER_LITER = 1_600
 DAYS_PER_MONTH = 30
 INF = float("inf")
 
-# 새 Calculator_Schema 포맷의 calc_type 값을 기존 calc_method 값으로 매핑
-_CALC_TYPE_MAP = {
-    "PERCENTAGE": "RATE",
-    "FLAT_RATE": "FIXED_AMOUNT",
-    "UNIT_BASED": "PER_UNIT",
-    "FULL_COVER": "MAX_COVER_UP_TO_LIMIT",
-}
-
 def _pick(tier: dict | None, keys: str | list[str], fallback=None):
     """Tier 조건에 해당 필드가 있으면 반환, 없으면 기본값(fallback) 반환."""
     if tier is not None:
@@ -34,7 +26,6 @@ def _pick(tier: dict | None, keys: str | list[str], fallback=None):
             if val is not None:
                 return val
     return fallback
-
 
 def _effective_days(day_of_week: list[str] | None) -> float:
     """요일 제한이 있을 시 월간 유효 일수 계산."""
@@ -50,44 +41,7 @@ class BenefitCalculator:
         self.meta = card_data.get("card_meta", {})
         self.groups = {g["group_id"]: g for g in card_data.get("benefit_groups", [])}
         self.benefits = card_data.get("benefits", [])
-        self._perf_excluded_cats: set[str] = set(
-            self.meta.get("performance_excluded_categories") or []
-        )
 
-    # -----------------------------------------------------------------
-    # 1. 전월 실적(Performance) 보정
-    # -----------------------------------------------------------------
-    def _adjusted_performance(
-        self, user_budgets: dict, user_total_spend: int
-    ) -> int:
-        """카드 메타 및 혜택별 실적 제외 로직을 반영한 보정 실적."""
-        adjusted = user_total_spend
-
-        def _get_total(cat_name):
-            val = user_budgets.get(cat_name, 0)
-            return val.get("total", 0) if isinstance(val, dict) else val
-
-        # card_meta 레벨 제외 (예: Fuel)
-        for cat in self._perf_excluded_cats:
-            adjusted -= _get_total(cat)
-
-        # benefit 레벨 제외 (excludes_from_performance / category_excludes_from_performance)
-        already_excluded = set(self._perf_excluded_cats)
-        for b in self.benefits:
-            flags = b.get("edge_case_flags") or {}
-            cat = b.get("category")
-            if cat and cat not in already_excluded:
-                if flags.get("excludes_from_performance") or flags.get(
-                    "category_excludes_from_performance"
-                ):
-                    adjusted -= _get_total(cat)
-                    already_excluded.add(cat)
-
-        return max(adjusted, 0)
-
-    # -----------------------------------------------------------------
-    # 2. Tier 매칭 (전월 실적 구간)
-    # -----------------------------------------------------------------
     @staticmethod
     def _find_best_tier(tier_conditions: list[dict], performance: float) -> dict | None:
         """전월 실적에 부합하는 가장 높은 티어 조건을 선별."""
@@ -103,130 +57,68 @@ class BenefitCalculator:
         [1. 혜택 유형별 공식] 적용.
         개별 혜택에 대해 주어진 예산으로 산출 가능한 이론상 최대 금액을 반환.
         """
-        calc_rule = benefit.get("calculation_rule") or {}
-        trans_cond = benefit.get("transaction_conditions") or {}
-        tier_conditions = benefit.get("tier_conditions") or []
-        edge_flags = benefit.get("edge_case_flags") or {}
-        reward_unit = benefit.get("reward_unit") or {}
-        freq = benefit.get("frequency", "MONTHLY")
+        rule = benefit.get("calculation_rule", {})
+        cond = benefit.get("transaction_conditions", {})
+        tiers = benefit.get("tier_conditions", [])
+        reward_unit = benefit.get("reward_unit", {})
+        
+        # 1. 티어 결정 및 변수 확정 (Override)
+        tier = self._find_best_tier(tiers, performance)
+        
+        rate = _pick(tier, "benefit_rate", rule.get("benefit_rate")) or 0.0
+        flat = _pick(tier, "flat_discount", rule.get("flat_discount")) or 0
+        unit_amount = _pick(tier, "discount_per_unit", rule.get("discount_per_unit")) or 0
+        limit = _pick(tier, "monthly_benefit_limit", rule.get("monthly_benefit_limit")) or INF
+        fallback_rate = rule.get("fallback_rate") or 0.0
+        conv_rate = reward_unit.get("currency_to_krw_rate", 1.0)
 
-        conversion_rate = reward_unit.get("currency_to_krw_rate", 1.0)
-        # 현금 할인(DISCOUNT)은 이미 KRW 기반이므로 환산 적용 제외 (긴급 수정)
-        if benefit.get("reward_type") == "DISCOUNT":
-            conversion_rate = 1.0
-
-        # --- Tier 결정 ---
-        perf_for_tier = performance
-        if edge_flags.get("current_month_performance", False):
-            perf_for_tier = user_total_spend  # 당월 기준 → 총 소비액 대체
-
-        tier = self._find_best_tier(tier_conditions, perf_for_tier)
-
-        # --- 변수 확정 (tier 우선 → calc_rule fallback) ---
-        # reward_rate -> rate로 일원화하되 하이브리드 지원
-        rate = _pick(tier, ["rate", "reward_rate"], calc_rule.get("rate")) or 0.0
-        fixed_amount = _pick(tier, "fixed_amount", calc_rule.get("fixed_amount")) or 0
-        unit_amount = _pick(tier, "unit_amount", calc_rule.get("unit_amount")) or 0
-        monthly_limit = (
-            _pick(tier, "monthly_limit", calc_rule.get("monthly_limit")) or INF
-        )
-        monthly_usage_limit = (
-            _pick(tier, "monthly_usage_limit", calc_rule.get("monthly_usage_limit"))
-            or INF
-        )
-        fallback_rate = calc_rule.get("fallback_reward_rate") or 0.0
-
-        # --- Transaction conditions ---
-        min_payment = trans_cond.get("min_payment_amount") or 0
-        max_payment_applied = trans_cond.get("max_payment_amount_applied") or INF
-        max_count_day = trans_cond.get("max_count_per_day") or INF
-        max_count_month = trans_cond.get("max_count_per_month") or INF
-        max_count_year = trans_cond.get("max_count_per_year") or INF
-        day_of_week = trans_cond.get("day_of_week")
+        # Transaction 제약
+        min_pay = cond.get("min_payment_amount") or 0
+        max_spend_tx = cond.get("max_tx_spend_allowed") or INF
+        max_cnt_month = cond.get("max_count_per_month") or INF
+        max_cnt_year = cond.get("max_count_per_year") or INF
+        day_of_week = cond.get("day_of_week")
 
         # 연간 한도/횟수 월간 안분
         if max_cnt_year < INF:
             max_cnt_month = min(max_cnt_month, max_cnt_year / 12.0)
         
         eff_days = _effective_days(day_of_week)
-        
-        # 연간 한도가 있을 경우 월간 평균으로 안분(Amortization)
-        if max_count_year < INF:
-            amortized_count_month = max_count_year / 12.0
-            max_count_month = min(max_count_month, amortized_count_month)
+        max_monthly_txns = min(max_cnt_month, (cond.get("max_count_per_day") or INF) * (eff_days / DAYS_PER_MONTH * 30))
 
-        max_monthly_txns = min(max_count_month, max_count_day * eff_days)
-
-        # Platform bonus (추가 적립률)
-        platform_bonus = edge_flags.get("payment_platform_bonus") or {}
-        add_rate = platform_bonus.get("additional_rate") or 0.0
-
-        # --- Effective budget ---
-        eff_budget = min(budget, monthly_usage_limit)
-
-        if eff_budget < min_payment and freq not in ("ANNUAL", "ONCE", "QUARTERLY"):
-            return self._empty_record(benefit)
-
-        # --- 계산 ---
-        calc_method = calc_rule.get("calc_method", "RATE")
-        raw_amount = 0.0
+        # 2. 공식 적용
+        reward_type = benefit.get("reward_type", "DIRECT_FINANCIAL")
+        calc_type = rule.get("calc_type", "PERCENTAGE")
+        raw_benefit = 0.0
         used_budget = 0.0
-        warnings: list[str] = list(benefit.get("ui_warnings") or [])
+        
+        if reward_type == "INDIRECT":
+            # [바우처/간접 혜택] 액면가 기반 계산
+            ind_meta = benefit.get("indirect_benefit_metadata", {})
+            v_val = ind_meta.get("voucher_value") or 0
+            
+            # 바우처는 보통 실적 충족 시 1회성으로 제공되므로, 
+            # 횟수 제한(월간 안분됨)을 곱하여 월평균 가치 도출
+            raw_benefit = v_val * min(max_monthly_txns, 1.0)
+            used_budget = 0 # 바우처는 보통 카테고리 예산을 소진하지 않음
+            
+        else:
+            # [직접 할인/적립]
+            if calc_type == "PERCENTAGE":
+                # 1-1 공식: min(spend, max_spend_per_tx * count) * rate
+                cap_spend = max_spend_tx * max_monthly_txns
+                eff_spend = min(budget, cap_spend)
+                raw_benefit = eff_spend * rate
+                used_budget = eff_spend
+                
+                # 1-4 Fallback 공식 연동
+                if budget > cap_spend and fallback_rate > 0:
+                    raw_benefit += (budget - cap_spend) * fallback_rate
 
-        # 연간 한도 안분 시 투명성 메시지 추가
-        if max_count_year < INF:
-            limit_val = int(max_count_year) if max_count_year == int(max_count_year) else max_count_year
-            warnings.append(f"연간 {limit_val}회 제한 (월간 {limit_val/12:.2f}회로 안분 계산됨)")
-
-        if calc_method == "RATE":
-            total_rate = rate + add_rate
-            cap = max_payment_applied * max_monthly_txns
-            eff = min(eff_budget, cap)
-            raw_amount = eff * total_rate
-            used_budget = eff
-
-        elif calc_method == "FIXED_AMOUNT":
-            if max_monthly_txns >= INF and max_count_month >= INF:
-                # 월 1회 정액 (횟수 제한 없음 = 월 정액)
-                raw_amount = fixed_amount
-            else:
-                possible = (
-                    eff_budget // max(min_payment, 1)
-                    if min_payment > 0
-                    else max_monthly_txns
-                )
-                count = min(max_monthly_txns, possible)
-                raw_amount = fixed_amount * count
-            used_budget = eff_budget
-
-        elif calc_method == "PER_UNIT":
-            label = calc_rule.get("unit_label", "")
-            if label == "liter":
-                liters = eff_budget / DEFAULT_FUEL_PRICE_PER_LITER
-                raw_amount = liters * unit_amount
-                warnings.append(
-                    f"주유 할인은 기준유가 {DEFAULT_FUEL_PRICE_PER_LITER:,}원/L 기반 추정치입니다"
-                )
-            elif label == "transaction":
-                possible = (
-                    eff_budget // max(min_payment, 1)
-                    if min_payment > 0
-                    else max_monthly_txns
-                )
-                count = min(max_monthly_txns, possible)
-                raw_amount = unit_amount * count
-            else:
-                raw_amount = unit_amount
-            used_budget = eff_budget
-
-        elif calc_method == "TIERED_RATE_BY_TRANSACTION":
-            txn_tiers = calc_rule.get("transaction_tiers") or []
-            if txn_tiers:
-                # 예산(eff_budget) 범위 내에서 달성 가능한 최적의 비율 선택
-                applicable = [t for t in txn_tiers if (t.get("min_amount") or 0) <= eff_budget]
-                if applicable:
-                    best = max(applicable, key=lambda t: t.get("rate", 0))
-                    raw_amount = eff_budget * (best["rate"] + add_rate)
+            elif calc_type == "FLAT_RATE":
+                # 1-2 공식: min(spend/min_pay, count) * flat
+                if budget < min_pay:
+                    raw_benefit = 0
                 else:
                     optimal_uses = budget // max(min_pay, 1)
                     count = min(optimal_uses, max_monthly_txns)
@@ -262,23 +154,12 @@ class BenefitCalculator:
             "category": benefit.get("category"),
             "sub_category": benefit.get("sub_category", "general"),
             "group_id": benefit.get("group_id"),
-            "warnings": warnings,
-        }
-
-    @staticmethod
-    def _empty_record(benefit: dict) -> dict:
-        return {
-            "benefit_id": benefit.get("benefit_id"),
-            "content": benefit.get("content", ""),
-            "category": benefit.get("category"),
-            "sub_category": benefit.get("sub_category"),
-            "frequency": benefit.get("frequency", "MONTHLY"),
-            "reward_type": benefit.get("reward_type"),
-            "raw_amount": 0,
-            "amount_krw": 0,
-            "used_budget": 0,
-            "group_id": benefit.get("group_id"),
-            "warnings": [],
+            "selective_group_id": (benefit.get("selective_choice") or {}).get("group_id"),
+            "choice_id": (benefit.get("selective_choice") or {}).get("choice_id"),
+            "yielded_discount": round(final_benefit * conv_rate),
+            "applied_budget": round(used_budget),
+            "tier_applied": tier.get("min_prev_performance") if tier else None,
+            "warnings": benefit.get("conditional_metadata", {}).get("warnings", [])
         }
 
     def _apply_complex_logic(self, results: list[dict], performance: float) -> list[dict]:
@@ -348,227 +229,89 @@ class BenefitCalculator:
             if total_g_benefit > g_limit:
                 ratio = g_limit / total_g_benefit
                 for r in items:
-                    if r["benefit_id"] not in selected_ids:
-                        r["amount_krw"] = 0
-                        r["warnings"].append(f"AUTO_TOP_{n} 미선택으로 제외됨")
-                # 선택된 항목에도 그룹 한도 적용
-                selected_total = sum(r["amount_krw"] for r in items)
-                if selected_total > g_limit and selected_total > 0:  # ZeroDivision 방어
-                    ratio = g_limit / selected_total
-                    for r in items:
-                        if r["amount_krw"] > 0:
-                            r["amount_krw"] = round(r["amount_krw"] * ratio)
+                    r["yielded_discount"] = round(r["yielded_discount"] * ratio)
 
-    # -----------------------------------------------------------------
-    # 6. 메인 산출 로직
-    # -----------------------------------------------------------------
-    def calculate(
-        self,
-        user_budgets: dict,
-        user_total_spend: int | None = None,
-    ) -> dict:
-        """
-        유저의 카테고리별 예산을 받아 해당 카드의 이론상 최대 할인 금액을 산출합니다.
+        return results
 
-        Args:
-            user_budgets: 카테고리 → 월 예산(원) 매핑 (또는 서브카테고리 비율 포함 dict).
-                          예: {"Coffee": {"total": 50000, "cafe": "75%", "bakery": "25%"}, "Traffic": 60000}
-            user_total_spend: 전체 월 소비액 (미입력 시 user_budgets 총합)
+    def calculate(self, user_budgets: dict, user_total_spend: int | None = None) -> dict:
+        """메인 계산 시퀀스."""
+        # 1. 실적 확정 (User 피드백 반영: 보정 없이 총 소비액을 실적으로 간주)
+        if user_total_spend is None:
+            user_total_spend = sum((v.get("total", 0) if isinstance(v, dict) else v) for v in user_budgets.values())
+        
+        performance = user_total_spend
+        min_perf = self.meta.get("minimum_performance", 0)
+        performance_met = performance >= min_perf
 
-        Returns:
-            dict: 카드별 카테고리 할인 내역, 월간/연간 합계 등
-        """
-        try:
-            # 입력값 스키마 최소 검증
-            if not isinstance(user_budgets, dict):
-                raise TypeError("user_budgets는 dict이어야 합니다.")
-            if user_total_spend is not None and not isinstance(user_total_spend, (int, float)):
-                raise TypeError("user_total_spend는 숫자여야 합니다.")
+        result = {
+            "card_name": self.meta.get("card_name"),
+            "card_id": self.meta.get("card_id"),
+            "performance_met": performance_met,
+            "monthly_total_krw": 0,
+            "category_breakdown": [],
+            "applied_benefits_trace": []
+        }
+        if not performance_met:
+            return result
 
-            for _, info in user_budgets.items():
-                if isinstance(info, dict):
-                    # 'total'은 (있는 경우) 숫자여야 합니다.
-                    total_val = info.get("total", 0)
-                    if not isinstance(total_val, (int, float)):
-                        raise TypeError("user_budgets의 sub-category dict에는 numeric total이 필요합니다.")
+        # 2. 개별 혜택 1차 계산
+        intermediate_results = []
+        for b in self.benefits:
+            cat = b.get("category")
+            sub_cat = b.get("sub_category", "general")
+            
+            # 소비 데이터에서 해당 카테고리/서브카테고리 예산 추출
+            cat_data = user_budgets.get(cat, 0)
+            if isinstance(cat_data, dict):
+                total_cat_budget = cat_data.get("total", 0)
+                if sub_cat == "general":
+                    budget = total_cat_budget
                 else:
-                    if not isinstance(info, (int, float)):
-                        raise TypeError("user_budgets 값은 숫자 또는 dict이어야 합니다.")
+                    ratio_str = str(cat_data.get(sub_cat, "0%")).replace("%", "")
+                    budget = total_cat_budget * (float(ratio_str) / 100.0)
+            else:
+                budget = float(cat_data)
+            
+            if budget <= 0: continue
+            
+            res = self._calc_single_benefit(b, budget, performance)
+            if res["yielded_discount"] > 0:
+                intermediate_results.append(res)
 
-            if user_total_spend is None:
-                user_total_spend = sum(
-                    (v.get("total", 0) if isinstance(v, dict) else v) for v in user_budgets.values()
-                )
+        # 3. 그룹 및 복합 로직 적용
+        final_results = self._apply_complex_logic(intermediate_results, performance)
 
-            # ── 전월 실적 보정 ──
-            performance = self._adjusted_performance(user_budgets, user_total_spend)
-            min_perf = self.meta.get("minimum_performance", 0)
-            performance_met = performance >= min_perf
+        # 4. 결과 집계
+        cat_agg = defaultdict(lambda: {"monthly_discount_krw": 0, "discount_info": defaultdict(int), "warnings": set()})
+        for r in final_results:
+            if r["yielded_discount"] <= 0: continue
+            
+            cat_agg[r["category"]]["monthly_discount_krw"] += r["yielded_discount"]
+            cat_agg[r["category"]]["discount_info"][r["sub_category"]] += r["yielded_discount"]
 
-            # 전월실적 채워드림 (performance_gap_forgiveness)
-            gap_applied = False
-            if not performance_met:
-                for b in self.benefits:
-                    fg = (b.get("edge_case_flags") or {}).get(
-                        "performance_gap_forgiveness"
-                    ) or {}
-                    if fg.get("enabled") and (min_perf - performance) <= (
-                        fg.get("max_gap_amount") or 0
-                    ):
-                        performance_met = True
-                        gap_applied = True
-                        break
+            # 혜택별 경고(warnings)가 있으면 카테고리 레벨로 수집
+            if r.get("warnings"):
+                cat_agg[r["category"]]["warnings"].update(r["warnings"])
+            
+            result["applied_benefits_trace"].append({
+                "benefit_id": r["benefit_id"],
+                "content": r["content"],
+                "applied_budget": r["applied_budget"],
+                "yielded_discount": r["yielded_discount"],
+                "user_choice": True,
+                "warnings": r.get("warnings", [])
+            })
 
-            result: dict = {
-                "card_name": self.meta.get("card_name"),
-                "card_id": self.meta.get("card_id"),
-                "performance_met": performance_met,
-                "adjusted_performance": performance,
-                "monthly_total_krw": 0,
-                "annual_total_krw": 0,
-                "category_breakdown": [],
-                "annual_breakdown": [],
-                "warnings": [],
-            }
+        for cat, data in cat_agg.items():
+            result["category_breakdown"].append({
+                "category": cat,
+                "monthly_discount_krw": data["monthly_discount_krw"],
+                "discount_info": dict(data["discount_info"]),
+                "warnings": sorted(list(data["warnings"]))
+            })
 
-            if gap_applied:
-                result["warnings"].append("전월실적 채워드림 적용 (연 횟수 제한 있음)")
-            if not performance_met:
-                result["warnings"].append(
-                    f"보정된 전월 실적({performance:,.0f}원)이 "
-                    f"최소 조건({min_perf:,.0f}원)에 미달합니다."
-                )
-                return result
-
-            # ── 혜택별 계산 (General을 마지막에 → Waterfall) ──
-            sorted_benefits = sorted(
-                self.benefits,
-                key=lambda x: (
-                    1 if x.get("category") == "General" else 0,
-                    x.get("benefit_id", ""),
-                ),
-            )
-
-            remaining_total = user_total_spend
-            monthly_results: list[dict] = []
-            quarterly_results: list[dict] = []
-            annual_freq_results: list[dict] = []
-
-            for b in sorted_benefits:
-                cat = b.get("category")
-                sub_cat = b.get("sub_category")
-                freq = b.get("frequency", "MONTHLY")
-
-                # 예산 결정
-                if cat == "General":
-                    budget = remaining_total
-                else:
-                    info = user_budgets.get(cat, 0)
-                    if isinstance(info, dict):
-                        total_cat_budget = info.get("total", 0)
-                        if sub_cat and sub_cat != "general":
-                            if sub_cat in info:
-                                ratio_val = info[sub_cat]
-                                ratio = float(str(ratio_val).replace("%", "")) / 100.0 if "%" in str(ratio_val) else float(ratio_val)
-                                budget = total_cat_budget * ratio
-                            else:
-                                budget = 0.0
-                        else:
-                            budget = float(total_cat_budget)
-                    else:
-                        budget = float(info)
-
-                if budget <= 0 and freq not in ("ANNUAL", "ONCE"):
-                    continue
-
-                calc_result = self._calc_benefit(b, budget, performance, user_total_spend)
-
-                if calc_result["amount_krw"] <= 0:
-                    continue
-
-                # Waterfall: 사용된 예산만큼 잔여 총액에서 차감
-                if cat != "General" and calc_result["used_budget"] > 0:
-                    remaining_total -= calc_result["used_budget"]
-                    remaining_total = max(remaining_total, 0)
-
-                if freq == "MONTHLY":
-                    monthly_results.append(calc_result)
-                elif freq == "QUARTERLY":
-                    quarterly_results.append(calc_result)
-                elif freq in ("ANNUAL", "ONCE"):
-                    annual_freq_results.append(calc_result)
-
-            # ── 그룹 한도 처리 ──
-            self._apply_group_limits(monthly_results)
-
-            # ── 카테고리별 합산 ──
-            cat_totals: dict[str, dict] = defaultdict(
-                lambda: {"monthly_discount_krw": 0, "discount_info": defaultdict(int), "warnings": set()}
-            )
-            for r in monthly_results:
-                cat = r["category"]
-                sub_cat = r.get("sub_category") or "general"
-
-                cat_totals[cat]["monthly_discount_krw"] += r["amount_krw"]
-                if r["amount_krw"] > 0:
-                    key = sub_cat
-                    cat_totals[cat]["discount_info"][key] += r["amount_krw"]
-                for w in r["warnings"]:
-                    cat_totals[cat]["warnings"].add(w)
-
-            for cat, data in cat_totals.items():
-                result["category_breakdown"].append(
-                    {
-                        "category": cat,
-                        "monthly_discount_krw": round(data["monthly_discount_krw"]),
-                        "discount_info": dict(data["discount_info"]),
-                        "warnings": list(data["warnings"]),
-                    }
-                )
-
-
-            # 유저가 선택한 카테고리 순서대로 정렬 (General 마지막)
-            result["category_breakdown"].sort(
-                key=lambda x: (x["category"] == "General", x["category"])
-            )
-
-            # 영수증(Trace) — 계산에 참여한 개별 혜택의 산출 근거 (슬림)
-            result["applied_benefits_trace"] = [
-                {
-                    "benefit_id": r["benefit_id"],
-                    "content": r["content"],
-                    "applied_budget": r["used_budget"],
-                    "yielded_discount": r["amount_krw"],
-                    "user_choice": True,
-                }
-                for r in monthly_results
-                if r["amount_krw"] > 0
-            ]
-
-            result["monthly_total_krw"] = round(
-                sum(r["amount_krw"] for r in monthly_results)
-            )
-
-            # ── 연간 혜택 합산 ──
-            quarterly_annual = sum(r["amount_krw"] * 4 for r in quarterly_results)
-            annual_freq_total = sum(r["amount_krw"] for r in annual_freq_results)
-            annual_specials = self._calc_annual_specials(user_total_spend)
-            annual_special_total = sum(a["amount_krw"] for a in annual_specials)
-
-            result["annual_total_krw"] = round(
-                annual_freq_total + quarterly_annual + annual_special_total
-            )
-            result["annual_breakdown"] = (
-                [
-                    {
-                        "category": r["category"],
-                        "amount_krw": r["amount_krw"],
-                        "frequency": r["frequency"],
-                    }
-                    for r in annual_freq_results + quarterly_results
-                ]
-                + annual_specials
-            )
+        result["monthly_total_krw"] = sum(r["yielded_discount"] for r in final_results)
+        result["annual_total_krw"] = result["monthly_total_krw"] * 12
 
         return result
 

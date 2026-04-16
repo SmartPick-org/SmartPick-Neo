@@ -50,6 +50,7 @@
   "benefits": [
     {
       "benefit_id": "B_001",
+      "content": "국내/외 전 가맹점 0.7% 포인트리 기본 적립",
       "group_id": null,
       "selective_choice": null,
       "category": "General",
@@ -472,6 +473,7 @@
     },
     {
       "benefit_id": "B_007",
+      "content": "선택 영역(11번가, 구글플레이, 통신 등) 3% 포인트리 추가 적립",
       "group_id": "G_AUTO_TOP_N_1",
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
@@ -989,6 +991,7 @@
     },
     {
       "benefit_id": "B_014",
+      "content": "이동통신요금 자동이체 시 추가 적립",
       "group_id": "G_AUTO_TOP_N_1",
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",

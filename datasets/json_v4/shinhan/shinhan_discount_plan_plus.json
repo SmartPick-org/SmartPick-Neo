@@ -406,6 +406,7 @@
     },
     {
       "benefit_id": "B_DAILY_PLAN_SHOPPING",
+      "content": "쇼핑 업종(백화점, 할인점 등) 이용 시 포인트 적립",
       "group_id": "G_DAILY_PLAN",
       "selective_choice": null,
       "category": "Shopping",
@@ -491,6 +492,7 @@
     },
     {
       "benefit_id": "B_DAILY_PLAN_MOVEMENT",
+      "content": "교통 업종(버스, 지하철, 택시) 이용 시 포인트 적립",
       "group_id": "G_DAILY_PLAN",
       "selective_choice": null,
       "category": "Traffic",
@@ -576,6 +578,7 @@
     },
     {
       "benefit_id": "B_DAILY_PLAN_LIFE",
+      "content": "생활 업종(편의점, 병원 등) 이용 시 포인트 적립",
       "group_id": "G_DAILY_PLAN",
       "selective_choice": null,
       "category": "Life",
@@ -1136,6 +1139,7 @@
     },
     {
       "benefit_id": "B_ANNUAL_PLAN_MAINTENANCE",
+      "content": "차량 정비/검사 서비스 할인 및 포인트 적립",
       "group_id": "G_ANNUAL_PLAN",
       "selective_choice": null,
       "category": "Traffic",

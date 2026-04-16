@@ -645,6 +645,7 @@
     },
     {
       "benefit_id": "B_AIRPORT_LOUNGE",
+      "content": "인천공항 라운지 무료 이용 (연 2회)",
       "group_id": null,
       "selective_choice": null,
       "category": "Travel",
@@ -695,6 +696,7 @@
     },
     {
       "benefit_id": "B_HOTEL_PARKING",
+      "content": "국내 주요 호텔 및 공항 발레파킹 서비스 (월 3회)",
       "group_id": null,
       "selective_choice": null,
       "category": "Travel",
@@ -745,6 +747,7 @@
     },
     {
       "benefit_id": "B_OVERSEAS_LOUNGE",
+      "content": "해외 공항 라운지(LoungeKey) 무료 이용 (연 2회)",
       "group_id": null,
       "selective_choice": null,
       "category": "Travel",

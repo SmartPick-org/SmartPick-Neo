@@ -284,6 +284,7 @@
     },
     {
       "benefit_id": "B_WEEKEND_FUEL_60",
+      "content": "주말 4대 주유소(SK, GS, S-Oil, 현대) 리터당 60원 할인",
       "group_id": "G_WEEKEND_DISCOUNT",
       "selective_choice": null,
       "category": "Traffic",

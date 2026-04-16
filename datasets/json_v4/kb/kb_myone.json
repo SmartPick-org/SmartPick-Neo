@@ -26,6 +26,7 @@
   "benefits": [
     {
       "benefit_id": "B_HOMEPLUS_001",
+      "content": "홈플러스(할인점, 익스프레스, 온라인몰), 문화센터, 애슐리(입점매장) 청구할인",
       "group_id": null,
       "selective_choice": null,
       "category": "Shopping",
@@ -165,6 +166,7 @@
     },
     {
       "benefit_id": "B_BEAUTY_001",
+      "content": "미용실, 피부미용업종 청구할인",
       "group_id": "G_SHARED_A",
       "selective_choice": null,
       "category": "Shopping",

@@ -200,6 +200,7 @@
     },
     {
       "benefit_id": "B_ESSENTIAL_FOOD",
+      "content": "음식점 업종 이용 시 0.5~3% 포인트 적립 (결제금액에 따라 차등)",
       "group_id": "G_ESSENTIAL_FOOD",
       "selective_choice": null,
       "category": "Food",
@@ -272,6 +273,7 @@
     },
     {
       "benefit_id": "B_ESSENTIAL_BILL",
+      "content": "도시가스/전기요금 등 생활요금 자동납부 시 포인트 적립",
       "group_id": "G_ESSENTIAL_BILL",
       "selective_choice": null,
       "category": "Life",

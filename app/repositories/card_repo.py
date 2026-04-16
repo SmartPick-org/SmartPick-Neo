@@ -109,6 +109,7 @@ class DBCardRepository(CardRepository):
             benefits = [
                 {
                     "group_id": b.get("group_id"),
+                    "benefit_id": b.get("benefit_slug"),
                     "benefit_slug": b.get("benefit_slug"),
                     "category": b.get("category"),
                     "content": b.get("content"),

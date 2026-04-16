@@ -1,16 +1,21 @@
 import asyncio
+import json
 from typing import Dict, List, Any
+from pathlib import Path
 
+from app.core.config import LEGACY_DATASETS_DIR
 from app.domain.models import CardData
 from app.repositories.card_repo import CardRepository
 from app.tools.Calc_tool import BenefitCalculator
 from loguru import logger
 
 
-def _enrich_benefit_details(benefit_details: list[dict], raw_benefits: list[dict]) -> list[dict]:
+def _enrich_benefit_details(benefit_details: list[dict], raw_benefits: list[dict], legacy_benefits: list[dict] | None = None) -> list[dict]:
     """
     Calc_tool이 반환한 benefit_details에 카드 JSON의 content 필드를 보강합니다.
-    json_v4 대전환에 따라 content가 null이거나 없을 경우를 위해 fallback 로직을 추가했습니다.
+    1순위: json_v4의 content가 있을 경우 사용
+    2순위: legacy(구버전) JSON에서 category/sub_category 매칭되는 content 사용
+    3순위: 위 둘 다 없으면 조합형 fallback 로직 사용
     """
     def _create_fallback_content(b: dict) -> str:
         cat = b.get("category", "")
@@ -34,14 +39,33 @@ def _enrich_benefit_details(benefit_details: list[dict], raw_benefits: list[dict
             
         return info
 
+    # 레거시 매핑 테이블 생성 (category, sub_category) -> content
+    legacy_map = {}
+    if legacy_benefits:
+        for lb in legacy_benefits:
+            cat = lb.get("category")
+            sub = lb.get("sub_category")
+            # sub_category가 없는 경우 "general"로 취급하거나 None 그대로 둠
+            if cat:
+                legacy_map[(cat, sub)] = lb.get("content")
+
     content_map = {}
     for b in raw_benefits:
         bid = b.get("benefit_id")
         if not bid:
             continue
+            
         content = b.get("content")
+        # 1. v4 본체에 content가 없으면 레거시에서 매칭 시도
+        if not content and legacy_benefits:
+            cat = b.get("category")
+            sub = b.get("sub_category")
+            content = legacy_map.get((cat, sub))
+            
+        # 2. 여전히 없으면 조합형 fallback
         if not content:
             content = _create_fallback_content(b)
+            
         content_map[bid] = content
 
     valid = [bd for bd in benefit_details if bd.get("benefit_id") is not None]
@@ -128,6 +152,17 @@ class CardRecommendService:
                     min_perf = card_meta.get("minimum_performance", 0)
                     min_spend_score = min_perf / total_budget if total_budget > 0 else 1.0
 
+                    # 레거시 데이터 로드 (content 추출용)
+                    legacy_benefits = []
+                    legacy_path = LEGACY_DATASETS_DIR / f"{card_meta.get('card_id')}.json"
+                    if legacy_path.exists():
+                        try:
+                            with open(legacy_path, "r", encoding="utf-8") as f:
+                                legacy_data = json.load(f)
+                                legacy_benefits = legacy_data.get("benefits", [])
+                        except Exception as e:
+                            logger.error(f"Failed to load legacy data from {legacy_path}: {e}")
+
                     return {
                         "card_name": card_name,
                         "card_company": card_meta.get("card_company", ""),
@@ -143,10 +178,15 @@ class CardRecommendService:
                             "min_spend_score": round(min_spend_score, 3),
                         },
                         "category_breakdown": result.get("category_breakdown", []),
-                        "applied_benefits_trace": result.get("applied_benefits_trace", []),
+                        "applied_benefits_trace": _enrich_benefit_details(
+                            result.get("applied_benefits_trace", []),
+                            card.get("benefits", []),
+                            legacy_benefits
+                        ),
                         "benefit_details": _enrich_benefit_details(
                             result.get("benefit_details", []),
                             card.get("benefits", []),
+                            legacy_benefits
                         ),
                         "annual_breakdown": result.get("annual_breakdown", []),
                         "warnings": result.get("warnings", []),

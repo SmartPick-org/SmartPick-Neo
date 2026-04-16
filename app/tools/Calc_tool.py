@@ -233,8 +233,10 @@ class BenefitCalculator:
 
         return results
 
-    def calculate(self, user_budgets: dict, user_total_spend: int | None = None) -> dict:
+    def calculate(self, user_budgets: dict, user_total_spend: int | None = None, excluded_benefit_ids: list[str] | None = None) -> dict:
         """메인 계산 시퀀스."""
+        excluded_ids = set(excluded_benefit_ids or [])
+        
         # 1. 실적 확정 (User 피드백 반영: 보정 없이 총 소비액을 실적으로 간주)
         if user_total_spend is None:
             user_total_spend = sum((v.get("total", 0) if isinstance(v, dict) else v) for v in user_budgets.values())
@@ -257,6 +259,9 @@ class BenefitCalculator:
         # 2. 개별 혜택 1차 계산
         intermediate_results = []
         for b in self.benefits:
+            if b["benefit_id"] in excluded_ids:
+                continue
+                
             cat = b.get("category")
             sub_cat = b.get("sub_category", "general")
             

@@ -36,6 +36,7 @@ from app.schemas.recommend import (
 )
 from app.services.card_service import CardRecommendService
 from app.services.explain_service import ExplainService
+from app.tools.Calc_tool import BenefitCalculator
 
 router = APIRouter(prefix="/cards", tags=["cards"])
 
@@ -304,35 +305,91 @@ def _build_recommend_card(card_result: dict, explanation: str) -> RecommendCard:
 @router.post("/recalculate", response_model=RecalculateResponse)
 async def recalculate_benefits(payload: RecalculateRequest) -> RecalculateResponse:
     """
-    유저 체크박스 상태를 반영하여 expected_monthly_benefit만 재계산합니다.
-    BenefitCalculator 재호출 없이 기존 trace 데이터의 합산만 변경합니다. (< 50ms)
-
-    - **recommended_cards**: 기존 추천 결과 (applied_benefits_trace 포함)
-    - **excluded_benefit_ids**: 유저가 체크 해제한 benefit_id 목록
+    유저 체크박스 상태를 반영하여 정확한 통합 한도를 재계산합니다. (Deep Recalculation)
     """
+    from app.schemas.recommend import BenefitTraceItem, CategoryBreakdown
+    from app.schemas.enums import CategoryEnum
+    
     excluded = set(payload.excluded_benefit_ids)
+    spending_str_keys = {cat.value if hasattr(cat, 'value') else str(cat): val for cat, val in payload.category_spending.items()}
+    
     updated_cards = []
 
-    for card in payload.recommended_cards:
-        new_total = 0
-        updated_trace = []
-        for t in card.applied_benefits_trace:
-            is_active = t.benefit_id not in excluded
-            updated_trace.append(t.model_copy(update={"user_choice": is_active}))
-            if is_active:
-                new_total += t.yielded_discount
+    for card_data in payload.recommended_cards:
+        c_id = card_data.card_id
+        matching_path = list(DATASETS_DIR.rglob(f"{c_id}.json"))
+        
+        if not matching_path:
+            # Fallback (Shallow)
+            new_total = 0
+            updated_trace = []
+            for t in card_data.applied_benefits_trace:
+                is_active = t.benefit_id not in excluded
+                updated_trace.append(t.model_copy(update={"user_choice": is_active}))
+                if is_active:
+                    new_total += t.yielded_discount
+            updated_cards.append(card_data.model_copy(update={
+                "applied_benefits_trace": updated_trace,
+                "expected_monthly_benefit": new_total
+            }))
+            continue
+            
+        with open(matching_path[0], "r", encoding="utf-8") as f:
+            raw_card = json.load(f)
+            
+        calculator = BenefitCalculator(raw_card)
+        result = calculator.calculate(
+            spending_str_keys, 
+            user_total_spend=payload.total_budget,
+            excluded_benefit_ids=payload.excluded_benefit_ids
+        )
+        
+        # 1. 혜택 영수증 (Trace) 재구성
+        final_trace = []
+        # 계산된 항목들 추가
+        for t in result["applied_benefits_trace"]:
+            final_trace.append(BenefitTraceItem(
+                benefit_id=t["benefit_id"],
+                content=t["content"],
+                applied_budget=t["applied_budget"],
+                yielded_discount=t["yielded_discount"],
+                user_choice=True,
+                warnings=t.get("warnings")
+            ))
+            
+        # 제외된 항목들 추가 (0원으로 표시)
+        original_trace_ids = {t.benefit_id for t in card_data.applied_benefits_trace}
+        new_trace_ids = {t["benefit_id"] for t in result["applied_benefits_trace"]}
+        for b_id in excluded:
+            if b_id in original_trace_ids and b_id not in new_trace_ids:
+                orig_item = next(t for t in card_data.applied_benefits_trace if t.benefit_id == b_id)
+                final_trace.append(BenefitTraceItem(
+                    benefit_id=b_id,
+                    content=orig_item.content,
+                    applied_budget=0,
+                    yielded_discount=0,
+                    user_choice=False,
+                    warnings=orig_item.warnings
+                ))
+        
+        # 2. 카테고리별 요약 (Breakdown) 재구성
+        final_breakdown = []
+        for cb in result["category_breakdown"]:
+            final_breakdown.append(CategoryBreakdown(
+                category=CategoryEnum(cb["category"]),
+                monthly_discount_krw=cb["monthly_discount_krw"],
+                discount_info=cb["discount_info"],
+                warnings=cb.get("warnings", [])
+            ))
 
-        updated_card = card.model_copy(update={
-            "applied_benefits_trace": updated_trace,
-            "expected_monthly_benefit": new_total,
+        updated_card = card_data.model_copy(update={
+            "expected_monthly_benefit": result["monthly_total_krw"],
+            "applied_benefits_trace": final_trace,
+            "category_breakdown": final_breakdown
         })
         updated_cards.append(updated_card)
 
     updated_cards.sort(key=lambda c: c.expected_monthly_benefit, reverse=True)
-    logger.info(
-        f"[recalculate] excluded={len(excluded)}개 혜택 제외 | "
-        f"카드 순위 재조정 완료: {[c.card_name for c in updated_cards]}"
-    )
     return RecalculateResponse(recommended_cards=updated_cards)
 
 

@@ -234,15 +234,16 @@ class RecalculateRequest(BaseModel):
     체크박스 재계산 요청.
     유저가 영수증에서 특정 혜택을 '쓸 일 없음'으로 체크 해제하면,
     해당 benefit_id 목록을 `excluded_benefit_ids` 에 담아 보냅니다.
-    BenefitCalculator 재호출 없이 합산만 변경하므로 응답이 즉각적(< 50ms)입니다.
     """
+    total_budget: int = Field(..., description="월 총 소비 금액")
+    category_spending: Dict[CategoryEnum, Any] = Field(..., description="카테고리별 월 소비 내역")
     recommended_cards: List[RecommendCard] = Field(
         ...,
         description="`/cards/recommend` 응답의 `recommended_cards` 를 그대로 전달합니다."
     )
     excluded_benefit_ids: List[str] = Field(
         ...,
-        description="유저가 체크 해제한 `benefit_id` 목록. 해당 혜택의 `yielded_discount` 가 `expected_monthly_benefit` 합산에서 제외됩니다.",
+        description="유저가 체크 해제한 `benefit_id` 목록.",
         examples=[["shinhan_mr_life_b_intake_mall"]]
     )
 

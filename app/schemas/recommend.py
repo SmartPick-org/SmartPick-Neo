@@ -8,11 +8,7 @@ from app.schemas.enums import CategoryEnum, SubCategoryEnum
 
 class RecommendRequest(BaseModel):
     total_budget: int = Field(..., description="월 총 소비 금액", examples=[500000])
-    excluded_benefit_ids: List[str] | None = Field(
-        None,
-        description="계산에서 제외할 혜택 ID 목록. 혜택 영수증에서 체크 해제한 항목을 전달합니다.",
-        examples=[["shinhan_mr_life_b003", "shinhan_mr_life_b007"]],
-    )
+
     top_n: int = Field(
         5,
         ge=1,
@@ -223,9 +219,9 @@ class RecalculateRequest(BaseModel):
     사용자가 영수증 항목에서 특정 혜택을 제외(체크 해제)했을 때, 
     통합 한도 재분배 로직을 포함한 '정밀 재계산(Deep Recalculation)'을 수행합니다.
     """
-    total_budget: int = Field(..., description="월 총 소비 금액 (원)", examples=[500000])
-    category_spending: Dict[CategoryEnum, Any] = Field(
-        ..., 
+    total_budget: int | None = Field(None, description="월 총 소비 금액 (원)", examples=[500000])
+    category_spending: Dict[CategoryEnum, Any] | None = Field(
+        None, 
         description="최초 추천 시 사용했던 소비 내역 데이터를 그대로 전달합니다.",
         examples=[{
             "Coffee": {"total": 50000, "cafe": "75%", "bakery": "25%"},

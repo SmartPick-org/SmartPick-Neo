@@ -98,7 +98,7 @@ async def recommend_cards(payload: RecommendRequest) -> RecommendResponse:
         logger.exception("[recommend_cards] calculate_benefits ValueError: %s", repr(e))
         raise ValueError(str(e))
 
-    ranked = recommend_service.rank_top(calc_results, top_n=3)
+    ranked = recommend_service.rank_top(calc_results, top_n=payload.top_n)
 
     if not ranked:
         raise NoCardsFoundError("혜택 계산 결과가 없습니다.")

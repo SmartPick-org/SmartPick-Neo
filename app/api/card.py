@@ -105,9 +105,11 @@ async def recommend_cards(payload: RecommendRequest) -> RecommendResponse:
 
     # 3. LLM 설명 생성 — 실패해도 카드 목록은 반환 (Graceful Degradation)
     digests = []
+    import asyncio
     try:
         # 모든 카드의 Digest를 시도하여 상세 내역 생성에 대비
-        digests = [digest_repo.get_digest(card.get("_card_data", {})) for card in ranked]
+        coros = [digest_repo.get_digest(card.get("_card_data", {})) for card in ranked]
+        digests = await asyncio.gather(*coros)
         top_digest = digests[0] if digests else ""
     except Exception as e:
         logger.warning("[recommend_cards] digest 로드 실패: %s", repr(e))
@@ -123,8 +125,10 @@ async def recommend_cards(payload: RecommendRequest) -> RecommendResponse:
             if not explanation or not explanation.strip():
                 explanation = _LLM_FALLBACK_EXPLAIN
         except Exception as e:
-            logger.warning("[LLM Fallback] explain() 실패, Fallback 텍스트 사용: %s", repr(e))
-            explanation = _LLM_FALLBACK_EXPLAIN
+            import traceback
+            err_msg = traceback.format_exc()
+            logger.warning("[LLM Fallback] explain() 실패, Fallback 텍스트 사용: %s", err_msg)
+            explanation = f"ERROR IN EXPLAIN: {err_msg}"
 
     try:
         # 상세 Tracing 기능이 포함된 빌더 호출

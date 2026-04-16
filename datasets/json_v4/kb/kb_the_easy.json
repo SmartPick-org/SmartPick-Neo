@@ -5,24 +5,21 @@
     "card_company": "KB",
     "annual_fee_domestic": 15000,
     "annual_fee_international": 15000,
-    "minimum_performance": 0,
+    "minimum_performance": 500000,
     "performance_excluded_categories": [
       "Tax",
       "Fee",
-      "Interest",
-      "Late_Fee",
-      "Annual_Fee",
+      "Insurance",
+      "Education",
       "Gift_Card",
       "Prepaid_Card",
-      "Government_Subsidy",
-      "Tuition",
       "Apartment_Maintenance"
     ]
   },
   "benefit_groups": [
     {
       "group_id": "G_SELECTIVE_1",
-      "group_name": "추가 서비스 (택 1)",
+      "group_name": "추가 서비스 선택 그룹",
       "group_type": "SELECTIVE_GROUP",
       "group_type_description": "SELECTIVE_GROUP: 필수 선택형 (2-3 공식)",
       "choices": [
@@ -40,10 +37,10 @@
       "top_n_count": null
     },
     {
-      "group_id": "G_SHARED_LIMIT_1",
-      "group_name": "7대 영역 추가 혜택",
-      "group_type": "SHARED_LIMIT",
-      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
+      "group_id": "G_AUTO_TOP_N_1",
+      "group_name": "7대 영역 상위 2개 혜택",
+      "group_type": "AUTO_TOP_N",
+      "group_type_description": "AUTO_TOP_N: 상위 이용금액 자동 추출",
       "choices": null,
       "monthly_limit": 500000,
       "annual_limit": null,
@@ -91,7 +88,7 @@
       "tier_conditions": [],
       "conditional_metadata": {
         "warnings": [
-          "무이자할부, 단기/장기카드대출, 세금, 공과금, 정부지원금, 등록금, 수수료, 이자, 연체료, 연회비, 상품권/선불카드 구입·충전금액 제외"
+          "전월 이용실적 및 한도 제한 없이 제공됩니다."
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -105,7 +102,7 @@
     },
     {
       "benefit_id": "B_002",
-      "group_id": "G_SHARED_LIMIT_1",
+      "group_id": "G_AUTO_TOP_N_1",
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
         "group_id": "G_SELECTIVE_1",
@@ -115,7 +112,7 @@
       "sub_category": "mart",
       "reward_type": "DIRECT_FINANCIAL",
       "reward_unit": {
-        "currency": "KRW",
+        "currency": "POINT",
         "currency_to_krw_rate": 1.0
       },
       "calculation_rule": {
@@ -126,7 +123,7 @@
         "discount_per_unit": null,
         "unit_label": null,
         "fallback_rate": null,
-        "monthly_benefit_limit": 500000,
+        "monthly_benefit_limit": 10000,
         "annual_benefit_limit": null
       },
       "transaction_conditions": {
@@ -140,7 +137,7 @@
           "start": null,
           "end": null
         },
-        "requires_offline": false,
+        "requires_offline": true,
         "requires_online": false,
         "requires_auto_payment": false
       },
@@ -150,7 +147,7 @@
           "benefit_rate": 0.03,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 500000,
+          "monthly_benefit_limit": 10000,
           "group_monthly_limit": 500000
         },
         {
@@ -158,13 +155,13 @@
           "benefit_rate": 0.03,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 1000000,
+          "monthly_benefit_limit": 20000,
           "group_monthly_limit": 1000000
         }
       ],
       "conditional_metadata": {
         "warnings": [
-          "온라인몰, SSM, 임대매장 제외"
+          "대형마트: 이마트, 롯데마트, 홈플러스 (온라인몰, SSM, 임대매장 제외)"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -178,7 +175,7 @@
     },
     {
       "benefit_id": "B_003",
-      "group_id": "G_SHARED_LIMIT_1",
+      "group_id": "G_AUTO_TOP_N_1",
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
         "group_id": "G_SELECTIVE_1",
@@ -188,7 +185,7 @@
       "sub_category": "convenience",
       "reward_type": "DIRECT_FINANCIAL",
       "reward_unit": {
-        "currency": "KRW",
+        "currency": "POINT",
         "currency_to_krw_rate": 1.0
       },
       "calculation_rule": {
@@ -199,7 +196,7 @@
         "discount_per_unit": null,
         "unit_label": null,
         "fallback_rate": null,
-        "monthly_benefit_limit": 500000,
+        "monthly_benefit_limit": 10000,
         "annual_benefit_limit": null
       },
       "transaction_conditions": {
@@ -213,7 +210,7 @@
           "start": null,
           "end": null
         },
-        "requires_offline": false,
+        "requires_offline": true,
         "requires_online": false,
         "requires_auto_payment": false
       },
@@ -223,7 +220,7 @@
           "benefit_rate": 0.03,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 500000,
+          "monthly_benefit_limit": 10000,
           "group_monthly_limit": 500000
         },
         {
@@ -231,13 +228,13 @@
           "benefit_rate": 0.03,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 1000000,
+          "monthly_benefit_limit": 20000,
           "group_monthly_limit": 1000000
         }
       ],
       "conditional_metadata": {
         "warnings": [
-          "백화점/마트 입점 매장 제외"
+          "편의점: GS25, CU (백화점/마트 입점 매장 제외)"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -251,7 +248,7 @@
     },
     {
       "benefit_id": "B_004",
-      "group_id": "G_SHARED_LIMIT_1",
+      "group_id": "G_AUTO_TOP_N_1",
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
         "group_id": "G_SELECTIVE_1",
@@ -261,7 +258,7 @@
       "sub_category": "cafe",
       "reward_type": "DIRECT_FINANCIAL",
       "reward_unit": {
-        "currency": "KRW",
+        "currency": "POINT",
         "currency_to_krw_rate": 1.0
       },
       "calculation_rule": {
@@ -272,7 +269,7 @@
         "discount_per_unit": null,
         "unit_label": null,
         "fallback_rate": null,
-        "monthly_benefit_limit": 500000,
+        "monthly_benefit_limit": 10000,
         "annual_benefit_limit": null
       },
       "transaction_conditions": {
@@ -286,7 +283,7 @@
           "start": null,
           "end": null
         },
-        "requires_offline": false,
+        "requires_offline": true,
         "requires_online": false,
         "requires_auto_payment": false
       },
@@ -296,7 +293,7 @@
           "benefit_rate": 0.03,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 500000,
+          "monthly_benefit_limit": 10000,
           "group_monthly_limit": 500000
         },
         {
@@ -304,13 +301,13 @@
           "benefit_rate": 0.03,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 1000000,
+          "monthly_benefit_limit": 20000,
           "group_monthly_limit": 1000000
         }
       ],
       "conditional_metadata": {
         "warnings": [
-          "상품권 구매, 선불식 충전, 마트/백화점 내 입점 매장 제외"
+          "커피: 커피전문점 업종 (상품권 구매, 선불식 충전, 마트/백화점 내 입점 매장 제외)"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -324,7 +321,7 @@
     },
     {
       "benefit_id": "B_005",
-      "group_id": "G_SHARED_LIMIT_1",
+      "group_id": "G_AUTO_TOP_N_1",
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
         "group_id": "G_SELECTIVE_1",
@@ -334,7 +331,7 @@
       "sub_category": "fuel",
       "reward_type": "DIRECT_FINANCIAL",
       "reward_unit": {
-        "currency": "KRW",
+        "currency": "POINT",
         "currency_to_krw_rate": 1.0
       },
       "calculation_rule": {
@@ -345,7 +342,7 @@
         "discount_per_unit": null,
         "unit_label": null,
         "fallback_rate": null,
-        "monthly_benefit_limit": 500000,
+        "monthly_benefit_limit": 10000,
         "annual_benefit_limit": null
       },
       "transaction_conditions": {
@@ -359,7 +356,7 @@
           "start": null,
           "end": null
         },
-        "requires_offline": false,
+        "requires_offline": true,
         "requires_online": false,
         "requires_auto_payment": false
       },
@@ -369,7 +366,7 @@
           "benefit_rate": 0.03,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 500000,
+          "monthly_benefit_limit": 10000,
           "group_monthly_limit": 500000
         },
         {
@@ -377,12 +374,14 @@
           "benefit_rate": 0.03,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 1000000,
+          "monthly_benefit_limit": 20000,
           "group_monthly_limit": 1000000
         }
       ],
       "conditional_metadata": {
-        "warnings": [],
+        "warnings": [
+          "주유: 주유소, 충전소 (LPG 포함) 업종"
+        ],
         "excludes_from_performance": false,
         "special_multiplier": null
       },
@@ -395,7 +394,7 @@
     },
     {
       "benefit_id": "B_006",
-      "group_id": "G_SHARED_LIMIT_1",
+      "group_id": "G_AUTO_TOP_N_1",
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
         "group_id": "G_SELECTIVE_1",
@@ -405,7 +404,7 @@
       "sub_category": "beauty",
       "reward_type": "DIRECT_FINANCIAL",
       "reward_unit": {
-        "currency": "KRW",
+        "currency": "POINT",
         "currency_to_krw_rate": 1.0
       },
       "calculation_rule": {
@@ -416,7 +415,7 @@
         "discount_per_unit": null,
         "unit_label": null,
         "fallback_rate": null,
-        "monthly_benefit_limit": 500000,
+        "monthly_benefit_limit": 10000,
         "annual_benefit_limit": null
       },
       "transaction_conditions": {
@@ -430,7 +429,7 @@
           "start": null,
           "end": null
         },
-        "requires_offline": false,
+        "requires_offline": true,
         "requires_online": false,
         "requires_auto_payment": false
       },
@@ -440,7 +439,7 @@
           "benefit_rate": 0.03,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 500000,
+          "monthly_benefit_limit": 10000,
           "group_monthly_limit": 500000
         },
         {
@@ -448,13 +447,13 @@
           "benefit_rate": 0.03,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 1000000,
+          "monthly_benefit_limit": 20000,
           "group_monthly_limit": 1000000
         }
       ],
       "conditional_metadata": {
         "warnings": [
-          "마트/백화점 내 입점 매장 제외"
+          "미용: 미용원, 이용원 업종 (마트/백화점 내 입점 매장 제외)"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -468,7 +467,7 @@
     },
     {
       "benefit_id": "B_007",
-      "group_id": "G_SHARED_LIMIT_1",
+      "group_id": "G_AUTO_TOP_N_1",
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
         "group_id": "G_SELECTIVE_1",
@@ -478,7 +477,7 @@
       "sub_category": "telecom",
       "reward_type": "DIRECT_FINANCIAL",
       "reward_unit": {
-        "currency": "KRW",
+        "currency": "POINT",
         "currency_to_krw_rate": 1.0
       },
       "calculation_rule": {
@@ -489,7 +488,7 @@
         "discount_per_unit": null,
         "unit_label": null,
         "fallback_rate": null,
-        "monthly_benefit_limit": 500000,
+        "monthly_benefit_limit": 10000,
         "annual_benefit_limit": null
       },
       "transaction_conditions": {
@@ -513,7 +512,7 @@
           "benefit_rate": 0.03,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 500000,
+          "monthly_benefit_limit": 10000,
           "group_monthly_limit": 500000
         },
         {
@@ -521,155 +520,13 @@
           "benefit_rate": 0.03,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 1000000,
-          "group_monthly_limit": 1000000
-        }
-      ],
-      "conditional_metadata": {
-        "warnings": [],
-        "excludes_from_performance": false,
-        "special_multiplier": null
-      },
-      "indirect_benefit_metadata": {
-        "description": null,
-        "target_locations": null,
-        "voucher_choices": null,
-        "voucher_value": null
-      }
-    },
-    {
-      "benefit_id": "B_008",
-      "group_id": "G_SHARED_LIMIT_1",
-      "selective_choice": {
-        "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
-        "group_id": "G_SELECTIVE_1",
-        "choice_id": "CHOICE_1"
-      },
-      "category": "Life",
-      "sub_category": "daily_service",
-      "reward_type": "DIRECT_FINANCIAL",
-      "reward_unit": {
-        "currency": "KRW",
-        "currency_to_krw_rate": 1.0
-      },
-      "calculation_rule": {
-        "calc_type": "PERCENTAGE",
-        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
-        "benefit_rate": 0.03,
-        "flat_discount": null,
-        "discount_per_unit": null,
-        "unit_label": null,
-        "fallback_rate": null,
-        "monthly_benefit_limit": 500000,
-        "annual_benefit_limit": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_tx_spend_allowed": null,
-        "max_count_per_day": null,
-        "max_count_per_month": null,
-        "max_count_per_year": null,
-        "day_of_week": null,
-        "time_of_day": {
-          "start": null,
-          "end": null
-        },
-        "requires_offline": false,
-        "requires_online": false,
-        "requires_auto_payment": true
-      },
-      "tier_conditions": [
-        {
-          "min_prev_performance": 500000,
-          "benefit_rate": 0.03,
-          "flat_discount": null,
-          "discount_per_unit": null,
-          "monthly_benefit_limit": 500000,
-          "group_monthly_limit": 500000
-        },
-        {
-          "min_prev_performance": 1000000,
-          "benefit_rate": 0.03,
-          "flat_discount": null,
-          "discount_per_unit": null,
-          "monthly_benefit_limit": 1000000,
-          "group_monthly_limit": 1000000
-        }
-      ],
-      "conditional_metadata": {
-        "warnings": [],
-        "excludes_from_performance": false,
-        "special_multiplier": null
-      },
-      "indirect_benefit_metadata": {
-        "description": null,
-        "target_locations": null,
-        "voucher_choices": null,
-        "voucher_value": null
-      }
-    },
-    {
-      "benefit_id": "B_009",
-      "group_id": "G_SHARED_LIMIT_1",
-      "selective_choice": {
-        "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
-        "group_id": "G_SELECTIVE_1",
-        "choice_id": "CHOICE_1"
-      },
-      "category": "EduHealth",
-      "sub_category": "education",
-      "reward_type": "DIRECT_FINANCIAL",
-      "reward_unit": {
-        "currency": "KRW",
-        "currency_to_krw_rate": 1.0
-      },
-      "calculation_rule": {
-        "calc_type": "PERCENTAGE",
-        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
-        "benefit_rate": 0.03,
-        "flat_discount": null,
-        "discount_per_unit": null,
-        "unit_label": null,
-        "fallback_rate": null,
-        "monthly_benefit_limit": 500000,
-        "annual_benefit_limit": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_tx_spend_allowed": null,
-        "max_count_per_day": null,
-        "max_count_per_month": null,
-        "max_count_per_year": null,
-        "day_of_week": null,
-        "time_of_day": {
-          "start": null,
-          "end": null
-        },
-        "requires_offline": false,
-        "requires_online": false,
-        "requires_auto_payment": false
-      },
-      "tier_conditions": [
-        {
-          "min_prev_performance": 500000,
-          "benefit_rate": 0.03,
-          "flat_discount": null,
-          "discount_per_unit": null,
-          "monthly_benefit_limit": 500000,
-          "group_monthly_limit": 500000
-        },
-        {
-          "min_prev_performance": 1000000,
-          "benefit_rate": 0.03,
-          "flat_discount": null,
-          "discount_per_unit": null,
-          "monthly_benefit_limit": 1000000,
+          "monthly_benefit_limit": 20000,
           "group_monthly_limit": 1000000
         }
       ],
       "conditional_metadata": {
         "warnings": [
-          "PG 결제, 유아교육기관, 학습자재 업종 제외"
+          "생활: 통신요금 자동납부(SKT, KT, LG U+)"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -682,8 +539,81 @@
       }
     },
     {
-      "benefit_id": "B_010",
-      "group_id": "G_SHARED_LIMIT_1",
+      "benefit_id": "B_008",
+      "group_id": "G_AUTO_TOP_N_1",
+      "selective_choice": {
+        "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
+        "group_id": "G_SELECTIVE_1",
+        "choice_id": "CHOICE_1"
+      },
+      "category": "EduHealth",
+      "sub_category": "education",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "POINT",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.03,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": 10000,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": true,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 500000,
+          "benefit_rate": 0.03,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 10000,
+          "group_monthly_limit": 500000
+        },
+        {
+          "min_prev_performance": 1000000,
+          "benefit_rate": 0.03,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 20000,
+          "group_monthly_limit": 1000000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "학원: 기술/사무/외국어/자동차/독서실 등 (PG 결제, 유아교육기관, 학습자재 업종 제외)"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_009",
+      "group_id": "G_AUTO_TOP_N_1",
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
         "group_id": "G_SELECTIVE_1",
@@ -704,7 +634,7 @@
         "discount_per_unit": null,
         "unit_label": null,
         "fallback_rate": null,
-        "monthly_benefit_limit": 500000,
+        "monthly_benefit_limit": 10000,
         "annual_benefit_limit": null
       },
       "transaction_conditions": {
@@ -718,7 +648,7 @@
           "start": null,
           "end": null
         },
-        "requires_offline": false,
+        "requires_offline": true,
         "requires_online": false,
         "requires_auto_payment": false
       },
@@ -728,7 +658,7 @@
           "benefit_rate": 0.05,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 500000,
+          "monthly_benefit_limit": 10000,
           "group_monthly_limit": 500000
         },
         {
@@ -736,13 +666,13 @@
           "benefit_rate": 0.05,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 1000000,
+          "monthly_benefit_limit": 20000,
           "group_monthly_limit": 1000000
         }
       ],
       "conditional_metadata": {
         "warnings": [
-          "온라인몰, SSM, 임대매장 제외"
+          "대형마트: 이마트, 롯데마트, 홈플러스 (온라인몰, SSM, 임대매장 제외)"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -755,8 +685,8 @@
       }
     },
     {
-      "benefit_id": "B_011",
-      "group_id": "G_SHARED_LIMIT_1",
+      "benefit_id": "B_010",
+      "group_id": "G_AUTO_TOP_N_1",
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
         "group_id": "G_SELECTIVE_1",
@@ -777,7 +707,7 @@
         "discount_per_unit": null,
         "unit_label": null,
         "fallback_rate": null,
-        "monthly_benefit_limit": 500000,
+        "monthly_benefit_limit": 10000,
         "annual_benefit_limit": null
       },
       "transaction_conditions": {
@@ -791,7 +721,7 @@
           "start": null,
           "end": null
         },
-        "requires_offline": false,
+        "requires_offline": true,
         "requires_online": false,
         "requires_auto_payment": false
       },
@@ -801,7 +731,7 @@
           "benefit_rate": 0.05,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 500000,
+          "monthly_benefit_limit": 10000,
           "group_monthly_limit": 500000
         },
         {
@@ -809,13 +739,13 @@
           "benefit_rate": 0.05,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 1000000,
+          "monthly_benefit_limit": 20000,
           "group_monthly_limit": 1000000
         }
       ],
       "conditional_metadata": {
         "warnings": [
-          "백화점/마트 입점 매장 제외"
+          "편의점: GS25, CU (백화점/마트 입점 매장 제외)"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -828,8 +758,8 @@
       }
     },
     {
-      "benefit_id": "B_012",
-      "group_id": "G_SHARED_LIMIT_1",
+      "benefit_id": "B_011",
+      "group_id": "G_AUTO_TOP_N_1",
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
         "group_id": "G_SELECTIVE_1",
@@ -850,7 +780,7 @@
         "discount_per_unit": null,
         "unit_label": null,
         "fallback_rate": null,
-        "monthly_benefit_limit": 500000,
+        "monthly_benefit_limit": 10000,
         "annual_benefit_limit": null
       },
       "transaction_conditions": {
@@ -864,7 +794,7 @@
           "start": null,
           "end": null
         },
-        "requires_offline": false,
+        "requires_offline": true,
         "requires_online": false,
         "requires_auto_payment": false
       },
@@ -874,7 +804,7 @@
           "benefit_rate": 0.05,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 500000,
+          "monthly_benefit_limit": 10000,
           "group_monthly_limit": 500000
         },
         {
@@ -882,13 +812,13 @@
           "benefit_rate": 0.05,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 1000000,
+          "monthly_benefit_limit": 20000,
           "group_monthly_limit": 1000000
         }
       ],
       "conditional_metadata": {
         "warnings": [
-          "상품권 구매, 선불식 충전, 마트/백화점 내 입점 매장 제외"
+          "커피: 커피전문점 업종 (상품권 구매, 선불식 충전, 마트/백화점 내 입점 매장 제외)"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -901,8 +831,8 @@
       }
     },
     {
-      "benefit_id": "B_013",
-      "group_id": "G_SHARED_LIMIT_1",
+      "benefit_id": "B_012",
+      "group_id": "G_AUTO_TOP_N_1",
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
         "group_id": "G_SELECTIVE_1",
@@ -923,7 +853,7 @@
         "discount_per_unit": null,
         "unit_label": null,
         "fallback_rate": null,
-        "monthly_benefit_limit": 500000,
+        "monthly_benefit_limit": 10000,
         "annual_benefit_limit": null
       },
       "transaction_conditions": {
@@ -937,7 +867,7 @@
           "start": null,
           "end": null
         },
-        "requires_offline": false,
+        "requires_offline": true,
         "requires_online": false,
         "requires_auto_payment": false
       },
@@ -947,7 +877,7 @@
           "benefit_rate": 0.05,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 500000,
+          "monthly_benefit_limit": 10000,
           "group_monthly_limit": 500000
         },
         {
@@ -955,12 +885,14 @@
           "benefit_rate": 0.05,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 1000000,
+          "monthly_benefit_limit": 20000,
           "group_monthly_limit": 1000000
         }
       ],
       "conditional_metadata": {
-        "warnings": [],
+        "warnings": [
+          "주유: 주유소, 충전소 (LPG 포함) 업종"
+        ],
         "excludes_from_performance": false,
         "special_multiplier": null
       },
@@ -972,8 +904,8 @@
       }
     },
     {
-      "benefit_id": "B_014",
-      "group_id": "G_SHARED_LIMIT_1",
+      "benefit_id": "B_013",
+      "group_id": "G_AUTO_TOP_N_1",
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
         "group_id": "G_SELECTIVE_1",
@@ -994,7 +926,7 @@
         "discount_per_unit": null,
         "unit_label": null,
         "fallback_rate": null,
-        "monthly_benefit_limit": 500000,
+        "monthly_benefit_limit": 10000,
         "annual_benefit_limit": null
       },
       "transaction_conditions": {
@@ -1008,7 +940,7 @@
           "start": null,
           "end": null
         },
-        "requires_offline": false,
+        "requires_offline": true,
         "requires_online": false,
         "requires_auto_payment": false
       },
@@ -1018,7 +950,7 @@
           "benefit_rate": 0.05,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 500000,
+          "monthly_benefit_limit": 10000,
           "group_monthly_limit": 500000
         },
         {
@@ -1026,13 +958,13 @@
           "benefit_rate": 0.05,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 1000000,
+          "monthly_benefit_limit": 20000,
           "group_monthly_limit": 1000000
         }
       ],
       "conditional_metadata": {
         "warnings": [
-          "마트/백화점 내 입점 매장 제외"
+          "미용: 미용원, 이용원 업종 (마트/백화점 내 입점 매장 제외)"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -1045,8 +977,8 @@
       }
     },
     {
-      "benefit_id": "B_015",
-      "group_id": "G_SHARED_LIMIT_1",
+      "benefit_id": "B_014",
+      "group_id": "G_AUTO_TOP_N_1",
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
         "group_id": "G_SELECTIVE_1",
@@ -1067,7 +999,7 @@
         "discount_per_unit": null,
         "unit_label": null,
         "fallback_rate": null,
-        "monthly_benefit_limit": 500000,
+        "monthly_benefit_limit": 10000,
         "annual_benefit_limit": null
       },
       "transaction_conditions": {
@@ -1091,7 +1023,7 @@
           "benefit_rate": 0.05,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 500000,
+          "monthly_benefit_limit": 10000,
           "group_monthly_limit": 500000
         },
         {
@@ -1099,12 +1031,14 @@
           "benefit_rate": 0.05,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 1000000,
+          "monthly_benefit_limit": 20000,
           "group_monthly_limit": 1000000
         }
       ],
       "conditional_metadata": {
-        "warnings": [],
+        "warnings": [
+          "생활: 통신요금 자동납부(SKT, KT, LG U+)"
+        ],
         "excludes_from_performance": false,
         "special_multiplier": null
       },
@@ -1116,79 +1050,8 @@
       }
     },
     {
-      "benefit_id": "B_016",
-      "group_id": "G_SHARED_LIMIT_1",
-      "selective_choice": {
-        "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
-        "group_id": "G_SELECTIVE_1",
-        "choice_id": "CHOICE_2"
-      },
-      "category": "Life",
-      "sub_category": "daily_service",
-      "reward_type": "DIRECT_FINANCIAL",
-      "reward_unit": {
-        "currency": "KRW",
-        "currency_to_krw_rate": 1.0
-      },
-      "calculation_rule": {
-        "calc_type": "PERCENTAGE",
-        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
-        "benefit_rate": 0.05,
-        "flat_discount": null,
-        "discount_per_unit": null,
-        "unit_label": null,
-        "fallback_rate": null,
-        "monthly_benefit_limit": 500000,
-        "annual_benefit_limit": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_tx_spend_allowed": null,
-        "max_count_per_day": null,
-        "max_count_per_month": 2,
-        "max_count_per_year": null,
-        "day_of_week": null,
-        "time_of_day": {
-          "start": null,
-          "end": null
-        },
-        "requires_offline": false,
-        "requires_online": false,
-        "requires_auto_payment": true
-      },
-      "tier_conditions": [
-        {
-          "min_prev_performance": 500000,
-          "benefit_rate": 0.05,
-          "flat_discount": null,
-          "discount_per_unit": null,
-          "monthly_benefit_limit": 500000,
-          "group_monthly_limit": 500000
-        },
-        {
-          "min_prev_performance": 1000000,
-          "benefit_rate": 0.05,
-          "flat_discount": null,
-          "discount_per_unit": null,
-          "monthly_benefit_limit": 1000000,
-          "group_monthly_limit": 1000000
-        }
-      ],
-      "conditional_metadata": {
-        "warnings": [],
-        "excludes_from_performance": false,
-        "special_multiplier": null
-      },
-      "indirect_benefit_metadata": {
-        "description": null,
-        "target_locations": null,
-        "voucher_choices": null,
-        "voucher_value": null
-      }
-    },
-    {
-      "benefit_id": "B_017",
-      "group_id": "G_SHARED_LIMIT_1",
+      "benefit_id": "B_015",
+      "group_id": "G_AUTO_TOP_N_1",
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
         "group_id": "G_SELECTIVE_1",
@@ -1209,7 +1072,7 @@
         "discount_per_unit": null,
         "unit_label": null,
         "fallback_rate": null,
-        "monthly_benefit_limit": 500000,
+        "monthly_benefit_limit": 10000,
         "annual_benefit_limit": null
       },
       "transaction_conditions": {
@@ -1223,7 +1086,7 @@
           "start": null,
           "end": null
         },
-        "requires_offline": false,
+        "requires_offline": true,
         "requires_online": false,
         "requires_auto_payment": false
       },
@@ -1233,7 +1096,7 @@
           "benefit_rate": 0.05,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 500000,
+          "monthly_benefit_limit": 10000,
           "group_monthly_limit": 500000
         },
         {
@@ -1241,13 +1104,13 @@
           "benefit_rate": 0.05,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 1000000,
+          "monthly_benefit_limit": 20000,
           "group_monthly_limit": 1000000
         }
       ],
       "conditional_metadata": {
         "warnings": [
-          "PG 결제, 유아교육기관, 학습자재 업종 제외"
+          "학원: 기술/사무/외국어/자동차/독서실 등 (PG 결제, 유아교육기관, 학습자재 업종 제외)"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null

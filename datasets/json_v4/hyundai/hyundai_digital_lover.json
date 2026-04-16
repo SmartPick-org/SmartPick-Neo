@@ -8,9 +8,7 @@
     "minimum_performance": 500000,
     "performance_excluded_categories": [
       "Cash_Advance",
-      "Card_Loan",
-      "Interest",
-      "Fees",
+      "Loan",
       "Tax",
       "Utility",
       "Management_Fee",
@@ -25,7 +23,7 @@
   "benefit_groups": [
     {
       "group_id": "G_STREAMING",
-      "group_name": "디지털 스트리밍 서비스 할인 그룹",
+      "group_name": "디지털 스트리밍 서비스",
       "group_type": "SHARED_LIMIT",
       "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
       "choices": null,
@@ -35,7 +33,7 @@
     },
     {
       "group_id": "G_PAYMENT",
-      "group_name": "온라인 간편결제서비스 할인 그룹",
+      "group_name": "온라인 간편결제서비스",
       "group_type": "SHARED_LIMIT",
       "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
       "choices": null,
@@ -46,7 +44,7 @@
   ],
   "benefits": [
     {
-      "benefit_id": "B_STREAMING_001",
+      "benefit_id": "B_STREAMING_1",
       "group_id": "G_STREAMING",
       "selective_choice": null,
       "category": "Cultural",
@@ -69,7 +67,7 @@
       },
       "transaction_conditions": {
         "min_payment_amount": 10000,
-        "max_tx_spend_allowed": 10000,
+        "max_tx_spend_allowed": null,
         "max_count_per_day": null,
         "max_count_per_month": 1,
         "max_count_per_year": null,
@@ -94,8 +92,12 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "통신요금 내 합산 청취, 앱스토어 결제 등 가맹점 구분이 불가한 경우 할인 제외",
-          "신규 발급 혜택: 발급월 기준 다음 달 이용 건까지는 전월 50만원 미만도 제공"
+          "전월 이용 금액 50만원 이상 이용 시 적립",
+          "대상 가맹점: 디즈니+, 넷플릭스, 유튜브 프리미엄, 멜론, 지니 중 택 1",
+          "직접 결제 시에만 할인 가능",
+          "이용요금 합산 금액이 1만원 미만일 경우 이용요금만큼 할인 적용",
+          "신규 발급 혜택: 발급월 기준 다음 달 이용 건까지는 전월 50만원 미만도 제공",
+          "통신요금 내 합산 청취, 앱스토어 결제 등 가맹점 구분이 불가한 경우 할인 제외"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -108,7 +110,7 @@
       }
     },
     {
-      "benefit_id": "B_PAYMENT_001",
+      "benefit_id": "B_PAYMENT_1",
       "group_id": "G_PAYMENT",
       "selective_choice": null,
       "category": "Shopping",
@@ -156,6 +158,8 @@
       ],
       "conditional_metadata": {
         "warnings": [
+          "전월 이용 금액 50만원 이상 이용 시 제공",
+          "대상 가맹점: 삼성페이, 네이버페이, 카카오페이, SSG페이, 스마일페이, 쿠페이 (온라인 결제 건에 한함)",
           "오프라인 가맹점 및 디지털 스트리밍 서비스 이용요금 결제 시 할인 제외"
         ],
         "excludes_from_performance": false,

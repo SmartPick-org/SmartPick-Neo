@@ -38,7 +38,9 @@ from app.services.explain_service import ExplainService
 
 router = APIRouter(prefix="/cards", tags=["cards"])
 
-from app.core.config import DATASETS_DIR, DIGEST_DIR
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+DATASETS_DIR = PROJECT_ROOT / "datasets" / "json_v4"
+DIGEST_DIR = PROJECT_ROOT / "datasets" / "digest"
 
 # Fallback 텍스트 — LLM이 죽어도 사용자는 카드 목록을 볼 수 있음
 _LLM_FALLBACK_EXPLAIN = (

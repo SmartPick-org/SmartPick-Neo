@@ -1,31 +1,36 @@
 """
-BenefitCalculator v4 – JSON_v4 스키마 기반 최대 혜택 산출기
+BenefitCalculator v2 – Master_Schema_v2.json 기반 최대 할인 산출기
 
-유저의 카테고리별 예산을 입력받아 신규 Calculator_Schema.json에 정의된
-공간별/그룹별 통합 한도와 티어(Tier) 조건을 반영하여 이론상 최대 혜택을 계산합니다.
+Agent workflow의 tool 노드에서 호출됩니다.
+유저가 사전에 선택한 카테고리별 예산을 입력받아
+해당 카드의 '이론상 최대 할인/적립 금액(Upper Bound)'을 반환합니다.
+
+입력:
+  - user_budgets : dict[str, int]  (예: {"Coffee": 50000, "Traffic": 60000})
+  - user_total_spend : int | None  (미입력 시 user_budgets의 합)
+
+출력: dict (카드명, 카테고리별 월 최대 할인 KRW, 연간 혜택 등)
 """
 
 from __future__ import annotations
 from collections import defaultdict
+
 from loguru import logger
 
+
 # =============================================================================
-# 상수 및 유틸리티
+# 상수
 # =============================================================================
-DEFAULT_FUEL_PRICE_PER_LITER = 1_600
+DEFAULT_FUEL_PRICE_PER_LITER = 1_600  # 기준 휘발유 가격 (원/리터)
 DAYS_PER_MONTH = 30
 INF = float("inf")
 
-# 새 Calculator_Schema 포맷의 calc_type 값을 기존 calc_method 값으로 매핑
-_CALC_TYPE_MAP = {
-    "PERCENTAGE": "RATE",
-    "FLAT_RATE": "FIXED_AMOUNT",
-    "UNIT_BASED": "PER_UNIT",
-    "FULL_COVER": "MAX_COVER_UP_TO_LIMIT",
-}
 
+# =============================================================================
+# 유틸리티
+# =============================================================================
 def _pick(tier: dict | None, keys: str | list[str], fallback=None):
-    """Tier 조건에 해당 필드가 있으면 반환, 없으면 기본값(fallback) 반환."""
+    """tier 사전에 값이 있으면 사용, 없으면 fallback. keys는 단일 문자열 또는 리스트."""
     if tier is not None:
         if isinstance(keys, str):
             keys = [keys]
@@ -37,18 +42,26 @@ def _pick(tier: dict | None, keys: str | list[str], fallback=None):
 
 
 def _effective_days(day_of_week: list[str] | None) -> float:
-    """요일 제한이 있을 시 월간 유효 일수 계산."""
+    """요일 제한이 있을 때 한 달 중 해당 요일 수 추정."""
     if not day_of_week:
         return DAYS_PER_MONTH
-    return len(day_of_week) * 4.33
+    return len(day_of_week) * 4.33  # 약 4.33주/월
+
 
 # =============================================================================
-# BenefitCalculator (v4)
+# BenefitCalculator
 # =============================================================================
 class BenefitCalculator:
+    """
+    Master Schema v2 카드 데이터를 받아
+    유저의 카테고리별 예산 대비 이론상 최대 할인/적립 금액을 산출합니다.
+    """
+
     def __init__(self, card_data: dict):
         self.meta = card_data.get("card_meta", {})
-        self.groups = {g["group_id"]: g for g in card_data.get("benefit_groups", [])}
+        self.groups = {
+            g["group_id"]: g for g in card_data.get("benefit_groups", [])
+        }
         self.benefits = card_data.get("benefits", [])
         self._perf_excluded_cats: set[str] = set(
             self.meta.get("performance_excluded_categories") or []
@@ -90,18 +103,30 @@ class BenefitCalculator:
     # -----------------------------------------------------------------
     @staticmethod
     def _find_best_tier(tier_conditions: list[dict], performance: float) -> dict | None:
-        """전월 실적에 부합하는 가장 높은 티어 조건을 선별."""
+        """실적 이상인 구간 중 가장 높은 구간을 반환."""
         if not tier_conditions:
             return None
-        applicable = [t for t in tier_conditions if performance >= t.get("min_prev_performance", 0)]
+        applicable = [
+            t for t in tier_conditions
+            if performance >= t.get("min_prev_performance", 0)
+        ]
         if not applicable:
             return None
         return max(applicable, key=lambda t: t.get("min_prev_performance", 0))
 
-    def _calc_single_benefit(self, benefit: dict, budget: float, performance: float) -> dict:
+    # -----------------------------------------------------------------
+    # 3. 단일 혜택 Upper Bound 산출
+    # -----------------------------------------------------------------
+    def _calc_benefit(
+        self,
+        benefit: dict,
+        budget: float,
+        performance: float,
+        user_total_spend: float,
+    ) -> dict:
         """
-        [1. 혜택 유형별 공식] 적용.
-        개별 혜택에 대해 주어진 예산으로 산출 가능한 이론상 최대 금액을 반환.
+        개별 benefit에 대해 주어진 budget으로 얻을 수 있는
+        이론상 최대 혜택 금액을 산출합니다 (Upper Bound).
         """
         calc_rule = benefit.get("calculation_rule") or {}
         trans_cond = benefit.get("transaction_conditions") or {}
@@ -144,10 +169,7 @@ class BenefitCalculator:
         max_count_year = trans_cond.get("max_count_per_year") or INF
         day_of_week = trans_cond.get("day_of_week")
 
-        # 연간 한도/횟수 월간 안분
-        if max_cnt_year < INF:
-            max_cnt_month = min(max_cnt_month, max_cnt_year / 12.0)
-        
+        # 요일 제한 반영 → 일별 횟수 × 해당 요일 수
         eff_days = _effective_days(day_of_week)
         
         # 연간 한도가 있을 경우 월간 평균으로 안분(Amortization)
@@ -228,39 +250,52 @@ class BenefitCalculator:
                     best = max(applicable, key=lambda t: t.get("rate", 0))
                     raw_amount = eff_budget * (best["rate"] + add_rate)
                 else:
-                    optimal_uses = budget // max(min_pay, 1)
-                    count = min(optimal_uses, max_monthly_txns)
-                    raw_benefit = count * flat
-                    used_budget = count * min_pay
+                    # 예산이 모든 구간의 최소 금액보다 작은 경우 0으로 처리 (또는 기본 적립률이 있다면 적용 가능)
+                    raw_amount = 0.0
+            used_budget = eff_budget
 
-            elif calc_type == "UNIT_BASED":
-                # 1-3 공식: (spend / unit_price) * unit_discount
-                label = rule.get("unit_label", "")
-                if label == "liter":
-                    liters = budget / DEFAULT_FUEL_PRICE_PER_LITER
-                    raw_benefit = liters * unit_amount
-                    used_budget = budget
-                else:
-                    raw_benefit = unit_amount # 기본값
-                    used_budget = budget
+        elif calc_method == "MAX_COVER_UP_TO_LIMIT":
+            raw_amount = min(eff_budget, monthly_limit)
+            used_budget = raw_amount
 
-            elif calc_type == "FULL_COVER":
-                raw_benefit = budget
-                used_budget = budget
+        else:
+            logger.warning(
+                "알 수 없는 calc_method '%s' — benefit_id=%s. 혜택을 0으로 처리합니다.",
+                calc_method,
+                benefit.get("benefit_id"),
+            )
 
-        # 3. 개별 한도 캡 적용
-        final_benefit = min(raw_benefit * conv_rate, limit)
-        
-        # 1-4 Fallback 보정 (비율 할인이나 실효 사용금액 기반인 경우 한도 초과분 처리)
-        if raw_benefit * conv_rate > limit and fallback_rate > 0 and rate > 0:
-            excess_spend = (raw_benefit * conv_rate - limit) / (rate * conv_rate)
-            final_benefit += (excess_spend * fallback_rate * conv_rate)
+        # --- 한도 적용 + Fallback ---
+        final_amount = min(raw_amount, monthly_limit)
+
+        if raw_amount > monthly_limit and fallback_rate > 0 and (rate + add_rate) > 0:
+            consumed = monthly_limit / (rate + add_rate)
+            remaining = used_budget - consumed
+            if remaining > 0:
+                final_amount += remaining * fallback_rate
+
+        # --- KRW 환산 ---
+        krw = final_amount * conversion_rate
+
+        # --- 시간대/요일/자동납부 경고 ---
+        time_of_day = trans_cond.get("time_of_day") or {}
+        if time_of_day.get("start"):
+            warnings.append(f"시간대 한정: {time_of_day['start']}~{time_of_day['end']}")
+        if day_of_week:
+            warnings.append(f"요일 한정: {', '.join(day_of_week)}")
+        if trans_cond.get("requires_auto_payment"):
+            warnings.append("자동납부(정기결제) 필수")
 
         return {
             "benefit_id": benefit.get("benefit_id"),
             "content": benefit.get("content", ""),
             "category": benefit.get("category"),
-            "sub_category": benefit.get("sub_category", "general"),
+            "sub_category": benefit.get("sub_category"),
+            "frequency": freq,
+            "reward_type": benefit.get("reward_type"),
+            "raw_amount": round(final_amount, 2),
+            "amount_krw": round(krw),
+            "used_budget": round(used_budget),
             "group_id": benefit.get("group_id"),
             "warnings": warnings,
         }
@@ -281,72 +316,105 @@ class BenefitCalculator:
             "warnings": [],
         }
 
-    def _apply_complex_logic(self, results: list[dict], performance: float) -> list[dict]:
-        """[2. 복합 조건 공식] 적용 (SHARED_LIMIT, SELECTIVE_GROUP, AUTO_TOP_N)."""
-        # 1. SELECTIVE_GROUP 처리 (패키지 중 하나 선택)
-        sel_groups = defaultdict(lambda: defaultdict(list))
+    def _fallback_result(self, reason: str) -> dict:
+        """
+        계산 실패 시 graceful degradation용 fallback.
+        다운스트림(CardRecommendService)은 특정 키를 안전하게 기대하고 있으므로,
+        여기서는 스키마를 깨지 않는 최소 구조를 반환합니다.
+        """
+        return {
+            "card_name": self.meta.get("card_name", ""),
+            "card_id": self.meta.get("card_id", ""),
+            "performance_met": False,
+            "adjusted_performance": 0,
+            "monthly_total_krw": 0,
+            "annual_total_krw": 0,
+            "category_breakdown": [],
+            "applied_benefits_trace": [],
+            "annual_breakdown": [],
+            "warnings": [reason],
+            "fallback": True,
+        }
+
+    # -----------------------------------------------------------------
+    # 4. 연간 특수 혜택 산출 (annual_usage_tiers, annual_voucher)
+    # -----------------------------------------------------------------
+    def _calc_annual_specials(self, user_total_spend: float) -> list[dict]:
+        """edge_case_flags 내 연간 캐시백 / 바우처 혜택 산출."""
+        items: list[dict] = []
+        annual_projection = user_total_spend * 12
+
+        for b in self.benefits:
+            flags = b.get("edge_case_flags") or {}
+
+            # 연간 누적 캐시백 (예: X카드 500만당 2만원)
+            for at in flags.get("annual_usage_tiers") or []:
+                min_spend = at.get("min_annual_spend", 0)
+                max_spend = at.get("max_annual_spend") or INF
+                cashback = at.get("cashback_amount", 0)
+                if annual_projection >= min_spend and min_spend > 0:  # ZeroDivision 방어
+                    eligible = min(annual_projection, max_spend)
+                    times = int(eligible // min_spend)
+                    items.append({
+                        "benefit_id": b.get("benefit_id"),
+                        "category": b.get("category"),
+                        "type": "annual_cashback",
+                        "amount_krw": cashback * times,
+                        "description": at.get("description", ""),
+                    })
+
+            # 연간 바우처 (예: Summit 15만원 바우처)
+            voucher = flags.get("annual_voucher") or {}
+            val = voucher.get("voucher_value_krw")
+            if val:
+                items.append({
+                    "benefit_id": b.get("benefit_id"),
+                    "category": b.get("category"),
+                    "type": "voucher",
+                    "amount_krw": val,
+                    "description": voucher.get("initial_year_condition", ""),
+                    "choices": voucher.get("choices"),
+                })
+
+        return items
+
+    # -----------------------------------------------------------------
+    # 5. 그룹 한도 적용
+    # -----------------------------------------------------------------
+    def _apply_group_limits(self, results: list[dict]) -> None:
+        """SHARED_LIMIT / USER_CHOICE_ONE / AUTO_TOP_N 그룹 한도 적용 (in-place)."""
+        buckets: dict[str, list[dict]] = defaultdict(list)
         for r in results:
-            if r["selective_group_id"]:
-                sel_groups[r["selective_group_id"]][r["choice_id"]].append(r)
+            gid = r.get("group_id")
+            if gid:
+                buckets[gid].append(r)
 
-        for sg_id, choices in sel_groups.items():
-            # 각 choice(패키지)별 합산 금액 계산
-            choice_totals = []
-            for c_id, g_items in choices.items():
-                total = sum(i["yielded_discount"] for i in g_items)
-                choice_totals.append((c_id, total))
-            
-            if not choice_totals: continue
-            best_c_id, _ = max(choice_totals, key=lambda x: x[1])
-            
-            # 나머지 패키지 무효화
-            for c_id, g_items in choices.items():
-                if c_id != best_c_id:
-                    for i in g_items:
-                        i["yielded_discount"] = 0
-                        i["applied_budget"] = 0
+        for gid, items in buckets.items():
+            group_info = self.groups.get(gid)
+            if not group_info:
+                continue
 
-        # 2. SHARED_LIMIT / AUTO_TOP_N 처리
-        group_buckets = defaultdict(list)
-        for r in results:
-            if r["group_id"]:
-                group_buckets[r["group_id"]].append(r)
+            g_type = group_info.get("group_type", "SHARED_LIMIT")
+            g_limit = group_info.get("limit_amount") or INF
 
-        for gid, items in group_buckets.items():
-            g_info = self.groups.get(gid)
-            if not g_info: continue
-            
-            g_type = g_info.get("group_type", "SHARED_LIMIT")
-            
-            # 티어별 그룹 한도 확인 (가변 한도)
-            # 여기서는 편의상 혜택들 중 하나(첫번째)의 티어 조건을 대표로 사용하거나 
-            # 그룹용 티어 검색을 별도로 수행할 수 있음. 
-            # 스키마 구조상 혜택별 tier_conditions 에 group_monthly_limit 이 있음.
-            g_limit = g_info.get("monthly_limit") or INF
-            
-            # 해당 그룹에 속한 혜택들 중 적용된 티어가 있다면 그룹 한도를 Override
-            for r in items:
-                # 혜택 객체를 다시 찾아 티어 정보를 가져옴
-                matching_benefit = next((b for b in self.benefits if b["benefit_id"] == r["benefit_id"]), None)
-                if matching_benefit:
-                    tier = self._find_best_tier(matching_benefit.get("tier_conditions", []), performance)
-                    if tier and tier.get("group_monthly_limit") is not None:
-                        g_limit = tier["group_monthly_limit"]
-                        break
+            if g_type == "SHARED_LIMIT":
+                total = sum(r["amount_krw"] for r in items)
+                if total > g_limit and total > 0:  # ZeroDivision 방어
+                    ratio = g_limit / total
+                    for r in items:
+                        r["amount_krw"] = round(r["amount_krw"] * ratio)
 
-            if g_type == "AUTO_TOP_N":
-                # 2-5 공식: 상위 N개 혜택만 합산
-                n = g_info.get("top_n_count") or 1
-                sorted_items = sorted(items, key=lambda x: x["yielded_discount"], reverse=True)
-                for idx, r in enumerate(sorted_items):
-                    if idx >= n:
-                        r["yielded_discount"] = 0
-                        r["applied_budget"] = 0
-            
-            # 2-1 공식: 그룹 통합 한도 캡 적용
-            total_g_benefit = sum(r["yielded_discount"] for r in items)
-            if total_g_benefit > g_limit:
-                ratio = g_limit / total_g_benefit
+            elif g_type == "USER_CHOICE_ONE":
+                best = max(items, key=lambda r: r["amount_krw"])
+                for r in items:
+                    if r["benefit_id"] != best["benefit_id"]:
+                        r["amount_krw"] = 0
+                        r["warnings"].append("그룹 내 택1 조건으로 인해 제외됨")
+
+            elif g_type == "AUTO_TOP_N":
+                n = group_info.get("top_n_count") or 1
+                ranked = sorted(items, key=lambda r: r["amount_krw"], reverse=True)
+                selected_ids = {r["benefit_id"] for r in ranked[:n]}
                 for r in items:
                     if r["benefit_id"] not in selected_ids:
                         r["amount_krw"] = 0
@@ -570,42 +638,250 @@ class BenefitCalculator:
                 + annual_specials
             )
 
-        return result
+            return result
+        except (ZeroDivisionError, TypeError, ValueError) as e:
+            logger.exception("[BenefitCalculator.calculate] 계산 실패로 인한 fallback: %s", repr(e))
+            return self._fallback_result(f"{type(e).__name__}: {e}")
+
 
 # =============================================================================
-# 직접 실행/테스트부
+# 테스트 실행부 (Master Schema v2 Mock Data)
 # =============================================================================
 if __name__ == "__main__":
     import json
-    import os
 
-    # 1. 샘플 데이터 로드 (현대카드 Z family Ed2 활용)
-    # 실제 환경에서는 datasets/json_v4 에서 읽어옴
-    sample_json_path = "c:/Users/vs501/Documents/workspace/SmartPick-Neo/datasets/json_v4/hyundai/hyundai_z_family_ed2.json"
-    
-    if os.path.exists(sample_json_path):
-        with open(sample_json_path, "r", encoding="utf-8") as f:
-            card_data = json.load(f)
-        
-        calc = BenefitCalculator(card_data)
-        
-        # 2. 샘플 페이로드 (dummy_20s_male 기반)
-        payload = {
-            "Traffic": {"total": 100000, "fuel": "100%"},
-            "Shopping": {"total": 150000, "online": "100%"},
-            "EduHealth": {"total": 200000, "hospital": "50%", "education": "50%"}
-        }
-        
-        # 실적 100만원 가정 (한도 1만원 증가 확인용)
-        res_100 = calc.calculate(payload, user_total_spend=1000000)
-        print(f"--- {res_100['card_name']} (실적 100만) ---")
-        print(f"월 총 혜택: {res_100['monthly_total_krw']:,}원")
-        for cb in res_100["category_breakdown"]:
-            print(f" - {cb['category']}: {cb['monthly_discount_krw']:,}원")
+    # ── 테스트 케이스 1: 정률 + 정액 + 그룹 한도 ──
+    mock_card_1 = {
+        "card_meta": {
+            "card_id": "test_discount_card",
+            "card_name": "테스트 할인카드 Pro",
+            "card_company": "TEST",
+            "annual_fee_domestic": 15000,
+            "annual_fee_international": 20000,
+            "minimum_performance": 300000,
+            "performance_excluded_categories": None,
+        },
+        "benefit_groups": [
+            {
+                "group_id": "G_TIME_PLAN",
+                "group_name": "Time Plan 통합",
+                "group_type": "SHARED_LIMIT",
+                "limit_amount": 10000,
+                "top_n_count": None,
+            }
+        ],
+        "benefits": [
+            {
+                "benefit_id": "b_coffee",
+                "category": "Coffee",
+                "content": "커피 전문점 10% 할인, 월 한도 15000원, 한도 초과 시 1% 적립",
+                "frequency": "MONTHLY",
+                "reward_type": "DISCOUNT",
+                "reward_unit": {"currency": "KRW", "currency_to_krw_rate": 1.0},
+                "tier_conditions": [],
+                "calculation_rule": {
+                    "calc_method": "RATE",
+                    "rate": 0.10,
+                    "fixed_amount": None,
+                    "unit_label": None,
+                    "unit_amount": None,
+                    "monthly_limit": 15000,
+                    "monthly_usage_limit": None,
+                    "fallback_reward_rate": 0.01,
+                    "transaction_tiers": None,
+                },
+                "transaction_conditions": {
+                    "min_payment_amount": 0,
+                    "max_payment_amount_applied": 10000,
+                    "max_count_per_day": 1,
+                    "max_count_per_month": 4,
+                    "max_count_per_year": None,
+                    "day_of_week": None,
+                    "time_of_day": {"start": None, "end": None},
+                    "requires_auto_payment": False,
+                    "requires_offline": True,
+                    "requires_online": False,
+                },
+                "group_id": "G_TIME_PLAN",
+                "ui_warnings": ["오프라인 매장 한정"],
+                "edge_case_flags": {
+                    "requires_user_selection": False,
+                    "excludes_from_performance": False,
+                    "category_excludes_from_performance": False,
+                    "special_month_bonus": {
+                        "type": None, "multiplier": None,
+                        "bonus_limit_add": None, "months": None,
+                    },
+                    "performance_gap_forgiveness": {
+                        "enabled": False, "max_gap_amount": None, "max_count_per_year": None,
+                    },
+                    "current_month_performance": False,
+                    "payment_platform_bonus": {"platform": None, "additional_rate": None},
+                    "annual_usage_tiers": [],
+                    "annual_voucher": {
+                        "voucher_value_krw": None, "initial_year_condition": None,
+                        "renewal_year_condition": None, "choices": None,
+                    },
+                    "escape_hatch_note": None,
+                },
+            },
+            {
+                "benefit_id": "b_general",
+                "category": "General",
+                "content": "전 가맹점 1% 적립",
+                "frequency": "MONTHLY",
+                "reward_type": "POINT",
+                "reward_unit": {"currency": "M_POINT", "currency_to_krw_rate": 0.666},
+                "tier_conditions": [],
+                "calculation_rule": {
+                    "calc_method": "RATE",
+                    "rate": 0.01,
+                    "fixed_amount": None,
+                    "unit_label": None,
+                    "unit_amount": None,
+                    "monthly_limit": None,
+                    "monthly_usage_limit": None,
+                    "fallback_reward_rate": 0.0,
+                    "transaction_tiers": None,
+                },
+                "transaction_conditions": {
+                    "min_payment_amount": 0,
+                    "max_payment_amount_applied": None,
+                    "max_count_per_day": None,
+                    "max_count_per_month": None,
+                    "max_count_per_year": None,
+                    "day_of_week": None,
+                    "time_of_day": {"start": None, "end": None},
+                    "requires_auto_payment": False,
+                    "requires_offline": False,
+                    "requires_online": False,
+                },
+                "group_id": None,
+                "ui_warnings": [],
+                "edge_case_flags": {
+                    "requires_user_selection": False,
+                    "excludes_from_performance": False,
+                    "category_excludes_from_performance": False,
+                    "special_month_bonus": {
+                        "type": None, "multiplier": None,
+                        "bonus_limit_add": None, "months": None,
+                    },
+                    "performance_gap_forgiveness": {
+                        "enabled": False, "max_gap_amount": None, "max_count_per_year": None,
+                    },
+                    "current_month_performance": False,
+                    "payment_platform_bonus": {"platform": None, "additional_rate": None},
+                    "annual_usage_tiers": [],
+                    "annual_voucher": {
+                        "voucher_value_krw": None, "initial_year_condition": None,
+                        "renewal_year_condition": None, "choices": None,
+                    },
+                    "escape_hatch_note": None,
+                },
+            },
+        ],
+    }
 
-        # 실적 50만원 가정 (한도 6천원 확인용)
-        res_50 = calc.calculate(payload, user_total_spend=500000)
-        print(f"\n--- {res_50['card_name']} (실적 50만) ---")
-        print(f"월 총 혜택: {res_50['monthly_total_krw']:,}원")
-    else:
-        print(f"파일을 찾을 수 없습니다: {sample_json_path}")
+    # ── 테스트 케이스 2: PER_UNIT (주유) + 실적 구간별 한도 ──
+    mock_card_2 = {
+        "card_meta": {
+            "card_id": "test_fuel_card",
+            "card_name": "테스트 주유카드",
+            "card_company": "TEST",
+            "annual_fee_domestic": 10000,
+            "annual_fee_international": None,
+            "minimum_performance": 300000,
+            "performance_excluded_categories": ["Fuel"],
+        },
+        "benefit_groups": [],
+        "benefits": [
+            {
+                "benefit_id": "b_fuel",
+                "category": "Fuel",
+                "content": "전 주유소 리터당 60원 할인",
+                "frequency": "MONTHLY",
+                "reward_type": "DISCOUNT",
+                "reward_unit": {"currency": "KRW", "currency_to_krw_rate": 1.0},
+                "tier_conditions": [
+                    {
+                        "min_prev_performance": 300000,
+                        "rate": None,
+                        "fixed_amount": None,
+                        "unit_amount": 60,
+                        "monthly_limit": None,
+                        "monthly_usage_limit": 200000,
+                        "description": "30만 이상: 이용금액 20만원 한도",
+                    },
+                    {
+                        "min_prev_performance": 600000,
+                        "rate": None,
+                        "fixed_amount": None,
+                        "unit_amount": 60,
+                        "monthly_limit": None,
+                        "monthly_usage_limit": 400000,
+                        "description": "60만 이상: 이용금액 40만원 한도",
+                    },
+                ],
+                "calculation_rule": {
+                    "calc_method": "PER_UNIT",
+                    "rate": None,
+                    "fixed_amount": None,
+                    "unit_label": "liter",
+                    "unit_amount": 60,
+                    "monthly_limit": None,
+                    "monthly_usage_limit": None,
+                    "fallback_reward_rate": 0.0,
+                    "transaction_tiers": None,
+                },
+                "transaction_conditions": {
+                    "min_payment_amount": 0,
+                    "max_payment_amount_applied": 100000,
+                    "max_count_per_day": 1,
+                    "max_count_per_month": None,
+                    "max_count_per_year": None,
+                    "day_of_week": None,
+                    "time_of_day": {"start": None, "end": None},
+                    "requires_auto_payment": False,
+                    "requires_offline": True,
+                    "requires_online": False,
+                },
+                "group_id": None,
+                "ui_warnings": [],
+                "edge_case_flags": {
+                    "requires_user_selection": False,
+                    "excludes_from_performance": False,
+                    "category_excludes_from_performance": True,
+                    "special_month_bonus": {
+                        "type": None, "multiplier": None,
+                        "bonus_limit_add": None, "months": None,
+                    },
+                    "performance_gap_forgiveness": {
+                        "enabled": False, "max_gap_amount": None, "max_count_per_year": None,
+                    },
+                    "current_month_performance": False,
+                    "payment_platform_bonus": {"platform": None, "additional_rate": None},
+                    "annual_usage_tiers": [],
+                    "annual_voucher": {
+                        "voucher_value_krw": None, "initial_year_condition": None,
+                        "renewal_year_condition": None, "choices": None,
+                    },
+                    "escape_hatch_note": None,
+                },
+            },
+        ],
+    }
+
+    print("=" * 60)
+    print("테스트 1: 정률 + Fallback + 그룹 한도")
+    print("=" * 60)
+    calc1 = BenefitCalculator(mock_card_1)
+    r1 = calc1.calculate({"Coffee": 100_000}, user_total_spend=1_000_000)
+    print(json.dumps(r1, indent=2, ensure_ascii=False))
+
+    print()
+    print("=" * 60)
+    print("테스트 2: 주유 PER_UNIT (리터당 60원) + 실적 제외")
+    print("=" * 60)
+    calc2 = BenefitCalculator(mock_card_2)
+    r2 = calc2.calculate({"Fuel": 200_000}, user_total_spend=800_000)
+    print(json.dumps(r2, indent=2, ensure_ascii=False))

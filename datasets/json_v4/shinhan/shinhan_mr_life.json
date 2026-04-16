@@ -5,7 +5,7 @@
     "card_company": "SHINHAN",
     "annual_fee_domestic": 15000,
     "annual_fee_international": 18000,
-    "minimum_performance": 300000,
+    "minimum_performance": 0,
     "performance_excluded_categories": [
       "Fuel",
       "Tax"
@@ -14,7 +14,7 @@
   "benefit_groups": [
     {
       "group_id": "G_MONTHLY_BILL",
-      "group_name": "월납요금(공과금) 서비스",
+      "group_name": "월납요금 통합 그룹",
       "group_type": "SHARED_LIMIT",
       "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
       "choices": null,
@@ -24,7 +24,7 @@
     },
     {
       "group_id": "G_WEEKEND_DISCOUNT",
-      "group_name": "주말 할인 서비스 (마트/주유)",
+      "group_name": "주말 할인 통합 그룹",
       "group_type": "SHARED_LIMIT",
       "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
       "choices": null,
@@ -34,17 +34,7 @@
     },
     {
       "group_id": "G_TIME_DISCOUNT",
-      "group_name": "Time 할인 서비스 (All Day / Night)",
-      "group_type": "SHARED_LIMIT",
-      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
-      "choices": null,
-      "monthly_limit": null,
-      "annual_limit": null,
-      "top_n_count": null
-    },
-    {
-      "group_id": "G_INTAKE_MALL",
-      "group_name": "인테이크(Intake)몰 20% 할인",
+      "group_name": "Time 할인 통합 그룹",
       "group_type": "SHARED_LIMIT",
       "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
       "choices": null,
@@ -79,7 +69,7 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_tx_spend_allowed": 50000,
-        "max_count_per_day": null,
+        "max_count_per_day": 1,
         "max_count_per_month": 1,
         "max_count_per_year": null,
         "day_of_week": null,
@@ -119,8 +109,7 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "할인 서비스는 서비스 대상 가맹점 중 신한카드 전표 매입 순서대로 적용됩니다.",
-          "무이자 및 슬림할부 이용거래는 할인 적용 제외 대상입니다."
+          "전월 이용실적에 따라 서비스별 통합 할인 한도가 적용됩니다."
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -157,7 +146,7 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_tx_spend_allowed": 50000,
-        "max_count_per_day": null,
+        "max_count_per_day": 1,
         "max_count_per_month": 1,
         "max_count_per_year": null,
         "day_of_week": null,
@@ -197,8 +186,7 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "할인 서비스는 서비스 대상 가맹점 중 신한카드 전표 매입 순서대로 적용됩니다.",
-          "무이자 및 슬림할부 이용거래는 할인 적용 제외 대상입니다."
+          "전월 이용실적에 따라 서비스별 통합 할인 한도가 적용됩니다."
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -279,8 +267,7 @@
       "conditional_metadata": {
         "warnings": [
           "상품권 구매는 제외됩니다.",
-          "할인 서비스는 서비스 대상 가맹점 중 신한카드 전표 매입 순서대로 적용됩니다.",
-          "무이자 및 슬림할부 이용거래는 할인 적용 제외 대상입니다."
+          "주말 할인 서비스는 공휴일 여부와 관계없이 토요일 및 일요일에 제공됩니다."
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -316,7 +303,7 @@
       },
       "transaction_conditions": {
         "min_payment_amount": 0,
-        "max_tx_spend_allowed": null,
+        "max_tx_spend_allowed": 100000,
         "max_count_per_day": 1,
         "max_count_per_month": null,
         "max_count_per_year": null,
@@ -360,9 +347,8 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "휘발유, 경유, 등유에 한함 (LPG 제외)",
-          "할인 서비스는 서비스 대상 가맹점 중 신한카드 전표 매입 순서대로 적용됩니다.",
-          "무이자 및 슬림할부 이용거래는 할인 적용 제외 대상입니다."
+          "주말 할인 서비스는 공휴일 여부와 관계없이 토요일 및 일요일에 제공됩니다.",
+          "휘발유, 경유, 등유에 한함 (LPG 제외)"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -375,7 +361,7 @@
       }
     },
     {
-      "benefit_id": "B_TIME_DAY_10",
+      "benefit_id": "B_TIME_ALL_DAY_10",
       "group_id": "G_TIME_DISCOUNT",
       "selective_choice": null,
       "category": "Shopping",
@@ -439,8 +425,7 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "할인 서비스는 서비스 대상 가맹점 중 신한카드 전표 매입 순서대로 적용됩니다.",
-          "무이자 및 슬림할부 이용거래는 할인 적용 제외 대상입니다."
+          "각 영역별 일 1회, 월 5회 할인 적용 (1회 승인금액 1만원까지 할인, 1회 최대 1천원 할인)"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -453,7 +438,7 @@
       }
     },
     {
-      "benefit_id": "B_TIME_DAY_10_HOSPITAL",
+      "benefit_id": "B_TIME_ALL_DAY_10_HOSPITAL",
       "group_id": "G_TIME_DISCOUNT",
       "selective_choice": null,
       "category": "EduHealth",
@@ -517,9 +502,8 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "동물병원 제외",
-          "할인 서비스는 서비스 대상 가맹점 중 신한카드 전표 매입 순서대로 적용됩니다.",
-          "무이자 및 슬림할부 이용거래는 할인 적용 제외 대상입니다."
+          "각 영역별 일 1회, 월 5회 할인 적용 (1회 승인금액 1만원까지 할인, 1회 최대 1천원 할인)",
+          "동물병원 제외"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -532,7 +516,7 @@
       }
     },
     {
-      "benefit_id": "B_TIME_DAY_10_LAUNDRY",
+      "benefit_id": "B_TIME_ALL_DAY_10_LAUNDRY",
       "group_id": "G_TIME_DISCOUNT",
       "selective_choice": null,
       "category": "Life",
@@ -596,8 +580,7 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "할인 서비스는 서비스 대상 가맹점 중 신한카드 전표 매입 순서대로 적용됩니다.",
-          "무이자 및 슬림할부 이용거래는 할인 적용 제외 대상입니다."
+          "각 영역별 일 1회, 월 5회 할인 적용 (1회 승인금액 1만원까지 할인, 1회 최대 1천원 할인)"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -674,8 +657,7 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "할인 서비스는 서비스 대상 가맹점 중 신한카드 전표 매입 순서대로 적용됩니다.",
-          "무이자 및 슬림할부 이용거래는 할인 적용 제외 대상입니다."
+          "각 영역별 일 1회, 월 10회 할인 적용 (1회 승인금액 1만원까지 할인, 1회 최대 1천원 할인)"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -752,9 +734,8 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "오프라인 현장 결제 건에 한함",
-          "할인 서비스는 서비스 대상 가맹점 중 신한카드 전표 매입 순서대로 적용됩니다.",
-          "무이자 및 슬림할부 이용거래는 할인 적용 제외 대상입니다."
+          "각 영역별 일 1회, 월 10회 할인 적용 (1회 승인금액 1만원까지 할인, 1회 최대 1천원 할인)",
+          "오프라인 현장 결제 건에 한함"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -831,8 +812,7 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "할인 서비스는 서비스 대상 가맹점 중 신한카드 전표 매입 순서대로 적용됩니다.",
-          "무이자 및 슬림할부 이용거래는 할인 적용 제외 대상입니다."
+          "각 영역별 일 1회, 월 10회 할인 적용 (1회 승인금액 1만원까지 할인, 1회 최대 1천원 할인)"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -845,11 +825,11 @@
       }
     },
     {
-      "benefit_id": "B_INTAKE_MALL_20",
-      "group_id": "G_INTAKE_MALL",
+      "benefit_id": "B_INTAKE_20",
+      "group_id": null,
       "selective_choice": null,
-      "category": "Shopping",
-      "sub_category": "online",
+      "category": "General",
+      "sub_category": null,
       "reward_type": "DIRECT_FINANCIAL",
       "reward_unit": {
         "currency": "KRW",
@@ -884,7 +864,7 @@
       "tier_conditions": [
         {
           "min_prev_performance": 0,
-          "benefit_rate": null,
+          "benefit_rate": 0.2,
           "flat_discount": null,
           "discount_per_unit": null,
           "monthly_benefit_limit": null,
@@ -894,15 +874,16 @@
       "conditional_metadata": {
         "warnings": [
           "인테이크몰 직접 접속 시에만 적용됩니다.",
-          "할인 서비스는 서비스 대상 가맹점 중 신한카드 전표 매입 순서대로 적용됩니다.",
-          "무이자 및 슬림할부 이용거래는 할인 적용 제외 대상입니다."
+          "전월 유실적 고객 대상 제공됩니다."
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
       },
       "indirect_benefit_metadata": {
         "description": null,
-        "target_locations": null,
+        "target_locations": [
+          "www.shopintake.com"
+        ],
         "voucher_choices": null,
         "voucher_value": null
       }

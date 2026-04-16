@@ -7,39 +7,18 @@
     "annual_fee_international": 15000,
     "minimum_performance": 400000,
     "performance_excluded_categories": [
-      "KB Pay",
-      "Food",
-      "Convenience_Store",
-      "Telecom",
-      "OTT",
-      "Delivery",
-      "Coffee",
-      "Taxi",
-      "Cinema",
-      "Beauty",
-      "Leisure_Sports",
-      "Books",
-      "Cash_Service",
-      "Card_Loan",
-      "Gift_Card",
-      "Apartment_Fee",
-      "School_Fee",
-      "Government_Subsidy",
-      "Tuition",
+      "Fuel",
       "Tax",
-      "Public_Fee",
       "Insurance",
-      "Fee_Interest",
-      "Late_Fee",
-      "Annual_Fee",
-      "Transportation",
-      "Vending_Machine"
+      "Education",
+      "Utility",
+      "Others"
     ]
   },
   "benefit_groups": [
     {
-      "group_id": "G_SHARED_COMMUNICATION_OTT",
-      "group_name": "통신OTT 통합 한도",
+      "group_id": "G_COMMUNICATION_OTT",
+      "group_name": "통신OTT 통합 그룹",
       "group_type": "SHARED_LIMIT",
       "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
       "choices": null,
@@ -49,21 +28,21 @@
     },
     {
       "group_id": "G_SELECTIVE_1",
-      "group_name": "필수 선택 1",
+      "group_name": "필수 선택 1 그룹",
       "group_type": "SELECTIVE_GROUP",
       "group_type_description": "SELECTIVE_GROUP: 필수 선택형 (2-3 공식)",
       "choices": [
         {
-          "choice_id": "CHOICE_EAT",
-          "choice_name": "먹는데 진심"
+          "choice_id": "CHOICE_1_EAT",
+          "choice_name": "먹는데 진심 (배민/요기요/마켓컬리, 커피)"
         },
         {
-          "choice_id": "CHOICE_PLAY",
-          "choice_name": "노는데 진심"
+          "choice_id": "CHOICE_1_PLAY",
+          "choice_name": "노는데 진심 (택시, 커피, 영화)"
         },
         {
-          "choice_id": "CHOICE_MANAGE",
-          "choice_name": "관리에 진심"
+          "choice_id": "CHOICE_1_MANAGE",
+          "choice_name": "관리에 진심 (미용실, 스포츠, 올리브영, 온라인서점)"
         }
       ],
       "monthly_limit": null,
@@ -112,8 +91,7 @@
       "tier_conditions": [],
       "conditional_metadata": {
         "warnings": [
-          "할인 받은 이용건 취소 시 할인한도가 즉시 복원되지 않을 수 있음",
-          "무이자할부, 단기카드대출, 장기카드대출, 상품권 및 선불카드 구입/충전금액, 아파트관리비, 초·중·고교 납입금, 정부지원금, 대학(원) 등록금, 국세, 지방세, 공과금, 4대 사회보험료, 각종 수수료 및 이자, 연체료, 연회비, 신차구매청구 할인 전표 전체, 취소금액 제외"
+          "할인 받은 이용 건 취소 시 할인한도가 즉시 복원되지 않을 수 있음"
         ],
         "excludes_from_performance": true,
         "special_multiplier": null
@@ -126,7 +104,7 @@
       }
     },
     {
-      "benefit_id": "B_FOOD_CONVENIENCE",
+      "benefit_id": "B_RESTAURANT_CONVENIENCE",
       "group_id": null,
       "selective_choice": null,
       "category": "Food",
@@ -165,8 +143,7 @@
       "tier_conditions": [],
       "conditional_metadata": {
         "warnings": [
-          "할인 받은 이용건 취소 시 할인한도가 즉시 복원되지 않을 수 있음",
-          "무이자할부, 단기카드대출, 장기카드대출, 상품권 및 선불카드 구입/충전금액, 아파트관리비, 초·중·고교 납입금, 정부지원금, 대학(원) 등록금, 국세, 지방세, 공과금, 4대 사회보험료, 각종 수수료 및 이자, 연체료, 연회비, 신차구매청구 할인 전표 전체, 취소금액 제외"
+          "할인 받은 이용 건 취소 시 할인한도가 즉시 복원되지 않을 수 있음"
         ],
         "excludes_from_performance": true,
         "special_multiplier": null
@@ -180,7 +157,7 @@
     },
     {
       "benefit_id": "B_TELECOM",
-      "group_id": "G_SHARED_COMMUNICATION_OTT",
+      "group_id": "G_COMMUNICATION_OTT",
       "selective_choice": null,
       "category": "Life",
       "sub_category": "telecom",
@@ -218,8 +195,7 @@
       "tier_conditions": [],
       "conditional_metadata": {
         "warnings": [
-          "할인 받은 이용건 취소 시 할인한도가 즉시 복원되지 않을 수 있음",
-          "무이자할부, 단기카드대출, 장기카드대출, 상품권 및 선불카드 구입/충전금액, 아파트관리비, 초·중·고교 납입금, 정부지원금, 대학(원) 등록금, 국세, 지방세, 공과금, 4대 사회보험료, 각종 수수료 및 이자, 연체료, 연회비, 신차구매청구 할인 전표 전체, 취소금액 제외"
+          "할인 받은 이용 건 취소 시 할인한도가 즉시 복원되지 않을 수 있음"
         ],
         "excludes_from_performance": true,
         "special_multiplier": null
@@ -233,7 +209,7 @@
     },
     {
       "benefit_id": "B_OTT",
-      "group_id": "G_SHARED_COMMUNICATION_OTT",
+      "group_id": "G_COMMUNICATION_OTT",
       "selective_choice": null,
       "category": "Cultural",
       "sub_category": "ott",
@@ -271,8 +247,7 @@
       "tier_conditions": [],
       "conditional_metadata": {
         "warnings": [
-          "할인 받은 이용건 취소 시 할인한도가 즉시 복원되지 않을 수 있음",
-          "무이자할부, 단기카드대출, 장기카드대출, 상품권 및 선불카드 구입/충전금액, 아파트관리비, 초·중·고교 납입금, 정부지원금, 대학(원) 등록금, 국세, 지방세, 공과금, 4대 사회보험료, 각종 수수료 및 이자, 연체료, 연회비, 신차구매청구 할인 전표 전체, 취소금액 제외"
+          "할인 받은 이용 건 취소 시 할인한도가 즉시 복원되지 않을 수 있음"
         ],
         "excludes_from_performance": true,
         "special_multiplier": null
@@ -290,7 +265,7 @@
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
         "group_id": "G_SELECTIVE_1",
-        "choice_id": "CHOICE_EAT"
+        "choice_id": "CHOICE_1_EAT"
       },
       "category": "Food",
       "sub_category": "delivery",
@@ -328,8 +303,7 @@
       "tier_conditions": [],
       "conditional_metadata": {
         "warnings": [
-          "할인 받은 이용건 취소 시 할인한도가 즉시 복원되지 않을 수 있음",
-          "무이자할부, 단기카드대출, 장기카드대출, 상품권 및 선불카드 구입/충전금액, 아파트관리비, 초·중·고교 납입금, 정부지원금, 대학(원) 등록금, 국세, 지방세, 공과금, 4대 사회보험료, 각종 수수료 및 이자, 연체료, 연회비, 신차구매청구 할인 전표 전체, 취소금액 제외"
+          "할인 받은 이용 건 취소 시 할인한도가 즉시 복원되지 않을 수 있음"
         ],
         "excludes_from_performance": true,
         "special_multiplier": 2.0
@@ -342,12 +316,12 @@
       }
     },
     {
-      "benefit_id": "B_TAXI_CINEMA",
+      "benefit_id": "B_TAXI_COFFEE_MOVIE",
       "group_id": null,
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
         "group_id": "G_SELECTIVE_1",
-        "choice_id": "CHOICE_PLAY"
+        "choice_id": "CHOICE_1_PLAY"
       },
       "category": "Traffic",
       "sub_category": "taxi",
@@ -385,8 +359,7 @@
       "tier_conditions": [],
       "conditional_metadata": {
         "warnings": [
-          "할인 받은 이용건 취소 시 할인한도가 즉시 복원되지 않을 수 있음",
-          "무이자할부, 단기카드대출, 장기카드대출, 상품권 및 선불카드 구입/충전금액, 아파트관리비, 초·중·고교 납입금, 정부지원금, 대학(원) 등록금, 국세, 지방세, 공과금, 4대 사회보험료, 각종 수수료 및 이자, 연체료, 연회비, 신차구매청구 할인 전표 전체, 취소금액 제외"
+          "할인 받은 이용 건 취소 시 할인한도가 즉시 복원되지 않을 수 있음"
         ],
         "excludes_from_performance": true,
         "special_multiplier": 2.0
@@ -399,12 +372,12 @@
       }
     },
     {
-      "benefit_id": "B_CINEMA",
+      "benefit_id": "B_MOVIE",
       "group_id": null,
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
         "group_id": "G_SELECTIVE_1",
-        "choice_id": "CHOICE_PLAY"
+        "choice_id": "CHOICE_1_PLAY"
       },
       "category": "Cultural",
       "sub_category": "cinema",
@@ -442,8 +415,7 @@
       "tier_conditions": [],
       "conditional_metadata": {
         "warnings": [
-          "할인 받은 이용건 취소 시 할인한도가 즉시 복원되지 않을 수 있음",
-          "무이자할부, 단기카드대출, 장기카드대출, 상품권 및 선불카드 구입/충전금액, 아파트관리비, 초·중·고교 납입금, 정부지원금, 대학(원) 등록금, 국세, 지방세, 공과금, 4대 사회보험료, 각종 수수료 및 이자, 연체료, 연회비, 신차구매청구 할인 전표 전체, 취소금액 제외"
+          "할인 받은 이용 건 취소 시 할인한도가 즉시 복원되지 않을 수 있음"
         ],
         "excludes_from_performance": true,
         "special_multiplier": 2.0
@@ -456,12 +428,12 @@
       }
     },
     {
-      "benefit_id": "B_BEAUTY_SPORT",
+      "benefit_id": "B_BEAUTY_SPORT_BOOK",
       "group_id": null,
       "selective_choice": {
         "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
         "group_id": "G_SELECTIVE_1",
-        "choice_id": "CHOICE_MANAGE"
+        "choice_id": "CHOICE_1_MANAGE"
       },
       "category": "Life",
       "sub_category": "daily_service",
@@ -492,15 +464,14 @@
           "start": null,
           "end": null
         },
-        "requires_offline": true,
+        "requires_offline": false,
         "requires_online": false,
         "requires_auto_payment": false
       },
       "tier_conditions": [],
       "conditional_metadata": {
         "warnings": [
-          "할인 받은 이용건 취소 시 할인한도가 즉시 복원되지 않을 수 있음",
-          "무이자할부, 단기카드대출, 장기카드대출, 상품권 및 선불카드 구입/충전금액, 아파트관리비, 초·중·고교 납입금, 정부지원금, 대학(원) 등록금, 국세, 지방세, 공과금, 4대 사회보험료, 각종 수수료 및 이자, 연체료, 연회비, 신차구매청구 할인 전표 전체, 취소금액 제외"
+          "할인 받은 이용 건 취소 시 할인한도가 즉시 복원되지 않을 수 있음"
         ],
         "excludes_from_performance": true,
         "special_multiplier": 2.0

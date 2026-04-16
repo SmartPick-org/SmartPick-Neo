@@ -11,10 +11,12 @@
       "Card_Loan",
       "Tax",
       "Public_Fees",
-      "Gift_Cards",
-      "Prepaid_Cards",
-      "Utilities",
-      "Management_Fees",
+      "Gift_Card",
+      "Prepaid_Card",
+      "Electricity",
+      "Gas",
+      "TV_Subscription",
+      "Apartment_Maintenance",
       "Real_Estate_Rent",
       "School_Fees",
       "Insurance",
@@ -26,8 +28,8 @@
   },
   "benefit_groups": [
     {
-      "group_id": "G_SHARED_LIMIT_1",
-      "group_name": "프리미엄 쇼핑 영역 5% M포인트 적립",
+      "group_id": "G_PREMIUM_SHOPPING",
+      "group_name": "프리미엄 쇼핑 영역 통합 한도",
       "group_type": "SHARED_LIMIT",
       "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
       "choices": null,
@@ -36,24 +38,11 @@
       "top_n_count": null
     },
     {
-      "group_id": "G_SELECTIVE_1",
-      "group_name": "the Pink 바우처 교환",
-      "group_type": "SELECTIVE_GROUP",
-      "group_type_description": "SELECTIVE_GROUP: 필수 선택형 (2-3 공식)",
-      "choices": [
-        {
-          "choice_id": "CHOICE_1",
-          "choice_name": "백화점 상품권 교환"
-        },
-        {
-          "choice_id": "CHOICE_2",
-          "choice_name": "면세점 상품권 교환"
-        },
-        {
-          "choice_id": "CHOICE_3",
-          "choice_name": "패션 전문몰 상품권 교환"
-        }
-      ],
+      "group_id": "G_BAUCHER_EXCHANGE",
+      "group_name": "바우처 교환 연간 한도",
+      "group_type": "SHARED_LIMIT",
+      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
+      "choices": null,
       "monthly_limit": null,
       "annual_limit": 1000000,
       "top_n_count": null
@@ -61,7 +50,7 @@
   ],
   "benefits": [
     {
-      "benefit_id": "B_001",
+      "benefit_id": "B_BASIC_1_5",
       "group_id": null,
       "selective_choice": null,
       "category": "General",
@@ -122,8 +111,8 @@
       }
     },
     {
-      "benefit_id": "B_002",
-      "group_id": "G_SHARED_LIMIT_1",
+      "benefit_id": "B_PREMIUM_SHOPPING_5",
+      "group_id": "G_PREMIUM_SHOPPING",
       "selective_choice": null,
       "category": "Shopping",
       "sub_category": "online",
@@ -140,7 +129,7 @@
         "discount_per_unit": null,
         "unit_label": null,
         "fallback_rate": 0.015,
-        "monthly_benefit_limit": 50000,
+        "monthly_benefit_limit": null,
         "annual_benefit_limit": null
       },
       "transaction_conditions": {
@@ -164,28 +153,34 @@
           "benefit_rate": 0.05,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 50000,
+          "monthly_benefit_limit": null,
           "group_monthly_limit": 50000
         }
       ],
       "conditional_metadata": {
         "warnings": [
-          "신규 발급 시 등록월 다음 달까지는 전월 100만원 미만 시에도 제공",
-          "간편결제, PG결제 등 별도 가맹점번호 승인 건은 추가 적립 제외"
+          "간편결제, PG결제 등 별도 가맹점번호 승인 건은 추가 적립 제외",
+          "신규 발급 시 등록월 다음 달까지는 전월 100만원 미만 시에도 제공"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
       },
       "indirect_benefit_metadata": {
         "description": null,
-        "target_locations": null,
+        "target_locations": [
+          "SSG.COM",
+          "롯데ON",
+          "현대Hmall",
+          "더한섬닷컴",
+          "신세계V"
+        ],
         "voucher_choices": null,
         "voucher_value": null
       }
     },
     {
-      "benefit_id": "B_003",
-      "group_id": "G_SHARED_LIMIT_1",
+      "benefit_id": "B_PREMIUM_SHOPPING_5_OFFLINE",
+      "group_id": "G_PREMIUM_SHOPPING",
       "selective_choice": null,
       "category": "Shopping",
       "sub_category": "dept_store",
@@ -202,7 +197,7 @@
         "discount_per_unit": null,
         "unit_label": null,
         "fallback_rate": 0.015,
-        "monthly_benefit_limit": 50000,
+        "monthly_benefit_limit": null,
         "annual_benefit_limit": null
       },
       "transaction_conditions": {
@@ -226,57 +221,61 @@
           "benefit_rate": 0.05,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 50000,
+          "monthly_benefit_limit": null,
           "group_monthly_limit": 50000
         }
       ],
       "conditional_metadata": {
         "warnings": [
-          "신규 발급 시 등록월 다음 달까지는 전월 100만원 미만 시에도 제공",
-          "간편결제, PG결제 등 별도 가맹점번호 승인 건은 추가 적립 제외"
+          "간편결제, PG결제 등 별도 가맹점번호 승인 건은 추가 적립 제외",
+          "신규 발급 시 등록월 다음 달까지는 전월 100만원 미만 시에도 제공"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
       },
       "indirect_benefit_metadata": {
         "description": null,
-        "target_locations": null,
+        "target_locations": [
+          "현대백화점",
+          "롯데백화점",
+          "신세계백화점",
+          "갤러리아백화점",
+          "현대프리미엄아울렛",
+          "롯데프리미엄아울렛",
+          "신세계사이먼프리미엄아울렛"
+        ],
         "voucher_choices": null,
         "voucher_value": null
       }
     },
     {
-      "benefit_id": "B_004",
-      "group_id": null,
-      "selective_choice": {
-        "description": "the Pink 바우처 교환",
-        "group_id": "G_SELECTIVE_1",
-        "choice_id": "CHOICE_1"
-      },
-      "category": "Shopping",
-      "sub_category": "dept_store",
+      "benefit_id": "B_BAUCHER_EXCHANGE",
+      "group_id": "G_BAUCHER_EXCHANGE",
+      "selective_choice": null,
+      "category": "General",
+      "sub_category": null,
       "reward_type": "INDIRECT",
       "reward_unit": {
-        "currency": "KRW",
+        "currency": "M_POINT",
         "currency_to_krw_rate": 1.0
       },
       "calculation_rule": {
-        "calc_type": null,
-        "calc_type_description": null,
+        "calc_type": "FULL_COVER",
+        "calc_type_description": "FULL_COVER: 결제금액 전액 혜택",
         "benefit_rate": null,
         "flat_discount": null,
         "discount_per_unit": null,
         "unit_label": null,
         "fallback_rate": null,
         "monthly_benefit_limit": null,
-        "annual_benefit_limit": null
+        "annual_benefit_limit": 1000000
       },
       "transaction_conditions": {
-        "min_payment_amount": 0,
+        "min_payment_amount": 100000,
         "max_tx_spend_allowed": null,
         "max_count_per_day": null,
         "max_count_per_month": null,
-        "max_count_per_year": null,
+        "max_count_per_year": 10,
         "day_of_week": null,
         "time_of_day": {
           "start": null,
@@ -288,143 +287,34 @@
       },
       "tier_conditions": [],
       "conditional_metadata": {
-        "warnings": [],
+        "warnings": [
+          "10만 M포인트 단위로 교환 가능",
+          "바우처 유효기간은 교환일로부터 1년"
+        ],
         "excludes_from_performance": false,
         "special_multiplier": null
       },
       "indirect_benefit_metadata": {
-        "description": "M포인트를 the Pink 바우처로 교환 (백화점 상품권 교환)",
+        "description": "M포인트를 the Pink 바우처로 교환",
         "target_locations": [
           "현대백화점",
           "롯데백화점",
-          "신세계백화점"
-        ],
-        "voucher_choices": [
-          "백화점 상품권"
-        ],
-        "voucher_value": 100000
-      }
-    },
-    {
-      "benefit_id": "B_005",
-      "group_id": null,
-      "selective_choice": {
-        "description": "the Pink 바우처 교환",
-        "group_id": "G_SELECTIVE_1",
-        "choice_id": "CHOICE_2"
-      },
-      "category": "Travel",
-      "sub_category": "overseas",
-      "reward_type": "INDIRECT",
-      "reward_unit": {
-        "currency": "KRW",
-        "currency_to_krw_rate": 1.0
-      },
-      "calculation_rule": {
-        "calc_type": null,
-        "calc_type_description": null,
-        "benefit_rate": null,
-        "flat_discount": null,
-        "discount_per_unit": null,
-        "unit_label": null,
-        "fallback_rate": null,
-        "monthly_benefit_limit": null,
-        "annual_benefit_limit": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_tx_spend_allowed": null,
-        "max_count_per_day": null,
-        "max_count_per_month": null,
-        "max_count_per_year": null,
-        "day_of_week": null,
-        "time_of_day": {
-          "start": null,
-          "end": null
-        },
-        "requires_offline": false,
-        "requires_online": false,
-        "requires_auto_payment": false
-      },
-      "tier_conditions": [],
-      "conditional_metadata": {
-        "warnings": [],
-        "excludes_from_performance": false,
-        "special_multiplier": null
-      },
-      "indirect_benefit_metadata": {
-        "description": "M포인트를 the Pink 바우처로 교환 (면세점 상품권 교환)",
-        "target_locations": [
+          "신세계백화점",
           "롯데면세점",
-          "신라면세점"
-        ],
-        "voucher_choices": [
-          "면세점 상품권"
-        ],
-        "voucher_value": 100000
-      }
-    },
-    {
-      "benefit_id": "B_006",
-      "group_id": null,
-      "selective_choice": {
-        "description": "the Pink 바우처 교환",
-        "group_id": "G_SELECTIVE_1",
-        "choice_id": "CHOICE_3"
-      },
-      "category": "Shopping",
-      "sub_category": "online",
-      "reward_type": "INDIRECT",
-      "reward_unit": {
-        "currency": "KRW",
-        "currency_to_krw_rate": 1.0
-      },
-      "calculation_rule": {
-        "calc_type": null,
-        "calc_type_description": null,
-        "benefit_rate": null,
-        "flat_discount": null,
-        "discount_per_unit": null,
-        "unit_label": null,
-        "fallback_rate": null,
-        "monthly_benefit_limit": null,
-        "annual_benefit_limit": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_tx_spend_allowed": null,
-        "max_count_per_day": null,
-        "max_count_per_month": null,
-        "max_count_per_year": null,
-        "day_of_week": null,
-        "time_of_day": {
-          "start": null,
-          "end": null
-        },
-        "requires_offline": false,
-        "requires_online": true,
-        "requires_auto_payment": false
-      },
-      "tier_conditions": [],
-      "conditional_metadata": {
-        "warnings": [],
-        "excludes_from_performance": false,
-        "special_multiplier": null
-      },
-      "indirect_benefit_metadata": {
-        "description": "M포인트를 the Pink 바우처로 교환 (패션 전문몰 상품권 교환)",
-        "target_locations": [
+          "신라면세점",
           "더한섬닷컴",
           "신세계V"
         ],
         "voucher_choices": [
+          "백화점 상품권",
+          "면세점 상품권",
           "패션 전문몰 상품권"
         ],
         "voucher_value": 100000
       }
     },
     {
-      "benefit_id": "B_007",
+      "benefit_id": "B_AIRPORT_LOUNGE",
       "group_id": null,
       "selective_choice": null,
       "category": "Travel",
@@ -435,8 +325,8 @@
         "currency_to_krw_rate": 1.0
       },
       "calculation_rule": {
-        "calc_type": null,
-        "calc_type_description": null,
+        "calc_type": "FULL_COVER",
+        "calc_type_description": "FULL_COVER: 결제금액 전액 혜택",
         "benefit_rate": null,
         "flat_discount": null,
         "discount_per_unit": null,
@@ -472,7 +362,7 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "본인 한정, 가족 제외"
+          "THE LOUNGE 앱에 카드 등록 후 사용"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -485,7 +375,7 @@
       }
     },
     {
-      "benefit_id": "B_008",
+      "benefit_id": "B_PARKING",
       "group_id": null,
       "selective_choice": null,
       "category": "Travel",
@@ -496,8 +386,8 @@
         "currency_to_krw_rate": 1.0
       },
       "calculation_rule": {
-        "calc_type": null,
-        "calc_type_description": null,
+        "calc_type": "FULL_COVER",
+        "calc_type_description": "FULL_COVER: 결제금액 전액 혜택",
         "benefit_rate": null,
         "flat_discount": null,
         "discount_per_unit": null,
@@ -532,9 +422,7 @@
         }
       ],
       "conditional_metadata": {
-        "warnings": [
-          "본인 한정"
-        ],
+        "warnings": [],
         "excludes_from_performance": false,
         "special_multiplier": null
       },
@@ -546,6 +434,111 @@
           "더 플라자",
           "비스타 워커힐 서울"
         ],
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_EMERGENCY_POINT",
+      "group_id": null,
+      "selective_choice": null,
+      "category": "General",
+      "sub_category": null,
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "M_POINT",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "FULL_COVER",
+        "calc_type_description": "FULL_COVER: 결제금액 전액 혜택",
+        "benefit_rate": null,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [],
+      "conditional_metadata": {
+        "warnings": [
+          "최대 50만 M포인트 선지급 가능",
+          "상환 잔액은 현금 청구될 수 있음"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": "M 긴급적립(선지급 포인트 서비스)",
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_METAL_PLATE",
+      "group_id": null,
+      "selective_choice": null,
+      "category": "General",
+      "sub_category": null,
+      "reward_type": "INDIRECT",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "FULL_COVER",
+        "calc_type_description": "FULL_COVER: 결제금액 전액 혜택",
+        "benefit_rate": null,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [],
+      "conditional_metadata": {
+        "warnings": [
+          "발급 수수료 10만원 별도 부과 또는 10만 M포인트 결제"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": "메탈 플레이트 제공",
+        "target_locations": null,
         "voucher_choices": null,
         "voucher_value": null
       }

@@ -7,25 +7,20 @@
     "annual_fee_international": 50000,
     "minimum_performance": 400000,
     "performance_excluded_categories": [
-      "Cash_Service",
-      "Card_Loan",
-      "Annual_Fee",
-      "Fees_Interest",
-      "Gift_Card",
+      "Fuel",
       "Tax",
-      "Insurance",
-      "Apartment_Fee",
-      "School_Fee",
-      "Public_Utilities",
-      "Voucher",
-      "Canceled_Transactions",
-      "Railway"
+      "Insurance_Tax",
+      "Housing",
+      "Daily_Service",
+      "Office",
+      "General",
+      "Others"
     ]
   },
   "benefit_groups": [
     {
       "group_id": "G_TIME_PLAN",
-      "group_name": "Time Plan",
+      "group_name": "Time Plan 통합 한도",
       "group_type": "SHARED_LIMIT",
       "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
       "choices": null,
@@ -35,7 +30,7 @@
     },
     {
       "group_id": "G_DAILY_PLAN",
-      "group_name": "Daily Plan",
+      "group_name": "Daily Plan 통합 한도",
       "group_type": "SHARED_LIMIT",
       "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
       "choices": null,
@@ -45,7 +40,7 @@
     },
     {
       "group_id": "G_MONTHLY_PLAN",
-      "group_name": "Monthly Plan",
+      "group_name": "Monthly Plan 통합 한도",
       "group_type": "SHARED_LIMIT",
       "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
       "choices": null,
@@ -55,7 +50,7 @@
     },
     {
       "group_id": "G_ANNUAL_PLAN",
-      "group_name": "Annual Plan",
+      "group_name": "Annual Plan 통합 한도",
       "group_type": "SHARED_LIMIT",
       "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
       "choices": null,
@@ -138,7 +133,7 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등은 할인 적용 제외"
+          "할인 적용 제외 대상: 무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -223,7 +218,7 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등은 할인 적용 제외"
+          "할인 적용 제외 대상: 무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -308,7 +303,7 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등은 할인 적용 제외"
+          "할인 적용 제외 대상: 무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -393,7 +388,7 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등은 할인 적용 제외"
+          "할인 적용 제외 대상: 무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -434,7 +429,10 @@
         "max_count_per_month": 5,
         "max_count_per_year": null,
         "day_of_week": null,
-        "time_of_day": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
         "requires_offline": true,
         "requires_online": true,
         "requires_auto_payment": false
@@ -475,7 +473,7 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등은 할인 적용 제외"
+          "할인 적용 제외 대상: 무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -516,7 +514,10 @@
         "max_count_per_month": 5,
         "max_count_per_year": null,
         "day_of_week": null,
-        "time_of_day": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
         "requires_offline": true,
         "requires_online": true,
         "requires_auto_payment": false
@@ -557,7 +558,7 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등은 할인 적용 제외"
+          "할인 적용 제외 대상: 무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -598,7 +599,10 @@
         "max_count_per_month": 5,
         "max_count_per_year": null,
         "day_of_week": null,
-        "time_of_day": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
         "requires_offline": true,
         "requires_online": true,
         "requires_auto_payment": false
@@ -639,7 +643,7 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등은 할인 적용 제외"
+          "할인 적용 제외 대상: 무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -652,11 +656,11 @@
       }
     },
     {
-      "benefit_id": "B_MONTHLY_PLAN_REGULAR",
+      "benefit_id": "B_MONTHLY_PLAN_AUTO_PAYMENT",
       "group_id": "G_MONTHLY_PLAN",
       "selective_choice": null,
       "category": "Life",
-      "sub_category": "general",
+      "sub_category": "telecom",
       "reward_type": "DIRECT_FINANCIAL",
       "reward_unit": {
         "currency": "KRW",
@@ -680,9 +684,12 @@
         "max_count_per_month": null,
         "max_count_per_year": null,
         "day_of_week": null,
-        "time_of_day": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
         "requires_offline": false,
-        "requires_online": true,
+        "requires_online": false,
         "requires_auto_payment": true
       },
       "tier_conditions": [
@@ -721,7 +728,7 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등은 할인 적용 제외"
+          "할인 적용 제외 대상: 무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -734,11 +741,11 @@
       }
     },
     {
-      "benefit_id": "B_MONTHLY_PLAN_DIGITAL",
+      "benefit_id": "B_MONTHLY_PLAN_MEMBERSHIP",
       "group_id": "G_MONTHLY_PLAN",
       "selective_choice": null,
-      "category": "Cultural",
-      "sub_category": "ott",
+      "category": "General",
+      "sub_category": null,
       "reward_type": "DIRECT_FINANCIAL",
       "reward_unit": {
         "currency": "KRW",
@@ -762,10 +769,13 @@
         "max_count_per_month": null,
         "max_count_per_year": null,
         "day_of_week": null,
-        "time_of_day": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
         "requires_offline": false,
         "requires_online": true,
-        "requires_auto_payment": true
+        "requires_auto_payment": false
       },
       "tier_conditions": [
         {
@@ -803,7 +813,7 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등은 할인 적용 제외"
+          "할인 적용 제외 대상: 무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -844,10 +854,13 @@
         "max_count_per_month": null,
         "max_count_per_year": null,
         "day_of_week": null,
-        "time_of_day": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
         "requires_offline": true,
         "requires_online": true,
-        "requires_auto_payment": true
+        "requires_auto_payment": false
       },
       "tier_conditions": [
         {
@@ -885,7 +898,7 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등은 할인 적용 제외"
+          "할인 적용 제외 대상: 무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -926,7 +939,10 @@
         "max_count_per_month": 1,
         "max_count_per_year": null,
         "day_of_week": null,
-        "time_of_day": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
         "requires_offline": true,
         "requires_online": true,
         "requires_auto_payment": false
@@ -967,7 +983,7 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등은 할인 적용 제외"
+          "할인 적용 제외 대상: 무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -994,11 +1010,11 @@
         "calc_type": "FLAT_RATE",
         "calc_type_description": "FLAT_RATE: 1-2 공식(정액)",
         "benefit_rate": null,
-        "flat_discount": 3000,
+        "flat_discount": 5000,
         "discount_per_unit": null,
         "unit_label": null,
         "fallback_rate": null,
-        "monthly_benefit_limit": 3000,
+        "monthly_benefit_limit": 5000,
         "annual_benefit_limit": null
       },
       "transaction_conditions": {
@@ -1008,7 +1024,10 @@
         "max_count_per_month": null,
         "max_count_per_year": null,
         "day_of_week": null,
-        "time_of_day": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
         "requires_offline": false,
         "requires_online": false,
         "requires_auto_payment": false
@@ -1033,7 +1052,7 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등은 할인 적용 제외"
+          "할인 적용 제외 대상: 무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -1074,15 +1093,27 @@
         "max_count_per_month": null,
         "max_count_per_year": 1,
         "day_of_week": null,
-        "time_of_day": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
         "requires_offline": true,
         "requires_online": true,
         "requires_auto_payment": false
       },
-      "tier_conditions": null,
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "benefit_rate": null,
+          "flat_discount": 30000,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": null
+        }
+      ],
       "conditional_metadata": {
         "warnings": [
-          "무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등은 할인 적용 제외"
+          "할인 적용 제외 대상: 무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -1123,21 +1154,33 @@
         "max_count_per_month": null,
         "max_count_per_year": 1,
         "day_of_week": null,
-        "time_of_day": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
         "requires_offline": true,
         "requires_online": false,
         "requires_auto_payment": false
       },
-      "tier_conditions": null,
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "benefit_rate": null,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": null
+        }
+      ],
       "conditional_metadata": {
         "warnings": [
-          "무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등은 할인 적용 제외"
+          "할인 적용 제외 대상: 무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
       },
       "indirect_benefit_metadata": {
-        "description": "정비 할인 (예: 스피드메이트 엔진오일 교환 등)",
+        "description": null,
         "target_locations": null,
         "voucher_choices": null,
         "voucher_value": null
@@ -1172,25 +1215,34 @@
         "max_count_per_month": null,
         "max_count_per_year": 1,
         "day_of_week": null,
-        "time_of_day": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
         "requires_offline": true,
         "requires_online": true,
         "requires_auto_payment": false
       },
-      "tier_conditions": null,
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "benefit_rate": 0.5,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": null
+        }
+      ],
       "conditional_metadata": {
         "warnings": [
-          "무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등은 할인 적용 제외"
+          "할인 적용 제외 대상: 무이자할부(부분 무이자 포함) 이용거래, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 포인트 사용 거래 중 포인트 금액, '신한카드 Discount Plan+'로 신한카드 할인서비스를 적용받은 모든 거래, 거래 취소금액 등"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
       },
       "indirect_benefit_metadata": {
         "description": null,
-        "target_locations": [
-          "에버랜드",
-          "롯데월드"
-        ],
+        "target_locations": null,
         "voucher_choices": null,
         "voucher_value": null
       }

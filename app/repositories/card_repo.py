@@ -5,7 +5,6 @@ from pathlib import Path
 from loguru import logger
 
 from app.core.discord import notify_discord_sync
-from app.domain.adapters import adapt_v3_for_calculator
 from app.domain.models import CardData
 
 
@@ -21,37 +20,34 @@ class DatasetCardRepository(CardRepository):
         self._cache: list[CardData] | None = None
 
     def list_cards(self) -> list[CardData]:
-        if self._cache is not None:
-            return self._cache
+            if self._cache is not None:
+                return self._cache
 
-        all_cards: list[CardData] = []
-        for json_file in self.datasets_dir.glob("**/*.json"):
-            raw = json.loads(json_file.read_text(encoding="utf-8"))
-            if not raw.get("card_meta", {}).get("card_name"):
-                continue
+            all_cards: list[CardData] = []
+            for company_dir in self.datasets_dir.iterdir():
+                if not company_dir.is_dir():
+                    continue
+                for json_file in company_dir.rglob("*.json"):
+                    raw = json.loads(json_file.read_text(encoding="utf-8"))
+                    if not raw.get("card_meta", {}).get("card_name"):
+                        continue
 
-            # inject card_slug from filename if not already present
-            if not raw["card_meta"].get("card_slug"):
-                raw["card_meta"]["card_slug"] = json_file.stem
+                    # v4 데이터를 직접 로드
+                    card_data = raw
+                    card_data["_file_path"] = str(json_file)
 
-            adapted = adapt_v3_for_calculator(raw)
-            adapted["_file_path"] = str(json_file)
-            adapted["_raw_v3"] = raw
+                    # 필터링을 위한 카테고리 추출 로직 (v4 스키마 대응)
+                    card_categories: set[str] = set()
+                    for benefit in card_data.get("benefits", []):
+                        category = benefit.get("category", "")
+                        if category:
+                            card_categories.add(category)
+                    card_data["_card_categories"] = card_categories
 
-            card_categories: set[str] = set()
-            for benefit in adapted.get("benefits", []):
-                category = benefit.get("category", "")
-                if category and category != "General":
-                    card_categories.add(category)
-                elif category == "General":
-                    card_categories.add(category)
-            adapted["_card_categories"] = card_categories
+                    all_cards.append(card_data)
 
-            all_cards.append(adapted)
-
-        self._cache = all_cards
-        return all_cards
-
+            self._cache = all_cards
+            return all_cards
 
 class DBCardRepository(CardRepository):
     """Supabase DB에서 카드 데이터를 조회하는 Repository.

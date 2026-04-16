@@ -8,13 +8,13 @@
     "minimum_performance": 300000,
     "performance_excluded_categories": [
       "Fuel",
-      "Tax"
+      "LPG"
     ]
   },
   "benefit_groups": [
     {
-      "group_id": "G_SHARED_LIMIT_FUEL",
-      "group_name": "주유 서비스 공유 한도",
+      "group_id": "G_SHARED_FUEL",
+      "group_name": "주유 서비스 통합 한도",
       "group_type": "SHARED_LIMIT",
       "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
       "choices": null,
@@ -23,8 +23,8 @@
       "top_n_count": null
     },
     {
-      "group_id": "G_SHARED_LIMIT_VEHICLE",
-      "group_name": "차량 서비스 공유 한도",
+      "group_id": "G_SHARED_VEHICLE",
+      "group_name": "차량 서비스 통합 한도",
       "group_type": "SHARED_LIMIT",
       "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
       "choices": null,
@@ -33,8 +33,8 @@
       "top_n_count": null
     },
     {
-      "group_id": "G_SHARED_LIMIT_LIFE",
-      "group_name": "생활 서비스 공유 한도",
+      "group_id": "G_SHARED_LIFE",
+      "group_name": "생활 서비스 통합 한도",
       "group_type": "SHARED_LIMIT",
       "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
       "choices": null,
@@ -43,26 +43,18 @@
       "top_n_count": null
     },
     {
-      "group_id": "G_SELECTIVE_FUEL",
-      "group_name": "주유 서비스 선택 그룹",
+      "group_id": "G_SELECTIVE_CINEMA",
+      "group_name": "영화 서비스 선택형",
       "group_type": "SELECTIVE_GROUP",
       "group_type_description": "SELECTIVE_GROUP: 필수 선택형 (2-3 공식)",
       "choices": [
         {
-          "choice_id": "CHOICE_GS",
-          "choice_name": "GS칼텍스"
+          "choice_id": "CHOICE_1",
+          "choice_name": "30만원 이상 70만원 미만 (1회)"
         },
         {
-          "choice_id": "CHOICE_SK",
-          "choice_name": "SK에너지"
-        },
-        {
-          "choice_id": "CHOICE_SOIL",
-          "choice_name": "S-OIL"
-        },
-        {
-          "choice_id": "CHOICE_HDOIL",
-          "choice_name": "에이치디현대오일뱅크"
+          "choice_id": "CHOICE_2",
+          "choice_name": "70만원 이상 (2회)"
         }
       ],
       "monthly_limit": null,
@@ -73,12 +65,8 @@
   "benefits": [
     {
       "benefit_id": "B_FUEL_10",
-      "group_id": "G_SHARED_LIMIT_FUEL",
-      "selective_choice": {
-        "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
-        "group_id": "G_SELECTIVE_FUEL",
-        "choice_id": "CHOICE_GS"
-      },
+      "group_id": "G_SHARED_FUEL",
+      "selective_choice": null,
       "category": "Traffic",
       "sub_category": "fuel",
       "reward_type": "DIRECT_FINANCIAL",
@@ -90,12 +78,15 @@
         "calc_type": "PERCENTAGE",
         "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
         "benefit_rate": 0.1,
-        "fallback_rate": 0.0,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
         "monthly_benefit_limit": null,
         "annual_benefit_limit": null
       },
       "transaction_conditions": {
-        "min_payment_amount": 0,
+        "min_payment_amount": null,
         "max_tx_spend_allowed": null,
         "max_count_per_day": null,
         "max_count_per_month": null,
@@ -112,7 +103,7 @@
       "tier_conditions": [
         {
           "min_prev_performance": 300000,
-          "benefit_rate": 0.1,
+          "benefit_rate": null,
           "flat_discount": null,
           "discount_per_unit": null,
           "monthly_benefit_limit": 150000,
@@ -120,7 +111,7 @@
         },
         {
           "min_prev_performance": 700000,
-          "benefit_rate": 0.1,
+          "benefit_rate": null,
           "flat_discount": null,
           "discount_per_unit": null,
           "monthly_benefit_limit": 300000,
@@ -144,7 +135,7 @@
     },
     {
       "benefit_id": "B_MAINTENANCE_10",
-      "group_id": "G_SHARED_LIMIT_VEHICLE",
+      "group_id": "G_SHARED_VEHICLE",
       "selective_choice": null,
       "category": "Traffic",
       "sub_category": "maintenance",
@@ -157,12 +148,15 @@
         "calc_type": "PERCENTAGE",
         "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
         "benefit_rate": 0.1,
-        "fallback_rate": 0.0,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
         "monthly_benefit_limit": null,
         "annual_benefit_limit": null
       },
       "transaction_conditions": {
-        "min_payment_amount": 0,
+        "min_payment_amount": null,
         "max_tx_spend_allowed": null,
         "max_count_per_day": null,
         "max_count_per_month": null,
@@ -179,18 +173,18 @@
       "tier_conditions": [
         {
           "min_prev_performance": 300000,
-          "benefit_rate": 0.1,
+          "benefit_rate": null,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 150000,
+          "monthly_benefit_limit": null,
           "group_monthly_limit": 150000
         },
         {
           "min_prev_performance": 700000,
-          "benefit_rate": 0.1,
+          "benefit_rate": null,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 300000,
+          "monthly_benefit_limit": null,
           "group_monthly_limit": 300000
         }
       ],
@@ -203,14 +197,16 @@
       },
       "indirect_benefit_metadata": {
         "description": null,
-        "target_locations": null,
+        "target_locations": [
+          "스피드메이트"
+        ],
         "voucher_choices": null,
         "voucher_value": null
       }
     },
     {
       "benefit_id": "B_PARKING_10",
-      "group_id": "G_SHARED_LIMIT_VEHICLE",
+      "group_id": "G_SHARED_VEHICLE",
       "selective_choice": null,
       "category": "Traffic",
       "sub_category": "parking",
@@ -223,12 +219,15 @@
         "calc_type": "PERCENTAGE",
         "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
         "benefit_rate": 0.1,
-        "fallback_rate": 0.0,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
         "monthly_benefit_limit": null,
         "annual_benefit_limit": null
       },
       "transaction_conditions": {
-        "min_payment_amount": 0,
+        "min_payment_amount": null,
         "max_tx_spend_allowed": null,
         "max_count_per_day": null,
         "max_count_per_month": null,
@@ -245,18 +244,18 @@
       "tier_conditions": [
         {
           "min_prev_performance": 300000,
-          "benefit_rate": 0.1,
+          "benefit_rate": null,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 150000,
+          "monthly_benefit_limit": null,
           "group_monthly_limit": 150000
         },
         {
           "min_prev_performance": 700000,
-          "benefit_rate": 0.1,
+          "benefit_rate": null,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 300000,
+          "monthly_benefit_limit": null,
           "group_monthly_limit": 300000
         }
       ],
@@ -276,7 +275,7 @@
     },
     {
       "benefit_id": "B_CONVENIENCE_5",
-      "group_id": "G_SHARED_LIMIT_LIFE",
+      "group_id": "G_SHARED_LIFE",
       "selective_choice": null,
       "category": "Shopping",
       "sub_category": "convenience",
@@ -289,12 +288,15 @@
         "calc_type": "PERCENTAGE",
         "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
         "benefit_rate": 0.05,
-        "fallback_rate": 0.0,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
         "monthly_benefit_limit": null,
         "annual_benefit_limit": null
       },
       "transaction_conditions": {
-        "min_payment_amount": 0,
+        "min_payment_amount": null,
         "max_tx_spend_allowed": null,
         "max_count_per_day": null,
         "max_count_per_month": null,
@@ -311,18 +313,18 @@
       "tier_conditions": [
         {
           "min_prev_performance": 300000,
-          "benefit_rate": 0.05,
+          "benefit_rate": null,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 150000,
+          "monthly_benefit_limit": null,
           "group_monthly_limit": 150000
         },
         {
           "min_prev_performance": 700000,
-          "benefit_rate": 0.05,
+          "benefit_rate": null,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 300000,
+          "monthly_benefit_limit": null,
           "group_monthly_limit": 300000
         }
       ],
@@ -333,14 +335,17 @@
       },
       "indirect_benefit_metadata": {
         "description": null,
-        "target_locations": null,
+        "target_locations": [
+          "GS25",
+          "CU"
+        ],
         "voucher_choices": null,
         "voucher_value": null
       }
     },
     {
       "benefit_id": "B_COFFEE_5",
-      "group_id": "G_SHARED_LIMIT_LIFE",
+      "group_id": "G_SHARED_LIFE",
       "selective_choice": null,
       "category": "Coffee",
       "sub_category": "cafe",
@@ -353,12 +358,15 @@
         "calc_type": "PERCENTAGE",
         "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
         "benefit_rate": 0.05,
-        "fallback_rate": 0.0,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
         "monthly_benefit_limit": null,
         "annual_benefit_limit": null
       },
       "transaction_conditions": {
-        "min_payment_amount": 0,
+        "min_payment_amount": null,
         "max_tx_spend_allowed": null,
         "max_count_per_day": null,
         "max_count_per_month": null,
@@ -375,18 +383,18 @@
       "tier_conditions": [
         {
           "min_prev_performance": 300000,
-          "benefit_rate": 0.05,
+          "benefit_rate": null,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 150000,
+          "monthly_benefit_limit": null,
           "group_monthly_limit": 150000
         },
         {
           "min_prev_performance": 700000,
-          "benefit_rate": 0.05,
+          "benefit_rate": null,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 300000,
+          "monthly_benefit_limit": null,
           "group_monthly_limit": 300000
         }
       ],
@@ -399,14 +407,17 @@
       },
       "indirect_benefit_metadata": {
         "description": null,
-        "target_locations": null,
+        "target_locations": [
+          "스타벅스",
+          "이디야"
+        ],
         "voucher_choices": null,
         "voucher_value": null
       }
     },
     {
       "benefit_id": "B_TAXI_5",
-      "group_id": "G_SHARED_LIMIT_LIFE",
+      "group_id": "G_SHARED_LIFE",
       "selective_choice": null,
       "category": "Traffic",
       "sub_category": "taxi",
@@ -419,12 +430,15 @@
         "calc_type": "PERCENTAGE",
         "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
         "benefit_rate": 0.05,
-        "fallback_rate": 0.0,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
         "monthly_benefit_limit": null,
         "annual_benefit_limit": null
       },
       "transaction_conditions": {
-        "min_payment_amount": 0,
+        "min_payment_amount": null,
         "max_tx_spend_allowed": null,
         "max_count_per_day": null,
         "max_count_per_month": null,
@@ -441,24 +455,24 @@
       "tier_conditions": [
         {
           "min_prev_performance": 300000,
-          "benefit_rate": 0.05,
+          "benefit_rate": null,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 150000,
+          "monthly_benefit_limit": null,
           "group_monthly_limit": 150000
         },
         {
           "min_prev_performance": 700000,
-          "benefit_rate": 0.05,
+          "benefit_rate": null,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 300000,
+          "monthly_benefit_limit": null,
           "group_monthly_limit": 300000
         }
       ],
       "conditional_metadata": {
         "warnings": [
-          "택시 할인 서비스는 오프라인 현장 일반결제만 가능하며, 온라인/자동결제 등은 적용 제외됩니다."
+          "오프라인 현장 일반결제만 가능하며, 온라인/자동결제 등은 적용 제외됩니다."
         ],
         "excludes_from_performance": true,
         "special_multiplier": null
@@ -473,7 +487,11 @@
     {
       "benefit_id": "B_CINEMA_5000",
       "group_id": null,
-      "selective_choice": null,
+      "selective_choice": {
+        "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
+        "group_id": "G_SELECTIVE_CINEMA",
+        "choice_id": "CHOICE_1"
+      },
       "category": "Cultural",
       "sub_category": "cinema",
       "reward_type": "DIRECT_FINANCIAL",
@@ -486,12 +504,14 @@
         "calc_type_description": "FLAT_RATE: 1-2 공식(정액)",
         "benefit_rate": null,
         "flat_discount": 5000,
-        "fallback_rate": 0.0,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": null,
         "monthly_benefit_limit": null,
         "annual_benefit_limit": null
       },
       "transaction_conditions": {
-        "min_payment_amount": 0,
+        "min_payment_amount": 5000,
         "max_tx_spend_allowed": null,
         "max_count_per_day": 1,
         "max_count_per_month": 1,
@@ -501,8 +521,8 @@
           "start": null,
           "end": null
         },
-        "requires_offline": false,
-        "requires_online": false,
+        "requires_offline": true,
+        "requires_online": true,
         "requires_auto_payment": false
       },
       "tier_conditions": [
@@ -525,16 +545,17 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "롯데시네마 일반관 상영 영화의 온라인/현장 예매 시 월 제공횟수 한도 내 1일 1회에 한하여 할인 제공됩니다.",
-          "조조영화도 할인 제공 가능합니다. 단, 3D 등 스페셜관 상영 영화, 일반관에서 5천원 이하 금액으로 상영되는 영화는 제외됩니다.",
-          "타 할인과 중복 적용 불가합니다."
+          "타 할인과 중복 적용 불가합니다.",
+          "3D 등 스페셜관 상영 영화, 일반관에서 5천원 이하 금액으로 상영되는 영화는 제외됩니다."
         ],
         "excludes_from_performance": true,
         "special_multiplier": null
       },
       "indirect_benefit_metadata": {
         "description": null,
-        "target_locations": null,
+        "target_locations": [
+          "롯데시네마"
+        ],
         "voucher_choices": null,
         "voucher_value": null
       }

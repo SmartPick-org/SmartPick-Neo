@@ -12,7 +12,7 @@
       "Fees",
       "Tax",
       "Public_Utilities",
-      "Education",
+      "Education_Fees",
       "Gift_Cards",
       "Insurance",
       "Toll",
@@ -24,20 +24,60 @@
   },
   "benefit_groups": [
     {
-      "group_id": "G_SHARED_5AREAS",
-      "group_name": "5대 영역 통합 할인 그룹",
+      "group_id": "G_SHARED_LIMIT_1",
+      "group_name": "온라인 쇼핑몰 통합 할인",
       "group_type": "SHARED_LIMIT",
       "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
       "choices": null,
-      "monthly_limit": null,
+      "monthly_limit": 10000,
+      "annual_limit": null,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_SHARED_LIMIT_2",
+      "group_name": "병원·약국 통합 할인",
+      "group_type": "SHARED_LIMIT",
+      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
+      "choices": null,
+      "monthly_limit": 10000,
+      "annual_limit": null,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_SHARED_LIMIT_3",
+      "group_name": "학원 통합 할인",
+      "group_type": "SHARED_LIMIT",
+      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
+      "choices": null,
+      "monthly_limit": 10000,
+      "annual_limit": null,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_SHARED_LIMIT_4",
+      "group_name": "주유 통합 할인",
+      "group_type": "SHARED_LIMIT",
+      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
+      "choices": null,
+      "monthly_limit": 10000,
+      "annual_limit": null,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_SHARED_LIMIT_5",
+      "group_name": "생활 요금 통합 할인",
+      "group_type": "SHARED_LIMIT",
+      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
+      "choices": null,
+      "monthly_limit": 10000,
       "annual_limit": null,
       "top_n_count": null
     }
   ],
   "benefits": [
     {
-      "benefit_id": "B_ONLINE_10",
-      "group_id": "G_SHARED_5AREAS",
+      "benefit_id": "B_ONLINE_1",
+      "group_id": "G_SHARED_LIMIT_1",
       "selective_choice": null,
       "category": "Shopping",
       "sub_category": "online",
@@ -54,11 +94,11 @@
         "discount_per_unit": null,
         "unit_label": null,
         "fallback_rate": null,
-        "monthly_benefit_limit": null,
+        "monthly_benefit_limit": 6000,
         "annual_benefit_limit": null
       },
       "transaction_conditions": {
-        "min_payment_amount": 0,
+        "min_payment_amount": null,
         "max_tx_spend_allowed": null,
         "max_count_per_day": 1,
         "max_count_per_month": null,
@@ -68,7 +108,7 @@
           "start": null,
           "end": null
         },
-        "requires_offline": false,
+        "requires_offline": null,
         "requires_online": true,
         "requires_auto_payment": false
       },
@@ -79,7 +119,7 @@
           "flat_discount": null,
           "discount_per_unit": null,
           "monthly_benefit_limit": 6000,
-          "group_monthly_limit": null
+          "group_monthly_limit": 6000
         },
         {
           "min_prev_performance": 1000000,
@@ -87,7 +127,7 @@
           "flat_discount": null,
           "discount_per_unit": null,
           "monthly_benefit_limit": 10000,
-          "group_monthly_limit": null
+          "group_monthly_limit": 10000
         }
       ],
       "conditional_metadata": {
@@ -105,8 +145,8 @@
       }
     },
     {
-      "benefit_id": "B_HOSPITAL_10",
-      "group_id": "G_SHARED_5AREAS",
+      "benefit_id": "B_HOSPITAL_2",
+      "group_id": "G_SHARED_LIMIT_2",
       "selective_choice": null,
       "category": "EduHealth",
       "sub_category": "hospital",
@@ -123,11 +163,11 @@
         "discount_per_unit": null,
         "unit_label": null,
         "fallback_rate": null,
-        "monthly_benefit_limit": null,
+        "monthly_benefit_limit": 6000,
         "annual_benefit_limit": null
       },
       "transaction_conditions": {
-        "min_payment_amount": 0,
+        "min_payment_amount": null,
         "max_tx_spend_allowed": null,
         "max_count_per_day": 1,
         "max_count_per_month": null,
@@ -148,7 +188,7 @@
           "flat_discount": null,
           "discount_per_unit": null,
           "monthly_benefit_limit": 6000,
-          "group_monthly_limit": null
+          "group_monthly_limit": 6000
         },
         {
           "min_prev_performance": 1000000,
@@ -156,7 +196,7 @@
           "flat_discount": null,
           "discount_per_unit": null,
           "monthly_benefit_limit": 10000,
-          "group_monthly_limit": null
+          "group_monthly_limit": 10000
         }
       ],
       "conditional_metadata": {
@@ -174,8 +214,8 @@
       }
     },
     {
-      "benefit_id": "B_ACADEMY_10",
-      "group_id": "G_SHARED_5AREAS",
+      "benefit_id": "B_ACADEMY_3",
+      "group_id": "G_SHARED_LIMIT_3",
       "selective_choice": null,
       "category": "EduHealth",
       "sub_category": "education",
@@ -192,11 +232,11 @@
         "discount_per_unit": null,
         "unit_label": null,
         "fallback_rate": null,
-        "monthly_benefit_limit": null,
+        "monthly_benefit_limit": 6000,
         "annual_benefit_limit": null
       },
       "transaction_conditions": {
-        "min_payment_amount": 0,
+        "min_payment_amount": null,
         "max_tx_spend_allowed": null,
         "max_count_per_day": 1,
         "max_count_per_month": null,
@@ -217,7 +257,7 @@
           "flat_discount": null,
           "discount_per_unit": null,
           "monthly_benefit_limit": 6000,
-          "group_monthly_limit": null
+          "group_monthly_limit": 6000
         },
         {
           "min_prev_performance": 1000000,
@@ -225,7 +265,7 @@
           "flat_discount": null,
           "discount_per_unit": null,
           "monthly_benefit_limit": 10000,
-          "group_monthly_limit": null
+          "group_monthly_limit": 10000
         }
       ],
       "conditional_metadata": {
@@ -241,8 +281,8 @@
       }
     },
     {
-      "benefit_id": "B_FUEL_10",
-      "group_id": "G_SHARED_5AREAS",
+      "benefit_id": "B_FUEL_4",
+      "group_id": "G_SHARED_LIMIT_4",
       "selective_choice": null,
       "category": "Traffic",
       "sub_category": "fuel",
@@ -259,11 +299,11 @@
         "discount_per_unit": null,
         "unit_label": null,
         "fallback_rate": null,
-        "monthly_benefit_limit": null,
+        "monthly_benefit_limit": 6000,
         "annual_benefit_limit": null
       },
       "transaction_conditions": {
-        "min_payment_amount": 0,
+        "min_payment_amount": null,
         "max_tx_spend_allowed": null,
         "max_count_per_day": 1,
         "max_count_per_month": null,
@@ -284,7 +324,7 @@
           "flat_discount": null,
           "discount_per_unit": null,
           "monthly_benefit_limit": 6000,
-          "group_monthly_limit": null
+          "group_monthly_limit": 6000
         },
         {
           "min_prev_performance": 1000000,
@@ -292,7 +332,7 @@
           "flat_discount": null,
           "discount_per_unit": null,
           "monthly_benefit_limit": 10000,
-          "group_monthly_limit": null
+          "group_monthly_limit": 10000
         }
       ],
       "conditional_metadata": {
@@ -308,8 +348,8 @@
       }
     },
     {
-      "benefit_id": "B_LIFE_10",
-      "group_id": "G_SHARED_5AREAS",
+      "benefit_id": "B_UTILITY_5",
+      "group_id": "G_SHARED_LIMIT_5",
       "selective_choice": null,
       "category": "Life",
       "sub_category": "general",
@@ -326,13 +366,13 @@
         "discount_per_unit": null,
         "unit_label": null,
         "fallback_rate": null,
-        "monthly_benefit_limit": null,
+        "monthly_benefit_limit": 6000,
         "annual_benefit_limit": null
       },
       "transaction_conditions": {
-        "min_payment_amount": 0,
+        "min_payment_amount": null,
         "max_tx_spend_allowed": null,
-        "max_count_per_day": 1,
+        "max_count_per_day": null,
         "max_count_per_month": null,
         "max_count_per_year": null,
         "day_of_week": null,
@@ -351,7 +391,7 @@
           "flat_discount": null,
           "discount_per_unit": null,
           "monthly_benefit_limit": 6000,
-          "group_monthly_limit": null
+          "group_monthly_limit": 6000
         },
         {
           "min_prev_performance": 1000000,
@@ -359,7 +399,7 @@
           "flat_discount": null,
           "discount_per_unit": null,
           "monthly_benefit_limit": 10000,
-          "group_monthly_limit": null
+          "group_monthly_limit": 10000
         }
       ],
       "conditional_metadata": {

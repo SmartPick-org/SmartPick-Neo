@@ -13,13 +13,15 @@
       "Restaurant",
       "Pharmacy",
       "Education",
-      "Fitness"
+      "Fitness",
+      "Tax",
+      "Fee"
     ]
   },
   "benefit_groups": [
     {
       "group_id": "G_SHARED_LIMIT_1",
-      "group_name": "기본 혜택 공유 한도",
+      "group_name": "기본 혜택 통합 한도",
       "group_type": "SHARED_LIMIT",
       "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
       "choices": null,
@@ -29,11 +31,11 @@
     },
     {
       "group_id": "G_SHARED_LIMIT_2",
-      "group_name": "추가 혜택 공유 한도",
+      "group_name": "추가 혜택 통합 한도",
       "group_type": "SHARED_LIMIT",
       "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
       "choices": null,
-      "monthly_limit": 35000,
+      "monthly_limit": 350000,
       "annual_limit": null,
       "top_n_count": null
     }
@@ -58,7 +60,7 @@
         "discount_per_unit": 60,
         "unit_label": "liter",
         "fallback_rate": null,
-        "monthly_benefit_limit": 20000,
+        "monthly_benefit_limit": 40000,
         "annual_benefit_limit": null
       },
       "transaction_conditions": {
@@ -135,7 +137,7 @@
         "discount_per_unit": null,
         "unit_label": null,
         "fallback_rate": null,
-        "monthly_benefit_limit": 3000,
+        "monthly_benefit_limit": 10000,
         "annual_benefit_limit": null
       },
       "transaction_conditions": {
@@ -468,7 +470,7 @@
           "flat_discount": null,
           "discount_per_unit": null,
           "monthly_benefit_limit": 5000,
-          "group_monthly_limit": 35000
+          "group_monthly_limit": 350000
         },
         {
           "min_prev_performance": 1200000,
@@ -476,7 +478,7 @@
           "flat_discount": null,
           "discount_per_unit": null,
           "monthly_benefit_limit": 5000,
-          "group_monthly_limit": 35000
+          "group_monthly_limit": 350000
         }
       ],
       "conditional_metadata": {
@@ -537,7 +539,7 @@
           "flat_discount": null,
           "discount_per_unit": null,
           "monthly_benefit_limit": 5000,
-          "group_monthly_limit": 35000
+          "group_monthly_limit": 350000
         },
         {
           "min_prev_performance": 1200000,
@@ -545,7 +547,7 @@
           "flat_discount": null,
           "discount_per_unit": null,
           "monthly_benefit_limit": 5000,
-          "group_monthly_limit": 35000
+          "group_monthly_limit": 350000
         }
       ],
       "conditional_metadata": {
@@ -604,7 +606,7 @@
           "flat_discount": null,
           "discount_per_unit": null,
           "monthly_benefit_limit": 5000,
-          "group_monthly_limit": 35000
+          "group_monthly_limit": 350000
         },
         {
           "min_prev_performance": 1200000,
@@ -612,7 +614,7 @@
           "flat_discount": null,
           "discount_per_unit": null,
           "monthly_benefit_limit": 5000,
-          "group_monthly_limit": 35000
+          "group_monthly_limit": 350000
         }
       ],
       "conditional_metadata": {
@@ -671,7 +673,7 @@
           "flat_discount": null,
           "discount_per_unit": null,
           "monthly_benefit_limit": 5000,
-          "group_monthly_limit": 35000
+          "group_monthly_limit": 350000
         },
         {
           "min_prev_performance": 1200000,
@@ -679,7 +681,7 @@
           "flat_discount": null,
           "discount_per_unit": null,
           "monthly_benefit_limit": 5000,
-          "group_monthly_limit": 35000
+          "group_monthly_limit": 350000
         }
       ],
       "conditional_metadata": {
@@ -738,7 +740,7 @@
           "flat_discount": null,
           "discount_per_unit": null,
           "monthly_benefit_limit": 30000,
-          "group_monthly_limit": 35000
+          "group_monthly_limit": 350000
         }
       ],
       "conditional_metadata": {
@@ -799,7 +801,7 @@
           "flat_discount": null,
           "discount_per_unit": null,
           "monthly_benefit_limit": 30000,
-          "group_monthly_limit": 35000
+          "group_monthly_limit": 350000
         }
       ],
       "conditional_metadata": {

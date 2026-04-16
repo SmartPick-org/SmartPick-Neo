@@ -137,8 +137,7 @@ class CardRecommendService:
                     )
 
                     monthly = result.get("monthly_total_krw", 0)
-                    annual_extra = result.get("annual_total_krw", 0)
-                    yearly = monthly * 12 + annual_extra
+                    yearly = result.get("annual_total_krw", 0)
 
                     card_categories = card.get("_card_categories", set())
                     specific_cats = card_categories - {"General"}
@@ -167,7 +166,7 @@ class CardRecommendService:
                         "card_name": card_name,
                         "card_company": card_meta.get("card_company", ""),
                         "card_id": card_meta.get("card_id", ""),
-                        "annual_fee": card_meta.get("annual_fee", 0),
+                        "annual_fee": card_meta.get("annual_fee_domestic", 0),
                         "minimum_performance": min_perf,
                         "performance_met": result.get("performance_met", False),
                         "expected_monthly_benefit": monthly,
@@ -178,17 +177,7 @@ class CardRecommendService:
                             "min_spend_score": round(min_spend_score, 3),
                         },
                         "category_breakdown": result.get("category_breakdown", []),
-                        "applied_benefits_trace": _enrich_benefit_details(
-                            result.get("applied_benefits_trace", []),
-                            card.get("benefits", []),
-                            legacy_benefits
-                        ),
-                        "benefit_details": _enrich_benefit_details(
-                            result.get("benefit_details", []),
-                            card.get("benefits", []),
-                            legacy_benefits
-                        ),
-                        "annual_breakdown": result.get("annual_breakdown", []),
+                        "applied_benefits_trace": result.get("applied_benefits_trace", []),
                         "warnings": result.get("warnings", []),
                         "_card_data": card,
                     }

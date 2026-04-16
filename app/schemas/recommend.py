@@ -96,9 +96,8 @@ class CategoryBreakdown(BaseModel):
 
 class BenefitTraceItem(BaseModel):
     """
-    개별 혜택의 산출 영수증 항목 (슬림 구조).
-    `category_breakdown`과 중복되는 카테고리/경고 필드는 제외하고,
-    체크박스 토글에 필요한 최소 필드만 포함합니다.
+    개별 혜택의 산출 영수증 항목.
+    UI에서 혜택 그룹화 및 한글 레이블링을 위해 category/sub_category 포함.
     """
     benefit_id: str = Field(
         ...,
@@ -109,6 +108,16 @@ class BenefitTraceItem(BaseModel):
         ...,
         description="혜택 설명 문자열. 영수증 UI에 그대로 표시할 텍스트입니다.",
         examples=["DAY(07~15시) 음식점 10% 할인"]
+    )
+    category: str = Field(
+        ...,
+        description="혜택 카테고리. UI 혜택 그룹화 및 한글 레이블 매핑에 사용됩니다.",
+        examples=["Food"]
+    )
+    sub_category: str | None = Field(
+        None,
+        description="혜택 서브 카테고리. 없을 경우 null 또는 'general'.",
+        examples=["restaurant"]
     )
     applied_budget: int = Field(
         ...,
@@ -137,6 +146,8 @@ class BenefitTraceItem(BaseModel):
                 {
                     "benefit_id": "shinhan_mr_life_b_food_restaurant",
                     "content": "DAY(07~15시) 음식점 10% 할인",
+                    "category": "Food",
+                    "sub_category": "restaurant",
                     "applied_budget": 210000,
                     "yielded_discount": 21000,
                     "user_choice": True
@@ -219,10 +230,10 @@ class RecalculateRequest(BaseModel):
     사용자가 영수증 항목에서 특정 혜택을 제외(체크 해제)했을 때, 
     통합 한도 재분배 로직을 포함한 '정밀 재계산(Deep Recalculation)'을 수행합니다.
     """
-    total_budget: int | None = Field(None, description="월 총 소비 금액 (원)", examples=[500000])
-    category_spending: Dict[CategoryEnum, Any] | None = Field(
-        None, 
-        description="최초 추천 시 사용했던 소비 내역 데이터를 그대로 전달합니다.",
+    total_budget: int = Field(..., description="월 총 소비 금액 (원). 정밀 한도 재계산에 필수입니다.", examples=[500000])
+    category_spending: Dict[CategoryEnum, Any] = Field(
+        ...,
+        description="최초 추천 시 사용했던 소비 내역 데이터를 그대로 전달합니다. 정밀 재계산 시 한도 재분배에 사용됩니다.",
         examples=[{
             "Coffee": {"total": 50000, "cafe": "75%", "bakery": "25%"},
             "Food": {"total": 300000, "restaurant": "70%", "delivery": "30%"},

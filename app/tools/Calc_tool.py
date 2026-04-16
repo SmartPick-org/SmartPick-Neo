@@ -301,6 +301,8 @@ class BenefitCalculator:
             result["applied_benefits_trace"].append({
                 "benefit_id": r["benefit_id"],
                 "content": r["content"],
+                "category": r["category"],
+                "sub_category": r.get("sub_category", "general"),
                 "applied_budget": r["applied_budget"],
                 "yielded_discount": r["yielded_discount"],
                 "user_choice": True,

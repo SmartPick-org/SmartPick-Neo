@@ -70,10 +70,16 @@ def init_logger():
     # 3. 환경별 Sink 설정
     if env == "production":
         # 운영 환경: JSON 구조화 로깅 (stdout Only)
-        # Loguru의 format 인자에 함수를 사용하면 반환된 문자열이 필드 대체를 시도하므로, 
-        # 커스텀 싱크 함수를 직접 사용하여 JSON을 출력합니다.
         def log_sink(message):
-            sys.stdout.write(json_formatter(message.record) + "\n")
+            try:
+                # Windows cp949 대응: 인코딩 에러 발생 시 최선을 다해 출력
+                sys.stdout.write(json_formatter(message.record) + "\n")
+                sys.stdout.flush()
+            except UnicodeEncodeError:
+                # 인코딩 불가능한 문자는 '?' 등으로 대체하여 출력
+                safe_msg = json_formatter(message.record).encode(sys.stdout.encoding, errors='replace').decode(sys.stdout.encoding)
+                sys.stdout.write(safe_msg + "\n")
+                sys.stdout.flush()
 
         logger.add(
             log_sink,
@@ -83,8 +89,16 @@ def init_logger():
         )
     else:
         # 개발 환경: 가독성이 좋은 텍스트 로깅 + 파일 백업
+        def dev_stdout_sink(message):
+            try:
+                sys.stdout.write(message)
+                sys.stdout.flush()
+            except UnicodeEncodeError:
+                sys.stdout.write(message.encode(sys.stdout.encoding, errors='replace').decode(sys.stdout.encoding))
+                sys.stdout.flush()
+
         logger.add(
-            sys.stdout,
+            dev_stdout_sink,
             colorize=True,
             format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>",
             level=log_level
@@ -95,6 +109,7 @@ def init_logger():
         def file_sink(message):
             # 파일에는 항상 JSON으로 기록
             log_file = f"logs/dev_{datetime.now().strftime('%Y-%m-%d')}.log"
+            # 파일 오픈 시 에러 방지를 위해 utf-8 명시 (이미 되어 있음)
             with open(log_file, "a", encoding="utf-8") as f:
                 f.write(json_formatter(message.record) + "\n")
 

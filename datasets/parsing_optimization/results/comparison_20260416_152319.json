@@ -1,0 +1,114 @@
+{
+  "shinhan_discount_plan+": [
+    {
+      "information_coverage_score": 6,
+      "information_coverage_notes": "Key sections like contact numbers, interest rate notes, and annual fee tables are present but with formatting issues. Critical details such as 'Plan Day' service, 'Monthly Plan' service descriptions, and 'Annual Plan' service conditions are truncated or missing. Some tables (e.g., '월 통합 혜택 한도') are incomplete or misaligned. Important disclaimers about DCC blocking, PIN registration, and family card policies are preserved but lack original structure. Mid-section omissions (e.g., 'Monthly 리워드' details) reduce completeness.",
+      "table_quality_score": 5,
+      "table_quality_notes": "Tables like '연회비' and '월 통합 혜택 한도' are partially reconstructed but with alignment errors (e.g., merged cells not preserved, headers misaligned). The '연회비' table is intact, but the '월 통합 혜택 한도' table has missing rows/columns. Some tables are missing entirely (e.g., the original 'Time Plan' benefit limits table). Formatting inconsistencies (e.g., missing borders, merged cells) reduce readability.",
+      "overall_assessment": "The parsed version captures core content but suffers from structural gaps, truncated sections, and table misalignments. While essential information is present, critical details and formatting are compromised.",
+      "total_score": 5.5,
+      "version_label": "Version 1 — Upstage → Markdown"
+    },
+    {
+      "information_coverage_score": 7,
+      "information_coverage_notes": "The parsed version captures most of the core content but omits several critical sections (e.g., Annual Plan service details, full Monthly Plan service descriptions, and some disclaimers). Key tables (e.g., '월 통합 혜택 한도') are incomplete. Some formatting errors exist (e.g., '해외검용' instead of '해외겸용', 'DCC 자산' instead of 'DCC 차단'). Images and QR codes are preserved but some image captions are truncated. The parsed version also misses the 'Plan Day 서비스' section and parts of the '연회비 반환 기준' section.",
+      "table_quality_score": 6,
+      "table_quality_notes": "The '연회비' table is accurately preserved. However, the '월 통합 혜택 한도' table is incomplete (missing the 'Monthly 리워드' row and some alignment issues). Other tabular data (e.g., '정기결제 최대 20% 할인' area) is converted to bullet points, losing structured formatting. Some table headers are misaligned or missing in the parsed version.",
+      "overall_assessment": "The parsed version captures the majority of the content but has noticeable omissions and formatting errors, particularly in tables and detailed service descriptions.",
+      "total_score": 6.5,
+      "version_label": "Version 2 — Datalab → Markdown"
+    },
+    {
+      "information_coverage_score": 8,
+      "information_coverage_notes": "Most core content is preserved, including contact numbers, fee structures, discount plans, and service terms. However, some details are missing or altered: (1) The original's '단기/장기 카드대출' and 'MF대출서비스' numbers are reordered in the parsed version. (2) The original's '연체이자율' section has minor formatting changes but retains all key details. (3) The parsed version omits the '할부금융 고객센터' number entirely. (4) The original's 'Monthly Plan 서비스' table in the middle section is incomplete in the parsed version, missing some rows/columns. (5) The parsed version adds a new 'DISCOUNT' header not present in the original.",
+      "table_quality_score": 7,
+      "table_quality_notes": "Tables are generally well-reconstructed but have minor issues: (1) The '연회비' table in the parsed version correctly captures all data but adds an extra '구분' column header. (2) The '월 통합 혜택 한도' table in the parsed version omits some original columns (e.g., 'Time Plan' and 'Daily Plan' sections) and alters formatting. (3) The parsed version's 'Monthly 리워드' table lacks proper alignment and merges cells differently than the original. (4) Some tables in the parsed version (e.g., contact numbers) are split into multiple tables unnecessarily.",
+      "overall_assessment": "The parsed version captures most content accurately with minor omissions and formatting issues, particularly in tables and contact number organization.",
+      "total_score": 7.5,
+      "version_label": "Version 3 — Upstage → HTML → Markdown"
+    },
+    {
+      "information_coverage_score": 7,
+      "information_coverage_notes": "Most core content is preserved, but some details are missing or altered. For example, the parsed version omits several phone numbers (e.g., MF대출서비스 1661-2032) and mislabels '해외겸용' as '해외검용' in the 연회비 table. The parsed version also omits specific disclaimers about DCC (Dynamic Currency Conversion) and contains formatting errors in the '월 통합 혜택 한도' table. Some sections (e.g., Annual Plan 서비스) are truncated or lack details present in the original.",
+      "table_quality_score": 6,
+      "table_quality_notes": "Tables are partially preserved but with formatting issues. The 연회비 table in the parsed version has misaligned headers and incorrect labels (e.g., '해외검용' instead of '해외겸용'). The '월 통합 혜택 한도' table is incomplete, missing columns and proper alignment. Some table notes are omitted or rephrased ambiguously.",
+      "overall_assessment": "The parsed version captures most content but has notable omissions, formatting errors, and table inaccuracies. Key details and disclaimers are missing, and tables are not fully preserved.",
+      "total_score": 6.5,
+      "version_label": "Version 4 — Datalab → HTML → Markdown"
+    },
+    {
+      "information_coverage_score": 6,
+      "information_coverage_notes": "The parsed version omits critical sections such as the original table structure for 연회비 (annual fees), Monthly Plan service limits, and specific details about Annual Plan benefits. Key tables (e.g., 월 통합 혜택 한도) are missing entirely. While general descriptions of services and notes are present, specific numerical data, conditions, and structured information are either incomplete or paraphrased without precision. For example, the 연회비 table is described in text but lacks the exact column headers and values. Discount Plan+ service details are fragmented, with some sections omitted (e.g., 영화 예매 5천원 할인 conditions).",
+      "table_quality_score": 4,
+      "table_quality_notes": "Tables are not preserved in their original format. The 연회비 table is described in text but lacks proper alignment, headers, and exact values (e.g., '4만3천원' is mentioned but not tabulated). The 월 통합 혜택 한도 table is entirely missing. No attempt is made to reconstruct tables as HTML or markdown, resulting in loss of data structure and readability. Formatting issues (e.g., merged cells, multi-line entries) are not addressed.",
+      "overall_assessment": "The parsed version captures general service descriptions but fails to retain critical tabular data and precise conditions, leading to significant information loss. Tables are inadequately handled, reducing usability for reference purposes.",
+      "total_score": 5.0,
+      "version_label": "Version 5 — Upstage → HTML + LLM tables → Markdown"
+    },
+    {
+      "information_coverage_score": 6,
+      "information_coverage_notes": "The parsed version captures core content (e.g., card benefits, fee structure, service details) but omits critical sections: 1) All contact numbers and legal disclaimers at the beginning, 2) Detailed penalty interest rate rules, 3) Credit score warnings, 4) Payment obligation clauses, 5) Regulatory approval notices, 6) Specific DCC (Dynamic Currency Conversion) warnings, 7) Annual fee refund policies, 8) Family card management details, 9) Contractual obligations, 10) Payment account processing notes. Tables are partially reconstructed but lack original formatting (e.g., merged cells, exact column widths).",
+      "table_quality_score": 7,
+      "table_quality_notes": "The parsed version correctly reconstructs the fee table structure but adds new columns (e.g., '브랜드') not present in the original. The monthly benefit limit table is significantly altered with added categories (Time Plan, Daily Plan) and modified content not matching the original. Original table headers like '구분' are inconsistently handled across tables.",
+      "overall_assessment": "The parsed version captures core card benefits but omits critical legal/operational details and alters table structures. Suitable for promotional material but insufficient for contractual reference.",
+      "total_score": 6.5,
+      "version_label": "Version 6 — Hand-crafted (gold standard)"
+    }
+  ],
+  "shinhan_mr_life": [
+    {
+      "information_coverage_score": 8,
+      "information_coverage_notes": "Most textual content is preserved, including card benefits, fees, terms, and service details. Minor omissions occur in the middle/end sections (e.g., truncated '전신환 매...' and '[... END SECTION OMITTED ...]'). All key tables (연회비, 월납 할인, 주말/Time 할인) are present with headers and data intact. Notes and disclaimers are fully retained.",
+      "table_quality_score": 9,
+      "table_quality_notes": "Tables are well-structured with proper headers, borders, and alignment. Only minor formatting issues (e.g., inconsistent spacing in '연회비' table headers) exist. All critical data (할인한도, 서비스 대상, 연회비 금액) is accurately captured. No table content is missing or misaligned.",
+      "overall_assessment": "The parsed version effectively captures the original content with minor truncations and formatting inconsistencies. Tables are exceptionally well-preserved.",
+      "total_score": 8.5,
+      "version_label": "Version 1 — Upstage → Markdown"
+    },
+    {
+      "information_coverage_score": 8,
+      "information_coverage_notes": "Most content is well-covered, including card design, discount services, fees, and terms. However, some minor omissions exist: (1) The original PDF contained multiple image placeholders (e.g., [808 x 567] pictures) that are not present in the parsed version, though some images (e.g., card design, QR code) are retained. (2) The parsed version omits the middle section of the '부가서비스 변경안내' (additional service change notice) and the end of the 'Night' discount section, which cuts off a bullet point. (3) The parsed version lacks the final '금융소비자 보호제도 안내' (financial consumer protection notice) section present in the original.",
+      "table_quality_score": 9,
+      "table_quality_notes": "Tables are generally well-reconstructed with proper alignment and headers. The '연회비' (annual fee) table and '월납 할인서비스' (monthly payment discount) tables are accurately preserved. Minor formatting inconsistencies exist in the '주유/쇼핑' and 'Night' discount tables (e.g., merged cells in the original are represented as separate rows in the parsed version), but data integrity remains intact.",
+      "overall_assessment": "The parsed version captures nearly all content with high fidelity, though minor omissions in text and images slightly reduce completeness. Tables are exceptionally well-preserved.",
+      "total_score": 8.5,
+      "version_label": "Version 2 — Datalab → Markdown"
+    },
+    {
+      "information_coverage_score": 8,
+      "information_coverage_notes": "Most content is well-covered, including card design, discount categories, fee structures, and service terms. However, some sections (e.g., '금융소비자 보호제도 안내', '부가서비스 변경안내', '해외이용 확인사항') have truncated or omitted details. Tables like '연회비 반환 기준' and '할인서비스 공통 유의사항' are partially missing. Images/pictures from the original PDF are entirely omitted but noted as such.",
+      "table_quality_score": 7,
+      "table_quality_notes": "Tables (e.g., '연회비', '할인서비스 한도', '서비스 대상') are generally well-reconstructed with proper headers and alignment. However, some tables (e.g., '공과금 할인 한도', '주말 할인서비스') have inconsistent formatting or missing footnotes. The '연회비 반환 기준' table is missing entirely.",
+      "overall_assessment": "The parsed version captures most content accurately but has minor omissions in text and tables. Tables are mostly intact but lack consistency in formatting and completeness.",
+      "total_score": 7.5,
+      "version_label": "Version 3 — Upstage → HTML → Markdown"
+    },
+    {
+      "information_coverage_score": 8,
+      "information_coverage_notes": "Most textual content is well-covered, including card design, discount categories, fee structures, and legal disclaimers. However, several tables (e.g., '연회비 반환 기준' and '할인서비스 공통 유의사항') have incomplete or missing data. Images and QR codes are omitted as noted in the original reference. Some sections (e.g., '해외이용 확인사항') are partially truncated or lack formatting consistency.",
+      "table_quality_score": 7,
+      "table_quality_notes": "Tables like '연회비' and '할인서비스 한도' are partially preserved with correct headers and some data, but alignment and borders are inconsistent. The '연회비 반환 기준' table is missing entirely. Footnotes and notes under tables (e.g., '※ 연회비는 카드별로...') are retained but lack proper separation from table content.",
+      "overall_assessment": "The parsed version captures most textual information accurately but struggles with table formatting and completeness. Key details are present, though minor omissions and formatting issues exist.",
+      "total_score": 7.5,
+      "version_label": "Version 4 — Datalab → HTML → Markdown"
+    },
+    {
+      "information_coverage_score": 8,
+      "information_coverage_notes": "Most textual content is well-covered, including card benefits, fee structures, and service details. However, several sections are omitted (e.g., middle/end sections marked with [...]), and all images/pictures from the original PDF are missing. The parsed version also lacks some formatting elements (e.g., bullet points, section headers) present in the original.",
+      "table_quality_score": 7,
+      "table_quality_notes": "Tables are converted to natural language descriptions, preserving core data (e.g., annual fees, discount limits, service conditions). However, structural details (e.g., row/column alignment, `rowspan` attributes) are not explicitly retained. Specific tables about contact centers, monthly discount tiers, and Time/Night discounts are accurately described but lose visual formatting.",
+      "overall_assessment": "The parsed version captures most content effectively but omits images, some sections, and formatting. Tables are well-translated to text but lose structural clarity.",
+      "total_score": 7.5,
+      "version_label": "Version 5 — Upstage → HTML + LLM tables → Markdown"
+    },
+    {
+      "information_coverage_score": 9,
+      "information_coverage_notes": "All textual content from the original PDF is present in the parsed version, including tables, service descriptions, and notes. The only omission is the intentional exclusion of images/pictures from the original PDF, which are not relevant to textual content coverage.",
+      "table_quality_score": 8,
+      "table_quality_notes": "Tables are well-reconstructed with proper column alignment and headers. Minor formatting issues exist in the second table where '영역별 각 1천원씩' notes are not explicitly tied to their respective rows but are still understandable in context.",
+      "overall_assessment": "The parsed version captures nearly all content accurately with excellent information coverage and good table handling.",
+      "total_score": 8.5,
+      "version_label": "Version 6 — Hand-crafted (gold standard)"
+    }
+  ]
+}

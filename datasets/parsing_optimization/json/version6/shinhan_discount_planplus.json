@@ -1,0 +1,451 @@
+{
+  "card_meta": {
+    "card_id": "shinhan_discount_plan_plus",
+    "card_name": "신한카드 Discount Plan+",
+    "card_company": "신한카드",
+    "annual_fee": 7000,
+    "minimum_performance": 400000,
+    "reward_currency": "KRW",
+    "currency_to_krw_rate": 1.0
+  },
+  "benefit_groups": [
+    {
+      "group_id": "G_DISCOUNTPLUS_TIME",
+      "group_name": "Time Plan 통합 한도",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": 20000,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_DISCOUNTPLUS_DAILY",
+      "group_name": "Daily Plan 통합 한도",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": 50000,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_DISCOUNTPLUS_MONTHLY",
+      "group_name": "Monthly Plan 통합 한도",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": 20000,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_DISCOUNTPLUS_MOVIE",
+      "group_name": "영화 예매 통합 한도",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": 5000,
+      "top_n_count": null
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_id": "b_discountplus_time_day",
+      "category": "Coffee",
+      "subcategory": "Cafe",
+      "content": "DAY (07시~15시) 카페 10% 할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 5000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 800000,
+          "monthly_limit": 10000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 1200000,
+          "monthly_limit": 15000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 1800000,
+          "monthly_limit": 20000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.1,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": 10000,
+        "max_count_per_month": 1
+      },
+      "group_id": "G_DISCOUNTPLUS_TIME",
+      "ui_warnings": [
+        "1회 이용액 1만원까지 할인 적용",
+        "일 1회 할인"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_discountplus_time_night",
+      "category": "Food",
+      "subcategory": "Delivery",
+      "content": "NIGHT (18시~22시) 배달앱 10% 할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 5000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 800000,
+          "monthly_limit": 10000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 1200000,
+          "monthly_limit": 15000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 1800000,
+          "monthly_limit": 20000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.1,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": 10000,
+        "max_count_per_month": 1
+      },
+      "group_id": "G_DISCOUNTPLUS_TIME",
+      "ui_warnings": [
+        "1회 이용액 1만원까지 할인 적용",
+        "일 1회 할인"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_discountplus_daily_shopping",
+      "category": "Shopping",
+      "subcategory": "Mart",
+      "content": "쇼핑 10% 할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 15000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 800000,
+          "monthly_limit": 25000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 1200000,
+          "monthly_limit": 35000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 1800000,
+          "monthly_limit": 50000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.1,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": 50000,
+        "max_count_per_month": 5
+      },
+      "group_id": "G_DISCOUNTPLUS_DAILY",
+      "ui_warnings": [
+        "1회 이용액 5만원까지 할인 적용",
+        "일 1회, 월 5회 할인"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_discountplus_daily_transit",
+      "category": "Traffic",
+      "subcategory": "Fuel",
+      "content": "이동 5% 할인 (주유)",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 15000,
+          "reward_rate": 0.05,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 800000,
+          "monthly_limit": 25000,
+          "reward_rate": 0.05,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 1200000,
+          "monthly_limit": 35000,
+          "reward_rate": 0.05,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 1800000,
+          "monthly_limit": 50000,
+          "reward_rate": 0.05,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.05,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": 50000,
+        "max_count_per_month": 5
+      },
+      "group_id": "G_DISCOUNTPLUS_DAILY",
+      "ui_warnings": [
+        "1회 이용액 5만원까지 할인 적용",
+        "일 1회, 월 5회 할인"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_discountplus_plan_day",
+      "category": "General",
+      "subcategory": "Other",
+      "content": "매월 1일 Time Plan, Daily Plan 서비스 첫 번째 할인 거래 할인율 2배 적용",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 20000,
+          "reward_rate": 0.2,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.2,
+        "fixed_amount": null,
+        "monthly_limit": 20000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": 2
+      },
+      "group_id": null,
+      "ui_warnings": [
+        "서비스당 1회, 최대 2회 적용"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": "매월 1일",
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_discountplus_monthly_utility",
+      "category": "Life",
+      "subcategory": "Utilities",
+      "content": "정기결제 공과금 10% 할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 5000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 800000,
+          "monthly_limit": 10000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 1200000,
+          "monthly_limit": 15000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        },
+        {
+          "min_prev_performance": 1800000,
+          "monthly_limit": 20000,
+          "reward_rate": 0.1,
+          "fixed_amount": null
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.1,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": "G_DISCOUNTPLUS_MONTHLY",
+      "ui_warnings": [],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_discountplus_monthly_movie",
+      "category": "Cultural",
+      "subcategory": "Movie",
+      "content": "영화 예매 5천원 할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "monthly_limit": 5000,
+          "reward_rate": null,
+          "fixed_amount": 5000
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": 5000,
+        "monthly_limit": 5000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 12000,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": 1
+      },
+      "group_id": "G_DISCOUNTPLUS_MOVIE",
+      "ui_warnings": [
+        "월 1회 할인"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_discountplus_monthly_reward",
+      "category": "General",
+      "subcategory": "Other",
+      "content": "전월 150만원 이상 이용 시 최대 5천원 캐시백",
+      "frequency": "MONTHLY",
+      "reward_type": "CASHBACK",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 1500000,
+          "monthly_limit": 3000,
+          "reward_rate": null,
+          "fixed_amount": 3000
+        },
+        {
+          "min_prev_performance": 1800000,
+          "monthly_limit": 5000,
+          "reward_rate": null,
+          "fixed_amount": 5000
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": 5000,
+        "monthly_limit": 5000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null
+      },
+      "group_id": null,
+      "ui_warnings": [],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    }
+  ]
+}

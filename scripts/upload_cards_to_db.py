@@ -59,6 +59,10 @@ JSON_V4_DIR = ROOT / "datasets" / "json_v4"
 
 def map_card_meta(card_id: str, meta: dict) -> dict:
     """card_meta 블록 → cards 테이블 row"""
+    company = meta.get("card_company", "").lower()
+    terms_companies = {"hana", "kb", "nh", "shinhan", "woori"}
+    terms_path = f"Terms/{company}_terms.pdf" if company in terms_companies else None
+
     return {
         # card_slug: JSON의 card_id 값 그대로 사용 (e.g. "hyundai_digital_lover")
         "card_slug": card_id,
@@ -79,7 +83,7 @@ def map_card_meta(card_id: str, meta: dict) -> dict:
         "digest_file_path": f"Digest/{card_id}.md",
         # manual_file_path: JSON에 없음. null로 두고 별도 운영 작업으로 채움
         "manual_file_path": f"Manuals/{card_id}.md",
-        "terms_file_path": f"Terms/{card_id}.md"
+        "terms_file_path": terms_path
     }
 
 

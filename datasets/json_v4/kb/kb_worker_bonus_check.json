@@ -9,8 +9,21 @@
     "performance_excluded_categories": [
       "Fuel",
       "Tax",
+      "Fuel",
+      "Tax",
+      "Traffic",
+      "Overseas",
+      "Cash_Service",
+      "Card_Loan",
+      "Annual_Fee",
+      "Fee_Interest",
+      "Cancellation",
+      "Gift_Card",
+      "Prepaid_Card",
+      "Tax",
       "Utility",
-      "Others"
+      "Management_Fee",
+      "Gift_Certificate"
     ]
   },
   "benefit_groups": [
@@ -19,16 +32,23 @@
       "group_name": "월간 통합 할인 한도",
       "group_type": "SHARED_LIMIT",
       "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
-      "monthly_limit": 50000,
+      "choices": null,
+      "monthly_limit": null,
       "annual_limit": null,
       "top_n_count": null
     },
     {
-      "group_id": "G_INDIRECT_BENEFITS",
-      "group_name": "부가 서비스",
+      "group_id": "G_SELECTIVE_1",
+      "group_name": "신규 발급 혜택",
       "group_type": "SELECTIVE_GROUP",
       "group_type_description": "SELECTIVE_GROUP: 필수 선택형 (2-3 공식)",
-      "monthly_limit": null,
+      "choices": [
+        {
+          "choice_id": "CHOICE_1",
+          "choice_name": "신규 발급 혜택 (60일 한정)"
+        }
+      ],
+      "monthly_limit": 5000,
       "annual_limit": null,
       "top_n_count": null
     }
@@ -36,7 +56,13 @@
   "benefits": [
     {
       "benefit_id": "B_TAX_7000",
+      "content": "국세/지방세 7천원 환급할인",
       "group_id": "G_SHARED_LIMIT",
+      "selective_choice": {
+        "description": null,
+        "group_id": "G_SELECTIVE_1",
+        "choice_id": "CHOICE_1"
+      },
       "category": "Life",
       "sub_category": "insurance_tax",
       "reward_type": "DIRECT_FINANCIAL",
@@ -66,7 +92,7 @@
           "start": null,
           "end": null
         },
-        "requires_offline": true,
+        "requires_offline": false,
         "requires_online": false,
         "requires_auto_payment": false
       },
@@ -82,9 +108,10 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "전월 실적 산정에서 제외되는 혜택"
+          "전월 실적 30만원 이상 시 제공",
+          "건당 10만원 이상 이용 시 할인 (월 1회)"
         ],
-        "excludes_from_performance": true,
+        "excludes_from_performance": false,
         "special_multiplier": null
       },
       "indirect_benefit_metadata": {
@@ -96,7 +123,13 @@
     },
     {
       "benefit_id": "B_INSURANCE_2000",
+      "content": "보험료 2천원 환급할인",
       "group_id": "G_SHARED_LIMIT",
+      "selective_choice": {
+        "description": null,
+        "group_id": "G_SELECTIVE_1",
+        "choice_id": "CHOICE_1"
+      },
       "category": "Life",
       "sub_category": "insurance_tax",
       "reward_type": "DIRECT_FINANCIAL",
@@ -126,7 +159,7 @@
           "start": null,
           "end": null
         },
-        "requires_offline": true,
+        "requires_offline": false,
         "requires_online": false,
         "requires_auto_payment": false
       },
@@ -142,9 +175,10 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "전월 실적 산정에서 제외되는 혜택"
+          "전월 실적 30만원 이상 시 제공",
+          "건당 10만원 이상 이용 시 할인 (월 1회)"
         ],
-        "excludes_from_performance": true,
+        "excludes_from_performance": false,
         "special_multiplier": null
       },
       "indirect_benefit_metadata": {
@@ -156,7 +190,13 @@
     },
     {
       "benefit_id": "B_TELECOM_1000",
+      "content": "이동통신요금 자동이체 시 1천원 환급할인",
       "group_id": "G_SHARED_LIMIT",
+      "selective_choice": {
+        "description": null,
+        "group_id": "G_SELECTIVE_1",
+        "choice_id": "CHOICE_1"
+      },
       "category": "Life",
       "sub_category": "telecom",
       "reward_type": "DIRECT_FINANCIAL",
@@ -202,10 +242,11 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "전월 실적 산정에서 제외되는 혜택",
+          "전월 실적 30만원 이상 시 제공",
+          "건당 5만원 이상 자동이체 시 할인 (월 1회)",
           "유무선 통합 청구금액 자동이체 시에는 제외"
         ],
-        "excludes_from_performance": true,
+        "excludes_from_performance": false,
         "special_multiplier": null
       },
       "indirect_benefit_metadata": {
@@ -216,8 +257,10 @@
       }
     },
     {
-      "benefit_id": "B_PUBLIC_TRANSPORT_5",
+      "benefit_id": "B_PUBLIC_5PERCENT",
+      "content": "후불교통(시내버스, 지하철) 5% 청구할인",
       "group_id": "G_SHARED_LIMIT",
+      "selective_choice": null,
       "category": "Traffic",
       "sub_category": "transit",
       "reward_type": "DIRECT_FINANCIAL",
@@ -247,7 +290,7 @@
           "start": null,
           "end": null
         },
-        "requires_offline": true,
+        "requires_offline": false,
         "requires_online": false,
         "requires_auto_payment": false
       },
@@ -263,69 +306,11 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "전월 실적 산정에서 제외되는 혜택"
+          "전월 실적 30만원 이상 시 제공",
+          "버스, 지하철 (월 이용금액 2만원까지 할인 적용)",
+          "고속/시외버스 (5% 환급할인)"
         ],
-        "excludes_from_performance": true,
-        "special_multiplier": null
-      },
-      "indirect_benefit_metadata": {
-        "description": null,
-        "target_locations": null,
-        "voucher_choices": null,
-        "voucher_value": null
-      }
-    },
-    {
-      "benefit_id": "B_EXPRESS_BUS_5",
-      "group_id": "G_SHARED_LIMIT",
-      "category": "Traffic",
-      "sub_category": "express_bus",
-      "reward_type": "DIRECT_FINANCIAL",
-      "reward_unit": {
-        "currency": "KRW",
-        "currency_to_krw_rate": 1.0
-      },
-      "calculation_rule": {
-        "calc_type": "PERCENTAGE",
-        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
-        "benefit_rate": 0.05,
-        "flat_discount": null,
-        "discount_per_unit": null,
-        "unit_label": null,
-        "fallback_rate": null,
-        "monthly_benefit_limit": null,
-        "annual_benefit_limit": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": null,
-        "max_tx_spend_allowed": null,
-        "max_count_per_day": null,
-        "max_count_per_month": null,
-        "max_count_per_year": null,
-        "day_of_week": null,
-        "time_of_day": {
-          "start": null,
-          "end": null
-        },
-        "requires_offline": true,
-        "requires_online": false,
-        "requires_auto_payment": false
-      },
-      "tier_conditions": [
-        {
-          "min_prev_performance": 300000,
-          "benefit_rate": 0.05,
-          "flat_discount": null,
-          "discount_per_unit": null,
-          "monthly_benefit_limit": null,
-          "group_monthly_limit": null
-        }
-      ],
-      "conditional_metadata": {
-        "warnings": [
-          "전월 실적 산정에서 제외되는 혜택"
-        ],
-        "excludes_from_performance": true,
+        "excludes_from_performance": false,
         "special_multiplier": null
       },
       "indirect_benefit_metadata": {
@@ -338,6 +323,7 @@
     {
       "benefit_id": "B_GS_CALTEX",
       "group_id": "G_SHARED_LIMIT",
+      "selective_choice": null,
       "category": "Traffic",
       "sub_category": "fuel",
       "reward_type": "DIRECT_FINANCIAL",
@@ -357,8 +343,8 @@
         "annual_benefit_limit": null
       },
       "transaction_conditions": {
-        "min_payment_amount": 100000,
-        "max_tx_spend_allowed": null,
+        "min_payment_amount": 10000,
+        "max_tx_spend_allowed": 100000,
         "max_count_per_day": null,
         "max_count_per_month": null,
         "max_count_per_year": null,
@@ -373,7 +359,7 @@
           "start": null,
           "end": null
         },
-        "requires_offline": true,
+        "requires_offline": false,
         "requires_online": false,
         "requires_auto_payment": false
       },
@@ -385,63 +371,7 @@
           "discount_per_unit": 50,
           "monthly_benefit_limit": 30000,
           "group_monthly_limit": null
-        }
-      ],
-      "conditional_metadata": {
-        "warnings": [
-          "전월 실적 산정에서 제외되는 혜택",
-          "LPG 및 비제휴 주유소는 제외"
-        ],
-        "excludes_from_performance": true,
-        "special_multiplier": 1.2
-      },
-      "indirect_benefit_metadata": {
-        "description": null,
-        "target_locations": null,
-        "voucher_choices": null,
-        "voucher_value": null
-      }
-    },
-    {
-      "benefit_id": "B_GS_CALTEX_WEEKEND",
-      "group_id": "G_SHARED_LIMIT",
-      "category": "Traffic",
-      "sub_category": "fuel",
-      "reward_type": "DIRECT_FINANCIAL",
-      "reward_unit": {
-        "currency": "KRW",
-        "currency_to_krw_rate": 1.0
-      },
-      "calculation_rule": {
-        "calc_type": "UNIT_BASED",
-        "calc_type_description": "UNIT_BASED: 1-3 공식(단위비례)",
-        "benefit_rate": null,
-        "flat_discount": null,
-        "discount_per_unit": 60,
-        "unit_label": "liter",
-        "fallback_rate": null,
-        "monthly_benefit_limit": 30000,
-        "annual_benefit_limit": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 100000,
-        "max_tx_spend_allowed": null,
-        "max_count_per_day": null,
-        "max_count_per_month": null,
-        "max_count_per_year": null,
-        "day_of_week": [
-          "SAT",
-          "SUN"
-        ],
-        "time_of_day": {
-          "start": null,
-          "end": null
         },
-        "requires_offline": true,
-        "requires_online": false,
-        "requires_auto_payment": false
-      },
-      "tier_conditions": [
         {
           "min_prev_performance": 200000,
           "benefit_rate": null,
@@ -453,10 +383,12 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "전월 실적 산정에서 제외되는 혜택",
-          "LPG 및 비제휴 주유소는 제외"
+          "전월 실적 20만원 이상 시 제공",
+          "건당 이용금액 10만원 / 월 이용금액 30만원까지 할인 적용",
+          "LPG 및 비제휴 주유소는 제외",
+          "주중 50원, 주말 60원 환급할인"
         ],
-        "excludes_from_performance": true,
+        "excludes_from_performance": false,
         "special_multiplier": null
       },
       "indirect_benefit_metadata": {
@@ -467,8 +399,10 @@
       }
     },
     {
-      "benefit_id": "B_EVERLAND_50",
+      "benefit_id": "B_EVERLAND_50PERCENT",
+      "content": "에버랜드 50% 환급할인",
       "group_id": "G_SHARED_LIMIT",
+      "selective_choice": null,
       "category": "Cultural",
       "sub_category": "theme_park",
       "reward_type": "DIRECT_FINANCIAL",
@@ -484,7 +418,7 @@
         "discount_per_unit": null,
         "unit_label": null,
         "fallback_rate": null,
-        "monthly_benefit_limit": 25000,
+        "monthly_benefit_limit": 20000,
         "annual_benefit_limit": null
       },
       "transaction_conditions": {
@@ -508,16 +442,17 @@
           "benefit_rate": 0.5,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": 25000,
+          "monthly_benefit_limit": 20000,
           "group_monthly_limit": null
         }
       ],
       "conditional_metadata": {
         "warnings": [
-          "전월 실적 산정에서 제외되는 혜택",
+          "전월 실적 20만원 이상 시 제공",
+          "건당 3만원 ~ 5만원까지 할인 적용 (월 1회)",
           "현장 티켓 발매에 한함"
         ],
-        "excludes_from_performance": true,
+        "excludes_from_performance": false,
         "special_multiplier": null
       },
       "indirect_benefit_metadata": {
@@ -528,8 +463,10 @@
       }
     },
     {
-      "benefit_id": "B_OUTBACK_10",
+      "benefit_id": "B_OUTBACK_10PERCENT",
+      "content": "아웃백 10% 환급할인",
       "group_id": "G_SHARED_LIMIT",
+      "selective_choice": null,
       "category": "Food",
       "sub_category": "restaurant",
       "reward_type": "DIRECT_FINANCIAL",
@@ -559,7 +496,7 @@
           "start": null,
           "end": null
         },
-        "requires_offline": true,
+        "requires_offline": false,
         "requires_online": false,
         "requires_auto_payment": false
       },
@@ -575,10 +512,11 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "전월 실적 산정에서 제외되는 혜택",
+          "전월 실적 20만원 이상 시 제공",
+          "건당 3만원 ~ 10만원까지 할인 적용 (월 1회)",
           "백화점 및 대형할인점 입점 점포는 제외"
         ],
-        "excludes_from_performance": true,
+        "excludes_from_performance": false,
         "special_multiplier": null
       },
       "indirect_benefit_metadata": {
@@ -589,8 +527,10 @@
       }
     },
     {
-      "benefit_id": "B_DEPT_5",
+      "benefit_id": "B_DEPT_5PERCENT",
+      "content": "롯데,신세계, 현대백화점 5% 환급할인",
       "group_id": "G_SHARED_LIMIT",
+      "selective_choice": null,
       "category": "Shopping",
       "sub_category": "dept_store",
       "reward_type": "DIRECT_FINANCIAL",
@@ -620,7 +560,7 @@
           "start": null,
           "end": null
         },
-        "requires_offline": true,
+        "requires_offline": false,
         "requires_online": false,
         "requires_auto_payment": false
       },
@@ -636,9 +576,11 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "전월 실적 산정에서 제외되는 혜택"
+          "전월 실적 50만원 이상 시 제공",
+          "건당 5만원 ~ 10만원까지 할인 적용 (월 1회)",
+          "대상: 롯데, 신세계, 현대백화점"
         ],
-        "excludes_from_performance": true,
+        "excludes_from_performance": false,
         "special_multiplier": null
       },
       "indirect_benefit_metadata": {
@@ -650,7 +592,9 @@
     },
     {
       "benefit_id": "B_SK_RENTAL",
-      "group_id": "G_INDIRECT_BENEFITS",
+      "content": "SK렌터카 할인(연 2회)",
+      "group_id": null,
+      "selective_choice": null,
       "category": "Travel",
       "sub_category": "rental",
       "reward_type": "INDIRECT",
@@ -680,16 +624,16 @@
           "start": null,
           "end": null
         },
-        "requires_offline": true,
+        "requires_offline": false,
         "requires_online": false,
         "requires_auto_payment": false
       },
       "tier_conditions": [],
       "conditional_metadata": {
         "warnings": [
-          "월간 통합 할인 한도 예외 적용 서비스"
+          "연 2회 (상세 내용은 안내장 참조)"
         ],
-        "excludes_from_performance": true,
+        "excludes_from_performance": false,
         "special_multiplier": null
       },
       "indirect_benefit_metadata": {
@@ -700,8 +644,9 @@
       }
     },
     {
-      "benefit_id": "B_SPEEDMATE",
-      "group_id": "G_INDIRECT_BENEFITS",
+      "benefit_id": "B_ENGINE_OIL",
+      "group_id": null,
+      "selective_choice": null,
       "category": "Traffic",
       "sub_category": "maintenance",
       "reward_type": "INDIRECT",
@@ -731,17 +676,17 @@
           "start": null,
           "end": null
         },
-        "requires_offline": true,
+        "requires_offline": false,
         "requires_online": false,
         "requires_auto_payment": false
       },
       "tier_conditions": [],
       "conditional_metadata": {
         "warnings": [
-          "월간 통합 할인 한도 예외 적용 서비스",
+          "엔진오일 교환 시 2만원 현장 할인 (연 1회)",
           "수입차 및 1.4톤 이상 차량 등은 제외"
         ],
-        "excludes_from_performance": true,
+        "excludes_from_performance": false,
         "special_multiplier": null
       },
       "indirect_benefit_metadata": {
@@ -753,7 +698,9 @@
     },
     {
       "benefit_id": "B_HAPPY_POINT",
+      "content": "해피포인트 5% 현장적립",
       "group_id": null,
+      "selective_choice": null,
       "category": "General",
       "sub_category": null,
       "reward_type": "DIRECT_FINANCIAL",
@@ -783,16 +730,16 @@
           "start": null,
           "end": null
         },
-        "requires_offline": true,
+        "requires_offline": false,
         "requires_online": false,
         "requires_auto_payment": false
       },
       "tier_conditions": [],
       "conditional_metadata": {
         "warnings": [
-          "전월 실적 산정에서 제외되는 혜택"
+          "해피포인트 가맹점에서 1,000원 이상 이용 시"
         ],
-        "excludes_from_performance": true,
+        "excludes_from_performance": false,
         "special_multiplier": null
       },
       "indirect_benefit_metadata": {

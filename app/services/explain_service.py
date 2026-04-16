@@ -80,7 +80,11 @@ class ExplainService:
             calc_summary=calc_summary,
         )
         try:
-            response = await self._resilient_invoke([SystemMessage(content=explain_prompt)])
+            messages = [
+                SystemMessage(content="카드 추천 전문가로서 사용자의 소비 습관에 맞춘 카드 혜택을 한국어로 명확하게 설명해 주세요."),
+                HumanMessage(content=explain_prompt)
+            ]
+            response = await self._resilient_invoke(messages)
             logger.info(f"[ExplainService] explain 완료 | 답변 길이: {len(str(response.content))} chars")
             return response.content
         except Exception as e:
@@ -210,17 +214,20 @@ class ExplainService:
         
         return "\n".join(lines)
 
-    def build_recommended_cards(self, ranked: List[dict], explanation: str) -> List[dict]:
+    def build_recommended_cards(self, ranked: List[dict], explanation: str, digests: List[str] = None) -> List[dict]:
         """
         모든 추천 카드에 대해 explanation 필드를 상세화합니다.
-        각 카드의 explanation 필드에는 해당 카드의 상세 내역(detail_text)만 포함됩니다.
-        (바깥 공통 explanation은 중복 방지를 위해 포함하지 않음)
+        각 카드의 explanation 필드에는 해당 카드의 상세 내역(detail_text)이 포함됩니다.
         """
         results = []
         for idx, card in enumerate(ranked):
             rank = idx + 1
+            # 개별 카드의 상세 혜택 내역(Trace 등) 생성
             final_explanation = self._format_card_detail(card, rank)
-
+            
+            # 만약 digest가 있다면 추가 정보로 결합 (선택 사항)
+            # 여기서는 기본적으로 _format_card_detail 결과를 우선 사용
+            
             results.append({
                 "card_name": card["card_name"],
                 "card_company": card["card_company"],
@@ -232,7 +239,6 @@ class ExplainService:
                 "category_breakdown": card["category_breakdown"],
                 "applied_benefits_trace": card.get("applied_benefits_trace", []),
                 "explanation": final_explanation,
-                "benefit_receipt": card.get("benefit_details", []),
             })
         return results
 

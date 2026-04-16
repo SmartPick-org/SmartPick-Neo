@@ -13,13 +13,15 @@
       "Restaurant",
       "Pharmacy",
       "Education",
-      "Fitness"
+      "Fitness",
+      "Tax",
+      "Fee"
     ]
   },
   "benefit_groups": [
     {
       "group_id": "G_SHARED_LIMIT_1",
-      "group_name": "기본 혜택 공유 한도",
+      "group_name": "기본 혜택 통합 한도",
       "group_type": "SHARED_LIMIT",
       "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
       "choices": null,
@@ -29,11 +31,11 @@
     },
     {
       "group_id": "G_SHARED_LIMIT_2",
-      "group_name": "추가 혜택 공유 한도",
+      "group_name": "추가 혜택 통합 한도",
       "group_type": "SHARED_LIMIT",
       "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
       "choices": null,
-      "monthly_limit": 35000,
+      "monthly_limit": 350000,
       "annual_limit": null,
       "top_n_count": null
     }
@@ -58,7 +60,7 @@
         "discount_per_unit": 60,
         "unit_label": "liter",
         "fallback_rate": null,
-        "monthly_benefit_limit": 20000,
+        "monthly_benefit_limit": 40000,
         "annual_benefit_limit": null
       },
       "transaction_conditions": {
@@ -118,6 +120,7 @@
     },
     {
       "benefit_id": "B_MART_1",
+      "content": "대형마트 10% 청구할인",
       "group_id": "G_SHARED_LIMIT_1",
       "selective_choice": null,
       "category": "Shopping",
@@ -135,7 +138,7 @@
         "discount_per_unit": null,
         "unit_label": null,
         "fallback_rate": null,
-        "monthly_benefit_limit": 3000,
+        "monthly_benefit_limit": 10000,
         "annual_benefit_limit": null
       },
       "transaction_conditions": {
@@ -195,6 +198,7 @@
     },
     {
       "benefit_id": "B_TELECOM_1",
+      "content": "통신 10% 청구할인",
       "group_id": "G_SHARED_LIMIT_1",
       "selective_choice": null,
       "category": "Life",
@@ -272,6 +276,7 @@
     },
     {
       "benefit_id": "B_PUBLIC_1",
+      "content": "대중교통 10% 청구할인",
       "group_id": "G_SHARED_LIMIT_1",
       "selective_choice": null,
       "category": "Traffic",
@@ -349,6 +354,7 @@
     },
     {
       "benefit_id": "B_OVERSEA_1",
+      "content": "해외이용(해외직구) 5% 할인 캐시백",
       "group_id": "G_SHARED_LIMIT_1",
       "selective_choice": null,
       "category": "Travel",
@@ -426,6 +432,7 @@
     },
     {
       "benefit_id": "B_FOOD_1",
+      "content": "음식 10% 청구할인",
       "group_id": "G_SHARED_LIMIT_2",
       "selective_choice": null,
       "category": "Food",
@@ -468,7 +475,7 @@
           "flat_discount": null,
           "discount_per_unit": null,
           "monthly_benefit_limit": 5000,
-          "group_monthly_limit": 35000
+          "group_monthly_limit": 350000
         },
         {
           "min_prev_performance": 1200000,
@@ -476,7 +483,7 @@
           "flat_discount": null,
           "discount_per_unit": null,
           "monthly_benefit_limit": 5000,
-          "group_monthly_limit": 35000
+          "group_monthly_limit": 350000
         }
       ],
       "conditional_metadata": {
@@ -495,6 +502,7 @@
     },
     {
       "benefit_id": "B_COFFEE_1",
+      "content": "커피전문점 10% 청구할인",
       "group_id": "G_SHARED_LIMIT_2",
       "selective_choice": null,
       "category": "Coffee",
@@ -537,7 +545,7 @@
           "flat_discount": null,
           "discount_per_unit": null,
           "monthly_benefit_limit": 5000,
-          "group_monthly_limit": 35000
+          "group_monthly_limit": 350000
         },
         {
           "min_prev_performance": 1200000,
@@ -545,7 +553,7 @@
           "flat_discount": null,
           "discount_per_unit": null,
           "monthly_benefit_limit": 5000,
-          "group_monthly_limit": 35000
+          "group_monthly_limit": 350000
         }
       ],
       "conditional_metadata": {
@@ -562,6 +570,7 @@
     },
     {
       "benefit_id": "B_CONVENIENCE_1",
+      "content": "편의점 10% 청구할인",
       "group_id": "G_SHARED_LIMIT_2",
       "selective_choice": null,
       "category": "Shopping",
@@ -604,7 +613,7 @@
           "flat_discount": null,
           "discount_per_unit": null,
           "monthly_benefit_limit": 5000,
-          "group_monthly_limit": 35000
+          "group_monthly_limit": 350000
         },
         {
           "min_prev_performance": 1200000,
@@ -612,7 +621,7 @@
           "flat_discount": null,
           "discount_per_unit": null,
           "monthly_benefit_limit": 5000,
-          "group_monthly_limit": 35000
+          "group_monthly_limit": 350000
         }
       ],
       "conditional_metadata": {
@@ -629,6 +638,7 @@
     },
     {
       "benefit_id": "B_PHARMACY_1",
+      "content": "약국 10% 청구할인",
       "group_id": "G_SHARED_LIMIT_2",
       "selective_choice": null,
       "category": "EduHealth",
@@ -671,7 +681,7 @@
           "flat_discount": null,
           "discount_per_unit": null,
           "monthly_benefit_limit": 5000,
-          "group_monthly_limit": 35000
+          "group_monthly_limit": 350000
         },
         {
           "min_prev_performance": 1200000,
@@ -679,7 +689,7 @@
           "flat_discount": null,
           "discount_per_unit": null,
           "monthly_benefit_limit": 5000,
-          "group_monthly_limit": 35000
+          "group_monthly_limit": 350000
         }
       ],
       "conditional_metadata": {
@@ -696,6 +706,7 @@
     },
     {
       "benefit_id": "B_EDU_1",
+      "content": "학원 10% 청구할인",
       "group_id": "G_SHARED_LIMIT_2",
       "selective_choice": null,
       "category": "EduHealth",
@@ -738,7 +749,7 @@
           "flat_discount": null,
           "discount_per_unit": null,
           "monthly_benefit_limit": 30000,
-          "group_monthly_limit": 35000
+          "group_monthly_limit": 350000
         }
       ],
       "conditional_metadata": {
@@ -757,6 +768,7 @@
     },
     {
       "benefit_id": "B_FITNESS_1",
+      "content": "피트니스 10% 청구할인",
       "group_id": "G_SHARED_LIMIT_2",
       "selective_choice": null,
       "category": "EduHealth",
@@ -799,7 +811,7 @@
           "flat_discount": null,
           "discount_per_unit": null,
           "monthly_benefit_limit": 30000,
-          "group_monthly_limit": 35000
+          "group_monthly_limit": 350000
         }
       ],
       "conditional_metadata": {

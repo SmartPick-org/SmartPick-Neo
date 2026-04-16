@@ -74,7 +74,7 @@ M포인트, 마이신한포인트 등 쌓인 포인트를 실질적인 현금 �
 
 * **가정**: 1포인트가 원화로 온전히 1:1 대응되지 않는 경우
 * **공식**:
-  $$ Fiat\_Value = Total\_Points \times point\_conv\_rate $$
+  $$ Fiat\_Value = Total\_Points \times currency\_to\_krw\_rate $$
 
 ### 2-3. 필수 선택형 그룹 내결정 (Selective Group Optimization)
 A, B, C 그룹 중 택1 해야 하는 혜택의 경우, 유저의 실질적인 소비 카테고리와 매칭하여 시뮬레이션을 진행합니다. 이때 불필요한 연산을 막고 현실성을 높이기 위해, 해당하는 영역에 실제 소비가 없는 그룹은 원천적으로 배제(Filter)합니다.
@@ -85,6 +85,14 @@ A, B, C 그룹 중 택1 해야 하는 혜택의 경우, 유저의 실질적인 �
   $$ Ultimate\_Benefit = \max_{G \in CandidateGroups}(Group\_Benefit\_G) $$
   (단, 후보 그룹이 없을 시 최종 혜택은 0원)
 
+### 2-5. 상위 이용금액 자동 추출 (Auto Top-N Selection)
+그룹 내 여러 혜택 중 실제 사용 금액(Benefit 산출액 아님)이 가장 높은 상위 N개 혜택만 골라 합산하는 방식입니다. 주로 '가장 많이 쓴 영역 3개에 대해 적립'과 같은 구조에 쓰입니다.
+
+*   **가정**: 그룹 내 혜택들($B_1, B_2, ... B_n$)에 대해 각각의 `Monthly_Benefit`을 먼저 산산출.
+*   **공식**:
+  $$ Group\_Benefit = \sum (Top\_N\_Benefits\_by\_Benefit\_Amount) $$
+  (그룹의 `top_n_count`에 따라 상위 순으로 합산)
+
 ### 2-4. 전월 실적 구간(Tier) 연동 (Performance Tier Mapping)
 카드의 혜택 한도나 혜택 비율(할인율 등)이 '유저의 전월 실적(`total_monthly_spend`)'에 따라 계단식으로 달라지는 로직입니다. 계산을 수행하기 전, 카드에 정의된 티어 조건표를 확인해 적용될 실제 변수를 미리 확정 짓는 단계가 선행되어야 합니다.
 
@@ -93,7 +101,7 @@ A, B, C 그룹 중 택1 해야 하는 혜택의 경우, 유저의 실질적인 �
 * **공식**:
   $$ Target\_Tier = \arg\max_{T_i} (T_i.min\_prev\_performance) \quad \text{subject to} \quad T_i.min\_prev\_performance \le total\_monthly\_spend $$
 * 만약 $Target\_Tier$가 존재하지 않는다면 (최소 실적 미달), 해당 혜택 연산은 조기에 중단(Return 0)하거나, `fallback_rate`가 있다면 이를 대체 적용합니다.
-* 산출된 $Target\_Tier$ 안에 `benefit_rate`나 `monthly_benefit_limit` 등의 값이 별도로 존재한다면, 이 값들이 기존 `1. 기본 공식`의 카드 측 기본 변수들을 덮어씌워 사용됩니다.
+* 산출된 $Target\_Tier$ 안에 `benefit_rate`나 `monthly_benefit_limit`뿐만 아니라, **소속 그룹의 통합 한도(`group_monthly_limit`)** 값이 존재한다면, 이 값들이 기존 카드/그룹 측 기본 변수들을 덮어씌워(Override) 사용됩니다.
 
 ---
 

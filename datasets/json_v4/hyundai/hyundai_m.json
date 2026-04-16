@@ -7,33 +7,19 @@
     "annual_fee_international": null,
     "minimum_performance": 500000,
     "performance_excluded_categories": [
-      "Loan",
-      "Cash_Service",
-      "Annual_Fee",
-      "Fee",
-      "Interest",
       "Tax",
-      "Public_Fee",
-      "Gift_Card",
-      "Prepaid_Card",
-      "Electricity",
-      "Gas",
-      "TV_Reception_Fee",
-      "Apartment_Management_Fee",
-      "Real_Estate_Rent",
-      "School_Fee",
-      "University_Tuition",
-      "Insurance",
-      "Highway_Toll",
-      "Postpaid_Highpass",
-      "Express_Bus",
-      "Discounted_Transaction"
+      "Utility",
+      "Housing",
+      "Insurance_Tax",
+      "Toll",
+      "Fuel",
+      "Discounted_Transactions"
     ]
   },
   "benefit_groups": [
     {
       "group_id": "G_SHARED_5P",
-      "group_name": "추가 혜택 (특별 적립) 통합 한도",
+      "group_name": "대상 영역 통합 월 1만 M포인트",
       "group_type": "SHARED_LIMIT",
       "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
       "choices": null,
@@ -44,7 +30,8 @@
   ],
   "benefits": [
     {
-      "benefit_id": "B_1_5P_ALL",
+      "benefit_id": "B_1_5P",
+      "content": "전월 이용 금액 50만원 이상 시 1.5% M포인트 적립",
       "group_id": null,
       "selective_choice": null,
       "category": "General",
@@ -92,7 +79,7 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "전월 이용 금액 50만원 미만 시 신규 발급 혜택으로 발급월 다음 달까지 제공"
+          "전월 이용 금액 50만원 미만 시 적립 불가 (신규 발급 시 발급월 다음 달까지는 예외)"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -106,6 +93,7 @@
     },
     {
       "benefit_id": "B_5P_ONLINE",
+      "content": "온라인 쇼핑몰(네이버쇼핑, 쿠팡, G마켓, 옥션, 11번가, SSG.COM, 컬리) 5% M포인트 적립",
       "group_id": "G_SHARED_5P",
       "selective_choice": null,
       "category": "Shopping",
@@ -153,9 +141,9 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "쿠팡이츠 결제 건 및 공식 앱/홈페이지 외 연결 결제 건 등은 추가 적립 제외",
-          "월 1만 M포인트 한도 초과 시 기본 1.5% 적립 적용",
-          "신규 발급 시 발급월 다음 달까지는 전월 100만원 미만 시에도 제공"
+          "쿠팡이츠 결제 건 및 공식 앱/홈페이지 외 연결 결제 건 제외",
+          "대상 영역 통합 월 1만 M포인트 한도 초과 시 기본 1.5% 적립 적용",
+          "전월 이용 금액 100만원 미만 시 적립 불가 (신규 발급 시 발급월 다음 달까지는 예외)"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -163,20 +151,15 @@
       "indirect_benefit_metadata": {
         "description": null,
         "target_locations": [
-          "네이버쇼핑",
-          "쿠팡",
-          "G마켓",
-          "옥션",
-          "11번가",
-          "SSG.COM",
-          "컬리"
+          "네이버쇼핑, 쿠팡, G마켓, 옥션, 11번가, SSG.COM, 컬리"
         ],
         "voucher_choices": null,
         "voucher_value": null
       }
     },
     {
-      "benefit_id": "B_5P_RESTAURANT",
+      "benefit_id": "B_5P_FOOD",
+      "content": "일반음식점 5% M포인트 적립",
       "group_id": "G_SHARED_5P",
       "selective_choice": null,
       "category": "Food",
@@ -224,21 +207,24 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "월 1만 M포인트 한도 초과 시 기본 1.5% 적립 적용",
-          "신규 발급 시 발급월 다음 달까지는 전월 100만원 미만 시에도 제공"
+          "대상 영역 통합 월 1만 M포인트 한도 초과 시 기본 1.5% 적립 적용",
+          "전월 이용 금액 100만원 미만 시 적립 불가 (신규 발급 시 발급월 다음 달까지는 예외)"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
       },
       "indirect_benefit_metadata": {
         "description": null,
-        "target_locations": null,
+        "target_locations": [
+          "일반음식점 업종 가맹점"
+        ],
         "voucher_choices": null,
         "voucher_value": null
       }
     },
     {
       "benefit_id": "B_5P_OVERSEAS",
+      "content": "해외 가맹점 5% M포인트 적립",
       "group_id": "G_SHARED_5P",
       "selective_choice": null,
       "category": "Travel",
@@ -286,15 +272,17 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "월 1만 M포인트 한도 초과 시 기본 1.5% 적립 적용",
-          "신규 발급 시 발급월 다음 달까지는 전월 100만원 미만 시에도 제공"
+          "대상 영역 통합 월 1만 M포인트 한도 초과 시 기본 1.5% 적립 적용",
+          "전월 이용 금액 100만원 미만 시 적립 불가 (신규 발급 시 발급월 다음 달까지는 예외)"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
       },
       "indirect_benefit_metadata": {
         "description": null,
-        "target_locations": null,
+        "target_locations": [
+          "해외 온·오프라인 가맹점"
+        ],
         "voucher_choices": null,
         "voucher_value": null
       }

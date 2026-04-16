@@ -25,6 +25,7 @@
   "benefits": [
     {
       "benefit_id": "[String] 개별 혜택 고유 식별자",
+      "content": "[String] 카드사의 공식 혜택 문구 (예: '스타벅스 50% 할인'). UI 노출 및 계산 영수증용",
       "group_id": "[String|Null] 소속된 benefit_groups의 group_id. 한도를 공유하는 공유 그룹(SHARED_LIMIT)이거나 AUTO_TOP_N일 때만 사용. 단독 풀이면 null",
       "selective_choice": {
         "description": "이 혜택이 선택형 패키지에 속하는 경우 명시 (없으면 null)",

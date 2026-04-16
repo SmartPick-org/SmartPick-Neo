@@ -5,22 +5,10 @@ from pydantic import BaseModel, Field, model_validator
 from app.schemas.enums import CategoryEnum, SubCategoryEnum
 
 
-class BenefitReceiptItem(BaseModel):
-    benefit_id: str = Field(..., description="혜택 고유 ID", examples=["shinhan_mr_life_b001"])
-    content: str = Field(..., description="혜택 설명 (카드사 원문)", examples=["배달앱 5% 할인 (월 최대 5,000원)"])
-    category: str = Field(..., description="카테고리", examples=["Food"])
-    sub_category: str | None = Field(None, description="서브 카테고리", examples=["delivery"])
-    amount_krw: int = Field(..., description="사용자 소비액 기반 계산된 혜택 금액", examples=[4500])
-    warnings: List[str] = Field(default_factory=list, description="주의사항", examples=[["1회 1만원 이상 결제 시 적용"]])
-
 
 class RecommendRequest(BaseModel):
     total_budget: int = Field(..., description="월 총 소비 금액", examples=[500000])
-    excluded_benefit_ids: List[str] | None = Field(
-        None,
-        description="계산에서 제외할 혜택 ID 목록. 혜택 영수증에서 체크 해제한 항목을 전달합니다.",
-        examples=[["shinhan_mr_life_b003", "shinhan_mr_life_b007"]],
-    )
+
     top_n: int = Field(
         5,
         ge=1,
@@ -171,10 +159,6 @@ class RecommendCard(BaseModel):
         description="혜택별 산출 영수증 (계산 근거 추적 및 체크박스 토글용)"
     )
     explanation: str = Field(..., description="이 카드의 주요 혜택 및 주의 사항", examples=["[1순위] 신한카드 Mr.Life (신한카드)\n연회비: 15,000원 | 월 예상 할인: 약 99,000원 | 연 순이익 추정: 1,185,000원\n  - Food: 70,000원\n    ⚠ 1회 승인금액 1만원까지 할인 적용(1회 최대 1천원 할인)\n    ⚠ 신규 발급 회원은 카드사용 등록월 익월말까지 실적 상관없이 할인 제공\n"])
-    benefit_receipt: List[BenefitReceiptItem] = Field(
-        default_factory=list,
-        description="혜택 영수증 — 유저 소비액 기반으로 계산된 개별 혜택 목록 (amount_krw > 0인 항목만 포함)",
-    )
 
 
 class RecommendResponse(BaseModel):
@@ -231,27 +215,61 @@ class CompareResponse(BaseModel):
 
 class RecalculateRequest(BaseModel):
     """
-    체크박스 재계산 요청.
-    유저가 영수증에서 특정 혜택을 '쓸 일 없음'으로 체크 해제하면,
-    해당 benefit_id 목록을 `excluded_benefit_ids` 에 담아 보냅니다.
-    BenefitCalculator 재호출 없이 합산만 변경하므로 응답이 즉각적(< 50ms)입니다.
+    체크박스 재계산 요청 스키마입니다.
+    사용자가 영수증 항목에서 특정 혜택을 제외(체크 해제)했을 때, 
+    통합 한도 재분배 로직을 포함한 '정밀 재계산(Deep Recalculation)'을 수행합니다.
     """
+    total_budget: int | None = Field(None, description="월 총 소비 금액 (원)", examples=[500000])
+    category_spending: Dict[CategoryEnum, Any] | None = Field(
+        None, 
+        description="최초 추천 시 사용했던 소비 내역 데이터를 그대로 전달합니다.",
+        examples=[{
+            "Coffee": {"total": 50000, "cafe": "75%", "bakery": "25%"},
+            "Food": {"total": 300000, "restaurant": "70%", "delivery": "30%"},
+            "Shopping": 150000,
+            "Traffic": {"total": 100000, "transit": "100%"}
+        }]
+    )
     recommended_cards: List[RecommendCard] = Field(
         ...,
-        description="`/cards/recommend` 응답의 `recommended_cards` 를 그대로 전달합니다."
+        description="전 단계인 `/cards/recommend` 응답으로 받은 `recommended_cards` 배열 전체를 그대로 전달합니다."
     )
     excluded_benefit_ids: List[str] = Field(
         ...,
-        description="유저가 체크 해제한 `benefit_id` 목록. 해당 혜택의 `yielded_discount` 가 `expected_monthly_benefit` 합산에서 제외됩니다.",
-        examples=[["shinhan_mr_life_b_intake_mall"]]
+        description="사용자가 체크 해제한 혜택의 `benefit_id` 목록입니다. 이 혜택들은 계산에서 완전히 제외되며 남은 한도는 다른 혜택에 재배분됩니다.",
+        examples=[["B_BEAUTY_001"]]
     )
 
     model_config = {
         "json_schema_extra": {
             "examples": [
                 {
-                    "recommended_cards": "[ ... /cards/recommend 응답의 recommended_cards 배열 ... ]",
-                    "excluded_benefit_ids": ["shinhan_mr_life_b_intake_mall"]
+                    "total_budget": 500000,
+                    "category_spending": {"Food": 300000, "Shopping": 200000},
+                    "recommended_cards": [
+                        {
+                            "card_name": "신한카드 Mr.Life",
+                            "card_company": "신한카드",
+                            "card_id": "shinhan_mr_life",
+                            "annual_fee": 15000,
+                            "minimum_performance": 300000,
+                            "expected_monthly_benefit": 99000,
+                            "category_breakdown": [
+                                {"category": "Food", "monthly_discount_krw": 70000, "discount_info": {}, "warnings": []}
+                            ],
+                            "applied_benefits_trace": [
+                                {
+                                    "benefit_id": "shinhan_mr_life_b_food_restaurant",
+                                    "content": "DAY(07~15시) 음식점 10% 할인",
+                                    "applied_budget": 210000,
+                                    "yielded_discount": 21000,
+                                    "user_choice": True,
+                                }
+                            ],
+                            "explanation": "[1순위] 신한카드 Mr.Life (신한카드)\n연회비: 15,000원 | ...",
+                        }
+                    ],
+                    "excluded_benefit_ids": ["B_BEAUTY_001"],
                 }
             ]
         }
@@ -269,17 +287,64 @@ class RecalculateResponse(BaseModel):
         description="순위 재조정된 카드 목록. `applied_benefits_trace` 의 `user_choice` 필드가 갱신된 상태입니다."
     )
 
+    model_config = {
+        "json_schema_extra": {
+            "examples": [
+                {
+                    "recommended_cards": [
+                        {
+                            "card_name": "신한카드 Mr.Life",
+                            "card_company": "신한카드",
+                            "card_id": "shinhan_mr_life",
+                            "annual_fee": 15000,
+                            "minimum_performance": 300000,
+                            "expected_monthly_benefit": 84000,
+                            "category_breakdown": [
+                                {"category": "Food", "monthly_discount_krw": 70000, "discount_info": {}, "warnings": []}
+                            ],
+                            "applied_benefits_trace": [
+                                {
+                                    "benefit_id": "shinhan_mr_life_b_food_restaurant",
+                                    "content": "DAY(07~15시) 음식점 10% 할인",
+                                    "applied_budget": 210000,
+                                    "yielded_discount": 21000,
+                                    "user_choice": True,
+                                },
+                                {
+                                    "benefit_id": "B_BEAUTY_001",
+                                    "content": "뷰티 5% 할인",
+                                    "applied_budget": 150000,
+                                    "yielded_discount": 15000,
+                                    "user_choice": False,
+                                },
+                            ],
+                            "explanation": "[1순위] 신한카드 Mr.Life (신한카드)\n...",
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+
 
 class QARequest(BaseModel):
     raw_data: str = Field(..., description="추천 결과 원본 JSON 문자열")
-    question: str = Field(..., description="유저 질문")
+    question: str = Field(
+        ...,
+        description="유저 질문 (자연어)",
+        examples=["왜 이 카드가 1순위야?"],
+    )
 
     def masked_dict(self) -> dict:
         data = self.model_dump()
         # raw_data는 내용이 길고 사용자 예산을 포함할 수 있으므로 절삭/마스킹
-        data["raw_data"] = "[MASKED_JSON_DATA]" 
+        data["raw_data"] = "[MASKED_JSON_DATA]"
         return data
 
 
 class QAResponse(BaseModel):
-    answer: str = Field(..., description="답변")
+    answer: str = Field(
+        ...,
+        description="LLM이 raw_data를 참고해 생성한 자연어 답변",
+        examples=["1순위 카드인 신한카드 Mr.Life는 식비(restaurant) 비중이 큰 소비 패턴에서 ..."],
+    )

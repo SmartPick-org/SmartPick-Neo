@@ -22,33 +22,19 @@
   "benefit_groups": [
     {
       "group_id": "G_SHARED_TRAVEL_OVERSEAS",
-      "group_name": "여행/해외 영역 공유 한도",
+      "group_name": "여행/해외 통합 한도",
       "group_type": "SHARED_LIMIT",
       "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
       "choices": null,
       "monthly_limit": 50000,
       "annual_limit": null,
       "top_n_count": null
-    },
-    {
-      "group_id": "G_SELECTIVE_VOUCHER",
-      "group_name": "바우처 교환 패키지",
-      "group_type": "SELECTIVE_GROUP",
-      "group_type_description": "SELECTIVE_GROUP: 필수 선택형 (2-3 공식)",
-      "choices": [
-        {
-          "choice_id": "CHOICE_100K",
-          "choice_name": "10만 M포인트당 10만원권 바우처"
-        }
-      ],
-      "monthly_limit": null,
-      "annual_limit": 1000000,
-      "top_n_count": null
     }
   ],
   "benefits": [
     {
       "benefit_id": "B_GENERAL_1_5",
+      "content": "국내외 가맹점 1.5% M포인트 적립",
       "group_id": null,
       "selective_choice": null,
       "category": "General",
@@ -96,7 +82,7 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "전월 이용 금액 50만원 미만 시 신규 발급 혜택으로 등록월 다음 달까지 제공"
+          "전월 실적 50만원 미만 시 신규 발급 혜택으로 1회 제공"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -110,6 +96,7 @@
     },
     {
       "benefit_id": "B_TRAVEL_5",
+      "content": "여행, 해외 영역 5% M포인트 적립",
       "group_id": "G_SHARED_TRAVEL_OVERSEAS",
       "selective_choice": null,
       "category": "Travel",
@@ -157,70 +144,8 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "대상 영역별 월 5만 M포인트 한도 초과 시 기본 1.5% 적립",
-          "신규 발급 시 등록월 다음 달까지는 전월 100만원 미만 시에도 제공"
-        ],
-        "excludes_from_performance": false,
-        "special_multiplier": null
-      },
-      "indirect_benefit_metadata": {
-        "description": null,
-        "target_locations": null,
-        "voucher_choices": null,
-        "voucher_value": null
-      }
-    },
-    {
-      "benefit_id": "B_OVERSEAS_5",
-      "group_id": "G_SHARED_TRAVEL_OVERSEAS",
-      "selective_choice": null,
-      "category": "Travel",
-      "sub_category": "overseas",
-      "reward_type": "DIRECT_FINANCIAL",
-      "reward_unit": {
-        "currency": "M_POINT",
-        "currency_to_krw_rate": 1.0
-      },
-      "calculation_rule": {
-        "calc_type": "PERCENTAGE",
-        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
-        "benefit_rate": 0.05,
-        "flat_discount": null,
-        "discount_per_unit": null,
-        "unit_label": null,
-        "fallback_rate": 0.015,
-        "monthly_benefit_limit": null,
-        "annual_benefit_limit": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_tx_spend_allowed": null,
-        "max_count_per_day": null,
-        "max_count_per_month": null,
-        "max_count_per_year": null,
-        "day_of_week": null,
-        "time_of_day": {
-          "start": null,
-          "end": null
-        },
-        "requires_offline": false,
-        "requires_online": false,
-        "requires_auto_payment": false
-      },
-      "tier_conditions": [
-        {
-          "min_prev_performance": 1000000,
-          "benefit_rate": 0.05,
-          "flat_discount": null,
-          "discount_per_unit": null,
-          "monthly_benefit_limit": null,
-          "group_monthly_limit": 50000
-        }
-      ],
-      "conditional_metadata": {
-        "warnings": [
-          "대상 영역별 월 5만 M포인트 한도 초과 시 기본 1.5% 적립",
-          "신규 발급 시 등록월 다음 달까지는 전월 100만원 미만 시에도 제공"
+          "전월 실적 100만원 미만 시 신규 발급 혜택으로 1회 제공",
+          "월 5만 M포인트 초과 시 기본 1.5% 적립 적용"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -235,11 +160,7 @@
     {
       "benefit_id": "B_VOUCHER_EXCHANGE",
       "group_id": null,
-      "selective_choice": {
-        "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
-        "group_id": "G_SELECTIVE_VOUCHER",
-        "choice_id": "CHOICE_100K"
-      },
+      "selective_choice": null,
       "category": "General",
       "sub_category": null,
       "reward_type": "INDIRECT",
@@ -248,18 +169,18 @@
         "currency_to_krw_rate": 1.0
       },
       "calculation_rule": {
-        "calc_type": null,
-        "calc_type_description": null,
+        "calc_type": "FULL_COVER",
+        "calc_type_description": "FULL_COVER: 결제금액 전액 혜택",
         "benefit_rate": null,
         "flat_discount": null,
         "discount_per_unit": null,
         "unit_label": null,
         "fallback_rate": null,
         "monthly_benefit_limit": null,
-        "annual_benefit_limit": null
+        "annual_benefit_limit": 1000000
       },
       "transaction_conditions": {
-        "min_payment_amount": 0,
+        "min_payment_amount": 100000,
         "max_tx_spend_allowed": null,
         "max_count_per_day": null,
         "max_count_per_month": null,
@@ -306,15 +227,15 @@
         "currency_to_krw_rate": 1.0
       },
       "calculation_rule": {
-        "calc_type": null,
-        "calc_type_description": null,
+        "calc_type": "FULL_COVER",
+        "calc_type_description": "FULL_COVER: 결제금액 전액 혜택",
         "benefit_rate": null,
         "flat_discount": null,
         "discount_per_unit": null,
         "unit_label": null,
         "fallback_rate": null,
         "monthly_benefit_limit": null,
-        "annual_benefit_limit": null
+        "annual_benefit_limit": 5
       },
       "transaction_conditions": {
         "min_payment_amount": 0,
@@ -343,8 +264,8 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "연간 5회 (본인 한정, 가족 제외)",
-          "THE LOUNGE 앱에 카드 등록 후 사용"
+          "THE LOUNGE 앱에 카드 등록 필요",
+          "가족 카드 제외"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -368,14 +289,14 @@
         "currency_to_krw_rate": 1.0
       },
       "calculation_rule": {
-        "calc_type": null,
-        "calc_type_description": null,
+        "calc_type": "FULL_COVER",
+        "calc_type_description": "FULL_COVER: 결제금액 전액 혜택",
         "benefit_rate": null,
         "flat_discount": null,
         "discount_per_unit": null,
         "unit_label": null,
         "fallback_rate": null,
-        "monthly_benefit_limit": null,
+        "monthly_benefit_limit": 5,
         "annual_benefit_limit": null
       },
       "transaction_conditions": {
@@ -399,14 +320,13 @@
           "benefit_rate": null,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": null,
+          "monthly_benefit_limit": 5,
           "group_monthly_limit": null
         }
       ],
       "conditional_metadata": {
         "warnings": [
-          "공항·호텔 통합 월 5회 (본인 한정)",
-          "대상점: 인천국제공항, 그랜드 워커힐 서울, 더 플라자, 비스타 워커힐 서울 등"
+          "가족 카드 제외"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null

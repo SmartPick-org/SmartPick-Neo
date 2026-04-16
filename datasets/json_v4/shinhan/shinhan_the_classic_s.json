@@ -7,18 +7,16 @@
     "annual_fee_international": 100000,
     "minimum_performance": 0,
     "performance_excluded_categories": [
-      "Cash_Advance",
+      "Cash_Service",
       "Card_Loan",
       "Annual_Fee",
       "Fees_Interest",
       "Gift_Card",
       "Tax",
       "Insurance",
-      "School_Fees",
-      "Utility",
       "Apartment_Maintenance",
-      "Gas",
-      "Electricity",
+      "Utilities",
+      "School_Fees",
       "Voucher_Purchase",
       "Interest_Free_Installment",
       "Discounted_Transactions"
@@ -37,7 +35,7 @@
     },
     {
       "group_id": "G_SHARED_LIMIT_2",
-      "group_name": "Travel 적립 한도",
+      "group_name": "해외/면세점 적립 한도",
       "group_type": "SHARED_LIMIT",
       "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
       "choices": null,
@@ -48,14 +46,15 @@
   ],
   "benefits": [
     {
-      "benefit_id": "B1_BASIC_REWARD",
+      "benefit_id": "B_BASIC_REWARD",
+      "content": "일시불·할부 이용금액의 1% 적립",
       "group_id": "G_SHARED_LIMIT_1",
       "selective_choice": null,
       "category": "General",
       "sub_category": null,
       "reward_type": "DIRECT_FINANCIAL",
       "reward_unit": {
-        "currency": "MY_SHINHAN_POINT",
+        "currency": "M_POINT",
         "currency_to_krw_rate": 0.666
       },
       "calculation_rule": {
@@ -100,14 +99,15 @@
       }
     },
     {
-      "benefit_id": "B2_ADDITIONAL_REWARD",
+      "benefit_id": "B_ADDITIONAL_REWARD",
+      "content": "일시불·할부 이용금액의 0.5% 추가적립 (전월 300만원 이상 이용 시)",
       "group_id": "G_SHARED_LIMIT_1",
       "selective_choice": null,
       "category": "General",
       "sub_category": null,
       "reward_type": "DIRECT_FINANCIAL",
       "reward_unit": {
-        "currency": "MY_SHINHAN_POINT",
+        "currency": "M_POINT",
         "currency_to_krw_rate": 0.666
       },
       "calculation_rule": {
@@ -148,7 +148,8 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "Travel 적립, 국세/4대보험 이용금액은 추가적립 대상에서 제외됩니다."
+          "Travel 적립, 국세/4대보험 이용금액은 추가적립 대상에서 제외됩니다.",
+          "신규 발급 시 발급월 및 다음달(등록월+1개월)까지는 기본적립 서비스만 제공됩니다."
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -161,14 +162,14 @@
       }
     },
     {
-      "benefit_id": "B3_TRAVEL_REWARD",
+      "benefit_id": "B_TRAVEL_REWARD",
       "group_id": "G_SHARED_LIMIT_2",
       "selective_choice": null,
       "category": "Travel",
       "sub_category": "overseas",
       "reward_type": "DIRECT_FINANCIAL",
       "reward_unit": {
-        "currency": "MY_SHINHAN_POINT",
+        "currency": "M_POINT",
         "currency_to_krw_rate": 0.666
       },
       "calculation_rule": {
@@ -219,23 +220,22 @@
         "description": null,
         "target_locations": [
           "해외 가맹점",
-          "롯데면세점",
-          "신라면세점",
-          "신세계면세점"
+          "롯데/신라/신세계 면세점"
         ],
         "voucher_choices": null,
         "voucher_value": null
       }
     },
     {
-      "benefit_id": "B4_BONUS_REWARD",
+      "benefit_id": "B_BONUS_REWARD",
+      "content": "분기당 일시불·할부 이용금액 1천만원 이상 이용 시 보너스 포인트 25,000포인트 적립",
       "group_id": null,
       "selective_choice": null,
       "category": "General",
       "sub_category": null,
       "reward_type": "DIRECT_FINANCIAL",
       "reward_unit": {
-        "currency": "MY_SHINHAN_POINT",
+        "currency": "M_POINT",
         "currency_to_krw_rate": 0.666
       },
       "calculation_rule": {
@@ -281,7 +281,7 @@
       }
     },
     {
-      "benefit_id": "B5_AIRPORT_LOUNGE",
+      "benefit_id": "B_AIRPORT_LOUNGE",
       "group_id": null,
       "selective_choice": null,
       "category": "Travel",
@@ -300,7 +300,7 @@
         "unit_label": null,
         "fallback_rate": null,
         "monthly_benefit_limit": null,
-        "annual_benefit_limit": null
+        "annual_benefit_limit": 5
       },
       "transaction_conditions": {
         "min_payment_amount": 0,
@@ -329,7 +329,7 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "본인 + 동반 1인까지 통합 횟수 차감 내에서 동시 이용 가능",
+          "본인 + 동반 1인까지 통합 횟수 차감 내에서 동시 이용 가능합니다.",
           "본인카드 회원에 한하여 제공됩니다. (가족카드 제외)",
           "신규 발급월에는 제공되지 않음"
         ],

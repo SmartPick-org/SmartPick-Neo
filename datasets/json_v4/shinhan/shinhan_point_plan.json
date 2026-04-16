@@ -9,19 +9,18 @@
     "performance_excluded_categories": [
       "Fuel",
       "Tax",
+      "Insurance_Tax",
+      "Housing",
       "Education",
       "Hospital",
       "Pharmacy",
-      "Transit",
-      "Utility",
-      "Insurance_Tax",
-      "Housing"
+      "Railway"
     ]
   },
   "benefit_groups": [
     {
       "group_id": "G_DAILY_LIFE",
-      "group_name": "일상 생활비 적립 그룹",
+      "group_name": "일상 생활비 적립 서비스",
       "group_type": "SHARED_LIMIT",
       "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
       "choices": null,
@@ -30,8 +29,8 @@
       "top_n_count": null
     },
     {
-      "group_id": "G_ESSENTIAL_WEEKEND",
-      "group_name": "필수 생활비 (주말 외식비) 그룹",
+      "group_id": "G_ESSENTIAL_FOOD",
+      "group_name": "필수 생활비 (주말 외식비)",
       "group_type": "SHARED_LIMIT",
       "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
       "choices": null,
@@ -40,8 +39,8 @@
       "top_n_count": null
     },
     {
-      "group_id": "G_ESSENTIAL_AUTOPAY",
-      "group_name": "필수 생활비 (정기결제) 그룹",
+      "group_id": "G_ESSENTIAL_BILL",
+      "group_name": "필수 생활비 (정기결제)",
       "group_type": "SHARED_LIMIT",
       "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
       "choices": null,
@@ -52,7 +51,8 @@
   ],
   "benefits": [
     {
-      "benefit_id": "B_DAILY_LIFE_01",
+      "benefit_id": "B_DAILY_LIFE_DOMESTIC",
+      "content": "국내 건당 결제금액별 0.5~3% 포인트 적립",
       "group_id": "G_DAILY_LIFE",
       "selective_choice": null,
       "category": "General",
@@ -69,7 +69,7 @@
         "flat_discount": null,
         "discount_per_unit": null,
         "unit_label": null,
-        "fallback_rate": null,
+        "fallback_rate": 0.0,
         "monthly_benefit_limit": null,
         "annual_benefit_limit": null
       },
@@ -146,7 +146,8 @@
       }
     },
     {
-      "benefit_id": "B_DAILY_LIFE_02",
+      "benefit_id": "B_DAILY_LIFE_OVERSEA",
+      "content": "해외 결제금액 1% 포인트 적립",
       "group_id": "G_DAILY_LIFE",
       "selective_choice": null,
       "category": "Travel",
@@ -163,7 +164,7 @@
         "flat_discount": null,
         "discount_per_unit": null,
         "unit_label": null,
-        "fallback_rate": null,
+        "fallback_rate": 0.0,
         "monthly_benefit_limit": null,
         "annual_benefit_limit": null
       },
@@ -182,19 +183,10 @@
         "requires_online": false,
         "requires_auto_payment": false
       },
-      "tier_conditions": [
-        {
-          "min_prev_performance": 0,
-          "benefit_rate": 0.01,
-          "flat_discount": null,
-          "discount_per_unit": null,
-          "monthly_benefit_limit": null,
-          "group_monthly_limit": null
-        }
-      ],
+      "tier_conditions": [],
       "conditional_metadata": {
         "warnings": [
-          "해외(일시불) 이용 금액 대상"
+          "무이자할부 거래는 적립 제외"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -207,8 +199,9 @@
       }
     },
     {
-      "benefit_id": "B_ESSENTIAL_WEEKEND",
-      "group_id": "G_ESSENTIAL_WEEKEND",
+      "benefit_id": "B_ESSENTIAL_FOOD",
+      "content": "음식점 업종 이용 시 0.5~3% 포인트 적립 (결제금액에 따라 차등)",
+      "group_id": "G_ESSENTIAL_FOOD",
       "selective_choice": null,
       "category": "Food",
       "sub_category": "general",
@@ -224,14 +217,14 @@
         "flat_discount": 1000,
         "discount_per_unit": null,
         "unit_label": null,
-        "fallback_rate": null,
+        "fallback_rate": 0.0,
         "monthly_benefit_limit": null,
         "annual_benefit_limit": null
       },
       "transaction_conditions": {
         "min_payment_amount": 20000,
         "max_tx_spend_allowed": null,
-        "max_count_per_day": null,
+        "max_count_per_day": 1,
         "max_count_per_month": 5,
         "max_count_per_year": null,
         "day_of_week": [
@@ -243,8 +236,7 @@
           "end": null
         },
         "requires_offline": false,
-        "requires_online": true,
-        "requires_auto_payment": false
+        "requires_online": true
       },
       "tier_conditions": [
         {
@@ -266,8 +258,8 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "음식점: 한식, 일식, 양식, 중식, 뷔페, 맥주홀, 일반대중음식, 패스트푸드, 제과점",
-          "배달앱: 배달의민족, 요기요, 땡겨요 (공식 앱 내 '신한 SOL페이' 결제 시 한함)"
+          "음식점, 배달앱 통합 일 1회 적용",
+          "적립 한도: 전월 실적에 따라 월 2회(전월 실적 40만원 미만)~5회(전월 실적 40만원 이상)"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -280,8 +272,9 @@
       }
     },
     {
-      "benefit_id": "B_ESSENTIAL_AUTOPAY",
-      "group_id": "G_ESSENTIAL_AUTOPAY",
+      "benefit_id": "B_ESSENTIAL_BILL",
+      "content": "도시가스/전기요금 등 생활요금 자동납부 시 포인트 적립",
+      "group_id": "G_ESSENTIAL_BILL",
       "selective_choice": null,
       "category": "Life",
       "sub_category": "general",
@@ -297,15 +290,15 @@
         "flat_discount": null,
         "discount_per_unit": 1000,
         "unit_label": "20000",
-        "fallback_rate": null,
+        "fallback_rate": 0.0,
         "monthly_benefit_limit": 5000,
         "annual_benefit_limit": null
       },
       "transaction_conditions": {
-        "min_payment_amount": 0,
+        "min_payment_amount": 20000,
         "max_tx_spend_allowed": 100000,
         "max_count_per_day": null,
-        "max_count_per_month": null,
+        "max_count_per_month": 1,
         "max_count_per_year": null,
         "day_of_week": null,
         "time_of_day": {
@@ -328,8 +321,9 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "대상: 도시가스/전기요금, 이동통신요금(SKT, KT, LGU+)",
-          "'정기결제 자동납부 포인트 적립 서비스'와 '일상 생활비 적립 서비스'는 중복 제공되지 않습니다."
+          "도시가스/전기요금은 통합 영역으로, 월 1건만 적용됩니다",
+          "2만원 이상 승인 건에 한해 적용되며, 2건 이상의 결제금액을 합산하여 적용되지 않습니다",
+          "'정기결제 자동납부 포인트 적립 서비스'와 '일상 생활비 적립 서비스'는 중복 제공되지 않습니다"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null

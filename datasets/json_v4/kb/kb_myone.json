@@ -13,18 +13,8 @@
   },
   "benefit_groups": [
     {
-      "group_id": "G_HOMEPLUS_DISCOUNT",
-      "group_name": "홈플러스 할인 그룹",
-      "group_type": "SHARED_LIMIT",
-      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
-      "choices": null,
-      "monthly_limit": 30000,
-      "annual_limit": null,
-      "top_n_count": null
-    },
-    {
-      "group_id": "G_LIFESTYLE_DISCOUNT",
-      "group_name": "생활편의 할인 그룹",
+      "group_id": "G_SHARED_A",
+      "group_name": "생활편의 통합 할인",
       "group_type": "SHARED_LIMIT",
       "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
       "choices": null,
@@ -35,8 +25,9 @@
   ],
   "benefits": [
     {
-      "benefit_id": "B_HOMEPLUS_5_10",
-      "group_id": "G_HOMEPLUS_DISCOUNT",
+      "benefit_id": "B_HOMEPLUS_001",
+      "content": "홈플러스(할인점, 익스프레스, 온라인몰), 문화센터, 애슐리(입점매장) 청구할인",
+      "group_id": null,
       "selective_choice": null,
       "category": "Shopping",
       "sub_category": "mart",
@@ -53,7 +44,7 @@
         "discount_per_unit": null,
         "unit_label": null,
         "fallback_rate": 0.0,
-        "monthly_benefit_limit": null,
+        "monthly_benefit_limit": 30000,
         "annual_benefit_limit": null
       },
       "transaction_conditions": {
@@ -68,7 +59,7 @@
           "end": null
         },
         "requires_offline": true,
-        "requires_online": false,
+        "requires_online": true,
         "requires_auto_payment": false
       },
       "tier_conditions": [
@@ -77,7 +68,7 @@
           "benefit_rate": 0.05,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": null,
+          "monthly_benefit_limit": 30000,
           "group_monthly_limit": null
         },
         {
@@ -85,7 +76,7 @@
           "benefit_rate": 0.07,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": null,
+          "monthly_benefit_limit": 30000,
           "group_monthly_limit": null
         },
         {
@@ -93,7 +84,7 @@
           "benefit_rate": 0.1,
           "flat_discount": null,
           "discount_per_unit": null,
-          "monthly_benefit_limit": null,
+          "monthly_benefit_limit": 30000,
           "group_monthly_limit": null
         }
       ],
@@ -112,8 +103,9 @@
       }
     },
     {
-      "benefit_id": "B_FAMILY_RESTAURANT",
-      "group_id": "G_LIFESTYLE_DISCOUNT",
+      "benefit_id": "B_FAMILYRESTAURANT_001",
+      "content": "아웃백, VIPS, TGIF 청구할인",
+      "group_id": "G_SHARED_A",
       "selective_choice": null,
       "category": "Food",
       "sub_category": "restaurant",
@@ -155,11 +147,13 @@
           "flat_discount": null,
           "discount_per_unit": null,
           "monthly_benefit_limit": null,
-          "group_monthly_limit": null
+          "group_monthly_limit": 20000
         }
       ],
       "conditional_metadata": {
-        "warnings": [],
+        "warnings": [
+          "아웃백, VIPS, TGIF에 한함"
+        ],
         "excludes_from_performance": false,
         "special_multiplier": null
       },
@@ -171,8 +165,9 @@
       }
     },
     {
-      "benefit_id": "B_BEAUTY",
-      "group_id": "G_LIFESTYLE_DISCOUNT",
+      "benefit_id": "B_BEAUTY_001",
+      "content": "미용실, 피부미용업종 청구할인",
+      "group_id": "G_SHARED_A",
       "selective_choice": null,
       "category": "Shopping",
       "sub_category": "beauty",
@@ -214,11 +209,13 @@
           "flat_discount": null,
           "discount_per_unit": null,
           "monthly_benefit_limit": null,
-          "group_monthly_limit": null
+          "group_monthly_limit": 20000
         }
       ],
       "conditional_metadata": {
-        "warnings": [],
+        "warnings": [
+          "미용실, 피부미용업종에 한함"
+        ],
         "excludes_from_performance": false,
         "special_multiplier": null
       },
@@ -230,7 +227,8 @@
       }
     },
     {
-      "benefit_id": "B_TELECOM",
+      "benefit_id": "B_TELECOM_001",
+      "content": "이동통신요금 자동이체 시 정액할인",
       "group_id": null,
       "selective_choice": null,
       "category": "Life",

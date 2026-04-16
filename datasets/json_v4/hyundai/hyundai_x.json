@@ -7,21 +7,25 @@
     "annual_fee_international": null,
     "minimum_performance": 500000,
     "performance_excluded_categories": [
-      "Cash_Advance",
+      "Cash_Service",
       "Card_Loan",
       "Annual_Fee",
-      "Fees",
+      "Commission",
       "Interest",
-      "Taxes",
+      "Tax",
       "Public_Charges",
-      "Gift_Cards",
-      "Prepaid_Cards"
+      "Electricity_Gas",
+      "Apartment_Maintenance",
+      "School_Fees",
+      "Insurance",
+      "Toll_Fees",
+      "Interest_Free_Installments"
     ]
   },
   "benefit_groups": [
     {
       "group_id": "G_SHARED_1",
-      "group_name": "기본 혜택 그룹",
+      "group_name": "전월 실적 50만원 이상 혜택 그룹",
       "group_type": "SHARED_LIMIT",
       "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
       "choices": null,
@@ -30,35 +34,21 @@
       "top_n_count": null
     },
     {
-      "group_id": "G_SELECTIVE_1",
-      "group_name": "추가 혜택 그룹",
-      "group_type": "SELECTIVE_GROUP",
-      "group_type_description": "SELECTIVE_GROUP: 필수 선택형 (2-3 공식)",
-      "choices": [
-        {
-          "choice_id": "CHOICE_1",
-          "choice_name": "연간 캐시백"
-        }
-      ],
-      "monthly_limit": null,
-      "annual_limit": 100000,
-      "top_n_count": null
-    },
-    {
-      "group_id": "G_INDIRECT_1",
-      "group_name": "우대 서비스 그룹",
+      "group_id": "G_ANNUAL_CASHBACK",
+      "group_name": "연간 캐시백 그룹",
       "group_type": "SHARED_LIMIT",
       "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
       "choices": null,
       "monthly_limit": null,
-      "annual_limit": 2,
+      "annual_limit": 100000,
       "top_n_count": null
     }
   ],
   "benefits": [
     {
       "benefit_id": "B_1",
-      "group_id": "G_SHARED_1",
+      "content": "국내외 가맹점 1% 청구 할인",
+      "group_id": null,
       "selective_choice": null,
       "category": "General",
       "sub_category": null,
@@ -105,8 +95,8 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "현금서비스, 카드론, 연회비, 제수수료, 이자, 공과금(지방세, 국세 등), 전기/가스요금, 아파트관리비, 초·중·고교 학교납입금, 사립유치원 교육비, 대학(원) 등록금, 건강/국민/고용/산재보험, 고속도로 통행료, 무이자 할부 이용 금액 등은 할인 대상에서 제외됩니다.",
-          "현대카드의 모든 할인 서비스 및 무이자 할부 이용 금액은 할인 대상에서 제외됩니다."
+          "전월 실적 산정에서 제외되는 카테고리 제외",
+          "할인 제외 대상 제외"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -120,12 +110,9 @@
     },
     {
       "benefit_id": "B_2",
-      "group_id": "G_SELECTIVE_1",
-      "selective_choice": {
-        "description": "이 혜택이 속한 SELECTIVE_GROUP의 group_id",
-        "group_id": "G_SELECTIVE_1",
-        "choice_id": "CHOICE_1"
-      },
+      "content": "연간 누적 이용 금액 500만원당 2만원 캐시백",
+      "group_id": "G_ANNUAL_CASHBACK",
+      "selective_choice": null,
       "category": "General",
       "sub_category": null,
       "reward_type": "DIRECT_FINANCIAL",
@@ -149,7 +136,7 @@
         "max_tx_spend_allowed": 25000000,
         "max_count_per_day": null,
         "max_count_per_month": null,
-        "max_count_per_year": 12,
+        "max_count_per_year": 1,
         "day_of_week": null,
         "time_of_day": {
           "start": null,
@@ -162,6 +149,7 @@
       "tier_conditions": [],
       "conditional_metadata": {
         "warnings": [
+          "연간 누적 이용 금액 500만원당 2만원 캐시백",
           "연간 누적 이용 금액 2,500만원까지 적용 (최대 10만원)"
         ],
         "excludes_from_performance": false,
@@ -176,7 +164,8 @@
     },
     {
       "benefit_id": "B_3",
-      "group_id": "G_INDIRECT_1",
+      "content": "인천국제공항 라운지/발레파킹 무료 이용",
+      "group_id": "G_SHARED_1",
       "selective_choice": null,
       "category": "Travel",
       "sub_category": "lounge_valet",
@@ -186,8 +175,8 @@
         "currency_to_krw_rate": 1.0
       },
       "calculation_rule": {
-        "calc_type": null,
-        "calc_type_description": null,
+        "calc_type": "FULL_COVER",
+        "calc_type_description": "FULL_COVER: 결제금액 전액 혜택",
         "benefit_rate": null,
         "flat_discount": null,
         "discount_per_unit": null,
@@ -207,7 +196,7 @@
           "start": null,
           "end": null
         },
-        "requires_offline": false,
+        "requires_offline": true,
         "requires_online": false,
         "requires_auto_payment": false
       },
@@ -223,7 +212,8 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "전월 이용 금액 50만원 이상 시 이용 가능"
+          "전월 실적 산정에서 제외되는 카테고리 제외",
+          "할인 제외 대상 제외"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -231,7 +221,8 @@
       "indirect_benefit_metadata": {
         "description": "인천국제공항 라운지 무료 이용 (스카이 허브 라운지, 마티나 라운지)",
         "target_locations": [
-          "인천국제공항"
+          "인천국제공항 스카이 허브 라운지",
+          "인천국제공항 마티나 라운지"
         ],
         "voucher_choices": null,
         "voucher_value": null
@@ -239,7 +230,8 @@
     },
     {
       "benefit_id": "B_4",
-      "group_id": "G_INDIRECT_1",
+      "content": "인천국제공항 라운지/발레파킹 무료 이용",
+      "group_id": "G_SHARED_1",
       "selective_choice": null,
       "category": "Travel",
       "sub_category": "lounge_valet",
@@ -249,8 +241,8 @@
         "currency_to_krw_rate": 1.0
       },
       "calculation_rule": {
-        "calc_type": null,
-        "calc_type_description": null,
+        "calc_type": "FULL_COVER",
+        "calc_type_description": "FULL_COVER: 결제금액 전액 혜택",
         "benefit_rate": null,
         "flat_discount": null,
         "discount_per_unit": null,
@@ -270,7 +262,7 @@
           "start": null,
           "end": null
         },
-        "requires_offline": false,
+        "requires_offline": true,
         "requires_online": false,
         "requires_auto_payment": false
       },
@@ -286,7 +278,8 @@
       ],
       "conditional_metadata": {
         "warnings": [
-          "전월 이용 금액 50만원 이상 시 이용 가능"
+          "전월 실적 산정에서 제외되는 카테고리 제외",
+          "할인 제외 대상 제외"
         ],
         "excludes_from_performance": false,
         "special_multiplier": null
@@ -294,7 +287,8 @@
       "indirect_benefit_metadata": {
         "description": "인천국제공항 발레파킹 무료 이용 (제1·2여객터미널)",
         "target_locations": [
-          "인천국제공항 제1·2여객터미널"
+          "인천국제공항 제1여객터미널",
+          "인천국제공항 제2여객터미널"
         ],
         "voucher_choices": null,
         "voucher_value": null

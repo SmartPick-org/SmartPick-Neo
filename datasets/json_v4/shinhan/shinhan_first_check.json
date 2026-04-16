@@ -15,23 +15,12 @@
       "Tax",
       "Public_Fees",
       "Insurance",
-      "Railway",
-      "Discounted_Transactions"
+      "Railway"
     ]
   },
   "benefit_groups": [
     {
-      "group_id": "G_SHARED_LIMIT_1",
-      "group_name": "통합 적립 한도",
-      "group_type": "SHARED_LIMIT",
-      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
-      "choices": null,
-      "monthly_limit": 5000,
-      "annual_limit": null,
-      "top_n_count": null
-    },
-    {
-      "group_id": "G_SELECTIVE_1",
+      "group_id": "G_STUDY",
       "group_name": "스터디 적립 서비스",
       "group_type": "SHARED_LIMIT",
       "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
@@ -41,33 +30,53 @@
       "top_n_count": null
     },
     {
-      "group_id": "G_SELECTIVE_2",
+      "group_id": "G_DAILY_5",
       "group_name": "오늘도 적립 서비스 (기본 5%)",
-      "group_type": "SHARED_LIMIT",
-      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
-      "choices": null,
-      "monthly_limit": 3000,
-      "annual_limit": null,
-      "top_n_count": null
-    },
-    {
-      "group_id": "G_SELECTIVE_3",
-      "group_name": "오늘도 적립 서비스 (방과 후 2%)",
       "group_type": "SHARED_LIMIT",
       "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
       "choices": null,
       "monthly_limit": 1000,
       "annual_limit": null,
       "top_n_count": null
+    },
+    {
+      "group_id": "G_DAILY_2",
+      "group_name": "오늘도 적립 서비스 (방과 후 2% 추가)",
+      "group_type": "SHARED_LIMIT",
+      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
+      "choices": null,
+      "monthly_limit": 1000,
+      "annual_limit": null,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_PHOTO",
+      "group_name": "일상 속 적립 서비스 (사진)",
+      "group_type": "SHARED_LIMIT",
+      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
+      "choices": null,
+      "monthly_limit": 1000,
+      "annual_limit": 2000,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_SHOPPING",
+      "group_name": "일상 속 적립 서비스 (쇼핑)",
+      "group_type": "SHARED_LIMIT",
+      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
+      "choices": null,
+      "monthly_limit": 3000,
+      "annual_limit": 9000,
+      "top_n_count": null
     }
   ],
   "benefits": [
     {
       "benefit_id": "B_STUDY_BOOKSTORE",
-      "group_id": "G_SELECTIVE_1",
+      "group_id": "G_STUDY",
       "selective_choice": null,
-      "category": "EduHealth",
-      "sub_category": "education",
+      "category": "Cultural",
+      "sub_category": "books",
       "reward_type": "DIRECT_FINANCIAL",
       "reward_unit": {
         "currency": "M_POINT",
@@ -77,7 +86,7 @@
         "calc_type": "PERCENTAGE",
         "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
         "benefit_rate": 0.05,
-        "fallback_rate": null,
+        "fallback_rate": 0.0,
         "monthly_benefit_limit": 2000,
         "annual_benefit_limit": null
       },
@@ -101,7 +110,56 @@
         "warnings": [
           "오프라인 매장 이용 시에만 적립됩니다. (인터넷/모바일 앱 제외)"
         ],
-        "excludes_from_performance": false,
+        "excludes_from_performance": true,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_STUDY_STUDYCAFE",
+      "group_id": "G_STUDY",
+      "selective_choice": null,
+      "category": "EduHealth",
+      "sub_category": "education",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "M_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.05,
+        "fallback_rate": 0.0,
+        "monthly_benefit_limit": 2000,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 3000,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": true,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [],
+      "conditional_metadata": {
+        "warnings": [
+          "오프라인 매장 이용 시에만 적립됩니다. (인터넷/모바일 앱 제외)"
+        ],
+        "excludes_from_performance": true,
         "special_multiplier": null
       },
       "indirect_benefit_metadata": {
@@ -113,10 +171,10 @@
     },
     {
       "benefit_id": "B_STUDY_STATIONERY",
-      "group_id": "G_SELECTIVE_1",
+      "group_id": "G_STUDY",
       "selective_choice": null,
-      "category": "EduHealth",
-      "sub_category": "education",
+      "category": "Life",
+      "sub_category": "office",
       "reward_type": "DIRECT_FINANCIAL",
       "reward_unit": {
         "currency": "M_POINT",
@@ -126,7 +184,7 @@
         "calc_type": "PERCENTAGE",
         "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
         "benefit_rate": 0.05,
-        "fallback_rate": null,
+        "fallback_rate": 0.0,
         "monthly_benefit_limit": 2000,
         "annual_benefit_limit": null
       },
@@ -150,7 +208,7 @@
         "warnings": [
           "오프라인 매장 이용 시에만 적립됩니다. (인터넷/모바일 앱 제외)"
         ],
-        "excludes_from_performance": false,
+        "excludes_from_performance": true,
         "special_multiplier": null
       },
       "indirect_benefit_metadata": {
@@ -161,57 +219,9 @@
       }
     },
     {
-      "benefit_id": "B_STUDY_READING",
-      "group_id": "G_SELECTIVE_1",
-      "selective_choice": null,
-      "category": "EduHealth",
-      "sub_category": "education",
-      "reward_type": "DIRECT_FINANCIAL",
-      "reward_unit": {
-        "currency": "M_POINT",
-        "currency_to_krw_rate": 0.666
-      },
-      "calculation_rule": {
-        "calc_type": "PERCENTAGE",
-        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
-        "benefit_rate": 0.05,
-        "fallback_rate": null,
-        "monthly_benefit_limit": 2000,
-        "annual_benefit_limit": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 3000,
-        "max_tx_spend_allowed": null,
-        "max_count_per_day": null,
-        "max_count_per_month": null,
-        "max_count_per_year": null,
-        "day_of_week": null,
-        "time_of_day": {
-          "start": null,
-          "end": null
-        },
-        "requires_offline": true,
-        "requires_online": false,
-        "requires_auto_payment": false
-      },
-      "tier_conditions": [],
-      "conditional_metadata": {
-        "warnings": [
-          "오프라인 매장 이용 시에만 적립됩니다. (인터넷/모바일 앱 제외)"
-        ],
-        "excludes_from_performance": false,
-        "special_multiplier": null
-      },
-      "indirect_benefit_metadata": {
-        "description": null,
-        "target_locations": null,
-        "voucher_choices": null,
-        "voucher_value": null
-      }
-    },
-    {
-      "benefit_id": "B_TODAY_CONVENIENCE",
-      "group_id": "G_SELECTIVE_2",
+      "benefit_id": "B_DAILY_5_CONVENIENCE",
+      "content": "편의점 5% 적립",
+      "group_id": "G_DAILY_5",
       "selective_choice": null,
       "category": "Shopping",
       "sub_category": "convenience",
@@ -224,7 +234,7 @@
         "calc_type": "PERCENTAGE",
         "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
         "benefit_rate": 0.05,
-        "fallback_rate": null,
+        "fallback_rate": 0.0,
         "monthly_benefit_limit": 1000,
         "annual_benefit_limit": null
       },
@@ -248,19 +258,24 @@
         "warnings": [
           "오프라인 매장 이용 시에만 적립됩니다."
         ],
-        "excludes_from_performance": false,
+        "excludes_from_performance": true,
         "special_multiplier": null
       },
       "indirect_benefit_metadata": {
         "description": null,
-        "target_locations": null,
+        "target_locations": [
+          "GS25",
+          "CU",
+          "세븐일레븐"
+        ],
         "voucher_choices": null,
         "voucher_value": null
       }
     },
     {
-      "benefit_id": "B_TODAY_FASTFOOD",
-      "group_id": "G_SELECTIVE_2",
+      "benefit_id": "B_DAILY_5_FASTFOOD",
+      "content": "패스트푸드 5% 적립",
+      "group_id": "G_DAILY_5",
       "selective_choice": null,
       "category": "Food",
       "sub_category": "fast_food",
@@ -273,7 +288,7 @@
         "calc_type": "PERCENTAGE",
         "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
         "benefit_rate": 0.05,
-        "fallback_rate": null,
+        "fallback_rate": 0.0,
         "monthly_benefit_limit": 1000,
         "annual_benefit_limit": null
       },
@@ -297,7 +312,7 @@
         "warnings": [
           "오프라인 매장 이용 시에만 적립됩니다."
         ],
-        "excludes_from_performance": false,
+        "excludes_from_performance": true,
         "special_multiplier": null
       },
       "indirect_benefit_metadata": {
@@ -308,8 +323,9 @@
       }
     },
     {
-      "benefit_id": "B_TODAY_CAFE",
-      "group_id": "G_SELECTIVE_2",
+      "benefit_id": "B_DAILY_5_CAFE",
+      "content": "카페 5% 적립",
+      "group_id": "G_DAILY_5",
       "selective_choice": null,
       "category": "Coffee",
       "sub_category": "cafe",
@@ -322,7 +338,62 @@
         "calc_type": "PERCENTAGE",
         "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
         "benefit_rate": 0.05,
-        "fallback_rate": null,
+        "fallback_rate": 0.0,
+        "monthly_benefit_limit": 1000,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 3000,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": true,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [],
+      "conditional_metadata": {
+        "warnings": [
+          "오프라인 매장 이용 시에만 적립됩니다."
+        ],
+        "excludes_from_performance": true,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": [
+          "투썸플레이스",
+          "이디야",
+          "메가MGC커피",
+          "파리바게뜨",
+          "배스킨라빈스"
+        ],
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_DAILY_2_ADDITIONAL",
+      "group_id": "G_DAILY_2",
+      "selective_choice": null,
+      "category": "Food",
+      "sub_category": "general",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "M_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.02,
+        "fallback_rate": 0.0,
         "monthly_benefit_limit": 1000,
         "annual_benefit_limit": null
       },
@@ -346,7 +417,7 @@
         "warnings": [
           "오프라인 매장 이용 시에만 적립됩니다."
         ],
-        "excludes_from_performance": false,
+        "excludes_from_performance": true,
         "special_multiplier": null
       },
       "indirect_benefit_metadata": {
@@ -357,11 +428,11 @@
       }
     },
     {
-      "benefit_id": "B_TODAY_CAFE_EXTRA",
-      "group_id": "G_SELECTIVE_3",
+      "benefit_id": "B_DAILY_2_CAFE",
+      "group_id": "G_DAILY_2",
       "selective_choice": null,
       "category": "Coffee",
-      "sub_category": "cafe",
+      "sub_category": "general",
       "reward_type": "DIRECT_FINANCIAL",
       "reward_unit": {
         "currency": "M_POINT",
@@ -371,7 +442,7 @@
         "calc_type": "PERCENTAGE",
         "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
         "benefit_rate": 0.02,
-        "fallback_rate": null,
+        "fallback_rate": 0.0,
         "monthly_benefit_limit": 1000,
         "annual_benefit_limit": null
       },
@@ -395,7 +466,56 @@
         "warnings": [
           "오프라인 매장 이용 시에만 적립됩니다."
         ],
-        "excludes_from_performance": false,
+        "excludes_from_performance": true,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_DAILY_2_CONVENIENCE",
+      "group_id": "G_DAILY_2",
+      "selective_choice": null,
+      "category": "Shopping",
+      "sub_category": "general",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "M_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.02,
+        "fallback_rate": 0.0,
+        "monthly_benefit_limit": 1000,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 3000,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": "16:00",
+          "end": "20:00"
+        },
+        "requires_offline": true,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [],
+      "conditional_metadata": {
+        "warnings": [
+          "오프라인 매장 이용 시에만 적립됩니다."
+        ],
+        "excludes_from_performance": true,
         "special_multiplier": null
       },
       "indirect_benefit_metadata": {
@@ -407,10 +527,11 @@
     },
     {
       "benefit_id": "B_LIFE_PHOTO",
-      "group_id": "G_SHARED_LIMIT_1",
+      "content": "사진관 1,000포인트 적립",
+      "group_id": "G_PHOTO",
       "selective_choice": null,
-      "category": "EduHealth",
-      "sub_category": "fitness",
+      "category": "Cultural",
+      "sub_category": "theme_park",
       "reward_type": "DIRECT_FINANCIAL",
       "reward_unit": {
         "currency": "M_POINT",
@@ -420,8 +541,8 @@
         "calc_type": "FLAT_RATE",
         "calc_type_description": "FLAT_RATE: 1-2 공식(정액)",
         "flat_discount": 1000,
-        "fallback_rate": null,
-        "monthly_benefit_limit": null,
+        "fallback_rate": 0.0,
+        "monthly_benefit_limit": 1000,
         "annual_benefit_limit": 2000
       },
       "transaction_conditions": {
@@ -441,8 +562,10 @@
       },
       "tier_conditions": [],
       "conditional_metadata": {
-        "warnings": [],
-        "excludes_from_performance": false,
+        "warnings": [
+          "포토부스 포함"
+        ],
+        "excludes_from_performance": true,
         "special_multiplier": null
       },
       "indirect_benefit_metadata": {
@@ -454,7 +577,8 @@
     },
     {
       "benefit_id": "B_LIFE_SHOPPING",
-      "group_id": "G_SHARED_LIMIT_1",
+      "content": "지그재그, 에이블리, 무신사/29CM(온라인) 3,000포인트 적립",
+      "group_id": "G_SHOPPING",
       "selective_choice": null,
       "category": "Shopping",
       "sub_category": "online",
@@ -467,8 +591,8 @@
         "calc_type": "FLAT_RATE",
         "calc_type_description": "FLAT_RATE: 1-2 공식(정액)",
         "flat_discount": 3000,
-        "fallback_rate": null,
-        "monthly_benefit_limit": null,
+        "fallback_rate": 0.0,
+        "monthly_benefit_limit": 3000,
         "annual_benefit_limit": 9000
       },
       "transaction_conditions": {
@@ -491,12 +615,17 @@
         "warnings": [
           "공식 홈페이지/모바일 앱 이용 시 한함"
         ],
-        "excludes_from_performance": false,
+        "excludes_from_performance": true,
         "special_multiplier": null
       },
       "indirect_benefit_metadata": {
         "description": null,
-        "target_locations": null,
+        "target_locations": [
+          "지그재그",
+          "에이블리",
+          "무신사/29CM(온라인)",
+          "올리브영(온/오프라인)"
+        ],
         "voucher_choices": null,
         "voucher_value": null
       }

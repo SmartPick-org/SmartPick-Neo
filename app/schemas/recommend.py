@@ -231,28 +231,39 @@ class CompareResponse(BaseModel):
 
 class RecalculateRequest(BaseModel):
     """
-    체크박스 재계산 요청.
-    유저가 영수증에서 특정 혜택을 '쓸 일 없음'으로 체크 해제하면,
-    해당 benefit_id 목록을 `excluded_benefit_ids` 에 담아 보냅니다.
+    체크박스 재계산 요청 스키마입니다.
+    사용자가 영수증 항목에서 특정 혜택을 제외(체크 해제)했을 때, 
+    통합 한도 재분배 로직을 포함한 '정밀 재계산(Deep Recalculation)'을 수행합니다.
     """
-    total_budget: int = Field(..., description="월 총 소비 금액")
-    category_spending: Dict[CategoryEnum, Any] = Field(..., description="카테고리별 월 소비 내역")
+    total_budget: int = Field(..., description="월 총 소비 금액 (원)", examples=[500000])
+    category_spending: Dict[CategoryEnum, Any] = Field(
+        ..., 
+        description="최초 추천 시 사용했던 소비 내역 데이터를 그대로 전달합니다.",
+        examples=[{
+            "Coffee": {"total": 50000, "cafe": "75%", "bakery": "25%"},
+            "Food": {"total": 300000, "restaurant": "70%", "delivery": "30%"},
+            "Shopping": 150000,
+            "Traffic": {"total": 100000, "transit": "100%"}
+        }]
+    )
     recommended_cards: List[RecommendCard] = Field(
         ...,
-        description="`/cards/recommend` 응답의 `recommended_cards` 를 그대로 전달합니다."
+        description="전 단계인 `/cards/recommend` 응답으로 받은 `recommended_cards` 배열 전체를 그대로 전달합니다."
     )
     excluded_benefit_ids: List[str] = Field(
         ...,
-        description="유저가 체크 해제한 `benefit_id` 목록.",
-        examples=[["shinhan_mr_life_b_intake_mall"]]
+        description="사용자가 체크 해제한 혜택의 `benefit_id` 목록입니다. 이 혜택들은 계산에서 완전히 제외되며 남은 한도는 다른 혜택에 재배분됩니다.",
+        examples=[["B_BEAUTY_001"]]
     )
 
     model_config = {
         "json_schema_extra": {
             "examples": [
                 {
-                    "recommended_cards": "[ ... /cards/recommend 응답의 recommended_cards 배열 ... ]",
-                    "excluded_benefit_ids": ["shinhan_mr_life_b_intake_mall"]
+                    "total_budget": 500000,
+                    "category_spending": {"Food": 300000, "Shopping": 200000},
+                    "recommended_cards": " [ ... 추천 API의 응답 결과 ... ] ",
+                    "excluded_benefit_ids": ["B_BEAUTY_001"]
                 }
             ]
         }

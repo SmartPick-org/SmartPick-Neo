@@ -32,7 +32,7 @@ LOGTAIL_SOURCE_TOKEN: str | None = os.getenv("LOGTAIL_SOURCE_TOKEN")
 LOGTAIL_HOST: str | None = os.getenv("LOGTAIL_HOST")
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
-DATASETS_DIR = PROJECT_ROOT / "datasets" / "json"
+DATASETS_DIR = PROJECT_ROOT / "datasets" / "json_v4"
 DIGEST_DIR = PROJECT_ROOT / "datasets" / "digest"
 MANUALS_DIR = PROJECT_ROOT / "datasets" / "manuals"
 TERMS_DIR = PROJECT_ROOT / "datasets" / "terms"

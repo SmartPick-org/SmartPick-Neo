@@ -26,7 +26,7 @@ class DatasetCardRepository(CardRepository):
             return self._cache
 
         all_cards: list[CardData] = []
-        for json_file in self.datasets_dir.glob("*.json"):
+        for json_file in self.datasets_dir.glob("**/*.json"):
             raw = json.loads(json_file.read_text(encoding="utf-8"))
             if not raw.get("card_meta", {}).get("card_name"):
                 continue

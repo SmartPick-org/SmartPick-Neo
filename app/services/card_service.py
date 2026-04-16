@@ -10,16 +10,43 @@ from loguru import logger
 def _enrich_benefit_details(benefit_details: list[dict], raw_benefits: list[dict]) -> list[dict]:
     """
     Calc_tool이 반환한 benefit_details에 카드 JSON의 content 필드를 보강합니다.
-    benefit_id를 키로 join하며, content가 없는 경우 빈 문자열로 처리합니다.
-    benefit_id가 None인 항목은 BenefitReceiptItem 스키마 검증 실패를 유발하므로 제외합니다.
+    json_v4 대전환에 따라 content가 null이거나 없을 경우를 위해 fallback 로직을 추가했습니다.
     """
-    content_map = {b["benefit_id"]: b.get("content", "") for b in raw_benefits if b.get("benefit_id")}
+    def _create_fallback_content(b: dict) -> str:
+        cat = b.get("category", "")
+        sub = b.get("sub_category", "")
+        rule = b.get("calculation_rule") or {}
+        rate = rule.get("benefit_rate") or rule.get("rate")
+        
+        info = f"[{cat}]"
+        if sub and sub != "general":
+            info += f" {sub}"
+            
+        if rate:
+            # 0.1 -> 10%
+            info += f" {int(rate * 100)}% 혜택"
+        elif rule.get("flat_discount"):
+            info += f" {rule.get('flat_discount'):,}원 할인"
+        elif rule.get("fixed_amount"):
+            info += f" {rule.get('fixed_amount'):,}원 할인"
+        else:
+            info += " 맞춤 혜택"
+            
+        return info
+
+    content_map = {}
+    for b in raw_benefits:
+        bid = b.get("benefit_id")
+        if not bid:
+            continue
+        content = b.get("content")
+        if not content:
+            content = _create_fallback_content(b)
+        content_map[bid] = content
+
     valid = [bd for bd in benefit_details if bd.get("benefit_id") is not None]
-    skipped = len(benefit_details) - len(valid)
-    if skipped:
-        logger.debug("[_enrich_benefit_details] benefit_id=None 항목 %d개 제외", skipped)
     return [
-        {**bd, "content": content_map.get(bd.get("benefit_id", ""), "")}
+        {**bd, "content": content_map.get(bd.get("benefit_id", ""), "맞춤 혜택")}
         for bd in valid
     ]
 

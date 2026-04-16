@@ -9,7 +9,11 @@ from app.core.dependencies import (
     get_explain_service,
     get_recommend_service,
 )
-from app.core.exceptions import LLMUnavailableError, NoCardsFoundError
+from app.core.exceptions import (
+    InternalCalculationError,
+    LLMUnavailableError,
+    NoCardsFoundError,
+)
 from app.repositories.card_repo import FallbackCardRepository
 from app.repositories.digest_repo import DigestRepository
 from app.schemas.card_catalog import (
@@ -199,12 +203,15 @@ async def recommend_cards(
             excluded_benefit_ids=payload.excluded_benefit_ids,
         )
     except KeyError as e:
-        # 필수 데이터 누락 등 → raw 500 방지
+        # 계산기 내부에서 필수 키 누락 = 데이터/로직 버그 → 500 + Discord 알림
         logger.exception("[recommend_cards] calculate_benefits KeyError: %s", repr(e))
-        raise ValueError("혜택 계산에 필요한 데이터가 누락되었습니다.") from e
+        raise InternalCalculationError(
+            "혜택 계산에 필요한 데이터가 누락되었습니다."
+        ) from e
     except ValueError as e:
+        # 계산기에서 올라오는 ValueError는 대체로 데이터 이상이므로 함께 500 처리
         logger.exception("[recommend_cards] calculate_benefits ValueError: %s", repr(e))
-        raise ValueError(str(e))
+        raise InternalCalculationError(str(e)) from e
 
     ranked = recommend_service.rank_top(calc_results, top_n=payload.top_n)
 
@@ -368,10 +375,12 @@ async def compare_cards(payload: CompareRequest) -> CompareResponse:
         )
     except KeyError as e:
         logger.exception("[compare_cards] calculate_benefits KeyError: %s", repr(e))
-        raise ValueError("혜택 계산에 필요한 데이터가 누락되었습니다.") from e
+        raise InternalCalculationError(
+            "혜택 계산에 필요한 데이터가 누락되었습니다."
+        ) from e
     except ValueError as e:
         logger.exception("[compare_cards] calculate_benefits ValueError: %s", repr(e))
-        raise ValueError(str(e))
+        raise InternalCalculationError(str(e)) from e
 
     ranked = recommend_service.rank_top(calc_results, top_n=len(calc_results))
     if not ranked:

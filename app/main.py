@@ -114,19 +114,27 @@ async def value_error_handler(request: Request, exc: ValueError) -> JSONResponse
 
 @app.exception_handler(KeyError)
 async def key_error_handler(request: Request, exc: KeyError) -> JSONResponse:
+    """
+    KeyError는 정상적인 사용자 입력 경로에서는 나올 수 없습니다 (Pydantic이 사전 검증).
+    여기까지 올라왔다면 내부 로직/데이터 버그 → 500 + Discord 알림.
+    """
     logger.exception(
-        "[KeyError] {} {} → {}: {}",
+        "[KeyError → SERVER BUG] {} {} → {}: {}",
         request.method,
         request.url.path,
-        "INVALID_INPUT",
+        "INTERNAL_SERVER_ERROR",
         repr(exc),
     )
+    await _notify_error_channels(
+        exc,
+        context=f"{request.method} {request.url.path} (unhandled KeyError)",
+    )
     return JSONResponse(
-        status_code=400,
+        status_code=500,
         content=_error_payload(
-            error_code="INVALID_INPUT",
-            message="필수 데이터가 누락되었습니다.",
-            detail=str(exc) if str(exc) else repr(exc),
+            error_code="INTERNAL_SERVER_ERROR",
+            message=_GENERIC_500_MESSAGE,
+            detail=None,
             fallback=False,
         ),
     )

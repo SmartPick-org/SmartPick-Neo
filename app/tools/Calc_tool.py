@@ -49,6 +49,28 @@ def _pick(tier: dict | None, keys: str | list[str], fallback=None):
     return fallback
 
 
+def _synthesize_benefit_content(benefit: dict) -> str:
+    """json_v4 등에서 content가 null일 경우를 대비한 가독성 보조용 텍스트 생성."""
+    cat = benefit.get("category", "General")
+    sub = benefit.get("sub_category", "")
+    rule = benefit.get("calculation_rule") or {}
+    
+    rate = _pick(None, [], rule.get("benefit_rate") or rule.get("rate"))
+    flat = _pick(None, [], rule.get("flat_discount") or rule.get("fixed_amount"))
+    
+    info = f"[{cat}]"
+    if sub and sub != "general":
+        info += f" {sub}"
+        
+    if rate:
+        info += f" {int(rate * 100)}% 혜택"
+    elif flat:
+        info += f" {flat:,}원 할인"
+    else:
+        info += " 맞춤 혜택"
+    return info
+
+
 def _effective_days(day_of_week: list[str] | None) -> float:
     """요일 제한이 있을 때 한 달 중 해당 요일 수 추정."""
     if not day_of_week:
@@ -329,11 +351,10 @@ class BenefitCalculator:
             "warnings": warnings,
         }
 
-    @staticmethod
-    def _empty_record(benefit: dict) -> dict:
+    def _empty_record(self, benefit: dict) -> dict:
         return {
             "benefit_id": benefit.get("benefit_id"),
-            "content": benefit.get("content", ""),
+            "content": benefit.get("content") or _synthesize_benefit_content(benefit),
             "category": benefit.get("category"),
             "sub_category": benefit.get("sub_category"),
             "frequency": benefit.get("frequency", "MONTHLY"),
@@ -641,7 +662,7 @@ class BenefitCalculator:
             result["applied_benefits_trace"] = [
                 {
                     "benefit_id": r["benefit_id"],
-                    "content": r.get("content", ""),
+                    "content": r.get("content") or "맞춤 혜택",
                     "applied_budget": r["used_budget"],
                     "yielded_discount": r["amount_krw"],
                     "user_choice": True,

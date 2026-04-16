@@ -168,20 +168,6 @@ uv run pytest tests/ -v
 - **`ValueError`** → 400 (사용자 입력 검증 실패)
 - 모든 요청에 `request_id`(UUID)가 할당되어 로그에 바인딩됨
 
-상세 설계 문서: `ERROR_HANDLING_WORK.md`
-
----
-
-## 운영 문서
-
-프로젝트 루트에 작업 기록 문서들이 있습니다.
-
-- `SERVICE_AUDIT.md` — 서비스 전반 이슈 우선순위 리포트
-- `API_EXAMPLES_AUDIT.md` — OpenAPI `examples` 누락 분석
-- `ERROR_HANDLING_WORK.md` — 에러 핸들링·알림 강화 작업
-- `TEST_COVERAGE_WORK.md` — 테스트 보강 작업
-- `CI_FIX_WORK.md` — CI 워크플로우 정상화
-
 ---
 
 ## 트러블슈팅

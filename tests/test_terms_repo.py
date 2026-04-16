@@ -42,26 +42,28 @@ async def test_get_terms_success(tmp_path):
 # ---------------------------------------------------------------------------
 
 @pytest.mark.asyncio
-async def test_get_terms_db_exception_raises_runtime_error(tmp_path):
-    """Raises RuntimeError when the Supabase DB query throws and no local file exists."""
+async def test_get_terms_db_exception_returns_empty(tmp_path):
+    """Returns empty string when DB query throws and no local file exists."""
     repo = TermsRepository(tmp_path)
 
     with patch("app.repositories.terms_repo.get_supabase", side_effect=RuntimeError("connection lost")), \
          patch("app.repositories.terms_repo.notify_discord", new=AsyncMock()):
-        with pytest.raises(RuntimeError, match="약관 파일을 찾을 수 없음"):
-            await repo.get_terms("현대카드 Z family")
+        result = await repo.get_terms("현대카드 Z family")
+
+    assert result == ""
 
 
 @pytest.mark.asyncio
-async def test_get_terms_missing_file_path_raises_runtime_error(tmp_path):
-    """Raises RuntimeError when terms_file_path is not set and no local file exists."""
+async def test_get_terms_missing_file_path_returns_empty(tmp_path):
+    """Returns empty string when terms_file_path is not set and no local file exists."""
     repo = TermsRepository(tmp_path)
     mock_supabase = _mock_supabase(file_path="")
 
     with patch("app.repositories.terms_repo.get_supabase", return_value=mock_supabase), \
          patch("app.repositories.terms_repo.notify_discord", new=AsyncMock()):
-        with pytest.raises(RuntimeError, match="약관 파일을 찾을 수 없음"):
-            await repo.get_terms("현대카드 Z family")
+        result = await repo.get_terms("현대카드 Z family")
+
+    assert result == ""
 
 
 # ---------------------------------------------------------------------------
@@ -69,24 +71,26 @@ async def test_get_terms_missing_file_path_raises_runtime_error(tmp_path):
 # ---------------------------------------------------------------------------
 
 @pytest.mark.asyncio
-async def test_get_terms_storage_exception_raises_runtime_error(tmp_path):
-    """Raises RuntimeError when storage download throws and no local file exists."""
+async def test_get_terms_storage_exception_returns_empty(tmp_path):
+    """Returns empty string when storage download throws and no local file exists."""
     repo = TermsRepository(tmp_path)
 
     with patch("app.repositories.terms_repo.get_supabase", return_value=_mock_supabase()), \
          patch("app.repositories.terms_repo.fetch_markdown_from_s3", side_effect=Exception("network error")), \
          patch("app.repositories.terms_repo.notify_discord", new=AsyncMock()):
-        with pytest.raises(RuntimeError, match="약관 파일을 찾을 수 없음"):
-            await repo.get_terms("현대카드 Z family")
+        result = await repo.get_terms("현대카드 Z family")
+
+    assert result == ""
 
 
 @pytest.mark.asyncio
-async def test_get_terms_empty_content_raises_runtime_error(tmp_path):
-    """Raises RuntimeError when storage returns empty content and no local file exists."""
+async def test_get_terms_empty_content_returns_empty(tmp_path):
+    """Returns empty string when storage returns empty content and no local file exists."""
     repo = TermsRepository(tmp_path)
 
     with patch("app.repositories.terms_repo.get_supabase", return_value=_mock_supabase()), \
          patch("app.repositories.terms_repo.fetch_markdown_from_s3", return_value=""), \
          patch("app.repositories.terms_repo.notify_discord", new=AsyncMock()):
-        with pytest.raises(RuntimeError, match="약관 파일을 찾을 수 없음"):
-            await repo.get_terms("현대카드 Z family")
+        result = await repo.get_terms("현대카드 Z family")
+
+    assert result == ""

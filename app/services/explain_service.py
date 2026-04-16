@@ -39,6 +39,23 @@ class ExplainService:
                     sub_name = sub.replace("sub_category_", "")
                     breakdown_lines.append(f"    └ {sub_name}: {amt:,}원")
 
+        # 고비중 혜택 주석 (전체 할인의 30% 이상 차지하는 항목만 — 토큰 절감)
+        trace = top_card.get("applied_benefits_trace", [])
+        total_discount = top_card.get("expected_monthly_benefit", 0)
+        if trace and total_discount > 0:
+            high_impact = [
+                t for t in trace
+                if t["yielded_discount"] / total_discount >= 0.3
+            ]
+            if high_impact:
+                breakdown_lines.append("\n※ 고비중 혜택 참고:")
+                for t in high_impact:
+                    pct = round(t["yielded_discount"] / total_discount * 100)
+                    breakdown_lines.append(
+                        f"  → \"{t['content']}\" = {t['yielded_discount']:,}원 "
+                        f"(전체의 {pct}%, 예산 {t['applied_budget']:,}원 기준)"
+                    )
+
         return (
             f"카드: {top_card['card_name']} ({top_card['card_company']})\n"
             f"연회비: {top_card['annual_fee']:,}원\n"
@@ -212,6 +229,7 @@ class ExplainService:
                 "minimum_performance": card["minimum_performance"],
                 "expected_monthly_benefit": card["expected_monthly_benefit"],
                 "category_breakdown": card["category_breakdown"],
+                "applied_benefits_trace": card.get("applied_benefits_trace", []),
                 "explanation": final_explanation,
                 "benefit_receipt": card.get("benefit_details", []),
             })

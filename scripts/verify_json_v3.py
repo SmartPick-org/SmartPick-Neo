@@ -138,9 +138,21 @@ def verify_schema(data: dict, filename: str) -> list[str]:
                     issues.append(f"[WARN] benefits[{i}] tier 정렬 오류: {perf} < {prev_perf}")
                 prev_perf = perf
 
-                tier_rate = t.get("reward_rate")
+                # reward_rate -> rate 일원화 체크
+                if "reward_rate" in t:
+                    issues.append(f"[ERROR] benefits[{i}] tier에 'reward_rate' 필드 사용됨. 'rate'로 변경 필요.")
+                
+                tier_rate = t.get("rate") or t.get("reward_rate")
                 if tier_rate is not None and isinstance(tier_rate, (int, float)) and tier_rate > 1.0:
-                    issues.append(f"[ERROR] benefits[{i}] tier reward_rate > 1.0: {tier_rate}")
+                    issues.append(f"[ERROR] benefits[{i}] tier rate > 1.0: {tier_rate}")
+        
+        # transaction_conditions 검증
+        trans_cond = b.get("transaction_conditions", {})
+        
+        # 테마파크/엔진오일 등 연간 한도가 필수적인 카테고리 체크
+        sub = b.get("sub_category", "")
+        if sub in ["theme_park", "maintenance"] and not trans_cond.get("max_count_per_year"):
+            issues.append(f"[ERROR] benefits[{i}] {sub} 혜택에 'max_count_per_year' 누락 (연간 횟수 제한 확인 필요)")
 
     return issues
 

@@ -10,14 +10,14 @@
   },
   "benefit_groups": [
     {
-      "group_id": "G_BIZ_FAVORITE",
+      "group_id": "G_TANTAN_BIZ_FAVORITE",
       "group_name": "Biz Favorite 선택 서비스",
       "group_type": "USER_CHOICE_ONE",
       "limit_amount": null,
       "top_n_count": null
     },
     {
-      "group_id": "G_BIZ_BASIC",
+      "group_id": "G_TANTAN_BIZ_BASIC",
       "group_name": "Biz Basic 서비스",
       "group_type": "SHARED_LIMIT",
       "limit_amount": 5000,
@@ -26,24 +26,24 @@
   ],
   "benefits": [
     {
-      "benefit_id": "b_biz_favorite_1",
+      "benefit_id": "b_tantan_biz_favorite_skgs_100ppl",
       "category": "Traffic",
       "sub_category": "fuel",
       "source_benefit_id": null,
-      "content": "SK,GS 주유소(충전소) 리터당 100점 적립",
+      "content": "SK,GS 주유소(충전소) 100점/ℓ",
       "frequency": "MONTHLY",
       "reward_type": "POINT",
       "tier_conditions": [
         {
           "min_prev_performance": 400000,
           "monthly_limit": 200000,
-          "reward_rate": null,
+          "rate": null,
           "fixed_amount": 100
         },
         {
           "min_prev_performance": 800000,
           "monthly_limit": 300000,
-          "reward_rate": null,
+          "rate": null,
           "fixed_amount": 100
         }
       ],
@@ -58,9 +58,10 @@
       "transaction_conditions": {
         "min_payment_amount": 10000,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_BIZ_FAVORITE",
+      "group_id": "G_TANTAN_BIZ_FAVORITE",
       "ui_warnings": [
         "이용 건당 1만원 이상 시 적립 제공",
         "복수 선택 불가"
@@ -73,7 +74,7 @@
       }
     },
     {
-      "benefit_id": "b_biz_favorite_2",
+      "benefit_id": "b_tantan_biz_favorite_mart_10pct",
       "category": "Shopping",
       "sub_category": "mart",
       "source_benefit_id": null,
@@ -84,13 +85,13 @@
         {
           "min_prev_performance": 400000,
           "monthly_limit": 10000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 800000,
           "monthly_limit": 15000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         }
       ],
@@ -105,9 +106,10 @@
       "transaction_conditions": {
         "min_payment_amount": 10000,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_BIZ_FAVORITE",
+      "group_id": "G_TANTAN_BIZ_FAVORITE",
       "ui_warnings": [
         "이용 건당 1만원 이상 시 적립 제공",
         "복수 선택 불가"
@@ -120,7 +122,7 @@
       }
     },
     {
-      "benefit_id": "b_biz_favorite_3",
+      "benefit_id": "b_tantan_biz_favorite_online_10pct",
       "category": "Shopping",
       "sub_category": "online",
       "source_benefit_id": null,
@@ -131,13 +133,13 @@
         {
           "min_prev_performance": 400000,
           "monthly_limit": 10000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 800000,
           "monthly_limit": 15000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         }
       ],
@@ -152,9 +154,10 @@
       "transaction_conditions": {
         "min_payment_amount": 10000,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_BIZ_FAVORITE",
+      "group_id": "G_TANTAN_BIZ_FAVORITE",
       "ui_warnings": [
         "이용 건당 1만원 이상 시 적립 제공",
         "복수 선택 불가"
@@ -167,24 +170,24 @@
       }
     },
     {
-      "benefit_id": "b_biz_favorite_4",
+      "benefit_id": "b_tantan_biz_favorite_skgs_130ppl",
       "category": "Traffic",
       "sub_category": "fuel",
       "source_benefit_id": null,
-      "content": "SK,GS 주유소(충전소) 리터당 130점 적립",
+      "content": "SK,GS 주유소(충전소) 130점/ℓ",
       "frequency": "MONTHLY",
       "reward_type": "POINT",
       "tier_conditions": [
         {
           "min_prev_performance": 400000,
           "monthly_limit": 200000,
-          "reward_rate": null,
+          "rate": null,
           "fixed_amount": 130
         },
         {
           "min_prev_performance": 800000,
           "monthly_limit": 300000,
-          "reward_rate": null,
+          "rate": null,
           "fixed_amount": 130
         }
       ],
@@ -199,9 +202,10 @@
       "transaction_conditions": {
         "min_payment_amount": 10000,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_BIZ_FAVORITE",
+      "group_id": "G_TANTAN_BIZ_FAVORITE",
       "ui_warnings": [
         "이용 건당 1만원 이상 시 적립 제공",
         "복수 선택 불가"
@@ -214,7 +218,7 @@
       }
     },
     {
-      "benefit_id": "b_biz_favorite_5",
+      "benefit_id": "b_tantan_biz_favorite_mart_20pct",
       "category": "Shopping",
       "sub_category": "mart",
       "source_benefit_id": null,
@@ -225,13 +229,13 @@
         {
           "min_prev_performance": 400000,
           "monthly_limit": 15000,
-          "reward_rate": 0.2,
+          "rate": 0.2,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 800000,
           "monthly_limit": 30000,
-          "reward_rate": 0.2,
+          "rate": 0.2,
           "fixed_amount": null
         }
       ],
@@ -246,9 +250,10 @@
       "transaction_conditions": {
         "min_payment_amount": 10000,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_BIZ_FAVORITE",
+      "group_id": "G_TANTAN_BIZ_FAVORITE",
       "ui_warnings": [
         "이용 건당 1만원 이상 시 적립 제공",
         "복수 선택 불가"
@@ -261,7 +266,7 @@
       }
     },
     {
-      "benefit_id": "b_biz_favorite_6",
+      "benefit_id": "b_tantan_biz_favorite_online_20pct",
       "category": "Shopping",
       "sub_category": "online",
       "source_benefit_id": null,
@@ -272,13 +277,13 @@
         {
           "min_prev_performance": 400000,
           "monthly_limit": 15000,
-          "reward_rate": 0.2,
+          "rate": 0.2,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 800000,
           "monthly_limit": 30000,
-          "reward_rate": 0.2,
+          "rate": 0.2,
           "fixed_amount": null
         }
       ],
@@ -293,9 +298,10 @@
       "transaction_conditions": {
         "min_payment_amount": 10000,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_BIZ_FAVORITE",
+      "group_id": "G_TANTAN_BIZ_FAVORITE",
       "ui_warnings": [
         "이용 건당 1만원 이상 시 적립 제공",
         "복수 선택 불가"
@@ -308,7 +314,7 @@
       }
     },
     {
-      "benefit_id": "b_biz_basic_1",
+      "benefit_id": "b_tantan_biz_basic_waterpurifier",
       "category": "Life",
       "sub_category": "daily_service",
       "source_benefit_id": null,
@@ -319,7 +325,7 @@
         {
           "min_prev_performance": 400000,
           "monthly_limit": 5000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         }
       ],
@@ -334,9 +340,10 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_BIZ_BASIC",
+      "group_id": "G_TANTAN_BIZ_BASIC",
       "ui_warnings": [],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -346,9 +353,9 @@
       }
     },
     {
-      "benefit_id": "b_biz_basic_2",
+      "benefit_id": "b_tantan_biz_basic_security",
       "category": "Life",
-      "sub_category": "office",
+      "sub_category": "daily_service",
       "source_benefit_id": null,
       "content": "보안 및 용역 5% 적립",
       "frequency": "MONTHLY",
@@ -357,7 +364,7 @@
         {
           "min_prev_performance": 400000,
           "monthly_limit": 5000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         }
       ],
@@ -372,9 +379,10 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_BIZ_BASIC",
+      "group_id": "G_TANTAN_BIZ_BASIC",
       "ui_warnings": [],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -384,7 +392,7 @@
       }
     },
     {
-      "benefit_id": "b_biz_basic_3",
+      "benefit_id": "b_tantan_biz_basic_stationery",
       "category": "Life",
       "sub_category": "office",
       "source_benefit_id": null,
@@ -395,7 +403,7 @@
         {
           "min_prev_performance": 400000,
           "monthly_limit": 5000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         }
       ],
@@ -410,9 +418,10 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_BIZ_BASIC",
+      "group_id": "G_TANTAN_BIZ_BASIC",
       "ui_warnings": [],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -422,9 +431,9 @@
       }
     },
     {
-      "benefit_id": "b_biz_basic_4",
+      "benefit_id": "b_tantan_biz_basic_insurance",
       "category": "Life",
-      "sub_category": "telecom",
+      "sub_category": "insurance_tax",
       "source_benefit_id": null,
       "content": "건강,고용,산재,국민연금 5% 적립",
       "frequency": "MONTHLY",
@@ -433,7 +442,7 @@
         {
           "min_prev_performance": 400000,
           "monthly_limit": 5000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         }
       ],
@@ -448,9 +457,10 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_BIZ_BASIC",
+      "group_id": "G_TANTAN_BIZ_BASIC",
       "ui_warnings": [],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -460,7 +470,7 @@
       }
     },
     {
-      "benefit_id": "b_biz_basic_5",
+      "benefit_id": "b_tantan_biz_basic_telecom",
       "category": "Life",
       "sub_category": "telecom",
       "source_benefit_id": null,
@@ -471,7 +481,7 @@
         {
           "min_prev_performance": 400000,
           "monthly_limit": 5000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         }
       ],
@@ -486,9 +496,10 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_BIZ_BASIC",
+      "group_id": "G_TANTAN_BIZ_BASIC",
       "ui_warnings": [],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -498,7 +509,7 @@
       }
     },
     {
-      "benefit_id": "b_biz_basic_6",
+      "benefit_id": "b_tantan_biz_basic_utility",
       "category": "Life",
       "sub_category": "utility",
       "source_benefit_id": null,
@@ -509,7 +520,7 @@
         {
           "min_prev_performance": 400000,
           "monthly_limit": 5000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         }
       ],
@@ -524,9 +535,10 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_BIZ_BASIC",
+      "group_id": "G_TANTAN_BIZ_BASIC",
       "ui_warnings": [],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -536,7 +548,7 @@
       }
     },
     {
-      "benefit_id": "b_biz_basic_7",
+      "benefit_id": "b_tantan_biz_basic_skstore",
       "category": "Shopping",
       "sub_category": "online",
       "source_benefit_id": null,
@@ -547,7 +559,7 @@
         {
           "min_prev_performance": 400000,
           "monthly_limit": 5000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         }
       ],
@@ -562,9 +574,10 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_BIZ_BASIC",
+      "group_id": "G_TANTAN_BIZ_BASIC",
       "ui_warnings": [],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -574,9 +587,9 @@
       }
     },
     {
-      "benefit_id": "b_biz_basic_8",
-      "category": "Shopping",
-      "sub_category": "online",
+      "benefit_id": "b_tantan_biz_basic_plus_o2o",
+      "category": "Food",
+      "sub_category": "delivery",
       "source_benefit_id": null,
       "content": "플러스 O2O 5% 적립",
       "frequency": "MONTHLY",
@@ -585,7 +598,7 @@
         {
           "min_prev_performance": 400000,
           "monthly_limit": 5000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         }
       ],
@@ -600,9 +613,10 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_BIZ_BASIC",
+      "group_id": "G_TANTAN_BIZ_BASIC",
       "ui_warnings": [],
       "edge_case_flags": {
         "requires_user_selection": false,

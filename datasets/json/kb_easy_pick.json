@@ -3,31 +3,24 @@
     "card_id": "kb_easy_pick",
     "card_name": "KB국민 Easy pick카드",
     "card_company": "KB국민카드",
-    "annual_fee": 14000,
+    "annual_fee": 10000,
     "minimum_performance": 500000,
     "reward_currency": "POINTREE",
     "currency_to_krw_rate": 1.0
   },
   "benefit_groups": [
     {
-      "group_id": "G_EASYPICK_EASY",
-      "group_name": "Easy 통합 혜택",
+      "group_id": "G_EASYPICK_SHARED_LIMIT",
+      "group_name": "통합 적립 한도",
       "group_type": "SHARED_LIMIT",
       "limit_amount": 10000,
       "top_n_count": null
     },
     {
-      "group_id": "G_EASYPICK_PICK",
-      "group_name": "Pick 통합 혜택",
-      "group_type": "SHARED_LIMIT",
-      "limit_amount": 10000,
-      "top_n_count": null
-    },
-    {
-      "group_id": "G_EASYPICK_BASIC",
-      "group_name": "Basic 통합 혜택",
-      "group_type": "SHARED_LIMIT",
-      "limit_amount": 5000,
+      "group_id": "G_EASYPICK_USER_CHOICE",
+      "group_name": "선호영역 선택",
+      "group_type": "USER_CHOICE_ONE",
+      "limit_amount": null,
       "top_n_count": null
     }
   ],
@@ -37,20 +30,20 @@
       "category": "Shopping",
       "sub_category": "online",
       "source_benefit_id": null,
-      "content": "인터넷쇼핑몰 5% 포인트리 적립",
+      "content": "인터넷쇼핑몰(G마켓, 옥션, 11번가) 5% 포인트리 적립",
       "frequency": "MONTHLY",
       "reward_type": "POINT",
       "tier_conditions": [
         {
           "min_prev_performance": 500000,
           "monthly_limit": 5000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 10000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         }
       ],
@@ -65,9 +58,10 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_EASYPICK_EASY",
+      "group_id": "G_EASYPICK_SHARED_LIMIT",
       "ui_warnings": [
         "상품권, 여행, 항공권, 티켓, 도서 이용금액 제외"
       ],
@@ -83,20 +77,20 @@
       "category": "Food",
       "sub_category": "delivery",
       "source_benefit_id": null,
-      "content": "배달앱 5% 포인트리 적립",
+      "content": "배달앱(배달의민족, 마켓컬리) 5% 포인트리 적립",
       "frequency": "MONTHLY",
       "reward_type": "POINT",
       "tier_conditions": [
         {
           "min_prev_performance": 500000,
           "monthly_limit": 5000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 10000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         }
       ],
@@ -111,9 +105,10 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_EASYPICK_EASY",
+      "group_id": "G_EASYPICK_SHARED_LIMIT",
       "ui_warnings": [
         "배달의민족 '바로결제>카드결제', 마켓컬리 '신용카드' 결제수단 이용 시 제공"
       ],
@@ -129,20 +124,20 @@
       "category": "Shopping",
       "sub_category": "mart",
       "source_benefit_id": null,
-      "content": "대형마트 5% 포인트리 적립",
+      "content": "대형마트(이마트, 롯데마트, 홈플러스) 5% 포인트리 적립",
       "frequency": "MONTHLY",
       "reward_type": "POINT",
       "tier_conditions": [
         {
           "min_prev_performance": 500000,
           "monthly_limit": 5000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 10000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         }
       ],
@@ -157,11 +152,12 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_EASYPICK_EASY",
+      "group_id": "G_EASYPICK_SHARED_LIMIT",
       "ui_warnings": [
-        "대형마트 온라인몰, 상품권구매, SSM(이마트에브리데이,롯데슈퍼,홈플러스 익스프레스) 및 마트 내 입점 매장 이용금액 제외"
+        "대형마트 온라인몰, 상품권구매, SSM(이마트에브리데이, 롯데슈퍼, 홈플러스 익스프레스) 및 마트 내 입점 매장 이용금액 제외"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -175,20 +171,20 @@
       "category": "Traffic",
       "sub_category": "fuel",
       "source_benefit_id": null,
-      "content": "주유소/충전소 5% 포인트리 적립",
+      "content": "주유소/충전소(국내 SK, GS주유소) 5% 포인트리 적립",
       "frequency": "MONTHLY",
       "reward_type": "POINT",
       "tier_conditions": [
         {
           "min_prev_performance": 500000,
           "monthly_limit": 5000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 10000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         }
       ],
@@ -203,12 +199,11 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_EASYPICK_EASY",
-      "ui_warnings": [
-        "국내 SK, GS주유소(충전소 포함)"
-      ],
+      "group_id": "G_EASYPICK_SHARED_LIMIT",
+      "ui_warnings": [],
       "edge_case_flags": {
         "requires_user_selection": false,
         "excludes_from_performance": false,
@@ -218,8 +213,8 @@
     },
     {
       "benefit_id": "b_easypick_pick_5pct",
-      "category": "General",
-      "sub_category": null,
+      "category": "Shopping",
+      "sub_category": "general",
       "source_benefit_id": null,
       "content": "선호영역(택 1) 5% 포인트리 적립",
       "frequency": "MONTHLY",
@@ -228,13 +223,13 @@
         {
           "min_prev_performance": 500000,
           "monthly_limit": 5000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 10000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         }
       ],
@@ -249,11 +244,12 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_EASYPICK_PICK",
+      "group_id": "G_EASYPICK_USER_CHOICE",
       "ui_warnings": [
-        "소셜커머스, 온라인서점, 홈쇼핑, 백화점, 제과/아이스크림, 커피, 편의점, 차량정비 중 택 1"
+        "선호영역 선택 필요 (소셜커머스, 온라인서점, 홈쇼핑, 백화점, 제과/아이스크림, 커피, 편의점, 차량정비 중 택 1)"
       ],
       "edge_case_flags": {
         "requires_user_selection": true,
@@ -267,14 +263,14 @@
       "category": "Traffic",
       "sub_category": "transit",
       "source_benefit_id": null,
-      "content": "대중교통 5% 포인트리 적립",
+      "content": "대중교통(버스/지하철, 택시) 5% 포인트리 적립",
       "frequency": "MONTHLY",
       "reward_type": "POINT",
       "tier_conditions": [
         {
           "min_prev_performance": 500000,
           "monthly_limit": 5000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         }
       ],
@@ -289,9 +285,10 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_EASYPICK_BASIC",
+      "group_id": null,
       "ui_warnings": [
         "시외버스, 고속버스, 공항버스 이용금액 제외"
       ],
@@ -307,14 +304,14 @@
       "category": "Life",
       "sub_category": "telecom",
       "source_benefit_id": null,
-      "content": "이동통신 5% 포인트리 적립",
+      "content": "이동통신(SKT, KT, LG U+) 요금 자동이체 5% 포인트리 적립",
       "frequency": "MONTHLY",
       "reward_type": "POINT",
       "tier_conditions": [
         {
           "min_prev_performance": 500000,
           "monthly_limit": 5000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         }
       ],
@@ -329,11 +326,12 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_EASYPICK_BASIC",
+      "group_id": null,
       "ui_warnings": [
-        "SKT, KT, LG U+ 이동통신요금 자동이체 (알뜰폰 이용금액 제외)"
+        "알뜰폰 이용금액 제외"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -347,14 +345,14 @@
       "category": "Shopping",
       "sub_category": "online",
       "source_benefit_id": null,
-      "content": "인터넷쇼핑몰 KB Pay 결제 5% 포인트리 적립",
+      "content": "인터넷쇼핑몰 KB Pay 결제(G마켓, 옥션, 11번가) 5% 포인트리 적립",
       "frequency": "MONTHLY",
       "reward_type": "POINT",
       "tier_conditions": [
         {
           "min_prev_performance": 500000,
           "monthly_limit": 5000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         }
       ],
@@ -369,11 +367,13 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_EASYPICK_BASIC",
+      "group_id": null,
       "ui_warnings": [
-        "G마켓, 옥션, 11번가 KB Pay 결제 이용금액 (Easy 서비스와 중복 적용, 적립한도는 각각 적용)"
+        "상품권, 여행, 항공권, 티켓, 도서 이용금액 제외",
+        "Easy 서비스와 중복 적용, 적립한도는 각각 적용"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,

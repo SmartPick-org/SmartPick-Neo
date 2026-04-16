@@ -3,7 +3,7 @@
     "card_id": "kb_the_easy",
     "card_name": "KB국민 The Easy카드",
     "card_company": "KB국민카드",
-    "annual_fee": 9000,
+    "annual_fee": 7000,
     "minimum_performance": 500000,
     "reward_currency": "POINTREE",
     "currency_to_krw_rate": 1.0
@@ -11,14 +11,14 @@
   "benefit_groups": [
     {
       "group_id": "G_EASY_ACCUMULATION",
-      "group_name": "적립형 혜택 그룹",
+      "group_name": "적립형 통합 혜택",
       "group_type": "USER_CHOICE_ONE",
       "limit_amount": null,
       "top_n_count": null
     },
     {
       "group_id": "G_EASY_DISCOUNT",
-      "group_name": "할인형 혜택 그룹",
+      "group_name": "할인형 통합 혜택",
       "group_type": "USER_CHOICE_ONE",
       "limit_amount": null,
       "top_n_count": null
@@ -45,11 +45,12 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
       "group_id": "G_EASY_ACCUMULATION",
       "ui_warnings": [
-        "무이자할부, 현금서비스, 공과금 등 제외"
+        "무이자할부, 현금서비스, 공과금, 세금, 등록금, 상품권 구입/충전금액 제외"
       ],
       "edge_case_flags": {
         "requires_user_selection": true,
@@ -59,10 +60,10 @@
       }
     },
     {
-      "benefit_id": "b_easy_add_accumulation_mart",
+      "benefit_id": "b_easy_additional_accumulation_mart",
       "category": "Shopping",
       "sub_category": "mart",
-      "source_benefit_id": "b_easy_add_accumulation",
+      "source_benefit_id": "b_easy_additional_accumulation",
       "content": "대형마트 3% 추가 적립",
       "frequency": "MONTHLY",
       "reward_type": "POINT",
@@ -70,13 +71,13 @@
         {
           "min_prev_performance": 500000,
           "monthly_limit": 10000,
-          "reward_rate": 0.03,
+          "rate": 0.03,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 20000,
-          "reward_rate": 0.03,
+          "rate": 0.03,
           "fixed_amount": null
         }
       ],
@@ -91,24 +92,26 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
       "group_id": "G_EASY_ACCUMULATION",
       "ui_warnings": [
-        "온라인쇼핑몰, 상품권 구매, 입점매장, SSM 제외"
+        "온라인쇼핑몰, 상품권 구매, SSM 이용금액 제외",
+        "월 1만/2만원 한도 적용"
       ],
       "edge_case_flags": {
-        "requires_user_selection": true,
+        "requires_user_selection": false,
         "excludes_from_performance": false,
         "special_month_bonus": null,
         "escape_hatch_note": null
       }
     },
     {
-      "benefit_id": "b_easy_add_accumulation_convenience",
+      "benefit_id": "b_easy_additional_accumulation_convenience",
       "category": "Shopping",
       "sub_category": "convenience",
-      "source_benefit_id": "b_easy_add_accumulation",
+      "source_benefit_id": "b_easy_additional_accumulation",
       "content": "편의점 3% 추가 적립",
       "frequency": "MONTHLY",
       "reward_type": "POINT",
@@ -116,13 +119,13 @@
         {
           "min_prev_performance": 500000,
           "monthly_limit": 10000,
-          "reward_rate": 0.03,
+          "rate": 0.03,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 20000,
-          "reward_rate": 0.03,
+          "rate": 0.03,
           "fixed_amount": null
         }
       ],
@@ -137,24 +140,26 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
       "group_id": "G_EASY_ACCUMULATION",
       "ui_warnings": [
-        "백화점, 대형마트 입점매장 제외"
+        "백화점, 대형마트 입점 가맹점 제외",
+        "월 1만/2만원 한도 적용"
       ],
       "edge_case_flags": {
-        "requires_user_selection": true,
+        "requires_user_selection": false,
         "excludes_from_performance": false,
         "special_month_bonus": null,
         "escape_hatch_note": null
       }
     },
     {
-      "benefit_id": "b_easy_add_accumulation_cafe",
+      "benefit_id": "b_easy_additional_accumulation_cafe",
       "category": "Coffee",
       "sub_category": "cafe",
-      "source_benefit_id": "b_easy_add_accumulation",
+      "source_benefit_id": "b_easy_additional_accumulation",
       "content": "커피 3% 추가 적립",
       "frequency": "MONTHLY",
       "reward_type": "POINT",
@@ -162,13 +167,13 @@
         {
           "min_prev_performance": 500000,
           "monthly_limit": 10000,
-          "reward_rate": 0.03,
+          "rate": 0.03,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 20000,
-          "reward_rate": 0.03,
+          "rate": 0.03,
           "fixed_amount": null
         }
       ],
@@ -183,24 +188,27 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
       "group_id": "G_EASY_ACCUMULATION",
       "ui_warnings": [
-        "상품권 구입, 선불식 충전카드, 입점매장 제외"
+        "상품권 구입, 선불식 충전카드 이용금액 제외",
+        "대형마트, 백화점 입점 가맹점 제외",
+        "월 1만/2만원 한도 적용"
       ],
       "edge_case_flags": {
-        "requires_user_selection": true,
+        "requires_user_selection": false,
         "excludes_from_performance": false,
         "special_month_bonus": null,
         "escape_hatch_note": null
       }
     },
     {
-      "benefit_id": "b_easy_add_accumulation_fuel",
+      "benefit_id": "b_easy_additional_accumulation_fuel",
       "category": "Traffic",
       "sub_category": "fuel",
-      "source_benefit_id": "b_easy_add_accumulation",
+      "source_benefit_id": "b_easy_additional_accumulation",
       "content": "주유 3% 추가 적립",
       "frequency": "MONTHLY",
       "reward_type": "POINT",
@@ -208,13 +216,13 @@
         {
           "min_prev_performance": 500000,
           "monthly_limit": 10000,
-          "reward_rate": 0.03,
+          "rate": 0.03,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 20000,
-          "reward_rate": 0.03,
+          "rate": 0.03,
           "fixed_amount": null
         }
       ],
@@ -229,22 +237,26 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
       "group_id": "G_EASY_ACCUMULATION",
-      "ui_warnings": [],
+      "ui_warnings": [
+        "주유소, 충전소(LPG) 이용금액",
+        "월 1만/2만원 한도 적용"
+      ],
       "edge_case_flags": {
-        "requires_user_selection": true,
+        "requires_user_selection": false,
         "excludes_from_performance": false,
         "special_month_bonus": null,
         "escape_hatch_note": null
       }
     },
     {
-      "benefit_id": "b_easy_add_accumulation_beauty",
+      "benefit_id": "b_easy_additional_accumulation_beauty",
       "category": "Shopping",
       "sub_category": "beauty",
-      "source_benefit_id": "b_easy_add_accumulation",
+      "source_benefit_id": "b_easy_additional_accumulation",
       "content": "미용 3% 추가 적립",
       "frequency": "MONTHLY",
       "reward_type": "POINT",
@@ -252,13 +264,13 @@
         {
           "min_prev_performance": 500000,
           "monthly_limit": 10000,
-          "reward_rate": 0.03,
+          "rate": 0.03,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 20000,
-          "reward_rate": 0.03,
+          "rate": 0.03,
           "fixed_amount": null
         }
       ],
@@ -273,24 +285,26 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
       "group_id": "G_EASY_ACCUMULATION",
       "ui_warnings": [
-        "입점매장 제외"
+        "대형마트, 백화점 입점 가맹점 제외",
+        "월 1만/2만원 한도 적용"
       ],
       "edge_case_flags": {
-        "requires_user_selection": true,
+        "requires_user_selection": false,
         "excludes_from_performance": false,
         "special_month_bonus": null,
         "escape_hatch_note": null
       }
     },
     {
-      "benefit_id": "b_easy_add_accumulation_life",
+      "benefit_id": "b_easy_additional_accumulation_life",
       "category": "Life",
       "sub_category": "general",
-      "source_benefit_id": "b_easy_add_accumulation",
+      "source_benefit_id": "b_easy_additional_accumulation",
       "content": "생활 3% 추가 적립",
       "frequency": "MONTHLY",
       "reward_type": "POINT",
@@ -298,13 +312,13 @@
         {
           "min_prev_performance": 500000,
           "monthly_limit": 10000,
-          "reward_rate": 0.03,
+          "rate": 0.03,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 20000,
-          "reward_rate": 0.03,
+          "rate": 0.03,
           "fixed_amount": null
         }
       ],
@@ -319,24 +333,27 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
       "group_id": "G_EASY_ACCUMULATION",
       "ui_warnings": [
-        "아파트관리비 자동납부 이용금액은 전월 실적 제외"
+        "통신요금(SKT, KT, LG U+ 자동납부), 아파트관리비 자동납부",
+        "알뜰폰, 아파트관리비 전월 실적 제외",
+        "월 1만/2만원 한도 적용"
       ],
       "edge_case_flags": {
-        "requires_user_selection": true,
+        "requires_user_selection": false,
         "excludes_from_performance": false,
         "special_month_bonus": null,
         "escape_hatch_note": null
       }
     },
     {
-      "benefit_id": "b_easy_add_accumulation_education",
+      "benefit_id": "b_easy_additional_accumulation_education",
       "category": "EduHealth",
       "sub_category": "education",
-      "source_benefit_id": "b_easy_add_accumulation",
+      "source_benefit_id": "b_easy_additional_accumulation",
       "content": "학원 3% 추가 적립",
       "frequency": "MONTHLY",
       "reward_type": "POINT",
@@ -344,13 +361,13 @@
         {
           "min_prev_performance": 500000,
           "monthly_limit": 10000,
-          "reward_rate": 0.03,
+          "rate": 0.03,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 20000,
-          "reward_rate": 0.03,
+          "rate": 0.03,
           "fixed_amount": null
         }
       ],
@@ -365,14 +382,16 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
       "group_id": "G_EASY_ACCUMULATION",
       "ui_warnings": [
-        "PG결제, 유아교육기관, 학습자재 업종 제외"
+        "PG(인터넷결제) 이용금액, 유아교육기관, 학습자재 업종 제외",
+        "월 1만/2만원 한도 적용"
       ],
       "edge_case_flags": {
-        "requires_user_selection": true,
+        "requires_user_selection": false,
         "excludes_from_performance": false,
         "special_month_bonus": null,
         "escape_hatch_note": null
@@ -398,11 +417,12 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
       "group_id": "G_EASY_DISCOUNT",
       "ui_warnings": [
-        "무이자할부, 현금서비스, 공과금 등 제외"
+        "무이자할부, 현금서비스, 공과금, 세금, 등록금, 상품권 구입/충전금액 제외"
       ],
       "edge_case_flags": {
         "requires_user_selection": true,
@@ -412,10 +432,10 @@
       }
     },
     {
-      "benefit_id": "b_easy_add_discount_mart",
+      "benefit_id": "b_easy_additional_discount_mart",
       "category": "Shopping",
       "sub_category": "mart",
-      "source_benefit_id": "b_easy_add_discount",
+      "source_benefit_id": "b_easy_additional_discount",
       "content": "대형마트 5% 추가 할인",
       "frequency": "MONTHLY",
       "reward_type": "DISCOUNT",
@@ -423,13 +443,13 @@
         {
           "min_prev_performance": 500000,
           "monthly_limit": 10000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 20000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         }
       ],
@@ -444,24 +464,27 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": 1
+        "max_count_per_month": 1,
+        "max_count_per_year": null
       },
       "group_id": "G_EASY_DISCOUNT",
       "ui_warnings": [
-        "온라인쇼핑몰, 상품권 구매, 입점매장, SSM 제외"
+        "온라인쇼핑몰, 상품권 구매, SSM 이용금액 제외",
+        "월 1만/2만원 한도 적용",
+        "월 1회 적용"
       ],
       "edge_case_flags": {
-        "requires_user_selection": true,
+        "requires_user_selection": false,
         "excludes_from_performance": false,
         "special_month_bonus": null,
         "escape_hatch_note": null
       }
     },
     {
-      "benefit_id": "b_easy_add_discount_convenience",
+      "benefit_id": "b_easy_additional_discount_convenience",
       "category": "Shopping",
       "sub_category": "convenience",
-      "source_benefit_id": "b_easy_add_discount",
+      "source_benefit_id": "b_easy_additional_discount",
       "content": "편의점 5% 추가 할인",
       "frequency": "MONTHLY",
       "reward_type": "DISCOUNT",
@@ -469,13 +492,13 @@
         {
           "min_prev_performance": 500000,
           "monthly_limit": 10000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 20000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         }
       ],
@@ -490,24 +513,27 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": 1
+        "max_count_per_month": 1,
+        "max_count_per_year": null
       },
       "group_id": "G_EASY_DISCOUNT",
       "ui_warnings": [
-        "백화점, 대형마트 입점매장 제외"
+        "백화점, 대형마트 입점 가맹점 제외",
+        "월 1만/2만원 한도 적용",
+        "월 1회 적용"
       ],
       "edge_case_flags": {
-        "requires_user_selection": true,
+        "requires_user_selection": false,
         "excludes_from_performance": false,
         "special_month_bonus": null,
         "escape_hatch_note": null
       }
     },
     {
-      "benefit_id": "b_easy_add_discount_cafe",
+      "benefit_id": "b_easy_additional_discount_cafe",
       "category": "Coffee",
       "sub_category": "cafe",
-      "source_benefit_id": "b_easy_add_discount",
+      "source_benefit_id": "b_easy_additional_discount",
       "content": "커피 5% 추가 할인",
       "frequency": "MONTHLY",
       "reward_type": "DISCOUNT",
@@ -515,13 +541,13 @@
         {
           "min_prev_performance": 500000,
           "monthly_limit": 10000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 20000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         }
       ],
@@ -536,24 +562,28 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": 1
+        "max_count_per_month": 1,
+        "max_count_per_year": null
       },
       "group_id": "G_EASY_DISCOUNT",
       "ui_warnings": [
-        "상품권 구입, 선불식 충전카드, 입점매장 제외"
+        "상품권 구입, 선불식 충전카드 이용금액 제외",
+        "대형마트, 백화점 입점 가맹점 제외",
+        "월 1만/2만원 한도 적용",
+        "월 1회 적용"
       ],
       "edge_case_flags": {
-        "requires_user_selection": true,
+        "requires_user_selection": false,
         "excludes_from_performance": false,
         "special_month_bonus": null,
         "escape_hatch_note": null
       }
     },
     {
-      "benefit_id": "b_easy_add_discount_fuel",
+      "benefit_id": "b_easy_additional_discount_fuel",
       "category": "Traffic",
       "sub_category": "fuel",
-      "source_benefit_id": "b_easy_add_discount",
+      "source_benefit_id": "b_easy_additional_discount",
       "content": "주유 5% 추가 할인",
       "frequency": "MONTHLY",
       "reward_type": "DISCOUNT",
@@ -561,13 +591,13 @@
         {
           "min_prev_performance": 500000,
           "monthly_limit": 10000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 20000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         }
       ],
@@ -582,22 +612,27 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": 1
+        "max_count_per_month": 1,
+        "max_count_per_year": null
       },
       "group_id": "G_EASY_DISCOUNT",
-      "ui_warnings": [],
+      "ui_warnings": [
+        "주유소, 충전소(LPG) 이용금액",
+        "월 1만/2만원 한도 적용",
+        "월 1회 적용"
+      ],
       "edge_case_flags": {
-        "requires_user_selection": true,
+        "requires_user_selection": false,
         "excludes_from_performance": false,
         "special_month_bonus": null,
         "escape_hatch_note": null
       }
     },
     {
-      "benefit_id": "b_easy_add_discount_beauty",
+      "benefit_id": "b_easy_additional_discount_beauty",
       "category": "Shopping",
       "sub_category": "beauty",
-      "source_benefit_id": "b_easy_add_discount",
+      "source_benefit_id": "b_easy_additional_discount",
       "content": "미용 5% 추가 할인",
       "frequency": "MONTHLY",
       "reward_type": "DISCOUNT",
@@ -605,13 +640,13 @@
         {
           "min_prev_performance": 500000,
           "monthly_limit": 10000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 20000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         }
       ],
@@ -626,24 +661,27 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": 1
+        "max_count_per_month": 1,
+        "max_count_per_year": null
       },
       "group_id": "G_EASY_DISCOUNT",
       "ui_warnings": [
-        "입점매장 제외"
+        "대형마트, 백화점 입점 가맹점 제외",
+        "월 1만/2만원 한도 적용",
+        "월 1회 적용"
       ],
       "edge_case_flags": {
-        "requires_user_selection": true,
+        "requires_user_selection": false,
         "excludes_from_performance": false,
         "special_month_bonus": null,
         "escape_hatch_note": null
       }
     },
     {
-      "benefit_id": "b_easy_add_discount_life",
+      "benefit_id": "b_easy_additional_discount_life",
       "category": "Life",
       "sub_category": "general",
-      "source_benefit_id": "b_easy_add_discount",
+      "source_benefit_id": "b_easy_additional_discount",
       "content": "생활 5% 추가 할인",
       "frequency": "MONTHLY",
       "reward_type": "DISCOUNT",
@@ -651,13 +689,13 @@
         {
           "min_prev_performance": 500000,
           "monthly_limit": 10000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 20000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         }
       ],
@@ -672,24 +710,28 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": 1
+        "max_count_per_month": 1,
+        "max_count_per_year": null
       },
       "group_id": "G_EASY_DISCOUNT",
       "ui_warnings": [
-        "아파트관리비 자동납부 이용금액은 전월 실적 제외"
+        "통신요금(SKT, KT, LG U+ 자동납부), 아파트관리비 자동납부",
+        "알뜰폰, 아파트관리비 전월 실적 제외",
+        "월 1만/2만원 한도 적용",
+        "월 1회 적용"
       ],
       "edge_case_flags": {
-        "requires_user_selection": true,
+        "requires_user_selection": false,
         "excludes_from_performance": false,
         "special_month_bonus": null,
         "escape_hatch_note": null
       }
     },
     {
-      "benefit_id": "b_easy_add_discount_education",
+      "benefit_id": "b_easy_additional_discount_education",
       "category": "EduHealth",
       "sub_category": "education",
-      "source_benefit_id": "b_easy_add_discount",
+      "source_benefit_id": "b_easy_additional_discount",
       "content": "학원 5% 추가 할인",
       "frequency": "MONTHLY",
       "reward_type": "DISCOUNT",
@@ -697,13 +739,13 @@
         {
           "min_prev_performance": 500000,
           "monthly_limit": 10000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 20000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         }
       ],
@@ -718,14 +760,17 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": 1
+        "max_count_per_month": 1,
+        "max_count_per_year": null
       },
       "group_id": "G_EASY_DISCOUNT",
       "ui_warnings": [
-        "PG결제, 유아교육기관, 학습자재 업종 제외"
+        "PG(인터넷결제) 이용금액, 유아교육기관, 학습자재 업종 제외",
+        "월 1만/2만원 한도 적용",
+        "월 1회 적용"
       ],
       "edge_case_flags": {
-        "requires_user_selection": true,
+        "requires_user_selection": false,
         "excludes_from_performance": false,
         "special_month_bonus": null,
         "escape_hatch_note": null

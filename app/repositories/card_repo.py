@@ -39,12 +39,14 @@ class DatasetCardRepository(CardRepository):
             adapted["_file_path"] = str(json_file)
             adapted["_raw_v3"] = raw
 
-            card_categories: set[str] = set()
-            for benefit in adapted.get("benefits", []):
-                category = benefit.get("category", "")
-                if category:
-                    card_categories.add(category)
-            adapted["_card_categories"] = card_categories
+                card_categories: set[str] = set()
+                for benefit in adapted.get("benefits", []):
+                    category = benefit.get("category", "")
+                    if category and category != "General":
+                        card_categories.add(category)
+                    elif category == "General":
+                        card_categories.add(category)
+                adapted["_card_categories"] = card_categories
 
             all_cards.append(adapted)
 

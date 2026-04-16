@@ -47,7 +47,7 @@ class CardRecommendService:
         filtered = []
         for card in after_performance:
             categories = card.get("_card_categories", set())
-            if categories & user_categories or "General" in categories or "All_Domestic" in categories:
+            if categories & user_categories or "General" in categories:
                 filtered.append(card)
         logger.info(f"[CardRecommendService] 필터링 된 1차 결과(최종): {len(filtered)}장")
         return filtered
@@ -116,6 +116,7 @@ class CardRecommendService:
                             "min_spend_score": round(min_spend_score, 3),
                         },
                         "category_breakdown": result.get("category_breakdown", []),
+                        "applied_benefits_trace": result.get("applied_benefits_trace", []),
                         "benefit_details": _enrich_benefit_details(
                             result.get("benefit_details", []),
                             card.get("benefits", []),

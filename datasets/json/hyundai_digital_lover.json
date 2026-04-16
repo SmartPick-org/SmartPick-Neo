@@ -10,14 +10,14 @@
   },
   "benefit_groups": [
     {
-      "group_id": "G_DL_STREAMING",
+      "group_id": "G_DIGITAL_LOVER_STREAMING",
       "group_name": "디지털 스트리밍 서비스 할인",
       "group_type": "SHARED_LIMIT",
       "limit_amount": 10000,
       "top_n_count": null
     },
     {
-      "group_id": "G_DL_PAYMENT",
+      "group_id": "G_DIGITAL_LOVER_PAYMENT",
       "group_name": "온라인 간편결제서비스 할인",
       "group_type": "SHARED_LIMIT",
       "limit_amount": 10000,
@@ -26,7 +26,7 @@
   ],
   "benefits": [
     {
-      "benefit_id": "b_dl_streaming_10000",
+      "benefit_id": "b_digital_lover_streaming_10000",
       "category": "Cultural",
       "sub_category": "ott",
       "source_benefit_id": null,
@@ -37,7 +37,7 @@
         {
           "min_prev_performance": 500000,
           "monthly_limit": 10000,
-          "reward_rate": null,
+          "rate": null,
           "fixed_amount": 10000
         }
       ],
@@ -52,9 +52,10 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_DL_STREAMING",
+      "group_id": "G_DIGITAL_LOVER_STREAMING",
       "ui_warnings": [
         "할부, 리볼빙 이용 시 최초 결제일자에 실적 포함",
         "전월 이용 금액 50만원 미만 시 할인 제외"
@@ -67,9 +68,9 @@
       }
     },
     {
-      "benefit_id": "b_dl_payment_5pct",
-      "category": "Shopping",
-      "sub_category": "general",
+      "benefit_id": "b_digital_lover_payment_5pct",
+      "category": "General",
+      "sub_category": null,
       "source_benefit_id": null,
       "content": "삼성페이, 네이버페이, 카카오페이, SSG페이, 스마일페이, 쿠페이 온라인 가맹점 결제 건 5% 청구 할인",
       "frequency": "MONTHLY",
@@ -78,7 +79,7 @@
         {
           "min_prev_performance": 500000,
           "monthly_limit": 10000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         }
       ],
@@ -93,9 +94,10 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_DL_PAYMENT",
+      "group_id": "G_DIGITAL_LOVER_PAYMENT",
       "ui_warnings": [
         "할부, 리볼빙 이용 시 최초 결제일자에 실적 포함",
         "전월 이용 금액 50만원 미만 시 할인 제외"

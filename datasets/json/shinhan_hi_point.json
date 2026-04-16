@@ -5,1114 +5,60 @@
     "card_company": "신한카드",
     "annual_fee": 30000,
     "minimum_performance": 0,
-    "reward_currency": "KRW",
+    "reward_currency": "MY_SHINHAN_POINT",
     "currency_to_krw_rate": 1.0
   },
   "benefit_groups": [
     {
-      "group_id": "G_SHINHAN_HIPOINT_MASTERCARD",
-      "group_name": "Mastercard Platinum 통합 서비스",
+      "group_id": "G_SHINHAN_HIPLATINUM_HOTEL_PARKING",
+      "group_name": "호텔 발레파킹 통합 한도",
       "group_type": "SHARED_LIMIT",
-      "limit_amount": null,
+      "limit_amount": 300000,
       "top_n_count": null
     },
     {
-      "group_id": "G_SHINHAN_HIPOINT_VISA",
-      "group_name": "VISA Platinum 통합 서비스",
+      "group_id": "G_SHINHAN_HIPLATINUM_AIRPORT_PARKING",
+      "group_name": "공항 발레파킹 통합 한도",
       "group_type": "SHARED_LIMIT",
-      "limit_amount": null,
+      "limit_amount": 300000,
       "top_n_count": null
     },
     {
-      "group_id": "G_SHINHAN_HIPOINT_SELECT",
-      "group_name": "선택 서비스 통합",
+      "group_id": "G_SHINHAN_HIPLATINUM_AIRPORT_LOUNGE",
+      "group_name": "공항 라운지 연간 통합",
       "group_type": "SHARED_LIMIT",
-      "limit_amount": null,
+      "limit_amount": 200000,
       "top_n_count": null
     }
   ],
   "benefits": [
     {
-      "benefit_id": "b_shinhan_hi_point_mastercard_airport_10pct",
-      "category": "Travel",
-      "sub_category": "rental",
-      "source_benefit_id": null,
-      "content": "LANE4 공항 이동 서비스 10% 할인",
-      "frequency": "ONCE",
-      "reward_type": "DISCOUNT",
-      "tier_conditions": [],
-      "calculation_rule": {
-        "calc_method": "RATE",
-        "rate": 0.1,
-        "fixed_amount": null,
-        "monthly_limit": null,
-        "fallback_reward_rate": 0.0,
-        "transaction_tiers": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_payment_amount_applied": null,
-        "max_count_per_month": null
-      },
-      "group_id": "G_SHINHAN_HIPOINT_MASTERCARD",
-      "ui_warnings": [
-        "예약 시 Mastercard Platinum 회원임을 알리고 해당 카드로 결제 필요"
-      ],
-      "edge_case_flags": {
-        "requires_user_selection": false,
-        "excludes_from_performance": false,
-        "special_month_bonus": null,
-        "escape_hatch_note": null
-      }
-    },
-    {
-      "benefit_id": "b_shinhan_hi_point_mastercard_airport_5pct",
-      "category": "Travel",
-      "sub_category": "rental",
-      "source_benefit_id": null,
-      "content": "K-VAN 공항 밴 서비스 5~10% 할인",
-      "frequency": "ONCE",
-      "reward_type": "DISCOUNT",
-      "tier_conditions": [],
-      "calculation_rule": {
-        "calc_method": "RATE",
-        "rate": 0.05,
-        "fixed_amount": null,
-        "monthly_limit": null,
-        "fallback_reward_rate": 0.0,
-        "transaction_tiers": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_payment_amount_applied": null,
-        "max_count_per_month": null
-      },
-      "group_id": "G_SHINHAN_HIPOINT_MASTERCARD",
-      "ui_warnings": [
-        "예약 시 Mastercard Platinum 회원임을 알리고 해당 카드로 결제 필요"
-      ],
-      "edge_case_flags": {
-        "requires_user_selection": false,
-        "excludes_from_performance": false,
-        "special_month_bonus": null,
-        "escape_hatch_note": null
-      }
-    },
-    {
-      "benefit_id": "b_shinhan_hi_point_mastercard_trip_8pct",
-      "category": "Travel",
-      "sub_category": "travel_agency",
-      "source_benefit_id": null,
-      "content": "Trip.com 호텔 8% 할인",
-      "frequency": "ONCE",
-      "reward_type": "DISCOUNT",
-      "tier_conditions": [],
-      "calculation_rule": {
-        "calc_method": "RATE",
-        "rate": 0.08,
-        "fixed_amount": null,
-        "monthly_limit": null,
-        "fallback_reward_rate": 0.0,
-        "transaction_tiers": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_payment_amount_applied": null,
-        "max_count_per_month": null
-      },
-      "group_id": "G_SHINHAN_HIPOINT_MASTERCARD",
-      "ui_warnings": [
-        "예약 시 Mastercard Platinum 회원임을 알리고 해당 카드로 결제 필요"
-      ],
-      "edge_case_flags": {
-        "requires_user_selection": false,
-        "excludes_from_performance": false,
-        "special_month_bonus": null,
-        "escape_hatch_note": null
-      }
-    },
-    {
-      "benefit_id": "b_shinhan_hi_point_mastercard_agoda_8pct",
-      "category": "Travel",
-      "sub_category": "travel_agency",
-      "source_benefit_id": null,
-      "content": "Agoda.com 최대 8% 할인",
-      "frequency": "ONCE",
-      "reward_type": "DISCOUNT",
-      "tier_conditions": [],
-      "calculation_rule": {
-        "calc_method": "RATE",
-        "rate": 0.08,
-        "fixed_amount": null,
-        "monthly_limit": null,
-        "fallback_reward_rate": 0.0,
-        "transaction_tiers": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_payment_amount_applied": null,
-        "max_count_per_month": null
-      },
-      "group_id": "G_SHINHAN_HIPOINT_MASTERCARD",
-      "ui_warnings": [
-        "예약 시 Mastercard Platinum 회원임을 알리고 해당 카드로 결제 필요"
-      ],
-      "edge_case_flags": {
-        "requires_user_selection": false,
-        "excludes_from_performance": false,
-        "special_month_bonus": null,
-        "escape_hatch_note": null
-      }
-    },
-    {
-      "benefit_id": "b_shinhan_hi_point_mastercard_rakuten_10pct",
-      "category": "Travel",
-      "sub_category": "travel_agency",
-      "source_benefit_id": null,
-      "content": "Rakuten Travel 일본 호텔 10% 할인",
-      "frequency": "ONCE",
-      "reward_type": "DISCOUNT",
-      "tier_conditions": [],
-      "calculation_rule": {
-        "calc_method": "RATE",
-        "rate": 0.1,
-        "fixed_amount": null,
-        "monthly_limit": null,
-        "fallback_reward_rate": 0.0,
-        "transaction_tiers": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_payment_amount_applied": null,
-        "max_count_per_month": null
-      },
-      "group_id": "G_SHINHAN_HIPOINT_MASTERCARD",
-      "ui_warnings": [
-        "예약 시 Mastercard Platinum 회원임을 알리고 해당 카드로 결제 필요"
-      ],
-      "edge_case_flags": {
-        "requires_user_selection": false,
-        "excludes_from_performance": false,
-        "special_month_bonus": null,
-        "escape_hatch_note": null
-      }
-    },
-    {
-      "benefit_id": "b_shinhan_hi_point_mastercard_lotte_10pct",
-      "category": "Travel",
-      "sub_category": "rental",
-      "source_benefit_id": null,
-      "content": "롯데렌터카 10% 할인",
-      "frequency": "ONCE",
-      "reward_type": "DISCOUNT",
-      "tier_conditions": [],
-      "calculation_rule": {
-        "calc_method": "RATE",
-        "rate": 0.1,
-        "fixed_amount": null,
-        "monthly_limit": null,
-        "fallback_reward_rate": 0.0,
-        "transaction_tiers": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_payment_amount_applied": null,
-        "max_count_per_month": null
-      },
-      "group_id": "G_SHINHAN_HIPOINT_MASTERCARD",
-      "ui_warnings": [
-        "예약 시 Mastercard Platinum 회원임을 알리고 해당 카드로 결제 필요"
-      ],
-      "edge_case_flags": {
-        "requires_user_selection": false,
-        "excludes_from_performance": false,
-        "special_month_bonus": null,
-        "escape_hatch_note": null
-      }
-    },
-    {
-      "benefit_id": "b_shinhan_hi_point_mastercard_wifi_15pct",
-      "category": "Travel",
-      "sub_category": "roaming",
-      "source_benefit_id": null,
-      "content": "와이드모바일 와이파이 15% 할인",
-      "frequency": "ONCE",
-      "reward_type": "DISCOUNT",
-      "tier_conditions": [],
-      "calculation_rule": {
-        "calc_method": "RATE",
-        "rate": 0.15,
-        "fixed_amount": null,
-        "monthly_limit": null,
-        "fallback_reward_rate": 0.0,
-        "transaction_tiers": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_payment_amount_applied": null,
-        "max_count_per_month": null
-      },
-      "group_id": "G_SHINHAN_HIPOINT_MASTERCARD",
-      "ui_warnings": [
-        "예약 시 Mastercard Platinum 회원임을 알리고 해당 카드로 결제 필요"
-      ],
-      "edge_case_flags": {
-        "requires_user_selection": false,
-        "excludes_from_performance": false,
-        "special_month_bonus": null,
-        "escape_hatch_note": null
-      }
-    },
-    {
-      "benefit_id": "b_shinhan_hi_point_mastercard_kkday_5pct",
-      "category": "Travel",
-      "sub_category": "travel_agency",
-      "source_benefit_id": null,
-      "content": "KKday 티켓/교통/액티비티 5% 할인",
-      "frequency": "ONCE",
-      "reward_type": "DISCOUNT",
-      "tier_conditions": [],
-      "calculation_rule": {
-        "calc_method": "RATE",
-        "rate": 0.05,
-        "fixed_amount": null,
-        "monthly_limit": null,
-        "fallback_reward_rate": 0.0,
-        "transaction_tiers": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_payment_amount_applied": null,
-        "max_count_per_month": null
-      },
-      "group_id": "G_SHINHAN_HIPOINT_MASTERCARD",
-      "ui_warnings": [
-        "예약 시 Mastercard Platinum 회원임을 알리고 해당 카드로 결제 필요"
-      ],
-      "edge_case_flags": {
-        "requires_user_selection": false,
-        "excludes_from_performance": false,
-        "special_month_bonus": null,
-        "escape_hatch_note": null
-      }
-    },
-    {
-      "benefit_id": "b_shinhan_hi_point_mastercard_airalo_15pct",
-      "category": "Travel",
-      "sub_category": "roaming",
-      "source_benefit_id": null,
-      "content": "Airalo eSIM 15% 할인",
-      "frequency": "ONCE",
-      "reward_type": "DISCOUNT",
-      "tier_conditions": [],
-      "calculation_rule": {
-        "calc_method": "RATE",
-        "rate": 0.15,
-        "fixed_amount": null,
-        "monthly_limit": null,
-        "fallback_reward_rate": 0.0,
-        "transaction_tiers": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_payment_amount_applied": null,
-        "max_count_per_month": null
-      },
-      "group_id": "G_SHINHAN_HIPOINT_MASTERCARD",
-      "ui_warnings": [
-        "예약 시 Mastercard Platinum 회원임을 알리고 해당 카드로 결제 필요"
-      ],
-      "edge_case_flags": {
-        "requires_user_selection": false,
-        "excludes_from_performance": false,
-        "special_month_bonus": null,
-        "escape_hatch_note": null
-      }
-    },
-    {
-      "benefit_id": "b_shinhan_hi_point_mastercard_trump_10pct",
-      "category": "Travel",
-      "sub_category": "hotel",
-      "source_benefit_id": null,
-      "content": "Trump Hotels 10% 할인 + $50 룸크레딧",
-      "frequency": "ONCE",
-      "reward_type": "DISCOUNT",
-      "tier_conditions": [],
-      "calculation_rule": {
-        "calc_method": "RATE",
-        "rate": 0.1,
-        "fixed_amount": 50000,
-        "monthly_limit": null,
-        "fallback_reward_rate": 0.0,
-        "transaction_tiers": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_payment_amount_applied": null,
-        "max_count_per_month": null
-      },
-      "group_id": "G_SHINHAN_HIPOINT_MASTERCARD",
-      "ui_warnings": [
-        "예약 시 Mastercard Platinum 회원임을 알리고 해당 카드로 결제 필요"
-      ],
-      "edge_case_flags": {
-        "requires_user_selection": false,
-        "excludes_from_performance": false,
-        "special_month_bonus": null,
-        "escape_hatch_note": null
-      }
-    },
-    {
-      "benefit_id": "b_shinhan_hi_point_mastercard_outrigger_5pct",
-      "category": "Travel",
-      "sub_category": "hotel",
-      "source_benefit_id": null,
-      "content": "Outrigger Hotel 5% 할인",
-      "frequency": "ONCE",
-      "reward_type": "DISCOUNT",
-      "tier_conditions": [],
-      "calculation_rule": {
-        "calc_method": "RATE",
-        "rate": 0.05,
-        "fixed_amount": null,
-        "monthly_limit": null,
-        "fallback_reward_rate": 0.0,
-        "transaction_tiers": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_payment_amount_applied": null,
-        "max_count_per_month": null
-      },
-      "group_id": "G_SHINHAN_HIPOINT_MASTERCARD",
-      "ui_warnings": [
-        "예약 시 Mastercard Platinum 회원임을 알리고 해당 카드로 결제 필요"
-      ],
-      "edge_case_flags": {
-        "requires_user_selection": false,
-        "excludes_from_performance": false,
-        "special_month_bonus": null,
-        "escape_hatch_note": null
-      }
-    },
-    {
-      "benefit_id": "b_shinhan_hi_point_mastercard_golf_25pct",
-      "category": "Cultural",
-      "sub_category": "leisure_sports",
-      "source_benefit_id": null,
-      "content": "해외 골프장 그린피 25% 할인",
-      "frequency": "ONCE",
-      "reward_type": "DISCOUNT",
-      "tier_conditions": [],
-      "calculation_rule": {
-        "calc_method": "RATE",
-        "rate": 0.25,
-        "fixed_amount": null,
-        "monthly_limit": null,
-        "fallback_reward_rate": 0.0,
-        "transaction_tiers": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_payment_amount_applied": null,
-        "max_count_per_month": null
-      },
-      "group_id": "G_SHINHAN_HIPOINT_MASTERCARD",
-      "ui_warnings": [
-        "예약 시 Mastercard Platinum 회원임을 알리고 해당 카드로 결제 필요"
-      ],
-      "edge_case_flags": {
-        "requires_user_selection": false,
-        "excludes_from_performance": false,
-        "special_month_bonus": null,
-        "escape_hatch_note": null
-      }
-    },
-    {
-      "benefit_id": "b_shinhan_hi_point_mastercard_lane4_10pct",
-      "category": "Travel",
-      "sub_category": "rental",
-      "source_benefit_id": null,
-      "content": "골프장 이동 서비스 10% 할인",
-      "frequency": "ONCE",
-      "reward_type": "DISCOUNT",
-      "tier_conditions": [],
-      "calculation_rule": {
-        "calc_method": "RATE",
-        "rate": 0.1,
-        "fixed_amount": null,
-        "monthly_limit": null,
-        "fallback_reward_rate": 0.0,
-        "transaction_tiers": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_payment_amount_applied": null,
-        "max_count_per_month": null
-      },
-      "group_id": "G_SHINHAN_HIPOINT_MASTERCARD",
-      "ui_warnings": [
-        "예약 시 Mastercard Platinum 회원임을 알리고 해당 카드로 결제 필요"
-      ],
-      "edge_case_flags": {
-        "requires_user_selection": false,
-        "excludes_from_performance": false,
-        "special_month_bonus": null,
-        "escape_hatch_note": null
-      }
-    },
-    {
-      "benefit_id": "b_shinhan_hi_point_mastercard_duty_free_15pct",
-      "category": "Shopping",
-      "sub_category": "duty_free",
-      "source_benefit_id": null,
-      "content": "신라면세점 온라인 15% 할인",
-      "frequency": "ONCE",
-      "reward_type": "DISCOUNT",
-      "tier_conditions": [],
-      "calculation_rule": {
-        "calc_method": "RATE",
-        "rate": 0.15,
-        "fixed_amount": null,
-        "monthly_limit": null,
-        "fallback_reward_rate": 0.0,
-        "transaction_tiers": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_payment_amount_applied": null,
-        "max_count_per_month": null
-      },
-      "group_id": "G_SHINHAN_HIPOINT_MASTERCARD",
-      "ui_warnings": [
-        "예약 시 Mastercard Platinum 회원임을 알리고 해당 카드로 결제 필요"
-      ],
-      "edge_case_flags": {
-        "requires_user_selection": false,
-        "excludes_from_performance": false,
-        "special_month_bonus": null,
-        "escape_hatch_note": null
-      }
-    },
-    {
-      "benefit_id": "b_shinhan_hi_point_mastercard_ff_10pct",
-      "category": "Shopping",
-      "sub_category": "online",
-      "source_benefit_id": null,
-      "content": "FarFetch 10% 할인",
-      "frequency": "ONCE",
-      "reward_type": "DISCOUNT",
-      "tier_conditions": [],
-      "calculation_rule": {
-        "calc_method": "RATE",
-        "rate": 0.1,
-        "fixed_amount": null,
-        "monthly_limit": null,
-        "fallback_reward_rate": 0.0,
-        "transaction_tiers": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 300000,
-        "max_payment_amount_applied": null,
-        "max_count_per_month": 2
-      },
-      "group_id": "G_SHINHAN_HIPOINT_MASTERCARD",
-      "ui_warnings": [
-        "예약 시 Mastercard Platinum 회원임을 알리고 해당 카드로 결제 필요"
-      ],
-      "edge_case_flags": {
-        "requires_user_selection": false,
-        "excludes_from_performance": false,
-        "special_month_bonus": null,
-        "escape_hatch_note": null
-      }
-    },
-    {
-      "benefit_id": "b_shinhan_hi_point_mastercard_yoox_15pct",
-      "category": "Shopping",
-      "sub_category": "online",
-      "source_benefit_id": null,
-      "content": "YOOX 15% 할인",
-      "frequency": "ONCE",
-      "reward_type": "DISCOUNT",
-      "tier_conditions": [],
-      "calculation_rule": {
-        "calc_method": "RATE",
-        "rate": 0.15,
-        "fixed_amount": null,
-        "monthly_limit": null,
-        "fallback_reward_rate": 0.0,
-        "transaction_tiers": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_payment_amount_applied": null,
-        "max_count_per_month": null
-      },
-      "group_id": "G_SHINHAN_HIPOINT_MASTERCARD",
-      "ui_warnings": [
-        "예약 시 Mastercard Platinum 회원임을 알리고 해당 카드로 결제 필요"
-      ],
-      "edge_case_flags": {
-        "requires_user_selection": false,
-        "excludes_from_performance": false,
-        "special_month_bonus": null,
-        "escape_hatch_note": null
-      }
-    },
-    {
-      "benefit_id": "b_shinhan_hi_point_mastercard_bicester_15pct",
-      "category": "Shopping",
-      "sub_category": "duty_free",
-      "source_benefit_id": null,
-      "content": "Bicester Village 15% 할인",
-      "frequency": "ONCE",
-      "reward_type": "DISCOUNT",
-      "tier_conditions": [],
-      "calculation_rule": {
-        "calc_method": "RATE",
-        "rate": 0.15,
-        "fixed_amount": null,
-        "monthly_limit": null,
-        "fallback_reward_rate": 0.0,
-        "transaction_tiers": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_payment_amount_applied": null,
-        "max_count_per_month": null
-      },
-      "group_id": "G_SHINHAN_HIPOINT_MASTERCARD",
-      "ui_warnings": [
-        "예약 시 Mastercard Platinum 회원임을 알리고 해당 카드로 결제 필요"
-      ],
-      "edge_case_flags": {
-        "requires_user_selection": false,
-        "excludes_from_performance": false,
-        "special_month_bonus": null,
-        "escape_hatch_note": null
-      }
-    },
-    {
-      "benefit_id": "b_shinhan_hi_point_mastercard_mongju_15pct",
-      "category": "EduHealth",
-      "sub_category": "pharmacy",
-      "source_benefit_id": null,
-      "content": "몽쥬약국 15% 할인",
-      "frequency": "ONCE",
-      "reward_type": "DISCOUNT",
-      "tier_conditions": [],
-      "calculation_rule": {
-        "calc_method": "RATE",
-        "rate": 0.15,
-        "fixed_amount": null,
-        "monthly_limit": null,
-        "fallback_reward_rate": 0.0,
-        "transaction_tiers": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_payment_amount_applied": null,
-        "max_count_per_month": null
-      },
-      "group_id": "G_SHINHAN_HIPOINT_MASTERCARD",
-      "ui_warnings": [
-        "예약 시 Mastercard Platinum 회원임을 알리고 해당 카드로 결제 필요"
-      ],
-      "edge_case_flags": {
-        "requires_user_selection": false,
-        "excludes_from_performance": false,
-        "special_month_bonus": null,
-        "escape_hatch_note": null
-      }
-    },
-    {
-      "benefit_id": "b_shinhan_hi_point_mastercard_carup_20pct",
-      "category": "Life",
-      "sub_category": "daily_service",
-      "source_benefit_id": null,
-      "content": "카업 프리미엄 자동차 케어 20% 할인",
-      "frequency": "ONCE",
-      "reward_type": "DISCOUNT",
-      "tier_conditions": [],
-      "calculation_rule": {
-        "calc_method": "RATE",
-        "rate": 0.2,
-        "fixed_amount": null,
-        "monthly_limit": null,
-        "fallback_reward_rate": 0.0,
-        "transaction_tiers": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_payment_amount_applied": null,
-        "max_count_per_month": null
-      },
-      "group_id": "G_SHINHAN_HIPOINT_MASTERCARD",
-      "ui_warnings": [
-        "예약 시 Mastercard Platinum 회원임을 알리고 해당 카드로 결제 필요"
-      ],
-      "edge_case_flags": {
-        "requires_user_selection": false,
-        "excludes_from_performance": false,
-        "special_month_bonus": null,
-        "escape_hatch_note": null
-      }
-    },
-    {
-      "benefit_id": "b_shinhan_hi_point_visa_airport_15pct",
+      "benefit_id": "b_shinhan_hiplat_hotel_parking",
       "category": "Travel",
       "sub_category": "lounge_valet",
       "source_benefit_id": null,
-      "content": "yQ Meet&Assist 공항 서비스 15% 할인",
-      "frequency": "ONCE",
-      "reward_type": "DISCOUNT",
-      "tier_conditions": [],
-      "calculation_rule": {
-        "calc_method": "RATE",
-        "rate": 0.15,
-        "fixed_amount": null,
-        "monthly_limit": null,
-        "fallback_reward_rate": 0.0,
-        "transaction_tiers": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_payment_amount_applied": null,
-        "max_count_per_month": null
-      },
-      "group_id": "G_SHINHAN_HIPOINT_VISA",
-      "ui_warnings": [
-        "예약 시 VISA Platinum 회원임을 알리고 해당 카드로 결제 필요"
-      ],
-      "edge_case_flags": {
-        "requires_user_selection": false,
-        "excludes_from_performance": false,
-        "special_month_bonus": null,
-        "escape_hatch_note": null
-      }
-    },
-    {
-      "benefit_id": "b_shinhan_hi_point_visa_herz_10pct",
-      "category": "Travel",
-      "sub_category": "rental",
-      "source_benefit_id": null,
-      "content": "Hertz 렌터카 10% 할인",
-      "frequency": "ONCE",
-      "reward_type": "DISCOUNT",
-      "tier_conditions": [],
-      "calculation_rule": {
-        "calc_method": "RATE",
-        "rate": 0.1,
-        "fixed_amount": null,
-        "monthly_limit": null,
-        "fallback_reward_rate": 0.0,
-        "transaction_tiers": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_payment_amount_applied": null,
-        "max_count_per_month": null
-      },
-      "group_id": "G_SHINHAN_HIPOINT_VISA",
-      "ui_warnings": [
-        "예약 시 VISA Platinum 회원임을 알리고 해당 카드로 결제 필요"
-      ],
-      "edge_case_flags": {
-        "requires_user_selection": false,
-        "excludes_from_performance": false,
-        "special_month_bonus": null,
-        "escape_hatch_note": null
-      }
-    },
-    {
-      "benefit_id": "b_shinhan_hi_point_visa_avis_10pct",
-      "category": "Travel",
-      "sub_category": "rental",
-      "source_benefit_id": null,
-      "content": "AVIS 렌터카 10~20% 할인",
-      "frequency": "ONCE",
-      "reward_type": "DISCOUNT",
-      "tier_conditions": [],
-      "calculation_rule": {
-        "calc_method": "RATE",
-        "rate": 0.1,
-        "fixed_amount": null,
-        "monthly_limit": null,
-        "fallback_reward_rate": 0.0,
-        "transaction_tiers": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_payment_amount_applied": null,
-        "max_count_per_month": null
-      },
-      "group_id": "G_SHINHAN_HIPOINT_VISA",
-      "ui_warnings": [
-        "예약 시 VISA Platinum 회원임을 알리고 해당 카드로 결제 필요"
-      ],
-      "edge_case_flags": {
-        "requires_user_selection": false,
-        "excludes_from_performance": false,
-        "special_month_bonus": null,
-        "escape_hatch_note": null
-      }
-    },
-    {
-      "benefit_id": "b_shinhan_hi_point_visa_rentalcars_10pct",
-      "category": "Travel",
-      "sub_category": "rental",
-      "source_benefit_id": null,
-      "content": "Rentalcars.com 10% 할인",
-      "frequency": "ONCE",
-      "reward_type": "DISCOUNT",
-      "tier_conditions": [],
-      "calculation_rule": {
-        "calc_method": "RATE",
-        "rate": 0.1,
-        "fixed_amount": null,
-        "monthly_limit": null,
-        "fallback_reward_rate": 0.0,
-        "transaction_tiers": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_payment_amount_applied": null,
-        "max_count_per_month": null
-      },
-      "group_id": "G_SHINHAN_HIPOINT_VISA",
-      "ui_warnings": [
-        "예약 시 VISA Platinum 회원임을 알리고 해당 카드로 결제 필요"
-      ],
-      "edge_case_flags": {
-        "requires_user_selection": false,
-        "excludes_from_performance": false,
-        "special_month_bonus": null,
-        "escape_hatch_note": null
-      }
-    },
-    {
-      "benefit_id": "b_shinhan_hi_point_visa_movv_25000",
-      "category": "Travel",
-      "sub_category": "rental",
-      "source_benefit_id": null,
-      "content": "movv 인천공항 이동 25,000원 할인",
-      "frequency": "ONCE",
-      "reward_type": "DISCOUNT",
-      "tier_conditions": [],
-      "calculation_rule": {
-        "calc_method": "FIXED_AMOUNT",
-        "rate": null,
-        "fixed_amount": 25000,
-        "monthly_limit": null,
-        "fallback_reward_rate": 0.0,
-        "transaction_tiers": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_payment_amount_applied": null,
-        "max_count_per_month": null
-      },
-      "group_id": "G_SHINHAN_HIPOINT_VISA",
-      "ui_warnings": [
-        "예약 시 VISA Platinum 회원임을 알리고 해당 카드로 결제 필요"
-      ],
-      "edge_case_flags": {
-        "requires_user_selection": false,
-        "excludes_from_performance": false,
-        "special_month_bonus": null,
-        "escape_hatch_note": null
-      }
-    },
-    {
-      "benefit_id": "b_shinhan_hi_point_visa_tbr_10pct",
-      "category": "Travel",
-      "sub_category": "rental",
-      "source_benefit_id": null,
-      "content": "TBR Global 공항 픽업 서비스 10% 할인",
-      "frequency": "ONCE",
-      "reward_type": "DISCOUNT",
-      "tier_conditions": [],
-      "calculation_rule": {
-        "calc_method": "RATE",
-        "rate": 0.1,
-        "fixed_amount": null,
-        "monthly_limit": null,
-        "fallback_reward_rate": 0.0,
-        "transaction_tiers": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_payment_amount_applied": null,
-        "max_count_per_month": null
-      },
-      "group_id": "G_SHINHAN_HIPOINT_VISA",
-      "ui_warnings": [
-        "예약 시 VISA Platinum 회원임을 알리고 해당 카드로 결제 필요"
-      ],
-      "edge_case_flags": {
-        "requires_user_selection": false,
-        "excludes_from_performance": false,
-        "special_month_bonus": null,
-        "escape_hatch_note": null
-      }
-    },
-    {
-      "benefit_id": "b_shinhan_hi_point_visa_goodlugg_10pct",
-      "category": "Travel",
-      "sub_category": "rental",
-      "source_benefit_id": null,
-      "content": "굿럭 짐 배송/보관 10% 할인",
-      "frequency": "ONCE",
-      "reward_type": "DISCOUNT",
-      "tier_conditions": [],
-      "calculation_rule": {
-        "calc_method": "RATE",
-        "rate": 0.1,
-        "fixed_amount": null,
-        "monthly_limit": null,
-        "fallback_reward_rate": 0.0,
-        "transaction_tiers": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_payment_amount_applied": null,
-        "max_count_per_month": null
-      },
-      "group_id": "G_SHINHAN_HIPOINT_VISA",
-      "ui_warnings": [
-        "예약 시 VISA Platinum 회원임을 알리고 해당 카드로 결제 필요"
-      ],
-      "edge_case_flags": {
-        "requires_user_selection": false,
-        "excludes_from_performance": false,
-        "special_month_bonus": null,
-        "escape_hatch_note": null
-      }
-    },
-    {
-      "benefit_id": "b_shinhan_hi_point_visa_goodlugg_50pct",
-      "category": "Travel",
-      "sub_category": "rental",
-      "source_benefit_id": null,
-      "content": "굿럭 장애인 짐 찾기 대행 50% 할인",
-      "frequency": "ONCE",
-      "reward_type": "DISCOUNT",
-      "tier_conditions": [],
-      "calculation_rule": {
-        "calc_method": "RATE",
-        "rate": 0.5,
-        "fixed_amount": null,
-        "monthly_limit": null,
-        "fallback_reward_rate": 0.0,
-        "transaction_tiers": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_payment_amount_applied": null,
-        "max_count_per_month": null
-      },
-      "group_id": "G_SHINHAN_HIPOINT_VISA",
-      "ui_warnings": [
-        "예약 시 VISA Platinum 회원임을 알리고 해당 카드로 결제 필요"
-      ],
-      "edge_case_flags": {
-        "requires_user_selection": false,
-        "excludes_from_performance": false,
-        "special_month_bonus": null,
-        "escape_hatch_note": null
-      }
-    },
-    {
-      "benefit_id": "b_shinhan_hi_point_visa_hotel_20pct",
-      "category": "Travel",
-      "sub_category": "hotel",
-      "source_benefit_id": null,
-      "content": "IHG Hotel 20% 할인",
-      "frequency": "ONCE",
-      "reward_type": "DISCOUNT",
-      "tier_conditions": [],
-      "calculation_rule": {
-        "calc_method": "RATE",
-        "rate": 0.2,
-        "fixed_amount": null,
-        "monthly_limit": null,
-        "fallback_reward_rate": 0.0,
-        "transaction_tiers": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_payment_amount_applied": null,
-        "max_count_per_month": null
-      },
-      "group_id": "G_SHINHAN_HIPOINT_VISA",
-      "ui_warnings": [
-        "예약 시 VISA Platinum 회원임을 알리고 해당 카드로 결제 필요"
-      ],
-      "edge_case_flags": {
-        "requires_user_selection": false,
-        "excludes_from_performance": false,
-        "special_month_bonus": null,
-        "escape_hatch_note": null
-      }
-    },
-    {
-      "benefit_id": "b_shinhan_hi_point_visa_accor_20pct",
-      "category": "Travel",
-      "sub_category": "hotel",
-      "source_benefit_id": null,
-      "content": "Accor China 20% 할인",
-      "frequency": "ONCE",
-      "reward_type": "DISCOUNT",
-      "tier_conditions": [],
-      "calculation_rule": {
-        "calc_method": "RATE",
-        "rate": 0.2,
-        "fixed_amount": null,
-        "monthly_limit": null,
-        "fallback_reward_rate": 0.0,
-        "transaction_tiers": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_payment_amount_applied": null,
-        "max_count_per_month": null
-      },
-      "group_id": "G_SHINHAN_HIPOINT_VISA",
-      "ui_warnings": [
-        "예약 시 VISA Platinum 회원임을 알리고 해당 카드로 결제 필요"
-      ],
-      "edge_case_flags": {
-        "requires_user_selection": false,
-        "excludes_from_performance": false,
-        "special_month_bonus": null,
-        "escape_hatch_note": null
-      }
-    },
-    {
-      "benefit_id": "b_shinhan_hi_point_visa_golf_15pct",
-      "category": "Cultural",
-      "sub_category": "leisure_sports",
-      "source_benefit_id": null,
-      "content": "하와이 KA LA`I 골프장 15% 할인",
-      "frequency": "ONCE",
-      "reward_type": "DISCOUNT",
-      "tier_conditions": [],
-      "calculation_rule": {
-        "calc_method": "RATE",
-        "rate": 0.15,
-        "fixed_amount": null,
-        "monthly_limit": null,
-        "fallback_reward_rate": 0.0,
-        "transaction_tiers": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_payment_amount_applied": null,
-        "max_count_per_month": null
-      },
-      "group_id": "G_SHINHAN_HIPOINT_VISA",
-      "ui_warnings": [
-        "예약 시 VISA Platinum 회원임을 알리고 해당 카드로 결제 필요"
-      ],
-      "edge_case_flags": {
-        "requires_user_selection": false,
-        "excludes_from_performance": false,
-        "special_month_bonus": null,
-        "escape_hatch_note": null
-      }
-    },
-    {
-      "benefit_id": "b_shinhan_hi_point_visa_gontran_50pct",
-      "category": "Coffee",
-      "sub_category": "bakery",
-      "source_benefit_id": null,
-      "content": "곤트란쉐리에 아메리카노 50% 할인",
-      "frequency": "ONCE",
-      "reward_type": "DISCOUNT",
-      "tier_conditions": [],
-      "calculation_rule": {
-        "calc_method": "RATE",
-        "rate": 0.5,
-        "fixed_amount": null,
-        "monthly_limit": null,
-        "fallback_reward_rate": 0.0,
-        "transaction_tiers": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 15000,
-        "max_payment_amount_applied": null,
-        "max_count_per_month": null
-      },
-      "group_id": "G_SHINHAN_HIPOINT_VISA",
-      "ui_warnings": [
-        "예약 시 VISA Platinum 회원임을 알리고 해당 카드로 결제 필요"
-      ],
-      "edge_case_flags": {
-        "requires_user_selection": false,
-        "excludes_from_performance": false,
-        "special_month_bonus": null,
-        "escape_hatch_note": null
-      }
-    },
-    {
-      "benefit_id": "b_shinhan_hi_point_visa_gontran_free",
-      "category": "Coffee",
-      "sub_category": "bakery",
-      "source_benefit_id": null,
-      "content": "곤트란쉐리에 아메리카노 1잔 무료",
-      "frequency": "ONCE",
-      "reward_type": "DISCOUNT",
-      "tier_conditions": [],
-      "calculation_rule": {
-        "calc_method": "FIXED_AMOUNT",
-        "rate": null,
-        "fixed_amount": 5000,
-        "monthly_limit": null,
-        "fallback_reward_rate": 0.0,
-        "transaction_tiers": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 20000,
-        "max_payment_amount_applied": null,
-        "max_count_per_month": null
-      },
-      "group_id": "G_SHINHAN_HIPOINT_VISA",
-      "ui_warnings": [
-        "예약 시 VISA Platinum 회원임을 알리고 해당 카드로 결제 필요"
-      ],
-      "edge_case_flags": {
-        "requires_user_selection": false,
-        "excludes_from_performance": false,
-        "special_month_bonus": null,
-        "escape_hatch_note": null
-      }
-    },
-    {
-      "benefit_id": "b_shinhan_hi_point_select_hotel_parking",
-      "category": "Life",
-      "sub_category": "daily_service",
-      "source_benefit_id": null,
-      "content": "호텔 발레파킹 월 3회",
+      "content": "호텔 발레파킹 서비스 (월 3회, 호텔별)",
       "frequency": "MONTHLY",
-      "reward_type": "VOUCHER",
+      "reward_type": "DISCOUNT",
       "tier_conditions": [],
       "calculation_rule": {
         "calc_method": "FIXED_AMOUNT",
         "rate": null,
         "fixed_amount": 0,
-        "monthly_limit": 3,
+        "monthly_limit": 100000,
         "fallback_reward_rate": 0.0,
         "transaction_tiers": null
       },
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": 3
+        "max_count_per_month": 3,
+        "max_count_per_year": null
       },
-      "group_id": "G_SHINHAN_HIPOINT_SELECT",
+      "group_id": "G_SHINHAN_HIPLATINUM_HOTEL_PARKING",
       "ui_warnings": [
-        "호텔 이용 영수증 제시 필요"
+        "1일 2~3시간까지 무료 주차 서비스 제공, 초과 시 별도 요금 부과",
+        "호텔 객실/매장 이용 영수증 필수 제시"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -1122,11 +68,46 @@
       }
     },
     {
-      "benefit_id": "b_shinhan_hi_point_select_airport_lounge",
+      "benefit_id": "b_shinhan_hiplat_airport_parking",
       "category": "Travel",
       "sub_category": "lounge_valet",
       "source_benefit_id": null,
-      "content": "공항 라운지 연 2회",
+      "content": "인천공항 발레파킹 서비스 (월 3회)",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": 0,
+        "monthly_limit": 100000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": 3,
+        "max_count_per_year": null
+      },
+      "group_id": "G_SHINHAN_HIPLATINUM_AIRPORT_PARKING",
+      "ui_warnings": [
+        "사전 예약 필수, 현장 상황에 따라 당일 이용 가능",
+        "주차요금은 본인 부담"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_shinhan_hiplat_airport_lounge",
+      "category": "Travel",
+      "sub_category": "lounge_valet",
+      "source_benefit_id": null,
+      "content": "공항 라운지 서비스 (연 2회)",
       "frequency": "ANNUAL",
       "reward_type": "VOUCHER",
       "tier_conditions": [],
@@ -1141,11 +122,13 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": 2
       },
-      "group_id": "G_SHINHAN_HIPOINT_SELECT",
+      "group_id": "G_SHINHAN_HIPLATINUM_AIRPORT_LOUNGE",
       "ui_warnings": [
-        "동반자 입장 시 입장료 고객 부담"
+        "동반자 입장 시 입장료 본인 부담",
+        "항공권, 여권, 카드 영문 이름 일치 필수"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -1155,30 +138,243 @@
       }
     },
     {
-      "benefit_id": "b_shinhan_hi_point_select_airport_parking",
-      "category": "Life",
-      "sub_category": "daily_service",
+      "benefit_id": "b_shinhan_hiplat_tripcom_hotel",
+      "category": "Travel",
+      "sub_category": "travel_agency",
       "source_benefit_id": null,
-      "content": "공항 발레파킹 월 3회",
+      "content": "Trip.com 호텔 8% 할인",
       "frequency": "MONTHLY",
-      "reward_type": "VOUCHER",
+      "reward_type": "DISCOUNT",
       "tier_conditions": [],
       "calculation_rule": {
-        "calc_method": "FIXED_AMOUNT",
-        "rate": null,
-        "fixed_amount": 0,
-        "monthly_limit": 3,
+        "calc_method": "RATE",
+        "rate": 0.08,
+        "fixed_amount": null,
+        "monthly_limit": null,
         "fallback_reward_rate": 0.0,
         "transaction_tiers": null
       },
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": 3
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_SHINHAN_HIPOINT_SELECT",
+      "group_id": null,
       "ui_warnings": [
-        "사전 예약 필요"
+        "마스터카드 전용 예약 웹 페이지에서 쿠폰 코드 입력 필요"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_shinhan_hiplat_agoda_hotel",
+      "category": "Travel",
+      "sub_category": "travel_agency",
+      "source_benefit_id": null,
+      "content": "Agoda.com 호텔 최대 8% 할인 (최대 USD 30)",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.08,
+        "fixed_amount": null,
+        "monthly_limit": 30000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null
+      },
+      "group_id": null,
+      "ui_warnings": [
+        "할인 상한액 USD 30 적용"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_shinhan_hiplat_rakuten_japan",
+      "category": "Travel",
+      "sub_category": "hotel",
+      "source_benefit_id": null,
+      "content": "일본 호텔 및 료칸 10% 할인 (최대 USD 300)",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.1,
+        "fixed_amount": null,
+        "monthly_limit": 300000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null
+      },
+      "group_id": null,
+      "ui_warnings": [
+        "할인 상한액 USD 300 적용",
+        "2.20 ~ 12.30 기간 한정"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_shinhan_hiplat_jeju_rental",
+      "category": "Travel",
+      "sub_category": "rental",
+      "source_benefit_id": null,
+      "content": "제주도 렌터카 10% 할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.1,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null
+      },
+      "group_id": null,
+      "ui_warnings": [
+        "제주도닷컴 예약 시 적용"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_shinhan_hiplat_herz_rental",
+      "category": "Travel",
+      "sub_category": "rental",
+      "source_benefit_id": null,
+      "content": "Hertz 렌터카 10% 할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.1,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null
+      },
+      "group_id": null,
+      "ui_warnings": [
+        "비자카드 전용 예약 웹 페이지에서 예약 시 적용"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_shinhan_hiplat_avis_rental",
+      "category": "Travel",
+      "sub_category": "rental",
+      "source_benefit_id": null,
+      "content": "AVIS 렌터카 10~20% 할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [],
+      "calculation_rule": {
+        "calc_method": "RATE",
+        "rate": 0.15,
+        "fixed_amount": null,
+        "monthly_limit": null,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null
+      },
+      "group_id": null,
+      "ui_warnings": [
+        "할인율 10~20% 변동 가능"
+      ],
+      "edge_case_flags": {
+        "requires_user_selection": false,
+        "excludes_from_performance": false,
+        "special_month_bonus": null,
+        "escape_hatch_note": null
+      }
+    },
+    {
+      "benefit_id": "b_shinhan_hiplat_gontan_bakery",
+      "category": "Coffee",
+      "sub_category": "bakery",
+      "source_benefit_id": null,
+      "content": "곤트란쉐리에 베이커리 15,000원 이상 구매 시 아메리카노 50% 할인",
+      "frequency": "MONTHLY",
+      "reward_type": "DISCOUNT",
+      "tier_conditions": [
+        {
+          "min_prev_performance": 0,
+          "monthly_limit": 5000,
+          "rate": null,
+          "fixed_amount": 2000
+        }
+      ],
+      "calculation_rule": {
+        "calc_method": "FIXED_AMOUNT",
+        "rate": null,
+        "fixed_amount": 2000,
+        "monthly_limit": 5000,
+        "fallback_reward_rate": 0.0,
+        "transaction_tiers": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 15000,
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null
+      },
+      "group_id": null,
+      "ui_warnings": [
+        "아메리카노 1잔에 한해 할인 적용"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,

@@ -3,7 +3,7 @@
     "card_id": "shinhan_first",
     "card_name": "신한카드 처음",
     "card_company": "신한카드",
-    "annual_fee": 7000,
+    "annual_fee": 15000,
     "minimum_performance": 300000,
     "reward_currency": "MY_SHINHAN_POINT",
     "currency_to_krw_rate": 1.0
@@ -11,39 +11,46 @@
   "benefit_groups": [
     {
       "group_id": "G_FIRST_TODAY5",
-      "group_name": "오늘도 5% 적립",
+      "group_name": "오늘도 5% 적립 서비스",
       "group_type": "SHARED_LIMIT",
-      "limit_amount": 20000,
+      "limit_amount": 5000,
       "top_n_count": null
     },
     {
       "group_id": "G_FIRST_DAILY5",
-      "group_name": "일상 속 5% 적립",
+      "group_name": "일상 속 5% 적립 서비스",
       "group_type": "SHARED_LIMIT",
-      "limit_amount": 20000,
+      "limit_amount": 5000,
       "top_n_count": null
     },
     {
-      "group_id": "G_FIRST_BILL20",
-      "group_name": "정기결제 최대 20% 적립",
+      "group_id": "G_FIRST_PERIODIC",
+      "group_name": "정기결제 최대 20% 적립 서비스",
       "group_type": "SHARED_LIMIT",
-      "limit_amount": 20000,
+      "limit_amount": 5000,
       "top_n_count": null
     },
     {
-      "group_id": "G_FIRST_BONUS",
-      "group_name": "소비관리 보너스 적립",
+      "group_id": "G_FIRST_PLAN",
+      "group_name": "소비관리 보너스 - 계획소비",
       "group_type": "SHARED_LIMIT",
-      "limit_amount": 20000,
+      "limit_amount": 3000,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_FIRST_INSTANT",
+      "group_name": "소비관리 보너스 - 즉시결제",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": 3000,
       "top_n_count": null
     }
   ],
   "benefits": [
     {
-      "benefit_id": "b_first_restaurant_5pct",
+      "benefit_id": "b_first_food_5pct",
       "category": "Food",
       "sub_category": "general",
-      "source_benefit_id": "b_src_first_today5",
+      "source_benefit_id": null,
       "content": "음식점 5% 마이신한포인트 적립",
       "frequency": "MONTHLY",
       "reward_type": "POINT",
@@ -51,19 +58,19 @@
         {
           "min_prev_performance": 300000,
           "monthly_limit": 5000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 500000,
           "monthly_limit": 10000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 20000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         }
       ],
@@ -78,7 +85,8 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": 10000,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
       "group_id": "G_FIRST_TODAY5",
       "ui_warnings": [
@@ -97,7 +105,7 @@
       "benefit_id": "b_first_cafe_5pct",
       "category": "Coffee",
       "sub_category": "general",
-      "source_benefit_id": "b_src_first_today5",
+      "source_benefit_id": null,
       "content": "카페 5% 마이신한포인트 적립",
       "frequency": "MONTHLY",
       "reward_type": "POINT",
@@ -105,19 +113,19 @@
         {
           "min_prev_performance": 300000,
           "monthly_limit": 5000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 500000,
           "monthly_limit": 10000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 20000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         }
       ],
@@ -132,7 +140,8 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": 10000,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
       "group_id": "G_FIRST_TODAY5",
       "ui_warnings": [
@@ -150,7 +159,7 @@
       "benefit_id": "b_first_convenience_5pct",
       "category": "Shopping",
       "sub_category": "convenience",
-      "source_benefit_id": "b_src_first_today5",
+      "source_benefit_id": null,
       "content": "편의점 5% 마이신한포인트 적립",
       "frequency": "MONTHLY",
       "reward_type": "POINT",
@@ -158,19 +167,19 @@
         {
           "min_prev_performance": 300000,
           "monthly_limit": 5000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 500000,
           "monthly_limit": 10000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 20000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         }
       ],
@@ -185,7 +194,8 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": 10000,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
       "group_id": "G_FIRST_TODAY5",
       "ui_warnings": [
@@ -203,7 +213,7 @@
       "benefit_id": "b_first_online_5pct",
       "category": "Shopping",
       "sub_category": "online",
-      "source_benefit_id": "b_src_first_today5",
+      "source_benefit_id": null,
       "content": "온라인쇼핑 5% 마이신한포인트 적립",
       "frequency": "MONTHLY",
       "reward_type": "POINT",
@@ -211,19 +221,19 @@
         {
           "min_prev_performance": 300000,
           "monthly_limit": 5000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 500000,
           "monthly_limit": 10000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 20000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         }
       ],
@@ -238,7 +248,8 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": 10000,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
       "group_id": "G_FIRST_TODAY5",
       "ui_warnings": [
@@ -255,7 +266,7 @@
       "benefit_id": "b_first_life_5pct",
       "category": "Life",
       "sub_category": "general",
-      "source_benefit_id": "b_src_first_daily5",
+      "source_benefit_id": null,
       "content": "생활 5% 마이신한포인트 적립",
       "frequency": "MONTHLY",
       "reward_type": "POINT",
@@ -263,19 +274,19 @@
         {
           "min_prev_performance": 300000,
           "monthly_limit": 5000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 500000,
           "monthly_limit": 10000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 20000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         }
       ],
@@ -283,14 +294,15 @@
         "calc_method": "RATE",
         "rate": 0.05,
         "fixed_amount": null,
-        "monthly_limit": 50000,
+        "monthly_limit": 10000,
         "fallback_reward_rate": 0.0,
         "transaction_tiers": null
       },
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": 50000,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
       "group_id": "G_FIRST_DAILY5",
       "ui_warnings": [
@@ -307,7 +319,7 @@
       "benefit_id": "b_first_travel_5pct",
       "category": "Travel",
       "sub_category": "general",
-      "source_benefit_id": "b_src_first_daily5",
+      "source_benefit_id": null,
       "content": "여행 5% 마이신한포인트 적립",
       "frequency": "MONTHLY",
       "reward_type": "POINT",
@@ -315,19 +327,19 @@
         {
           "min_prev_performance": 300000,
           "monthly_limit": 5000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 500000,
           "monthly_limit": 10000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 20000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         }
       ],
@@ -335,21 +347,23 @@
         "calc_method": "RATE",
         "rate": 0.05,
         "fixed_amount": null,
-        "monthly_limit": 50000,
+        "monthly_limit": 10000,
         "fallback_reward_rate": 0.0,
         "transaction_tiers": null
       },
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": 50000,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
       "group_id": "G_FIRST_DAILY5",
       "ui_warnings": [
         "택시, KTX, 해외 일시불(해외이용·직구 포함) 대상",
-        "해외겸용(Mastercard)카드 이용 시에만 제공",
-        "해외 일시불 거래 후 할부로 전환하면 포인트 적립 불가",
-        "해외 온라인 사이트 거래 시 국내 가맹점으로 결제하는 경우 포인트 적립 불가"
+        "해외겸용(Mastercard)카드 이용 시에만 해외 일시불 적립 제공",
+        "해외 일시불 적립은 최종 원화 청구금액 기준",
+        "해외 온라인 사이트 거래 시 국내 가맹점으로 결제하는 경우 포인트 적립 불가",
+        "해외 단기카드대출(현금서비스), 해외 현금인출, 해외 가상화폐, 해외 사행성 가맹점 이용 건은 포인트 적립 불가"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -362,7 +376,7 @@
       "benefit_id": "b_first_fashion_5pct",
       "category": "Shopping",
       "sub_category": "general",
-      "source_benefit_id": "b_src_first_daily5",
+      "source_benefit_id": null,
       "content": "패션 5% 마이신한포인트 적립",
       "frequency": "MONTHLY",
       "reward_type": "POINT",
@@ -370,19 +384,19 @@
         {
           "min_prev_performance": 300000,
           "monthly_limit": 5000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 500000,
           "monthly_limit": 10000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 20000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         }
       ],
@@ -390,14 +404,15 @@
         "calc_method": "RATE",
         "rate": 0.05,
         "fixed_amount": null,
-        "monthly_limit": 50000,
+        "monthly_limit": 10000,
         "fallback_reward_rate": 0.0,
         "transaction_tiers": null
       },
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": 50000,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
       "group_id": "G_FIRST_DAILY5",
       "ui_warnings": [
@@ -415,7 +430,7 @@
       "benefit_id": "b_first_communication_10pct",
       "category": "Life",
       "sub_category": "telecom",
-      "source_benefit_id": "b_src_first_bill20",
+      "source_benefit_id": null,
       "content": "통신 10% 마이신한포인트 적립",
       "frequency": "MONTHLY",
       "reward_type": "POINT",
@@ -423,19 +438,19 @@
         {
           "min_prev_performance": 300000,
           "monthly_limit": 5000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 500000,
           "monthly_limit": 10000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 20000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         }
       ],
@@ -443,16 +458,17 @@
         "calc_method": "RATE",
         "rate": 0.1,
         "fixed_amount": null,
-        "monthly_limit": 30000,
+        "monthly_limit": 10000,
         "fallback_reward_rate": 0.0,
         "transaction_tiers": null
       },
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": 30000,
-        "max_count_per_month": 1
+        "max_count_per_month": 1,
+        "max_count_per_year": null
       },
-      "group_id": "G_FIRST_BILL20",
+      "group_id": "G_FIRST_PERIODIC",
       "ui_warnings": [
         "SKT, KT, LGU+ 대상",
         "순수 통신요금 자동납부 시에만 포인트 적립",
@@ -469,7 +485,7 @@
       "benefit_id": "b_first_ott_15pct",
       "category": "Cultural",
       "sub_category": "ott",
-      "source_benefit_id": "b_src_first_bill20",
+      "source_benefit_id": null,
       "content": "OTT 15% 마이신한포인트 적립",
       "frequency": "MONTHLY",
       "reward_type": "POINT",
@@ -477,19 +493,19 @@
         {
           "min_prev_performance": 300000,
           "monthly_limit": 5000,
-          "reward_rate": 0.15,
+          "rate": 0.15,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 500000,
           "monthly_limit": 10000,
-          "reward_rate": 0.15,
+          "rate": 0.15,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 20000,
-          "reward_rate": 0.15,
+          "rate": 0.15,
           "fixed_amount": null
         }
       ],
@@ -497,20 +513,21 @@
         "calc_method": "RATE",
         "rate": 0.15,
         "fixed_amount": null,
-        "monthly_limit": null,
+        "monthly_limit": 10000,
         "fallback_reward_rate": 0.0,
         "transaction_tiers": null
       },
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_FIRST_BILL20",
+      "group_id": "G_FIRST_PERIODIC",
       "ui_warnings": [
         "넷플릭스, 유튜브 프리미엄, 티빙, 디즈니+, SPOTV NOW 대상",
         "공식 홈페이지를 통한 정기결제(자동이체) 시에만 포인트 적립",
-        "1회성 일반구매 결제, 앱마켓을 통한 인앱결제, 통신 요금 포함(합산) 결제 제외"
+        "1회성 일반구매 결제, 구글 플레이/애플 앱스토어 등 앱마켓을 통한 인앱결제, 통신 요금 포함(합산) 결제 제외"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -523,7 +540,7 @@
       "benefit_id": "b_first_membership_20pct",
       "category": "General",
       "sub_category": null,
-      "source_benefit_id": "b_src_first_bill20",
+      "source_benefit_id": null,
       "content": "멤버십 20% 마이신한포인트 적립",
       "frequency": "MONTHLY",
       "reward_type": "POINT",
@@ -531,19 +548,19 @@
         {
           "min_prev_performance": 300000,
           "monthly_limit": 5000,
-          "reward_rate": 0.2,
+          "rate": 0.2,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 500000,
           "monthly_limit": 10000,
-          "reward_rate": 0.2,
+          "rate": 0.2,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 20000,
-          "reward_rate": 0.2,
+          "rate": 0.2,
           "fixed_amount": null
         }
       ],
@@ -551,16 +568,17 @@
         "calc_method": "RATE",
         "rate": 0.2,
         "fixed_amount": null,
-        "monthly_limit": null,
+        "monthly_limit": 10000,
         "fallback_reward_rate": 0.0,
         "transaction_tiers": null
       },
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_FIRST_BILL20",
+      "group_id": "G_FIRST_PERIODIC",
       "ui_warnings": [
         "쿠팡 와우 멤버십, 네이버플러스멤버십 대상",
         "‘오늘도 5% 적립 서비스’와 중복 적용 불가"
@@ -573,30 +591,30 @@
       }
     },
     {
-      "benefit_id": "b_first_plan_500p",
+      "benefit_id": "b_first_plan_500pct",
       "category": "General",
       "sub_category": null,
       "source_benefit_id": null,
-      "content": "목표 소비 금액 설정 시 500 마이신한포인트 적립",
+      "content": "계획소비 500포인트 적립",
       "frequency": "MONTHLY",
       "reward_type": "POINT",
       "tier_conditions": [
         {
           "min_prev_performance": 300000,
           "monthly_limit": 3000,
-          "reward_rate": null,
+          "rate": null,
           "fixed_amount": 500
         },
         {
           "min_prev_performance": 500000,
           "monthly_limit": 6000,
-          "reward_rate": null,
+          "rate": null,
           "fixed_amount": 500
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 10000,
-          "reward_rate": null,
+          "rate": null,
           "fixed_amount": 500
         }
       ],
@@ -604,20 +622,25 @@
         "calc_method": "FIXED_AMOUNT",
         "rate": null,
         "fixed_amount": 500,
-        "monthly_limit": null,
+        "monthly_limit": 10000,
         "fallback_reward_rate": 0.0,
         "transaction_tiers": null
       },
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": 1
+        "max_count_per_month": 1,
+        "max_count_per_year": null
       },
-      "group_id": "G_FIRST_BONUS",
+      "group_id": "G_FIRST_PLAN",
       "ui_warnings": [
         "매월 1일~5일 목표 소비 금액 설정 필요",
-        "목표 소비 금액 달성 시 추가 5000 포인트 적립",
-        "목표 소비 금액 달성 여부 확인 시점에 거래 취소 등으로 이용금액이 목표 구간 벗어난 경우 포인트 적립 불가"
+        "목표 소비 금액 ± 5만원 이내 달성 시 5천 포인트 적립",
+        "목표 소비 금액 설정하지 않으면 서비스 제공 불가",
+        "목표 소비 금액 최소 30만원부터 만원 단위 설정 가능",
+        "이번 달 이용금액 30만원 이상 시에만 달성 가능",
+        "거래 취소 등으로 이용금액이 목표 구간 벗어날 경우 포인트 적립 불가",
+        "포인트 지급 후 매출 취소로 기준 미달 시 적립 포인트 회수"
       ],
       "edge_case_flags": {
         "requires_user_selection": true,
@@ -627,60 +650,7 @@
       }
     },
     {
-      "benefit_id": "b_first_plan_5000p",
-      "category": "General",
-      "sub_category": null,
-      "source_benefit_id": null,
-      "content": "목표 소비 금액 달성 시 5000 마이신한포인트 적립",
-      "frequency": "MONTHLY",
-      "reward_type": "POINT",
-      "tier_conditions": [
-        {
-          "min_prev_performance": 300000,
-          "monthly_limit": 3000,
-          "reward_rate": null,
-          "fixed_amount": 5000
-        },
-        {
-          "min_prev_performance": 500000,
-          "monthly_limit": 6000,
-          "reward_rate": null,
-          "fixed_amount": 5000
-        },
-        {
-          "min_prev_performance": 1000000,
-          "monthly_limit": 10000,
-          "reward_rate": null,
-          "fixed_amount": 5000
-        }
-      ],
-      "calculation_rule": {
-        "calc_method": "FIXED_AMOUNT",
-        "rate": null,
-        "fixed_amount": 5000,
-        "monthly_limit": null,
-        "fallback_reward_rate": 0.0,
-        "transaction_tiers": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_payment_amount_applied": null,
-        "max_count_per_month": 1
-      },
-      "group_id": "G_FIRST_BONUS",
-      "ui_warnings": [
-        "매월 1일~5일 목표 소비 금액 설정 필요",
-        "목표 소비 금액 달성 여부 확인 시점에 거래 취소 등으로 이용금액이 목표 구간 벗어난 경우 포인트 적립 불가"
-      ],
-      "edge_case_flags": {
-        "requires_user_selection": true,
-        "excludes_from_performance": false,
-        "special_month_bonus": null,
-        "escape_hatch_note": null
-      }
-    },
-    {
-      "benefit_id": "b_first_immediate_03pct",
+      "benefit_id": "b_first_instant_03pct",
       "category": "General",
       "sub_category": null,
       "source_benefit_id": null,
@@ -691,19 +661,19 @@
         {
           "min_prev_performance": 300000,
           "monthly_limit": 3000,
-          "reward_rate": 0.003,
+          "rate": 0.003,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 500000,
           "monthly_limit": 6000,
-          "reward_rate": 0.003,
+          "rate": 0.003,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 10000,
-          "reward_rate": 0.003,
+          "rate": 0.003,
           "fixed_amount": null
         }
       ],
@@ -711,19 +681,22 @@
         "calc_method": "RATE",
         "rate": 0.003,
         "fixed_amount": null,
-        "monthly_limit": null,
+        "monthly_limit": 10000,
         "fallback_reward_rate": 0.0,
         "transaction_tiers": null
       },
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_FIRST_BONUS",
+      "group_id": "G_FIRST_INSTANT",
       "ui_warnings": [
         "이번 달 일시불 이용금액을 이번 달 내 즉시결제해야 포인트 적립",
-        "포인트 적립 제외 대상 거래는 즉시결제 적립 서비스 제공 불가"
+        "포인트 적립 제외 대상 거래는 서비스 제공 불가",
+        "‘금액별 즉시결제’는 거래 순서대로 적용",
+        "이번 달 이용금액이라도 신한카드에 접수되지 않으면 즉시결제 제한 가능"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,

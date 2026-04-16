@@ -106,6 +106,58 @@ class CategoryBreakdown(BaseModel):
     warnings: List[str] | None = Field(None, description="주의사항", examples=[["전월 실적 미달"]])
 
 
+class BenefitTraceItem(BaseModel):
+    """
+    개별 혜택의 산출 영수증 항목 (슬림 구조).
+    `category_breakdown`과 중복되는 카테고리/경고 필드는 제외하고,
+    체크박스 토글에 필요한 최소 필드만 포함합니다.
+    """
+    benefit_id: str = Field(
+        ...,
+        description="혜택 고유 ID. `/cards/recalculate` 의 `excluded_benefit_ids` 에 이 값을 담아 보내면 해당 혜택이 제외됩니다.",
+        examples=["shinhan_mr_life_b_food_restaurant"]
+    )
+    content: str = Field(
+        ...,
+        description="혜택 설명 문자열. 영수증 UI에 그대로 표시할 텍스트입니다.",
+        examples=["DAY(07~15시) 음식점 10% 할인"]
+    )
+    applied_budget: int = Field(
+        ...,
+        description="이 혜택 계산에 배정된 유저 예산 (원). 해당 카테고리에서 이 혜택이 소비한 금액입니다.",
+        examples=[210000]
+    )
+    yielded_discount: int = Field(
+        ...,
+        description="산출된 할인/적립 금액 (원). `user_choice=true` 인 항목들의 합이 `expected_monthly_benefit` 과 일치합니다.",
+        examples=[21000]
+    )
+    user_choice: bool = Field(
+        True,
+        description="유저 포함 여부. `false` 이면 이 혜택의 `yielded_discount` 가 합산에서 제외됩니다. (기본값: `true`)",
+        examples=[True]
+    )
+    warnings: List[str] | None = Field(
+        None,
+        description="이 혜택에 한정된 주의사항 (예: 연간 한도 초과 등)",
+        examples=[["연간 3회 제한 (월간 0.25회로 안분 계산됨)"]]
+    )
+
+    model_config = {
+        "json_schema_extra": {
+            "examples": [
+                {
+                    "benefit_id": "shinhan_mr_life_b_food_restaurant",
+                    "content": "DAY(07~15시) 음식점 10% 할인",
+                    "applied_budget": 210000,
+                    "yielded_discount": 21000,
+                    "user_choice": True
+                }
+            ]
+        }
+    }
+
+
 class RecommendCard(BaseModel):
     card_name: str = Field(..., description="카드 이름", examples=["현대카드 T3 Edition2"])
     card_company: str = Field(..., description="카드 회사", examples=["현대카드"])
@@ -114,6 +166,10 @@ class RecommendCard(BaseModel):
     minimum_performance: int = Field(..., description="전월 실적", examples=[100000])
     expected_monthly_benefit: int = Field(..., description="기대 월 할인/적립 금액", examples=[10000])
     category_breakdown: List[CategoryBreakdown] = Field(..., description="카테고리별 할인/적립 금액")
+    applied_benefits_trace: List[BenefitTraceItem] = Field(
+        default_factory=list,
+        description="혜택별 산출 영수증 (계산 근거 추적 및 체크박스 토글용)"
+    )
     explanation: str = Field(..., description="이 카드의 주요 혜택 및 주의 사항", examples=["[1순위] 신한카드 Mr.Life (신한카드)\n연회비: 15,000원 | 월 예상 할인: 약 99,000원 | 연 순이익 추정: 1,185,000원\n  - Food: 70,000원\n    ⚠ 1회 승인금액 1만원까지 할인 적용(1회 최대 1천원 할인)\n    ⚠ 신규 발급 회원은 카드사용 등록월 익월말까지 실적 상관없이 할인 제공\n"])
     benefit_receipt: List[BenefitReceiptItem] = Field(
         default_factory=list,
@@ -171,6 +227,47 @@ class CompareResponse(BaseModel):
     yearly_diff: int = Field(..., description="연간 혜택 차이 (추천 1순위 - 기존)", examples=[180000])
     category_comparison: List[CategoryComparison] = Field(..., description="카테고리별 혜택 비교")
     explanation: str = Field(..., description="비교 큐레이션 텍스트")
+
+
+class RecalculateRequest(BaseModel):
+    """
+    체크박스 재계산 요청.
+    유저가 영수증에서 특정 혜택을 '쓸 일 없음'으로 체크 해제하면,
+    해당 benefit_id 목록을 `excluded_benefit_ids` 에 담아 보냅니다.
+    BenefitCalculator 재호출 없이 합산만 변경하므로 응답이 즉각적(< 50ms)입니다.
+    """
+    recommended_cards: List[RecommendCard] = Field(
+        ...,
+        description="`/cards/recommend` 응답의 `recommended_cards` 를 그대로 전달합니다."
+    )
+    excluded_benefit_ids: List[str] = Field(
+        ...,
+        description="유저가 체크 해제한 `benefit_id` 목록. 해당 혜택의 `yielded_discount` 가 `expected_monthly_benefit` 합산에서 제외됩니다.",
+        examples=[["shinhan_mr_life_b_intake_mall"]]
+    )
+
+    model_config = {
+        "json_schema_extra": {
+            "examples": [
+                {
+                    "recommended_cards": "[ ... /cards/recommend 응답의 recommended_cards 배열 ... ]",
+                    "excluded_benefit_ids": ["shinhan_mr_life_b_intake_mall"]
+                }
+            ]
+        }
+    }
+
+
+class RecalculateResponse(BaseModel):
+    """
+    체크박스 재계산 응답.
+    `expected_monthly_benefit` 이 선택된 혜택들의 합으로 갱신되며,
+    카드 순위가 재조정됩니다.
+    """
+    recommended_cards: List[RecommendCard] = Field(
+        ...,
+        description="순위 재조정된 카드 목록. `applied_benefits_trace` 의 `user_choice` 필드가 갱신된 상태입니다."
+    )
 
 
 class QARequest(BaseModel):

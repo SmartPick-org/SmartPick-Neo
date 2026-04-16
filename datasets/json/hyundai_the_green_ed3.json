@@ -10,8 +10,15 @@
   },
   "benefit_groups": [
     {
-      "group_id": "G_GREEN_ED3_MONTHLY_LIMIT",
-      "group_name": "월별 적립 한도 통합",
+      "group_id": "G_GREEN_ED3_BASIC",
+      "group_name": "기본 혜택",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": null,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_GREEN_ED3_ADDITIONAL",
+      "group_name": "추가 혜택",
       "group_type": "SHARED_LIMIT",
       "limit_amount": 50000,
       "top_n_count": null
@@ -19,7 +26,7 @@
   ],
   "benefits": [
     {
-      "benefit_id": "b_green_ed3_base_1_5pct",
+      "benefit_id": "b_green_ed3_basic_1_5pct",
       "category": "General",
       "sub_category": null,
       "source_benefit_id": null,
@@ -30,7 +37,7 @@
         {
           "min_prev_performance": 500000,
           "monthly_limit": null,
-          "reward_rate": 0.015,
+          "rate": 0.015,
           "fixed_amount": null
         }
       ],
@@ -45,11 +52,12 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": null,
+      "group_id": "G_GREEN_ED3_BASIC",
       "ui_warnings": [
-        "적립 한도는 없으나, 추가 혜택과 중복 제공되지 않음"
+        "1회 및 연간 적립 한도 제한 없음"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -59,7 +67,7 @@
       }
     },
     {
-      "benefit_id": "b_green_ed3_add_5pct",
+      "benefit_id": "b_green_ed3_additional_5pct",
       "category": "Travel",
       "sub_category": "general",
       "source_benefit_id": null,
@@ -70,7 +78,7 @@
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 50000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         }
       ],
@@ -85,12 +93,13 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_GREEN_ED3_MONTHLY_LIMIT",
+      "group_id": "G_GREEN_ED3_ADDITIONAL",
       "ui_warnings": [
-        "기본 혜택과 중복 제공되지 않음",
-        "대상 영역별 월 5만 M포인트 적립 한도 적용"
+        "대상 영역별 월 5만 M포인트 적립 한도",
+        "추가 혜택 적용 시 기본 혜택은 중복 제공되지 않음"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -100,7 +109,7 @@
       }
     },
     {
-      "benefit_id": "b_green_ed3_lounge_5times",
+      "benefit_id": "b_green_ed3_lounge_5x",
       "category": "Travel",
       "sub_category": "lounge_valet",
       "source_benefit_id": null,
@@ -111,7 +120,7 @@
         {
           "min_prev_performance": 500000,
           "monthly_limit": null,
-          "reward_rate": null,
+          "rate": null,
           "fixed_amount": null
         }
       ],
@@ -126,11 +135,12 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": 5
       },
       "group_id": null,
       "ui_warnings": [
-        "연간 5회 한도",
+        "연간 5회 이용 가능",
         "전월 이용 금액 50만원 이상 시 이용 가능"
       ],
       "edge_case_flags": {
@@ -141,7 +151,7 @@
       }
     },
     {
-      "benefit_id": "b_green_ed3_parking_5times",
+      "benefit_id": "b_green_ed3_parking_5x",
       "category": "Travel",
       "sub_category": "lounge_valet",
       "source_benefit_id": null,
@@ -152,7 +162,7 @@
         {
           "min_prev_performance": 500000,
           "monthly_limit": null,
-          "reward_rate": null,
+          "rate": null,
           "fixed_amount": null
         }
       ],
@@ -167,11 +177,12 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": 5
+        "max_count_per_month": 5,
+        "max_count_per_year": null
       },
       "group_id": null,
       "ui_warnings": [
-        "공항/호텔 통합 월 5회 한도",
+        "공항/호텔 통합 월 5회 이용 가능",
         "전월 이용 금액 50만원 이상 시 이용 가능"
       ],
       "edge_case_flags": {
@@ -188,7 +199,7 @@
       "source_benefit_id": null,
       "content": "최대 50만 M포인트 긴급적립(선지급 포인트 서비스)",
       "frequency": "ONCE",
-      "reward_type": "POINT",
+      "reward_type": "VOUCHER",
       "tier_conditions": [],
       "calculation_rule": {
         "calc_method": "FIXED_AMOUNT",
@@ -201,12 +212,13 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
       "group_id": null,
       "ui_warnings": [
-        "상환되지 못한 포인트는 1 M포인트 = 1원으로 환산하여 청구",
-        "the Green 바우처 교환 불가"
+        "상환되지 못한 긴급적립 M포인트가 남아있을 경우 별도 현금 청구",
+        "M 긴급적립 포인트는 the Green 바우처 교환 불가"
       ],
       "edge_case_flags": {
         "requires_user_selection": true,

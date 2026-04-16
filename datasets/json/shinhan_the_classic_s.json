@@ -45,7 +45,8 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
       "group_id": "G_CLASSIC_S_BASIC",
       "ui_warnings": [
@@ -70,7 +71,7 @@
         {
           "min_prev_performance": 3000000,
           "monthly_limit": 1000000,
-          "reward_rate": 0.005,
+          "rate": 0.005,
           "fixed_amount": null
         }
       ],
@@ -85,12 +86,12 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
       "group_id": "G_CLASSIC_S_BASIC",
       "ui_warnings": [
-        "Travel 적립, 국세/4대보험 이용금액은 추가적립에서 제외",
-        "단기카드대출(현금서비스), 장기카드대출(카드론), 연회비, 각종수수료/이자(할부수수료, SMS이용수수료, 연체이자 등), 거래 취소금액, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 무이자 할부 이용 거래, 포인트 사용거래 중 포인트금액, The CLASSIC-S로 신한카드 할인서비스(이벤트포함)를 적용 받은 모든 거래(해당 거래금액 전체), 오토리스 대금 등 제외"
+        "신규 발급회원의 경우 카드 사용 등록월에는 서비스 미제공, Travel 적립, 국세/4대보험 이용금액 제외"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -111,7 +112,7 @@
         {
           "min_prev_performance": 500000,
           "monthly_limit": 50000,
-          "reward_rate": 0.02,
+          "rate": 0.02,
           "fixed_amount": null
         }
       ],
@@ -126,12 +127,12 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
       "group_id": "G_CLASSIC_S_TRAVEL",
       "ui_warnings": [
-        "월적립한도(5만 포인트) 초과시 초과 이용금액은 기본적립만 적용(0.5% 추가적립 제외)",
-        "거래 취소금액, 기프트카드/선불카드 구매·충전금액, 상품권/선불전자지급수단 구매·충전금액, 무이자할부 이용거래, 포인트 사용거래 중 포인트금액, The CLASSIC-S로 신한카드 할인서비스(이벤트포함)를 적용 받은 모든 거래(해당 거래금액 전체), 간편결제(Pay) 결제금액 등 제외"
+        "월적립한도(5만 포인트) 초과시 초과 이용금액은 기본적립만 적용(0.5% 추가적립 제외), 신규 발급회원의 경우 카드 사용 등록월의 익월까지 이용금액 관계없이 제공"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -145,14 +146,14 @@
       "category": "General",
       "sub_category": null,
       "source_benefit_id": null,
-      "content": "분기당 일시불·할부 이용금액 1천만원 이상 이용 시 보너스 포인트 적립(분기별 25,000포인트 적립)",
+      "content": "분기당 일시불·할부 이용금액 1천만원 이상 이용 시 보너스 포인트 25,000포인트 적립",
       "frequency": "QUARTERLY",
       "reward_type": "POINT",
       "tier_conditions": [
         {
           "min_prev_performance": 10000000,
           "monthly_limit": 25000,
-          "reward_rate": null,
+          "rate": null,
           "fixed_amount": 25000
         }
       ],
@@ -167,11 +168,12 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": 4
       },
       "group_id": null,
       "ui_warnings": [
-        "단기카드대출(현금서비스), 장기카드대출(카드론), 연회비, 각종수수료/이자(할부수수료, SMS이용수수료,연체이자 등), 거래 취소금액 등 제외"
+        "분기별 이용금액은 분기 시작월 1일부터 분기 종료월 말일까지의 거래시점 금액 반영, 본인회원에 한하여 분기당 1회 적립"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -200,16 +202,12 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": 5
       },
       "group_id": null,
       "ui_warnings": [
-        "서비스 이용 전월 The CLASSIC-S 카드로 일시불·할부 이용금액이 50만원 이상 이용 시 제공",
-        "신규로 카드를 발급 받으신 경우 발급월 또는 카드사용 등록월에는 서비스가 제공되지 않음",
-        "본인카드 회원에 한하여 제공되며, 가족카드 회원에게는 제공되지 않음",
-        "항공권 탑승자 이름과 The Lounge Members 회원 가입 시 이용하신 이름이 일치해야지만 공항라운지 입장 가능",
-        "발급받은 라운지 이용권은 발급 후 24시간 유효하며, 시간 내 미사용 시 자동 취소됨",
-        "이용 가능 라운지 확인은 theloungemember.com에서 가능하며, 신설/계약 미 체결 라운지 및 공간 사정 등으로 입장 제공이 어려울 수 있음"
+        "본인카드 회원에 한하여 제공, 가족카드 회원 미제공, 동반인 무료 입장은 본인 이용시에만 제공, 라운지 이용권은 발급 후 24시간 유효"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,

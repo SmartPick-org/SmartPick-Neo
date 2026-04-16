@@ -69,11 +69,9 @@ class TermsRepository:
             )
             return local_file.read_text(encoding="utf-8")
 
-        # 4) Not found
-        exc = RuntimeError(f"약관 파일을 찾을 수 없음: {card_name} (slug={slug})")
-        logger.error("[TermsRepository] {}", exc)
-        await notify_discord(
-            exc,
-            context=f"TermsRepository.get_terms — file not found | card={card_name} | slug={slug}",
+        # 4) Not found — return empty (terms are optional; some cards share a company-level document)
+        logger.info(
+            "[TermsRepository] 약관 없음 | card={} | slug={}",
+            card_name, slug,
         )
-        raise exc
+        return ""

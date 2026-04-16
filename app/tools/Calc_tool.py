@@ -37,12 +37,15 @@ _CALC_TYPE_MAP = {
 # =============================================================================
 # 유틸리티
 # =============================================================================
-def _pick(tier: dict | None, key: str, fallback=None):
-    """tier 사전에 값이 있으면 사용, 없으면 fallback."""
+def _pick(tier: dict | None, keys: str | list[str], fallback=None):
+    """tier 사전에 값이 있으면 사용, 없으면 fallback. keys는 단일 문자열 또는 리스트."""
     if tier is not None:
-        val = tier.get(key)
-        if val is not None:
-            return val
+        if isinstance(keys, str):
+            keys = [keys]
+        for key in keys:
+            val = tier.get(key)
+            if val is not None:
+                return val
     return fallback
 
 
@@ -154,22 +157,22 @@ class BenefitCalculator:
 
         # --- 변수 확정 (tier 우선 → calc_rule fallback, 구/신 필드명 모두 지원) ---
         rate = (
-            _pick(tier, "rate") or _pick(tier, "benefit_rate")
+            _pick(tier, ["rate", "reward_rate", "benefit_rate"])
             or calc_rule.get("rate") or calc_rule.get("benefit_rate")
             or 0.0
         )
         fixed_amount = (
-            _pick(tier, "fixed_amount") or _pick(tier, "flat_discount")
+            _pick(tier, ["fixed_amount", "flat_discount"])
             or calc_rule.get("fixed_amount") or calc_rule.get("flat_discount")
             or 0
         )
         unit_amount = (
-            _pick(tier, "unit_amount") or _pick(tier, "discount_per_unit")
+            _pick(tier, ["unit_amount", "discount_per_unit"])
             or calc_rule.get("unit_amount") or calc_rule.get("discount_per_unit")
             or 0
         )
         monthly_limit = (
-            _pick(tier, "monthly_limit") or _pick(tier, "monthly_benefit_limit")
+            _pick(tier, ["monthly_limit", "monthly_benefit_limit"])
             or calc_rule.get("monthly_limit") or calc_rule.get("monthly_benefit_limit")
             or INF
         )
@@ -188,10 +191,17 @@ class BenefitCalculator:
         )
         max_count_day = trans_cond.get("max_count_per_day") or INF
         max_count_month = trans_cond.get("max_count_per_month") or INF
+        max_count_year = trans_cond.get("max_count_per_year") or INF
         day_of_week = trans_cond.get("day_of_week")
 
         # 요일 제한 반영 → 일별 횟수 × 해당 요일 수
         eff_days = _effective_days(day_of_week)
+        
+        # 연간 한도가 있을 경우 월간 평균으로 안분(Amortization)
+        if max_count_year < INF:
+            amortized_count_month = max_count_year / 12.0
+            max_count_month = min(max_count_month, amortized_count_month)
+
         max_monthly_txns = min(max_count_month, max_count_day * eff_days)
 
         # Platform bonus (추가 적립률)
@@ -213,6 +223,10 @@ class BenefitCalculator:
         used_budget = 0.0
         _cond_meta = benefit.get("conditional_metadata") or {}
         warnings: list[str] = list(benefit.get("ui_warnings") or _cond_meta.get("warnings") or [])
+        # 연간 한도 안분 시 투명성 메시지 추가
+        if max_count_year < INF:
+            limit_val = int(max_count_year) if max_count_year == int(max_count_year) else max_count_year
+            warnings.append(f"연간 {limit_val}회 제한 (월간 {limit_val/12:.2f}회로 안분 계산됨)")
 
         if calc_method == "RATE":
             total_rate = rate + add_rate
@@ -302,6 +316,7 @@ class BenefitCalculator:
 
         return {
             "benefit_id": benefit.get("benefit_id"),
+            "content": benefit.get("content", ""),
             "category": benefit.get("category"),
             "sub_category": benefit.get("sub_category"),
             "frequency": freq,
@@ -317,6 +332,7 @@ class BenefitCalculator:
     def _empty_record(benefit: dict) -> dict:
         return {
             "benefit_id": benefit.get("benefit_id"),
+            "content": benefit.get("content", ""),
             "category": benefit.get("category"),
             "sub_category": benefit.get("sub_category"),
             "frequency": benefit.get("frequency", "MONTHLY"),
@@ -342,6 +358,7 @@ class BenefitCalculator:
             "monthly_total_krw": 0,
             "annual_total_krw": 0,
             "category_breakdown": [],
+            "applied_benefits_trace": [],
             "annual_breakdown": [],
             "warnings": [reason],
             "fallback": True,
@@ -526,7 +543,7 @@ class BenefitCalculator:
             sorted_benefits = sorted(
                 [b for b in self.benefits if b.get("benefit_id") not in _excluded],
                 key=lambda x: (
-                    1 if x.get("category") == "All_Domestic" else 0,
+                    1 if x.get("category") == "General" else 0,
                     x.get("benefit_id", ""),
                 ),
             )
@@ -542,7 +559,7 @@ class BenefitCalculator:
                 freq = b.get("frequency", "MONTHLY")
 
                 # 예산 결정
-                if cat == "All_Domestic":
+                if cat == "General":
                     budget = remaining_total
                 else:
                     info = user_budgets.get(cat, 0)
@@ -569,7 +586,7 @@ class BenefitCalculator:
                     continue
 
                 # Waterfall: 사용된 예산만큼 잔여 총액에서 차감
-                if cat != "All_Domestic" and calc_result["used_budget"] > 0:
+                if cat != "General" and calc_result["used_budget"] > 0:
                     remaining_total -= calc_result["used_budget"]
                     remaining_total = max(remaining_total, 0)
 
@@ -614,10 +631,23 @@ class BenefitCalculator:
                 )
 
 
-            # 유저가 선택한 카테고리 순서대로 정렬 (All_Domestic 마지막)
+            # 유저가 선택한 카테고리 순서대로 정렬 (General 마지막)
             result["category_breakdown"].sort(
-                key=lambda x: (x["category"] == "All_Domestic", x["category"])
+                key=lambda x: (x["category"] == "General", x["category"])
             )
+
+            # 영수증(Trace) — 계산에 참여한 개별 혜택의 산출 근거 (슬림)
+            result["applied_benefits_trace"] = [
+                {
+                    "benefit_id": r["benefit_id"],
+                    "content": r.get("content", ""),
+                    "applied_budget": r["used_budget"],
+                    "yielded_discount": r["amount_krw"],
+                    "user_choice": True,
+                }
+                for r in monthly_results
+                if r["amount_krw"] > 0
+            ]
 
             result["monthly_total_krw"] = round(
                 sum(r["amount_krw"] for r in monthly_results)
@@ -732,8 +762,8 @@ if __name__ == "__main__":
                 },
             },
             {
-                "benefit_id": "b_all_domestic",
-                "category": "All_Domestic",
+                "benefit_id": "b_general",
+                "category": "General",
                 "content": "전 가맹점 1% 적립",
                 "frequency": "MONTHLY",
                 "reward_type": "POINT",

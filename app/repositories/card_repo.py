@@ -1,11 +1,10 @@
-import asyncio
 import json
 from abc import ABC, abstractmethod
 from pathlib import Path
 
 from loguru import logger
 
-from app.core.discord import notify_discord
+from app.core.discord import notify_discord_sync
 from app.domain.adapters import adapt_v3_for_calculator
 from app.domain.models import CardData
 
@@ -42,7 +41,9 @@ class DatasetCardRepository(CardRepository):
             card_categories: set[str] = set()
             for benefit in adapted.get("benefits", []):
                 category = benefit.get("category", "")
-                if category:
+                if category and category != "General":
+                    card_categories.add(category)
+                elif category == "General":
                     card_categories.add(category)
             adapted["_card_categories"] = card_categories
 
@@ -107,6 +108,7 @@ class DBCardRepository(CardRepository):
             benefits = [
                 {
                     "group_id": b.get("group_id"),
+                    "benefit_id": b.get("benefit_slug"),
                     "benefit_slug": b.get("benefit_slug"),
                     "category": b.get("category"),
                     "content": b.get("content"),
@@ -167,16 +169,16 @@ class FallbackCardRepository(CardRepository):
                 return cards
             exc = RuntimeError("DB에서 카드 0개 반환")
             logger.warning("[FallbackCardRepository] {} → 로컬 데이터셋으로 폴백", exc)
-            try:
-                asyncio.ensure_future(notify_discord(exc, context="FallbackCardRepository.list_cards — DB returned 0 cards"))
-            except RuntimeError:
-                pass
+            notify_discord_sync(
+                exc,
+                context="FallbackCardRepository.list_cards — DB returned 0 cards",
+            )
         except Exception as e:
             logger.warning(f"[FallbackCardRepository] DB 조회 실패: {e} → 로컬 데이터셋으로 폴백")
-            try:
-                asyncio.ensure_future(notify_discord(e, context="FallbackCardRepository.list_cards — DB fetch failed"))
-            except RuntimeError:
-                pass
+            notify_discord_sync(
+                e,
+                context="FallbackCardRepository.list_cards — DB fetch failed",
+            )
 
         self._cache = DatasetCardRepository(self._datasets_dir).list_cards()
         return self._cache

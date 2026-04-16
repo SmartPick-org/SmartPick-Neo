@@ -33,7 +33,7 @@
     {
       "group_id": "G_DEEPOIL_CINEMA",
       "group_name": "영화 서비스",
-      "group_type": "SHARED_LIMIT",
+      "group_type": "AUTO_TOP_N",
       "limit_amount": null,
       "top_n_count": 1
     }
@@ -44,20 +44,20 @@
       "category": "Traffic",
       "sub_category": "fuel",
       "source_benefit_id": null,
-      "content": "선택한 정유사 주유 이용금액 10% 결제일 할인",
+      "content": "GS칼텍스, SK에너지, S-OIL, 에이치디현대오일뱅크 중 선택한 1개 정유사 주유 이용금액 10% 할인",
       "frequency": "MONTHLY",
       "reward_type": "DISCOUNT",
       "tier_conditions": [
         {
           "min_prev_performance": 300000,
           "monthly_limit": 150000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 700000,
           "monthly_limit": 300000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         }
       ],
@@ -72,16 +72,17 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
       "group_id": "G_DEEPOIL_FUEL",
       "ui_warnings": [
-        "휘발유, 등유, 경유에 대해서만 할인 제공 (LPG 제외)",
-        "선택한 정유사에만 적용 (연 1회 변경 가능)"
+        "휘발유, 등유, 경유에 대해서만 할인 제공, LPG 제외",
+        "정유사 선택은 1곳만 가능하며 연 1회 변경 가능"
       ],
       "edge_case_flags": {
         "requires_user_selection": true,
-        "excludes_from_performance": true,
+        "excludes_from_performance": false,
         "special_month_bonus": null,
         "escape_hatch_note": null
       }
@@ -91,20 +92,20 @@
       "category": "Traffic",
       "sub_category": "maintenance",
       "source_benefit_id": null,
-      "content": "스피드메이트 이용금액 10% 결제일 할인",
+      "content": "스피드메이트 이용금액 10% 할인",
       "frequency": "MONTHLY",
       "reward_type": "DISCOUNT",
       "tier_conditions": [
         {
           "min_prev_performance": 300000,
           "monthly_limit": 150000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 700000,
           "monthly_limit": 300000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         }
       ],
@@ -119,15 +120,16 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
       "group_id": "G_DEEPOIL_VEHICLE",
       "ui_warnings": [
-        "오프라인 현장 일반결제만 가능 (온라인 결제 제외)"
+        "오프라인 현장 일반결제만 가능, 온라인 결제 제외"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
-        "excludes_from_performance": true,
+        "excludes_from_performance": false,
         "special_month_bonus": null,
         "escape_hatch_note": null
       }
@@ -137,20 +139,20 @@
       "category": "Traffic",
       "sub_category": "parking",
       "source_benefit_id": null,
-      "content": "전국 모든 주차장 10% 결제일 할인",
+      "content": "전국 모든 주차장 10% 할인",
       "frequency": "MONTHLY",
       "reward_type": "DISCOUNT",
       "tier_conditions": [
         {
           "min_prev_performance": 300000,
           "monthly_limit": 150000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 700000,
           "monthly_limit": 300000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         }
       ],
@@ -165,15 +167,16 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
       "group_id": "G_DEEPOIL_VEHICLE",
       "ui_warnings": [
-        "당사 주차장 업종으로 등록된 가맹점에 한함"
+        "당사 주차장 업종으로 등록된 가맹점에 한해 제공"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
-        "excludes_from_performance": true,
+        "excludes_from_performance": false,
         "special_month_bonus": null,
         "escape_hatch_note": null
       }
@@ -183,20 +186,20 @@
       "category": "Shopping",
       "sub_category": "convenience",
       "source_benefit_id": null,
-      "content": "GS25, CU 5% 결제일 할인",
+      "content": "GS25, CU 5% 할인",
       "frequency": "MONTHLY",
       "reward_type": "DISCOUNT",
       "tier_conditions": [
         {
           "min_prev_performance": 300000,
           "monthly_limit": 150000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 700000,
           "monthly_limit": 300000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         }
       ],
@@ -211,15 +214,14 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
       "group_id": "G_DEEPOIL_LIFE",
-      "ui_warnings": [
-        "상품권 구입, 선불카드 충전은 할인 제외"
-      ],
+      "ui_warnings": [],
       "edge_case_flags": {
         "requires_user_selection": false,
-        "excludes_from_performance": true,
+        "excludes_from_performance": false,
         "special_month_bonus": null,
         "escape_hatch_note": null
       }
@@ -229,20 +231,20 @@
       "category": "Coffee",
       "sub_category": "cafe",
       "source_benefit_id": null,
-      "content": "스타벅스, 이디야 5% 결제일 할인",
+      "content": "스타벅스, 이디야 5% 할인",
       "frequency": "MONTHLY",
       "reward_type": "DISCOUNT",
       "tier_conditions": [
         {
           "min_prev_performance": 300000,
           "monthly_limit": 150000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 700000,
           "monthly_limit": 300000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         }
       ],
@@ -257,7 +259,8 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
       "group_id": "G_DEEPOIL_LIFE",
       "ui_warnings": [
@@ -265,7 +268,7 @@
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
-        "excludes_from_performance": true,
+        "excludes_from_performance": false,
         "special_month_bonus": null,
         "escape_hatch_note": null
       }
@@ -275,20 +278,20 @@
       "category": "Traffic",
       "sub_category": "taxi",
       "source_benefit_id": null,
-      "content": "택시 5% 결제일 할인",
+      "content": "택시 5% 할인",
       "frequency": "MONTHLY",
       "reward_type": "DISCOUNT",
       "tier_conditions": [
         {
           "min_prev_performance": 300000,
           "monthly_limit": 150000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 700000,
           "monthly_limit": 300000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         }
       ],
@@ -303,38 +306,39 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
       "group_id": "G_DEEPOIL_LIFE",
       "ui_warnings": [
-        "오프라인 현장 일반결제만 가능 (온라인/자동결제 제외)"
+        "오프라인 현장 일반결제만 가능, 온라인/자동결제 제외"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
-        "excludes_from_performance": true,
+        "excludes_from_performance": false,
         "special_month_bonus": null,
         "escape_hatch_note": null
       }
     },
     {
-      "benefit_id": "b_deepoil_cinema_5k",
+      "benefit_id": "b_deepoil_cinema_5000",
       "category": "Cultural",
       "sub_category": "cinema",
       "source_benefit_id": null,
-      "content": "롯데시네마 일반관 5천원 현장 할인",
+      "content": "롯데시네마 일반관 5천원 할인",
       "frequency": "MONTHLY",
       "reward_type": "DISCOUNT",
       "tier_conditions": [
         {
           "min_prev_performance": 300000,
-          "monthly_limit": 5000,
-          "reward_rate": null,
+          "monthly_limit": 1,
+          "rate": null,
           "fixed_amount": 5000
         },
         {
           "min_prev_performance": 700000,
-          "monthly_limit": 10000,
-          "reward_rate": null,
+          "monthly_limit": 2,
+          "rate": null,
           "fixed_amount": 5000
         }
       ],
@@ -349,7 +353,8 @@
       "transaction_conditions": {
         "min_payment_amount": 5000,
         "max_payment_amount_applied": null,
-        "max_count_per_month": 1
+        "max_count_per_month": 1,
+        "max_count_per_year": null
       },
       "group_id": "G_DEEPOIL_CINEMA",
       "ui_warnings": [
@@ -358,7 +363,7 @@
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
-        "excludes_from_performance": true,
+        "excludes_from_performance": false,
         "special_month_bonus": null,
         "escape_hatch_note": null
       }

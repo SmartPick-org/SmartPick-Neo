@@ -86,7 +86,7 @@ SUB_CATEGORY_DEFINITIONS: dict[str, list[dict]] = {
 VALID_CATEGORIES = {
     "General", "Shopping", "Traffic", "Food", "Coffee",
     "Cultural", "Travel", "Life", "EduHealth",
-    "All_Domestic", "Others",
+    "Others",
 }
 
 # ── sub_category가 있는 카테고리의 유효한 키 목록 ──
@@ -122,8 +122,7 @@ def build_prompt_block() -> str:
         lines.append("")
 
     lines.extend([
-        "- General: 모든 가맹점, 전 가맹점 적립/할인 → sub_category: null",
-        "- All_Domestic: 국내 전 가맹점 → sub_category: null",
+        "- General: 모든 가맹점, 전 가맹점 적립/할인, 국내 전 가맹점 → sub_category: null",
         "- Others: 위에 해당하지 않는 경우 → sub_category: null",
         "",
         "[RESERVED] 표시된 항목은 현재 데이터에 해당 혜택이 없으나, 해당하는 혜택 발견 시 사용 가능.",

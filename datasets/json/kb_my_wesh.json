@@ -10,22 +10,22 @@
   },
   "benefit_groups": [
     {
-      "group_id": "G_MYWESH_NAHAN",
+      "group_id": "G_KBWESH_NAHAN",
       "group_name": "나한테 진심 서비스",
       "group_type": "SHARED_LIMIT",
       "limit_amount": 5000,
       "top_n_count": null
     },
     {
-      "group_id": "G_MYWESH_EOMNEUN",
+      "group_id": "G_KBWESH_EOMNEUN",
       "group_name": "더욱 진심 서비스 (택1)",
       "group_type": "USER_CHOICE_ONE",
       "limit_amount": null,
       "top_n_count": null
     },
     {
-      "group_id": "G_MYWESH_WESH",
-      "group_name": "WE:SH 서비스",
+      "group_id": "G_KBWESH_BIRTH",
+      "group_name": "Happy Birth Month",
       "group_type": "SHARED_LIMIT",
       "limit_amount": null,
       "top_n_count": null
@@ -40,14 +40,7 @@
       "content": "KB Pay 10% 할인 (건당 한도 2,500원, 월 할인한도 5,000원)",
       "frequency": "MONTHLY",
       "reward_type": "DISCOUNT",
-      "tier_conditions": [
-        {
-          "min_prev_performance": 400000,
-          "monthly_limit": 5000,
-          "reward_rate": 0.1,
-          "fixed_amount": null
-        }
-      ],
+      "tier_conditions": [],
       "calculation_rule": {
         "calc_method": "RATE",
         "rate": 0.1,
@@ -59,12 +52,13 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": 2500,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_MYWESH_NAHAN",
+      "group_id": "G_KBWESH_NAHAN",
       "ui_warnings": [
-        "무이자할부, 단기카드대출, 상품권 구입 등 제외 대상 제외",
-        "할인 받은 건 취소 시 할인한도 즉시 복원 불가"
+        "무이자할부, 상품권 구입, 공과금 등은 할인 제외",
+        "취소 시 할인한도 즉시 복원 불가"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -74,21 +68,14 @@
       }
     },
     {
-      "benefit_id": "b_kbwesh_food_10pct",
+      "benefit_id": "b_kbwesh_food_convenience_10pct",
       "category": "Food",
       "sub_category": "restaurant",
       "source_benefit_id": null,
       "content": "음식점 10% 할인 (건당 한도 2,500원, 월 할인한도 5,000원)",
       "frequency": "MONTHLY",
       "reward_type": "DISCOUNT",
-      "tier_conditions": [
-        {
-          "min_prev_performance": 400000,
-          "monthly_limit": 5000,
-          "reward_rate": 0.1,
-          "fixed_amount": null
-        }
-      ],
+      "tier_conditions": [],
       "calculation_rule": {
         "calc_method": "RATE",
         "rate": 0.1,
@@ -100,12 +87,13 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": 2500,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_MYWESH_NAHAN",
+      "group_id": "G_KBWESH_NAHAN",
       "ui_warnings": [
-        "무이자할부, 단기카드대출, 상품권 구입 등 제외 대상 제외",
-        "할인 받은 건 취소 시 할인한도 즉시 복원 불가"
+        "무이자할부, 상품권 구입, 공과금 등은 할인 제외",
+        "취소 시 할인한도 즉시 복원 불가"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -122,14 +110,7 @@
       "content": "편의점(CU/GS25) 10% 할인 (건당 한도 2,500원, 월 할인한도 5,000원)",
       "frequency": "MONTHLY",
       "reward_type": "DISCOUNT",
-      "tier_conditions": [
-        {
-          "min_prev_performance": 400000,
-          "monthly_limit": 5000,
-          "reward_rate": 0.1,
-          "fixed_amount": null
-        }
-      ],
+      "tier_conditions": [],
       "calculation_rule": {
         "calc_method": "RATE",
         "rate": 0.1,
@@ -141,12 +122,13 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": 2500,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_MYWESH_NAHAN",
+      "group_id": "G_KBWESH_NAHAN",
       "ui_warnings": [
-        "무이자할부, 단기카드대출, 상품권 구입 등 제외 대상 제외",
-        "할인 받은 건 취소 시 할인한도 즉시 복원 불가"
+        "무이자할부, 상품권 구입, 공과금 등은 할인 제외",
+        "취소 시 할인한도 즉시 복원 불가"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -160,17 +142,10 @@
       "category": "Life",
       "sub_category": "telecom",
       "source_benefit_id": null,
-      "content": "이동통신요금(SKT/KT/LG U+/Liiv M) 10% 할인 (건당 한도 2,500원, 월 할인한도 5,000원)",
+      "content": "이동통신요금 (SKT/KT/LG U+/Liiv M) 10% 할인 (건당 한도 2,500원, 월 할인한도 5,000원)",
       "frequency": "MONTHLY",
       "reward_type": "DISCOUNT",
-      "tier_conditions": [
-        {
-          "min_prev_performance": 400000,
-          "monthly_limit": 5000,
-          "reward_rate": 0.1,
-          "fixed_amount": null
-        }
-      ],
+      "tier_conditions": [],
       "calculation_rule": {
         "calc_method": "RATE",
         "rate": 0.1,
@@ -182,12 +157,13 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": 2500,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_MYWESH_NAHAN",
+      "group_id": "G_KBWESH_NAHAN",
       "ui_warnings": [
-        "무이자할부, 단기카드대출, 상품권 구입 등 제외 대상 제외",
-        "할인 받은 건 취소 시 할인한도 즉시 복원 불가"
+        "무이자할부, 상품권 구입, 공과금 등은 할인 제외",
+        "취소 시 할인한도 즉시 복원 불가"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -201,17 +177,10 @@
       "category": "Cultural",
       "sub_category": "ott",
       "source_benefit_id": null,
-      "content": "OTT(넷플릭스/유튜브/웨이브/티빙/디즈니) 30% 할인 (건당 한도 2,500원, 월 할인한도 5,000원)",
+      "content": "OTT (넷플릭스/유튜브/웨이브/티빙/디즈니) 30% 할인 (건당 한도 2,500원, 월 할인한도 5,000원)",
       "frequency": "MONTHLY",
       "reward_type": "DISCOUNT",
-      "tier_conditions": [
-        {
-          "min_prev_performance": 400000,
-          "monthly_limit": 5000,
-          "reward_rate": 0.3,
-          "fixed_amount": null
-        }
-      ],
+      "tier_conditions": [],
       "calculation_rule": {
         "calc_method": "RATE",
         "rate": 0.3,
@@ -223,12 +192,13 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": 2500,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_MYWESH_NAHAN",
+      "group_id": "G_KBWESH_NAHAN",
       "ui_warnings": [
-        "무이자할부, 단기카드대출, 상품권 구입 등 제외 대상 제외",
-        "할인 받은 건 취소 시 할인한도 즉시 복원 불가"
+        "무이자할부, 상품권 구입, 공과금 등은 할인 제외",
+        "취소 시 할인한도 즉시 복원 불가"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -238,21 +208,14 @@
       }
     },
     {
-      "benefit_id": "b_kbwesh_food_delivery_5pct",
+      "benefit_id": "b_kbwesh_delivery_5pct",
       "category": "Food",
       "sub_category": "delivery",
       "source_benefit_id": null,
-      "content": "배달(배민/요기요/마켓컬리) 5% 할인 (건당 한도 2,500원, 월 할인한도 5,000원)",
+      "content": "베달(배민/요기요/마켓컬리) 5% 할인 (월 할인한도 5,000원)",
       "frequency": "MONTHLY",
       "reward_type": "DISCOUNT",
-      "tier_conditions": [
-        {
-          "min_prev_performance": 400000,
-          "monthly_limit": 5000,
-          "reward_rate": 0.05,
-          "fixed_amount": null
-        }
-      ],
+      "tier_conditions": [],
       "calculation_rule": {
         "calc_method": "RATE",
         "rate": 0.05,
@@ -263,14 +226,14 @@
       },
       "transaction_conditions": {
         "min_payment_amount": 0,
-        "max_payment_amount_applied": 2500,
-        "max_count_per_month": null
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_MYWESH_EOMNEUN",
+      "group_id": "G_KBWESH_EOMNEUN",
       "ui_warnings": [
-        "무이자할부, 단기카드대출, 상품권 구입 등 제외 대상 제외",
-        "할인 받은 건 취소 시 할인한도 즉시 복원 불가",
-        "택1 선택 혜택"
+        "무이자할부, 상품권 구입, 공과금 등은 할인 제외",
+        "취소 시 할인한도 즉시 복원 불가"
       ],
       "edge_case_flags": {
         "requires_user_selection": true,
@@ -284,17 +247,10 @@
       "category": "Coffee",
       "sub_category": "cafe",
       "source_benefit_id": null,
-      "content": "커피 5% 할인 (건당 한도 2,500원, 월 할인한도 5,000원)",
+      "content": "커피 5% 할인 (월 할인한도 5,000원)",
       "frequency": "MONTHLY",
       "reward_type": "DISCOUNT",
-      "tier_conditions": [
-        {
-          "min_prev_performance": 400000,
-          "monthly_limit": 5000,
-          "reward_rate": 0.05,
-          "fixed_amount": null
-        }
-      ],
+      "tier_conditions": [],
       "calculation_rule": {
         "calc_method": "RATE",
         "rate": 0.05,
@@ -305,14 +261,14 @@
       },
       "transaction_conditions": {
         "min_payment_amount": 0,
-        "max_payment_amount_applied": 2500,
-        "max_count_per_month": null
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_MYWESH_EOMNEUN",
+      "group_id": "G_KBWESH_EOMNEUN",
       "ui_warnings": [
-        "무이자할부, 단기카드대출, 상품권 구입 등 제외 대상 제외",
-        "할인 받은 건 취소 시 할인한도 즉시 복원 불가",
-        "택1 선택 혜택"
+        "무이자할부, 상품권 구입, 공과금 등은 할인 제외",
+        "취소 시 할인한도 즉시 복원 불가"
       ],
       "edge_case_flags": {
         "requires_user_selection": true,
@@ -326,17 +282,10 @@
       "category": "Traffic",
       "sub_category": "taxi",
       "source_benefit_id": null,
-      "content": "택시 5% 할인 (건당 한도 2,500원, 월 할인한도 5,000원)",
+      "content": "택시 5% 할인 (월 할인한도 5,000원)",
       "frequency": "MONTHLY",
       "reward_type": "DISCOUNT",
-      "tier_conditions": [
-        {
-          "min_prev_performance": 400000,
-          "monthly_limit": 5000,
-          "reward_rate": 0.05,
-          "fixed_amount": null
-        }
-      ],
+      "tier_conditions": [],
       "calculation_rule": {
         "calc_method": "RATE",
         "rate": 0.05,
@@ -347,14 +296,14 @@
       },
       "transaction_conditions": {
         "min_payment_amount": 0,
-        "max_payment_amount_applied": 2500,
-        "max_count_per_month": null
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_MYWESH_EOMNEUN",
+      "group_id": "G_KBWESH_EOMNEUN",
       "ui_warnings": [
-        "무이자할부, 단기카드대출, 상품권 구입 등 제외 대상 제외",
-        "할인 받은 건 취소 시 할인한도 즉시 복원 불가",
-        "택1 선택 혜택"
+        "무이자할부, 상품권 구입, 공과금 등은 할인 제외",
+        "취소 시 할인한도 즉시 복원 불가"
       ],
       "edge_case_flags": {
         "requires_user_selection": true,
@@ -368,17 +317,10 @@
       "category": "Cultural",
       "sub_category": "cinema",
       "source_benefit_id": null,
-      "content": "영화(CGV/롯데시네마/메가박스) 30% 할인 (건당 한도 2,500원, 월 할인한도 5,000원, 연 4회)",
+      "content": "영화(CGV/롯데시네마/메가박스) 30% 할인 (월 할인한도 5,000원, 연 4회/연 2만원 한도)",
       "frequency": "MONTHLY",
       "reward_type": "DISCOUNT",
-      "tier_conditions": [
-        {
-          "min_prev_performance": 400000,
-          "monthly_limit": 5000,
-          "reward_rate": 0.3,
-          "fixed_amount": null
-        }
-      ],
+      "tier_conditions": [],
       "calculation_rule": {
         "calc_method": "RATE",
         "rate": 0.3,
@@ -389,15 +331,15 @@
       },
       "transaction_conditions": {
         "min_payment_amount": 0,
-        "max_payment_amount_applied": 2500,
-        "max_count_per_month": 4
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null,
+        "max_count_per_year": 4
       },
-      "group_id": "G_MYWESH_EOMNEUN",
+      "group_id": "G_KBWESH_EOMNEUN",
       "ui_warnings": [
-        "무이자할부, 단기카드대출, 상품권 구입 등 제외 대상 제외",
-        "할인 받은 건 취소 시 할인한도 즉시 복원 불가",
-        "택1 선택 혜택",
-        "연 4회 제한"
+        "무이자할부, 상품권 구입, 공과금 등은 할인 제외",
+        "취소 시 할인한도 즉시 복원 불가",
+        "연간 4회/2만원 한도 적용"
       ],
       "edge_case_flags": {
         "requires_user_selection": true,
@@ -408,20 +350,13 @@
     },
     {
       "benefit_id": "b_kbwesh_beauty_5pct",
-      "category": "Shopping",
-      "sub_category": "beauty",
+      "category": "Life",
+      "sub_category": "daily_service",
       "source_benefit_id": null,
-      "content": "미용실 5% 할인 (건당 한도 2,500원, 월 할인한도 10,000원)",
+      "content": "미용실 5% 할인 (월 할인한도 10,000원)",
       "frequency": "MONTHLY",
       "reward_type": "DISCOUNT",
-      "tier_conditions": [
-        {
-          "min_prev_performance": 400000,
-          "monthly_limit": 10000,
-          "reward_rate": 0.05,
-          "fixed_amount": null
-        }
-      ],
+      "tier_conditions": [],
       "calculation_rule": {
         "calc_method": "RATE",
         "rate": 0.05,
@@ -432,14 +367,14 @@
       },
       "transaction_conditions": {
         "min_payment_amount": 0,
-        "max_payment_amount_applied": 2500,
-        "max_count_per_month": null
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_MYWESH_EOMNEUN",
+      "group_id": "G_KBWESH_EOMNEUN",
       "ui_warnings": [
-        "무이자할부, 단기카드대출, 상품권 구입 등 제외 대상 제외",
-        "할인 받은 건 취소 시 할인한도 즉시 복원 불가",
-        "택1 선택 혜택"
+        "무이자할부, 상품권 구입, 공과금 등은 할인 제외",
+        "취소 시 할인한도 즉시 복원 불가"
       ],
       "edge_case_flags": {
         "requires_user_selection": true,
@@ -453,17 +388,10 @@
       "category": "Cultural",
       "sub_category": "leisure_sports",
       "source_benefit_id": null,
-      "content": "스포츠 5% 할인 (건당 한도 2,500원, 월 할인한도 10,000원)",
+      "content": "스포츠 5% 할인 (월 할인한도 10,000원)",
       "frequency": "MONTHLY",
       "reward_type": "DISCOUNT",
-      "tier_conditions": [
-        {
-          "min_prev_performance": 400000,
-          "monthly_limit": 10000,
-          "reward_rate": 0.05,
-          "fixed_amount": null
-        }
-      ],
+      "tier_conditions": [],
       "calculation_rule": {
         "calc_method": "RATE",
         "rate": 0.05,
@@ -474,14 +402,14 @@
       },
       "transaction_conditions": {
         "min_payment_amount": 0,
-        "max_payment_amount_applied": 2500,
-        "max_count_per_month": null
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_MYWESH_EOMNEUN",
+      "group_id": "G_KBWESH_EOMNEUN",
       "ui_warnings": [
-        "무이자할부, 단기카드대출, 상품권 구입 등 제외 대상 제외",
-        "할인 받은 건 취소 시 할인한도 즉시 복원 불가",
-        "택1 선택 혜택"
+        "무이자할부, 상품권 구입, 공과금 등은 할인 제외",
+        "취소 시 할인한도 즉시 복원 불가"
       ],
       "edge_case_flags": {
         "requires_user_selection": true,
@@ -495,17 +423,10 @@
       "category": "Shopping",
       "sub_category": "beauty",
       "source_benefit_id": null,
-      "content": "올리브영 5% 할인 (건당 한도 2,500원, 월 할인한도 10,000원)",
+      "content": "올리브영 5% 할인 (월 할인한도 10,000원)",
       "frequency": "MONTHLY",
       "reward_type": "DISCOUNT",
-      "tier_conditions": [
-        {
-          "min_prev_performance": 400000,
-          "monthly_limit": 10000,
-          "reward_rate": 0.05,
-          "fixed_amount": null
-        }
-      ],
+      "tier_conditions": [],
       "calculation_rule": {
         "calc_method": "RATE",
         "rate": 0.05,
@@ -516,14 +437,14 @@
       },
       "transaction_conditions": {
         "min_payment_amount": 0,
-        "max_payment_amount_applied": 2500,
-        "max_count_per_month": null
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_MYWESH_EOMNEUN",
+      "group_id": "G_KBWESH_EOMNEUN",
       "ui_warnings": [
-        "무이자할부, 단기카드대출, 상품권 구입 등 제외 대상 제외",
-        "할인 받은 건 취소 시 할인한도 즉시 복원 불가",
-        "택1 선택 혜택"
+        "무이자할부, 상품권 구입, 공과금 등은 할인 제외",
+        "취소 시 할인한도 즉시 복원 불가"
       ],
       "edge_case_flags": {
         "requires_user_selection": true,
@@ -537,17 +458,10 @@
       "category": "Cultural",
       "sub_category": "books",
       "source_benefit_id": null,
-      "content": "온라인서점(교보문고/YES24) 5% 할인 (건당 한도 2,500원, 월 할인한도 10,000원)",
+      "content": "온라인서점(교보문고/YES24) 5% 할인 (월 할인한도 10,000원)",
       "frequency": "MONTHLY",
       "reward_type": "DISCOUNT",
-      "tier_conditions": [
-        {
-          "min_prev_performance": 400000,
-          "monthly_limit": 10000,
-          "reward_rate": 0.05,
-          "fixed_amount": null
-        }
-      ],
+      "tier_conditions": [],
       "calculation_rule": {
         "calc_method": "RATE",
         "rate": 0.05,
@@ -558,14 +472,14 @@
       },
       "transaction_conditions": {
         "min_payment_amount": 0,
-        "max_payment_amount_applied": 2500,
-        "max_count_per_month": null
+        "max_payment_amount_applied": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_MYWESH_EOMNEUN",
+      "group_id": "G_KBWESH_EOMNEUN",
       "ui_warnings": [
-        "무이자할부, 단기카드대출, 상품권 구입 등 제외 대상 제외",
-        "할인 받은 건 취소 시 할인한도 즉시 복원 불가",
-        "택1 선택 혜택"
+        "무이자할부, 상품권 구입, 공과금 등은 할인 제외",
+        "취소 시 할인한도 즉시 복원 불가"
       ],
       "edge_case_flags": {
         "requires_user_selection": true,
@@ -582,17 +496,10 @@
       "content": "생일월 더욱 진심 서비스 월 할인한도 2배 (연 1회)",
       "frequency": "ANNUAL",
       "reward_type": "DISCOUNT",
-      "tier_conditions": [
-        {
-          "min_prev_performance": 400000,
-          "monthly_limit": null,
-          "reward_rate": null,
-          "fixed_amount": null
-        }
-      ],
+      "tier_conditions": [],
       "calculation_rule": {
-        "calc_method": "MAX_COVER_UP_TO_LIMIT",
-        "rate": null,
+        "calc_method": "RATE",
+        "rate": 0.0,
         "fixed_amount": null,
         "monthly_limit": null,
         "fallback_reward_rate": 0.0,
@@ -601,58 +508,18 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": 1
       },
-      "group_id": "G_MYWESH_WESH",
+      "group_id": "G_KBWESH_BIRTH",
       "ui_warnings": [
-        "생일월 한정 혜택",
-        "할인 받은 건 취소 시 할인한도 즉시 복원 불가"
+        "할인한도 2배 적용은 생일월 1회 한정",
+        "무이자할부, 상품권 구입, 공과금 등은 할인 제외"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
         "excludes_from_performance": true,
-        "special_month_bonus": "생일월 할인한도 2배",
-        "escape_hatch_note": null
-      }
-    },
-    {
-      "benefit_id": "b_kbwesh_performance_fill",
-      "category": "General",
-      "sub_category": null,
-      "source_benefit_id": null,
-      "content": "전월실적 5만원 이내 부족분 채움서비스 (연 2회)",
-      "frequency": "ANNUAL",
-      "reward_type": "DISCOUNT",
-      "tier_conditions": [
-        {
-          "min_prev_performance": 0,
-          "monthly_limit": null,
-          "reward_rate": null,
-          "fixed_amount": 50000
-        }
-      ],
-      "calculation_rule": {
-        "calc_method": "FIXED_AMOUNT",
-        "rate": null,
-        "fixed_amount": 50000,
-        "monthly_limit": null,
-        "fallback_reward_rate": 0.0,
-        "transaction_tiers": null
-      },
-      "transaction_conditions": {
-        "min_payment_amount": 0,
-        "max_payment_amount_applied": null,
-        "max_count_per_month": null
-      },
-      "group_id": "G_MYWESH_WESH",
-      "ui_warnings": [
-        "연 2회 제한",
-        "전월실적 5만원 미만 시 적용"
-      ],
-      "edge_case_flags": {
-        "requires_user_selection": false,
-        "excludes_from_performance": false,
-        "special_month_bonus": null,
+        "special_month_bonus": "할인한도 2배",
         "escape_hatch_note": null
       }
     }

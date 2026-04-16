@@ -11,23 +11,30 @@
   "benefit_groups": [
     {
       "group_id": "G_MRLIFE_MONTHLY",
-      "group_name": "월납 할인 통합 한도",
+      "group_name": "월납 할인",
       "group_type": "SHARED_LIMIT",
       "limit_amount": 10000,
       "top_n_count": null
     },
     {
       "group_id": "G_MRLIFE_WEEKEND",
-      "group_name": "주말 할인 통합 한도",
+      "group_name": "주말 할인",
       "group_type": "SHARED_LIMIT",
       "limit_amount": 10000,
       "top_n_count": null
     },
     {
-      "group_id": "G_MRLIFE_TIME",
-      "group_name": "Time 할인 통합 한도",
+      "group_id": "G_MRLIFE_TIME_DAY",
+      "group_name": "Time 할인 (All Day)",
       "group_type": "SHARED_LIMIT",
-      "limit_amount": 30000,
+      "limit_amount": 3000,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_MRLIFE_TIME_NIGHT",
+      "group_name": "Time 할인 (Night)",
+      "group_type": "SHARED_LIMIT",
+      "limit_amount": 3000,
       "top_n_count": null
     }
   ],
@@ -44,19 +51,19 @@
         {
           "min_prev_performance": 300000,
           "monthly_limit": 3000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 500000,
           "monthly_limit": 7000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 10000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         }
       ],
@@ -71,12 +78,12 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": 50000,
-        "max_count_per_month": 1
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
       "group_id": "G_MRLIFE_MONTHLY",
       "ui_warnings": [
-        "1회 승인금액 5만원까지 할인 적용",
-        "일 1회 할인 적용"
+        "1회 승인금액 5만원까지 할인 적용 (1회 최대 5천원 할인)"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -97,19 +104,19 @@
         {
           "min_prev_performance": 300000,
           "monthly_limit": 3000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 500000,
           "monthly_limit": 7000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 10000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         }
       ],
@@ -124,12 +131,12 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": 50000,
-        "max_count_per_month": 1
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
       "group_id": "G_MRLIFE_MONTHLY",
       "ui_warnings": [
-        "1회 승인금액 5만원까지 할인 적용",
-        "일 1회 할인 적용"
+        "1회 승인금액 5만원까지 할인 적용 (1회 최대 5천원 할인)"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -150,19 +157,19 @@
         {
           "min_prev_performance": 300000,
           "monthly_limit": 3000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 500000,
           "monthly_limit": 7000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 10000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         }
       ],
@@ -177,13 +184,12 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": 50000,
-        "max_count_per_month": 1
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
       "group_id": "G_MRLIFE_WEEKEND",
       "ui_warnings": [
-        "토요일/일요일만 적용",
-        "1회 승인금액 5만원까지 할인 적용",
-        "일 1회 할인 적용"
+        "토요일/일요일에만 적용, 1회 승인금액 5만원까지 할인 적용 (1회 최대 5천원 할인)"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -204,19 +210,19 @@
         {
           "min_prev_performance": 300000,
           "monthly_limit": 3000,
-          "reward_rate": null,
+          "rate": null,
           "fixed_amount": 60
         },
         {
           "min_prev_performance": 500000,
           "monthly_limit": 7000,
-          "reward_rate": null,
+          "rate": null,
           "fixed_amount": 60
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 10000,
-          "reward_rate": null,
+          "rate": null,
           "fixed_amount": 60
         }
       ],
@@ -231,13 +237,12 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": 100000,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
       "group_id": "G_MRLIFE_WEEKEND",
       "ui_warnings": [
-        "토요일/일요일만 적용",
-        "월 승인금액 30만원까지 할인 적용",
-        "1회 승인금액 10만원까지 할인 적용"
+        "토요일/일요일에만 적용, 월 승인금액 30만원까지 할인 적용"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -258,19 +263,19 @@
         {
           "min_prev_performance": 300000,
           "monthly_limit": 10000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 500000,
           "monthly_limit": 20000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 30000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         }
       ],
@@ -285,12 +290,12 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": 10000,
-        "max_count_per_month": 5
+        "max_count_per_month": 5,
+        "max_count_per_year": null
       },
-      "group_id": "G_MRLIFE_TIME",
+      "group_id": "G_MRLIFE_TIME_DAY",
       "ui_warnings": [
-        "1회 승인금액 1만원까지 할인 적용",
-        "일 1회/월 5회 할인 적용"
+        "일 1회/월 5회 할인 적용, 1회 승인금액 1만원까지 할인 적용 (1회 최대 1천원 할인)"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -311,19 +316,19 @@
         {
           "min_prev_performance": 300000,
           "monthly_limit": 10000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 500000,
           "monthly_limit": 20000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 30000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         }
       ],
@@ -338,13 +343,12 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": 10000,
-        "max_count_per_month": 5
+        "max_count_per_month": 5,
+        "max_count_per_year": null
       },
-      "group_id": "G_MRLIFE_TIME",
+      "group_id": "G_MRLIFE_TIME_DAY",
       "ui_warnings": [
-        "1회 승인금액 1만원까지 할인 적용",
-        "일 1회/월 5회 할인 적용",
-        "동물병원 제외"
+        "일 1회/월 5회 할인 적용, 1회 승인금액 1만원까지 할인 적용 (1회 최대 1천원 할인), 동물병원 제외"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -365,19 +369,19 @@
         {
           "min_prev_performance": 300000,
           "monthly_limit": 10000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 500000,
           "monthly_limit": 20000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 30000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         }
       ],
@@ -392,12 +396,12 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": 10000,
-        "max_count_per_month": 5
+        "max_count_per_month": 5,
+        "max_count_per_year": null
       },
-      "group_id": "G_MRLIFE_TIME",
+      "group_id": "G_MRLIFE_TIME_DAY",
       "ui_warnings": [
-        "1회 승인금액 1만원까지 할인 적용",
-        "일 1회/월 5회 할인 적용"
+        "일 1회/월 5회 할인 적용, 1회 승인금액 1만원까지 할인 적용 (1회 최대 1천원 할인)"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -418,19 +422,19 @@
         {
           "min_prev_performance": 300000,
           "monthly_limit": 10000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 500000,
           "monthly_limit": 20000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 30000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         }
       ],
@@ -445,12 +449,12 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": 10000,
-        "max_count_per_month": 5
+        "max_count_per_month": 5,
+        "max_count_per_year": null
       },
-      "group_id": "G_MRLIFE_TIME",
+      "group_id": "G_MRLIFE_TIME_DAY",
       "ui_warnings": [
-        "1회 승인금액 1만원까지 할인 적용",
-        "일 1회/월 5회 할인 적용"
+        "일 1회/월 5회 할인 적용, 1회 승인금액 1만원까지 할인 적용 (1회 최대 1천원 할인)"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -471,19 +475,19 @@
         {
           "min_prev_performance": 300000,
           "monthly_limit": 10000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 500000,
           "monthly_limit": 20000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 30000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         }
       ],
@@ -498,14 +502,12 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": 10000,
-        "max_count_per_month": 10
+        "max_count_per_month": 10,
+        "max_count_per_year": null
       },
-      "group_id": "G_MRLIFE_TIME",
+      "group_id": "G_MRLIFE_TIME_NIGHT",
       "ui_warnings": [
-        "오후 9시 ~ 오전 9시까지 적용",
-        "1회 승인금액 1만원까지 할인 적용",
-        "일 1회/월 10회 할인 적용",
-        "대상 사이트 직접 접속 시만 적용"
+        "오후 9시 ~ 오전 9시까지 적용, 일 1회/월 10회 할인 적용, 1회 승인금액 1만원까지 할인 적용 (1회 최대 1천원 할인)"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -526,19 +528,19 @@
         {
           "min_prev_performance": 300000,
           "monthly_limit": 10000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 500000,
           "monthly_limit": 20000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 30000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         }
       ],
@@ -553,13 +555,12 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": 10000,
-        "max_count_per_month": 10
+        "max_count_per_month": 10,
+        "max_count_per_year": null
       },
-      "group_id": "G_MRLIFE_TIME",
+      "group_id": "G_MRLIFE_TIME_NIGHT",
       "ui_warnings": [
-        "오후 9시 ~ 오전 9시까지 적용",
-        "1회 승인금액 1만원까지 할인 적용",
-        "일 1회/월 10회 할인 적용"
+        "오후 9시 ~ 오전 9시까지 적용, 일 1회/월 10회 할인 적용, 1회 승인금액 1만원까지 할인 적용 (1회 최대 1천원 할인)"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -580,19 +581,19 @@
         {
           "min_prev_performance": 300000,
           "monthly_limit": 10000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 500000,
           "monthly_limit": 20000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 1000000,
           "monthly_limit": 30000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         }
       ],
@@ -607,13 +608,12 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": 10000,
-        "max_count_per_month": 10
+        "max_count_per_month": 10,
+        "max_count_per_year": null
       },
-      "group_id": "G_MRLIFE_TIME",
+      "group_id": "G_MRLIFE_TIME_NIGHT",
       "ui_warnings": [
-        "오후 9시 ~ 오전 9시까지 적용",
-        "1회 승인금액 1만원까지 할인 적용",
-        "일 1회/월 10회 할인 적용"
+        "오후 9시 ~ 오전 9시까지 적용, 일 1회/월 10회 할인 적용, 1회 승인금액 1만원까지 할인 적용 (1회 최대 1천원 할인)"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -624,8 +624,8 @@
     },
     {
       "benefit_id": "b_mrlife_intake_20pct",
-      "category": "Food",
-      "sub_category": "general",
+      "category": "General",
+      "sub_category": null,
       "source_benefit_id": null,
       "content": "인테이크몰 20% 할인",
       "frequency": "MONTHLY",
@@ -634,7 +634,7 @@
         {
           "min_prev_performance": 0,
           "monthly_limit": null,
-          "reward_rate": 0.2,
+          "rate": 0.2,
           "fixed_amount": null
         }
       ],
@@ -649,12 +649,12 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": 4
+        "max_count_per_month": 4,
+        "max_count_per_year": null
       },
       "group_id": null,
       "ui_warnings": [
-        "인테이크몰 직접 접속 시만 적용",
-        "월 4회 할인 적용"
+        "월 4회 할인 적용, 인테이크몰 직접 접속 시에만 할인 적용"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,

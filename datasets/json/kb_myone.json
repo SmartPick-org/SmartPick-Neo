@@ -10,23 +10,23 @@
   },
   "benefit_groups": [
     {
-      "group_id": "G_KB_MYONE_HOMEPLUS",
+      "group_id": "G_MYONE_HOMEPLUS",
       "group_name": "홈플러스 통합 할인",
       "group_type": "SHARED_LIMIT",
       "limit_amount": 30000,
       "top_n_count": null
     },
     {
-      "group_id": "G_KB_MYONE_RESTAURANT_BEAUTY",
-      "group_type": "SHARED_LIMIT",
+      "group_id": "G_MYONE_RESTAURANT_BEAUTY",
       "group_name": "패밀리레스토랑/미용 통합 할인",
+      "group_type": "SHARED_LIMIT",
       "limit_amount": 20000,
       "top_n_count": null
     }
   ],
   "benefits": [
     {
-      "benefit_id": "b_kb_myone_homeplus_5_10pct",
+      "benefit_id": "b_myone_homeplus_5_7_10pct",
       "category": "Shopping",
       "sub_category": "mart",
       "source_benefit_id": null,
@@ -37,19 +37,19 @@
         {
           "min_prev_performance": 300000,
           "monthly_limit": 30000,
-          "reward_rate": 0.05,
+          "rate": 0.05,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 600000,
           "monthly_limit": 30000,
-          "reward_rate": 0.07,
+          "rate": 0.07,
           "fixed_amount": null
         },
         {
           "min_prev_performance": 900000,
           "monthly_limit": 30000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         }
       ],
@@ -57,16 +57,17 @@
         "calc_method": "RATE",
         "rate": null,
         "fixed_amount": null,
-        "monthly_limit": 30000,
+        "monthly_limit": null,
         "fallback_reward_rate": 0.0,
         "transaction_tiers": null
       },
       "transaction_conditions": {
         "min_payment_amount": 50000,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_KB_MYONE_HOMEPLUS",
+      "group_id": "G_MYONE_HOMEPLUS",
       "ui_warnings": [
         "할인대상: 홈플러스 할인점, 홈플러스 익스프레스, 문화센터, 온라인몰 및 애슐리(홈플러스 입점매장)",
         "최초 카드 사용등록일로부터 90일간 이용금액 미달시도 5% 할인율 적용",
@@ -80,7 +81,7 @@
       }
     },
     {
-      "benefit_id": "b_kb_myone_restaurant_10pct",
+      "benefit_id": "b_myone_restaurant_10pct",
       "category": "Food",
       "sub_category": "restaurant",
       "source_benefit_id": null,
@@ -91,7 +92,7 @@
         {
           "min_prev_performance": 300000,
           "monthly_limit": 20000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         }
       ],
@@ -99,16 +100,17 @@
         "calc_method": "RATE",
         "rate": 0.1,
         "fixed_amount": null,
-        "monthly_limit": 20000,
+        "monthly_limit": null,
         "fallback_reward_rate": 0.0,
         "transaction_tiers": null
       },
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": 2
+        "max_count_per_month": 2,
+        "max_count_per_year": null
       },
-      "group_id": "G_KB_MYONE_RESTAURANT_BEAUTY",
+      "group_id": "G_MYONE_RESTAURANT_BEAUTY",
       "ui_warnings": [
         "1일 1회, 월 2회, 월간 통합 할인한도 2만원까지"
       ],
@@ -120,9 +122,9 @@
       }
     },
     {
-      "benefit_id": "b_kb_myone_beauty_10pct",
-      "category": "EduHealth",
-      "sub_category": "hospital",
+      "benefit_id": "b_myone_beauty_10pct",
+      "category": "Life",
+      "sub_category": "daily_service",
       "source_benefit_id": null,
       "content": "미용, 피부미용업종 청구할인",
       "frequency": "MONTHLY",
@@ -131,7 +133,7 @@
         {
           "min_prev_performance": 300000,
           "monthly_limit": 20000,
-          "reward_rate": 0.1,
+          "rate": 0.1,
           "fixed_amount": null
         }
       ],
@@ -139,16 +141,17 @@
         "calc_method": "RATE",
         "rate": 0.1,
         "fixed_amount": null,
-        "monthly_limit": 20000,
+        "monthly_limit": null,
         "fallback_reward_rate": 0.0,
         "transaction_tiers": null
       },
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
-      "group_id": "G_KB_MYONE_RESTAURANT_BEAUTY",
+      "group_id": "G_MYONE_RESTAURANT_BEAUTY",
       "ui_warnings": [
         "월간 통합 할인한도 2만원까지"
       ],
@@ -160,7 +163,7 @@
       }
     },
     {
-      "benefit_id": "b_kb_myone_telecom_3000",
+      "benefit_id": "b_myone_telecom_3000",
       "category": "Life",
       "sub_category": "telecom",
       "source_benefit_id": null,
@@ -170,8 +173,8 @@
       "tier_conditions": [
         {
           "min_prev_performance": 300000,
-          "monthly_limit": 3000,
-          "reward_rate": null,
+          "monthly_limit": null,
+          "rate": null,
           "fixed_amount": 3000
         }
       ],
@@ -179,14 +182,15 @@
         "calc_method": "FIXED_AMOUNT",
         "rate": null,
         "fixed_amount": 3000,
-        "monthly_limit": 3000,
+        "monthly_limit": null,
         "fallback_reward_rate": 0.0,
         "transaction_tiers": null
       },
       "transaction_conditions": {
         "min_payment_amount": 10000,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": 1,
+        "max_count_per_year": null
       },
       "group_id": null,
       "ui_warnings": [

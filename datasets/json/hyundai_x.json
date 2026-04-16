@@ -3,7 +3,7 @@
     "card_id": "hyundai_x",
     "card_name": "현대카드 X",
     "card_company": "현대카드",
-    "annual_fee": 50000,
+    "annual_fee": 20000,
     "minimum_performance": 500000,
     "reward_currency": "KRW",
     "currency_to_krw_rate": 1.0
@@ -19,7 +19,7 @@
   ],
   "benefits": [
     {
-      "benefit_id": "b_hyundai_x_discount",
+      "benefit_id": "b_hyundai_x_discount_1pct",
       "category": "General",
       "sub_category": null,
       "source_benefit_id": null,
@@ -30,7 +30,7 @@
         {
           "min_prev_performance": 500000,
           "monthly_limit": null,
-          "reward_rate": 0.01,
+          "rate": 0.01,
           "fixed_amount": null
         }
       ],
@@ -45,11 +45,12 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": null
       },
       "group_id": null,
       "ui_warnings": [
-        "할인 제외 기준: 장기카드대출, 단기카드대출, 연회비, 제수수료, 이자, 국제브랜드 수수료, 해외서비스 수수료, 공과금 납부액, 전기/가스 요금, 아파트 관리비, 학교납입금, 상품권 구매, 현금성 유가증권, 건강보험, 국민연금, 고속도로 통행 요금, 후불하이패스, 고속버스, 현대카드 할인 서비스 이용 금액"
+        "할인 제외 기준: 장기카드대출, 단기카드대출, 연회비, 제수수료, 이자, 국제브랜드 수수료, 공과금 납부액, 상품권 구매, 건강보험, 국민연금, 고속도로 통행 요금 등"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -59,7 +60,7 @@
       }
     },
     {
-      "benefit_id": "b_hyundai_x_cashback",
+      "benefit_id": "b_hyundai_x_cashback_20000",
       "category": "General",
       "sub_category": null,
       "source_benefit_id": null,
@@ -68,9 +69,9 @@
       "reward_type": "CASHBACK",
       "tier_conditions": [
         {
-          "min_prev_performance": 5000000,
+          "min_prev_performance": 500000,
           "monthly_limit": null,
-          "reward_rate": null,
+          "rate": null,
           "fixed_amount": 20000
         }
       ],
@@ -85,12 +86,13 @@
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": null
+        "max_count_per_month": null,
+        "max_count_per_year": 5
       },
       "group_id": "G_HYUNDAI_X_CASHBACK",
       "ui_warnings": [
-        "연간 최대 2,500만원까지 연간 최대 10만원 한도",
-        "캐시백 제외 기준: 장기카드대출, 단기카드대출, 연회비, 제수수료, 이자, 국제브랜드 수수료, 해외서비스 수수료, 공과금 납부액, 전기/가스 요금, 아파트 관리비, 학교납입금, 상품권 구매, 현금성 유가증권, 건강보험, 국민연금, 고속도로 통행 요금, 후불하이패스, 고속버스, 현대카드 할인 서비스 이용 금액"
+        "연간 누적 이용 금액 2,500만원까지 연간 최대 10만원 한도",
+        "할인 제외 기준: 장기카드대출, 단기카드대출, 연회비, 제수수료, 이자, 국제브랜드 수수료, 공과금 납부액, 상품권 구매, 건강보험, 국민연금, 고속도로 통행 요금 등"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,
@@ -100,18 +102,18 @@
       }
     },
     {
-      "benefit_id": "b_hyundai_x_lounge",
+      "benefit_id": "b_hyundai_x_lounge_parking",
       "category": "Travel",
       "sub_category": "lounge_valet",
       "source_benefit_id": null,
       "content": "인천국제공항 라운지/발레파킹 무료 이용",
-      "frequency": "MONTHLY",
+      "frequency": "ANNUAL",
       "reward_type": "VOUCHER",
       "tier_conditions": [
         {
           "min_prev_performance": 500000,
-          "monthly_limit": 1,
-          "reward_rate": null,
+          "monthly_limit": null,
+          "rate": null,
           "fixed_amount": null
         }
       ],
@@ -119,19 +121,20 @@
         "calc_method": "FIXED_AMOUNT",
         "rate": null,
         "fixed_amount": null,
-        "monthly_limit": 1,
+        "monthly_limit": null,
         "fallback_reward_rate": 0.0,
         "transaction_tiers": null
       },
       "transaction_conditions": {
         "min_payment_amount": 0,
         "max_payment_amount_applied": null,
-        "max_count_per_month": 1
+        "max_count_per_month": 1,
+        "max_count_per_year": 2
       },
       "group_id": null,
       "ui_warnings": [
-        "연간 2회 한도(본인 및 가족 카드 통합 기준)",
-        "전월 이용 금액 50만원 이상 시 이용 가능"
+        "본인 및 가족 카드 통합 기준",
+        "이용 한도: 일 1회, 연간 2회"
       ],
       "edge_case_flags": {
         "requires_user_selection": false,

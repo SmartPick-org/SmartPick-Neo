@@ -9,7 +9,11 @@ from app.core.dependencies import (
     get_explain_service,
     get_recommend_service,
 )
-from app.core.exceptions import LLMUnavailableError, NoCardsFoundError
+from app.core.exceptions import (
+    InternalCalculationError,
+    LLMUnavailableError,
+    NoCardsFoundError,
+)
 from app.repositories.card_repo import FallbackCardRepository
 from app.repositories.digest_repo import DigestRepository
 from app.schemas.card_catalog import (
@@ -26,6 +30,8 @@ from app.schemas.recommend import (
     RecommendCard,
     RecommendRequest,
     RecommendResponse,
+    RecalculateRequest, 
+    RecalculateResponse,
 )
 from app.services.card_service import CardRecommendService
 from app.services.explain_service import ExplainService
@@ -141,6 +147,7 @@ def _safe_build_recommended_cards(ranked: list[dict], explanation: str) -> list[
                 "minimum_performance": card.get("minimum_performance", 0),
                 "expected_monthly_benefit": card.get("expected_monthly_benefit", 0),
                 "category_breakdown": card.get("category_breakdown", []) or [],
+                "applied_benefits_trace": card.get("applied_benefits_trace", []) or [],
                 "explanation": explanation if idx == 0 else "",
                 "benefit_receipt": card.get("benefit_details", []),
             }
@@ -196,12 +203,15 @@ async def recommend_cards(
             excluded_benefit_ids=payload.excluded_benefit_ids,
         )
     except KeyError as e:
-        # 필수 데이터 누락 등 → raw 500 방지
+        # 계산기 내부에서 필수 키 누락 = 데이터/로직 버그 → 500 + Discord 알림
         logger.exception("[recommend_cards] calculate_benefits KeyError: %s", repr(e))
-        raise ValueError("혜택 계산에 필요한 데이터가 누락되었습니다.") from e
+        raise InternalCalculationError(
+            "혜택 계산에 필요한 데이터가 누락되었습니다."
+        ) from e
     except ValueError as e:
+        # 계산기에서 올라오는 ValueError는 대체로 데이터 이상이므로 함께 500 처리
         logger.exception("[recommend_cards] calculate_benefits ValueError: %s", repr(e))
-        raise ValueError(str(e))
+        raise InternalCalculationError(str(e)) from e
 
     ranked = recommend_service.rank_top(calc_results, top_n=payload.top_n)
 
@@ -282,8 +292,45 @@ def _build_recommend_card(card_result: dict, explanation: str) -> RecommendCard:
         minimum_performance=card_result.get("minimum_performance", 0),
         expected_monthly_benefit=card_result.get("expected_monthly_benefit", 0),
         category_breakdown=card_result.get("category_breakdown", []),
+        applied_benefits_trace=card_result.get("applied_benefits_trace", []),
+        benefit_receipt=card_result.get("benefit_details", []),
         explanation=explanation,
     )
+
+
+@router.post("/recalculate", response_model=RecalculateResponse)
+async def recalculate_benefits(payload: RecalculateRequest) -> RecalculateResponse:
+    """
+    유저 체크박스 상태를 반영하여 expected_monthly_benefit만 재계산합니다.
+    BenefitCalculator 재호출 없이 기존 trace 데이터의 합산만 변경합니다. (< 50ms)
+
+    - **recommended_cards**: 기존 추천 결과 (applied_benefits_trace 포함)
+    - **excluded_benefit_ids**: 유저가 체크 해제한 benefit_id 목록
+    """
+    excluded = set(payload.excluded_benefit_ids)
+    updated_cards = []
+
+    for card in payload.recommended_cards:
+        new_total = 0
+        updated_trace = []
+        for t in card.applied_benefits_trace:
+            is_active = t.benefit_id not in excluded
+            updated_trace.append(t.model_copy(update={"user_choice": is_active}))
+            if is_active:
+                new_total += t.yielded_discount
+
+        updated_card = card.model_copy(update={
+            "applied_benefits_trace": updated_trace,
+            "expected_monthly_benefit": new_total,
+        })
+        updated_cards.append(updated_card)
+
+    updated_cards.sort(key=lambda c: c.expected_monthly_benefit, reverse=True)
+    logger.info(
+        f"[recalculate] excluded={len(excluded)}개 혜택 제외 | "
+        f"카드 순위 재조정 완료: {[c.card_name for c in updated_cards]}"
+    )
+    return RecalculateResponse(recommended_cards=updated_cards)
 
 
 @router.post("/compare", response_model=CompareResponse)
@@ -294,9 +341,9 @@ async def compare_cards(payload: CompareRequest) -> CompareResponse:
     - **current_card_id**: 유저가 현재 사용 중인 카드 ID (GET /cards 에서 확인 가능)
     - **total_budget / category_spending**: recommend와 동일한 소비 패턴 입력
     """
+    from fastapi import HTTPException
     card_repo = _get_card_repository()
 
-    # 1. current_card_id로 카드 원본 데이터 찾기
     current_card_raw: dict | None = None
     for card in card_repo.list_cards():
         meta = card.get("card_meta", {}) or {}
@@ -316,7 +363,6 @@ async def compare_cards(payload: CompareRequest) -> CompareResponse:
         logger.exception("[compare_cards] ExplainService 생성 실패: %s", repr(e))
         explain_service = None
 
-    # 2. 전체 카드 필터링 + 혜택 계산 + 랭킹 (recommend 로직 재사용)
     filtered = recommend_service.filter_cards(payload.total_budget, payload.category_spending)
     if not filtered:
         raise NoCardsFoundError(
@@ -329,10 +375,12 @@ async def compare_cards(payload: CompareRequest) -> CompareResponse:
         )
     except KeyError as e:
         logger.exception("[compare_cards] calculate_benefits KeyError: %s", repr(e))
-        raise ValueError("혜택 계산에 필요한 데이터가 누락되었습니다.") from e
+        raise InternalCalculationError(
+            "혜택 계산에 필요한 데이터가 누락되었습니다."
+        ) from e
     except ValueError as e:
         logger.exception("[compare_cards] calculate_benefits ValueError: %s", repr(e))
-        raise ValueError(str(e))
+        raise InternalCalculationError(str(e)) from e
 
     ranked = recommend_service.rank_top(calc_results, top_n=len(calc_results))
     if not ranked:
@@ -340,7 +388,6 @@ async def compare_cards(payload: CompareRequest) -> CompareResponse:
 
     recommended_result = ranked[0]
 
-    # 3. 기존 카드 혜택 계산 (필터 통과 여부와 무관하게 단독 계산)
     try:
         current_calc = await recommend_service.calculate_benefits(
             [current_card_raw], payload.total_budget, payload.category_spending
@@ -351,23 +398,22 @@ async def compare_cards(payload: CompareRequest) -> CompareResponse:
                 current_result["warnings"] = ["전월 실적 미달 등의 사유로 혜택이 0원으로 산출되었습니다."]
     except Exception as e:
         logger.warning("[compare_cards] 기존 카드 혜택 계산 실패: %s", repr(e))
+        meta = (current_card_raw.get("card_meta", {}) or {})
         current_result = {
-            "card_name": (current_card_raw.get("card_meta", {}) or {}).get("card_name", ""),
-            "card_company": (current_card_raw.get("card_meta", {}) or {}).get("card_company", ""),
+            "card_name": meta.get("card_name", ""),
+            "card_company": meta.get("card_company", ""),
             "card_id": payload.current_card_id,
-            "annual_fee": (current_card_raw.get("card_meta", {}) or {}).get("annual_fee", 0),
-            "minimum_performance": (current_card_raw.get("card_meta", {}) or {}).get("minimum_performance", 0),
+            "annual_fee": meta.get("annual_fee", 0),
+            "minimum_performance": meta.get("minimum_performance", 0),
             "expected_monthly_benefit": 0,
             "category_breakdown": [],
         }
 
-    # 4. 월/연 혜택 차이 계산
     current_monthly = current_result.get("expected_monthly_benefit", 0)
     recommended_monthly = recommended_result.get("expected_monthly_benefit", 0)
     monthly_diff = recommended_monthly - current_monthly
     yearly_diff = monthly_diff * 12
 
-    # 5. 카테고리별 비교 계산
     current_breakdown_map: dict[str, int] = {
         cb["category"]: cb["monthly_discount_krw"]
         for cb in current_result.get("category_breakdown", [])
@@ -378,7 +424,6 @@ async def compare_cards(payload: CompareRequest) -> CompareResponse:
     }
 
     all_categories = set(current_breakdown_map.keys()) | set(recommended_breakdown_map.keys())
-    # 유저가 입력한 카테고리 순서로 정렬
     user_cat_strs = [
         cat.value if hasattr(cat, "value") else str(cat)
         for cat in payload.category_spending.keys()
@@ -396,10 +441,7 @@ async def compare_cards(payload: CompareRequest) -> CompareResponse:
         for cat in ordered_cats
     ]
 
-    # 6. ExplainService로 설명 빌더 (fallback graceful degradation)
     current_explain = ""
-    
-    # 0원 혜택에 대한 친절한 요약 설명
     if current_result.get("expected_monthly_benefit", 0) == 0:
         warnings = current_result.get("warnings", [])
         if warnings:
@@ -410,20 +452,17 @@ async def compare_cards(payload: CompareRequest) -> CompareResponse:
         try:
             if not current_explain:
                 current_explain = explain_service._format_card_detail(current_result, rank=0)
-            
             for i, r_result in enumerate(ranked):
-                r_exp = explain_service._format_card_detail(r_result, rank=i+1)
+                r_exp = explain_service._format_card_detail(r_result, rank=i + 1)
                 recommended_cards_schema.append(_build_recommend_card(r_result, r_exp))
         except Exception as e:
             logger.warning("[compare_cards] _format_card_detail 실패: %s", repr(e))
-    
-    # LLM 실패 혹은 explain_service 없을 때 fallback
+
     if not recommended_cards_schema:
         recommended_cards_schema = [_build_recommend_card(r, "") for r in ranked]
-    
+
     recommended_card_schema = recommended_cards_schema[0]
 
-    # 7. LLM 비교 큐레이션 텍스트 생성
     explanation = _LLM_FALLBACK_COMPARE
     if explain_service is not None:
         try:
@@ -441,8 +480,6 @@ async def compare_cards(payload: CompareRequest) -> CompareResponse:
 
     current_card_schema = _build_recommend_card(current_result, current_explain)
 
-    # 8. recommended_cards 배열 필터링
-    # 조건: expected_monthly_benefit > 0 AND > 기존 카드 월 혜택, 내림차순 정렬
     filtered_recommended_cards = [
         card for card in recommended_cards_schema
         if card.expected_monthly_benefit > 0

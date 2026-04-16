@@ -1,3 +1,10 @@
+"""CardRecommendService 회귀 테스트 (v4 기준).
+
+v4 이관 후 달라진 계약:
+- `annual_fee`는 `card_meta["annual_fee_domestic"]`에서 읽음 (과거: `annual_fee`)
+- `expected_yearly_benefit`는 `annual_total_krw`를 그대로 씀 (과거: `monthly * 12`)
+- 반환 dict에서 `benefit_details`·`annual_breakdown`이 제거됨. 대신 `applied_benefits_trace`
+"""
 from typing import Dict, List
 
 import pytest
@@ -22,20 +29,18 @@ class FakeBenefitCalculator:
         if name == "CardA":
             return {
                 "monthly_total_krw": 1000,
-                "annual_total_krw": 500,
+                "annual_total_krw": 12000,
                 "performance_met": True,
                 "category_breakdown": [{"category": "Coffee", "monthly_discount_krw": 1000}],
-                "benefit_details": [],
-                "annual_breakdown": [],
+                "applied_benefits_trace": [],
                 "warnings": [],
             }
         return {
             "monthly_total_krw": 3000,
-            "annual_total_krw": 0,
+            "annual_total_krw": 36000,
             "performance_met": True,
             "category_breakdown": [{"category": "Shopping", "monthly_discount_krw": 3000}],
-            "benefit_details": [],
-            "annual_breakdown": [],
+            "applied_benefits_trace": [],
             "warnings": [],
         }
 
@@ -47,6 +52,7 @@ class FakeBenefitCalculatorSparse:
     def calculate(self, category_spending: Dict[str, int], user_total_spend: int = None, excluded_benefit_ids=None) -> dict:
         return {
             "monthly_total_krw": 1200,
+            "annual_total_krw": 14400,
         }
 
 
@@ -79,11 +85,11 @@ def test_filter_cards_by_performance_and_category():
 async def test_calculate_benefits_aggregates_and_sorts(monkeypatch):
     cards = [
         {
-            "card_meta": {"card_name": "CardA", "card_company": "C1", "annual_fee": 1000, "card_id": "a"},
+            "card_meta": {"card_name": "CardA", "card_company": "C1", "annual_fee_domestic": 1000, "card_id": "a"},
             "_card_categories": {"Coffee"},
         },
         {
-            "card_meta": {"card_name": "CardB", "card_company": "C2", "annual_fee": 2000, "card_id": "b"},
+            "card_meta": {"card_name": "CardB", "card_company": "C2", "annual_fee_domestic": 2000, "card_id": "b"},
             "_card_categories": {"Shopping"},
         },
     ]
@@ -96,7 +102,9 @@ async def test_calculate_benefits_aggregates_and_sorts(monkeypatch):
     assert results[0]["card_name"] == "CardB"
     assert results[0]["expected_monthly_benefit"] == 3000
     assert results[1]["expected_monthly_benefit"] == 1000
-    assert results[0]["expected_yearly_benefit"] == 3000 * 12
+    # v4에서는 expected_yearly_benefit == annual_total_krw (계산기가 바로 연간값을 돌려줌)
+    assert results[0]["expected_yearly_benefit"] == 36000
+    assert results[1]["expected_yearly_benefit"] == 12000
 
 
 def test_rank_top():
@@ -135,7 +143,7 @@ def test_filter_cards_with_empty_spending_only_allows_general():
 async def test_calculate_benefits_handles_zero_budget_and_sparse_result(monkeypatch):
     cards = [
         {
-            "card_meta": {"card_name": "Sparse", "card_company": "C1", "annual_fee": 0, "card_id": "x"},
+            "card_meta": {"card_name": "Sparse", "card_company": "C1", "annual_fee_domestic": 0, "card_id": "x"},
             "_card_categories": {"Coffee"},
         },
     ]
@@ -146,12 +154,11 @@ async def test_calculate_benefits_handles_zero_budget_and_sparse_result(monkeypa
     result = results[0]
 
     assert result["expected_monthly_benefit"] == 1200
-    assert result["expected_yearly_benefit"] == 1200 * 12
+    assert result["expected_yearly_benefit"] == 14400
     assert result["performance_met"] is False
     assert result["scores"]["fit_score"] == 0.0
     assert result["scores"]["coverage_score"] == 0.0
     assert result["scores"]["min_spend_score"] == 1.0
     assert result["category_breakdown"] == []
-    assert result["benefit_details"] == []
-    assert result["annual_breakdown"] == []
+    assert result["applied_benefits_trace"] == []
     assert result["warnings"] == []

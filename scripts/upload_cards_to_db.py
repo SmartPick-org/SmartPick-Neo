@@ -6,8 +6,10 @@ json → Supabase DB 업로더
     card_meta.card_id             → card_slug
     card_meta.card_name           → card_name
     card_meta.card_company        → card_company
-    card_meta.annual_fee          → annual_fee
+    card_meta.annual_fee_domestic → annual_fee_domestic
+    card_meta.annual_fee_international → annual_fee_international
     card_meta.minimum_performance → min_performance   ← 키 이름 불일치 수정
+    card_meta.performance_excluded_categories → performance_excluded_categories
     card_meta.reward_currency     → reward_currency
     card_meta.currency_to_krw_rate → currency_rate   ← 키 이름 불일치 수정
     image_url                     → null (JSON에 없음, 별도 처리)
@@ -18,18 +20,24 @@ json → Supabase DB 업로더
     benefit_groups[].group_id     → group_slug       ← 키 이름 불일치 수정
     benefit_groups[].group_name   → group_name
     benefit_groups[].group_type   → group_type
-    benefit_groups[].limit_amount → limit_amount
-    (top_n_count 은 DB 미저장 — 그룹 제한 로직은 group_type으로 이미 표현됨)
+    benefit_groups[].group_type_description → group_type_description
+    benefit_groups[].choices      → choices
+    benefit_groups[].monthly_limit → monthly_limit
+    benefit_groups[].annual_limit → annual_limit
+    benefit_groups[].top_n_count  → top_n_count
 
   [card_benefits 테이블]
     benefits[].benefit_id         → benefit_slug     ← 키 이름 불일치 수정
+    benefits[].selective_choice   → selective_choice
     benefits[].category           → category
-    benefits[].content            → content
+    benefits[].sub_category       → sub_category
     benefits[].reward_type        → reward_type
+    benefits[].reward_unit        → reward_unit (jsonb)
     benefits[].calculation_rule   → calculation_rule (jsonb)
     benefits[].transaction_conditions → transaction_conditions (jsonb)
-    benefits[].ui_warnings        → ui_warnings
-    (frequency, tier_conditions, edge_case_flags 처리는 하단 주석 참고)
+    benefits[].tier_conditions    → tier_conditions (jsonb)
+    benefits[].conditional_metadata → conditional_metadata (jsonb)
+    benefits[].indirect_benefit_metadata → indirect_benefit_metadata (jsonb)
 
 사용법:
   python -m scripts.upload_cards_to_db
@@ -42,7 +50,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-JSON_V3_DIR = ROOT / "datasets" / "json"
+JSON_V4_DIR = ROOT / "datasets" / "json_v4"
 
 
 # ---------------------------------------------------------------------------
@@ -56,9 +64,11 @@ def map_card_meta(card_id: str, meta: dict) -> dict:
         "card_slug": card_id,
         "card_name": meta.get("card_name", ""),
         "card_company": meta.get("card_company", ""),
-        "annual_fee": meta.get("annual_fee", 0),
+        "annual_fee_domestic": meta.get("annual_fee_domestic"),
+        "annual_fee_international": meta.get("annual_fee_international"),
         # minimum_performance → min_performance (키 이름 불일치 수정)
         "min_performance": meta.get("minimum_performance", 0),
+        "performance_excluded_categories": meta.get("performance_excluded_categories", []),
         "reward_currency": meta.get("reward_currency", "KRW"),
         # currency_to_krw_rate → currency_rate (키 이름 불일치 수정)
         "currency_rate": meta.get("currency_to_krw_rate", 1.0),
@@ -66,10 +76,10 @@ def map_card_meta(card_id: str, meta: dict) -> dict:
         "image_url": None,
         # digest_file_path: Supabase Storage 버킷 경로 규칙에 따라 추론
         #   Digest 버킷 구조: {company}/{card_id}.md
-        "digest_file_path": f"digest/{card_id}.md",
+        "digest_file_path": f"Digest/{card_id}.md",
         # manual_file_path: JSON에 없음. null로 두고 별도 운영 작업으로 채움
-        "manual_file_path": None,
-        "terms_file_path": f"terms/{card_id}.md"
+        "manual_file_path": f"Manuals/{card_id}.md",
+        "terms_file_path": f"Terms/{card_id}.md"
     }
 
 
@@ -81,8 +91,11 @@ def map_benefit_group(card_uuid: str, group: dict) -> dict:
         "group_slug": group.get("group_id", ""),
         "group_name": group.get("group_name", ""),
         "group_type": group.get("group_type", ""),
-        "limit_amount": group.get("limit_amount"),
-        # top_n_count: DB 미저장 (설계 근거는 README/분석 문서 참고)
+        "group_type_description": group.get("group_type_description"),
+        "choices": group.get("choices"),
+        "monthly_limit": group.get("monthly_limit"),
+        "annual_limit": group.get("annual_limit"),
+        "top_n_count": group.get("top_n_count"),
     }
 
 
@@ -92,19 +105,17 @@ def map_benefit(group_uuid: str, benefit: dict) -> dict:
         "group_id": group_uuid,
         # benefit_id → benefit_slug (키 이름 불일치 수정)
         "benefit_slug": benefit.get("benefit_id", ""),
+        "content": benefit.get("content"),
+        "selective_choice": benefit.get("selective_choice"),
         "category": benefit.get("category", ""),
-        "content": benefit.get("content", ""),
+        "sub_category": benefit.get("sub_category", ""),
         "reward_type": benefit.get("reward_type", ""),
-        # calculation_rule: jsonb — 구조 그대로 저장
+        "reward_unit": benefit.get("reward_unit"),
         "calculation_rule": benefit.get("calculation_rule"),
-        # transaction_conditions: jsonb — 구조 그대로 저장
         "transaction_conditions": benefit.get("transaction_conditions"),
-        # ui_warnings: text[] 또는 jsonb — 배열 그대로 저장
-        "ui_warnings": benefit.get("ui_warnings", []),
-        # --- DB 미저장 필드 (설계 근거는 README/분석 문서 참고) ---
-        # frequency:         calculation_rule.calc_method로 충분히 표현됨
-        # tier_conditions:   calculation_rule.transaction_tiers으로 통합
-        # edge_case_flags:   calculator 런타임 전용, DB 저장 불필요
+        "tier_conditions": benefit.get("tier_conditions", []),
+        "conditional_metadata": benefit.get("conditional_metadata"),
+        "indirect_benefit_metadata": benefit.get("indirect_benefit_metadata"),
     }
 
 
@@ -170,7 +181,7 @@ def main():
         from app.core.database import get_supabase
         db = get_supabase()
 
-    search_dir = JSON_V3_DIR / args.company if args.company else JSON_V3_DIR
+    search_dir = JSON_V4_DIR / args.company if args.company else JSON_V4_DIR
     json_files = list(search_dir.rglob("*.json"))
 
     if not json_files:
@@ -180,7 +191,7 @@ def main():
     print(f"총 {len(json_files)}개 파일 처리 시작\n")
     success, fail = 0, 0
     for jf in sorted(json_files):
-        print(f"[{jf.relative_to(JSON_V3_DIR)}]")
+        print(f"[{jf.relative_to(JSON_V4_DIR)}]")
         try:
             ok = upload_json_file(db, jf, dry_run=args.dry_run)
             if ok:

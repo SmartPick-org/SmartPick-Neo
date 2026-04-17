@@ -307,10 +307,16 @@ class RecalculateResponse(BaseModel):
     체크박스 재계산 응답.
     `expected_monthly_benefit` 이 선택된 혜택들의 합으로 갱신되며,
     카드 순위가 재조정됩니다.
+    1순위 카드가 바뀐 경우 `explanation` 에 새 큐레이션 텍스트가 채워집니다.
+    순위 변동이 없으면 빈 문자열로 내려옵니다.
     """
     recommended_cards: List[RecommendCard] = Field(
         ...,
         description="순위 재조정된 카드 목록. `applied_benefits_trace` 의 `user_choice` 필드가 갱신된 상태입니다."
+    )
+    explanation: str = Field(
+        "",
+        description="1순위 카드가 변경된 경우 새 1순위 카드에 대한 큐레이션 텍스트. 순위 변동 없으면 빈 문자열."
     )
 
     model_config = {

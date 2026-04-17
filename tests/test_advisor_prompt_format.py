@@ -33,6 +33,16 @@ class TestBrokenFormatsRemoved:
             f"{key} 프롬프트에 <small> 태그가 남아 있음"
         )
 
+    @pytest.mark.parametrize("key", list(QUERIES.keys()))
+    def test_strikethrough_prohibited_in_prompt(self, key: str) -> None:
+        """_DISCLAIMER를 통해 모든 쿼리 프롬프트에 취소선(~~) 사용 금지 지침이 포함되어야 한다.
+        remark-gfm이 ~~text~~를 취소선으로 렌더링하므로 LLM이 절대 사용하지 않아야 한다."""
+        prompt = QUERIES[key]
+        assert "~~취소선~~" in prompt, (
+            f"{key} 프롬프트에 ~~취소선~~ 사용 금지 지침이 없음 — "
+            "_DISCLAIMER에 추가 필요"
+        )
+
 
 class TestRetainedStructure:
     """유지되어야 하는 포맷이 실수로 빠지지 않도록 고정."""

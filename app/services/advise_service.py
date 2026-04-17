@@ -270,6 +270,9 @@ def _cache_set(cache_key: str, answer: str) -> None:
 
 _terms_repo = None
 _manual_repo = None
+# In-memory cache for card documents: card_name → (manual, terms)
+# Files are stable — cached for the lifetime of the process.
+_doc_cache: dict[str, tuple[str, str]] = {}
 
 
 def _get_terms_repo():
@@ -288,6 +291,20 @@ def _get_manual_repo():
         from app.repositories.manual_repo import ManualRepository
         _manual_repo = ManualRepository(MANUALS_DIR)
     return _manual_repo
+
+
+async def _load_card_docs(card_name: str) -> tuple[str, str]:
+    """manual + terms를 병렬 로드. 프로세스 생존 기간 동안 in-memory 캐시."""
+    if card_name in _doc_cache:
+        logger.info(f"[CardAdvisorService] 문서 캐시 히트 | card={card_name}")
+        return _doc_cache[card_name]
+    manual, terms = await asyncio.gather(
+        _get_manual_repo().get_manual(card_name),
+        _get_terms_repo().get_terms(card_name),
+    )
+    _doc_cache[card_name] = (manual, terms)
+    logger.info(f"[CardAdvisorService] 문서 로드 완료 및 캐시 저장 | card={card_name} | manual={len(manual)} chars | terms={len(terms)} chars")
+    return manual, terms
 
 
 
@@ -318,12 +335,14 @@ async def get_advice(
     if cached_answer is not None:
         return cached_answer
 
-    # 1. 상품설명서(manual) + 약관(terms) 병렬 로드
-    manual, terms = await asyncio.gather(
-        _get_manual_repo().get_manual(card_name),
-        _get_terms_repo().get_terms(card_name),
-    )
-    card_info = _build_card_info(manual, terms)
+    # 1. 상품설명서(manual) + 약관(terms) 로드
+    # QUERIES_STANDALONE(reviews, how_to_apply)은 웹 검색 기반이므로 문서 불필요
+    if query_type in QUERIES_DETAILS:
+        manual, terms = await _load_card_docs(card_name)
+        card_info = _build_card_info(manual, terms)
+    else:
+        card_info = ""
+        logger.info(f"[CardAdvisorService] standalone 쿼리 — 문서 로드 생략 | query_type={query_type}")
 
     # 2. Build LLM with tools
     # naver_blog_search is only relevant for reviews; all other queries use web search only

@@ -152,32 +152,32 @@
   "hotPaths": [
     {
       "path": "app/tools/Calc_tool.py",
-      "accessCount": 27,
-      "lastAccessed": 1776152097038,
+      "accessCount": 28,
+      "lastAccessed": 1776388631418,
       "type": "file"
     },
     {
       "path": "app/api/card.py",
-      "accessCount": 13,
-      "lastAccessed": 1776152623858,
+      "accessCount": 15,
+      "lastAccessed": 1776392093914,
       "type": "file"
     },
     {
       "path": "app/services/card_service.py",
-      "accessCount": 10,
-      "lastAccessed": 1776152644040,
+      "accessCount": 13,
+      "lastAccessed": 1776392079979,
       "type": "file"
     },
     {
       "path": "app/schemas/recommend.py",
-      "accessCount": 8,
-      "lastAccessed": 1776152662768,
+      "accessCount": 11,
+      "lastAccessed": 1776392106329,
       "type": "file"
     },
     {
       "path": "app/services/explain_service.py",
-      "accessCount": 6,
-      "lastAccessed": 1776152674815,
+      "accessCount": 7,
+      "lastAccessed": 1776388691342,
       "type": "file"
     },
     {
@@ -233,6 +233,12 @@
       "accessCount": 1,
       "lastAccessed": 1776151640588,
       "type": "directory"
+    },
+    {
+      "path": "app/core/config.py",
+      "accessCount": 1,
+      "lastAccessed": 1776388690935,
+      "type": "file"
     }
   ],
   "userDirectives": []

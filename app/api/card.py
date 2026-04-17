@@ -392,23 +392,21 @@ async def recalculate_benefits(payload: RecalculateRequest) -> RecalculateRespon
             if is_active:
                 new_total += t.yielded_discount
 
-        # 카테고리별 요약(breakdown)도 선택된 혜택 기준으로 수치 조정
-        new_breakdown = []
-        for cb in card.category_breakdown:
-            # 해당 카테고리에 속한 혜택들 중 체크된 것만 합산
-            cat_sum = sum(
-                t.yielded_discount 
-                for t in updated_trace 
-                if t.user_choice and t.benefit_id in [b.benefit_id for b in card.applied_benefits_trace if b.benefit_id == t.benefit_id]
-                # 실제로는 trace의 각 항목이 카테고리 정보를 가지고 있어야 더 정확함
-            )
-            # 여기서는 편의상 전체 카테고리 구조를 유지하며 합산액만 갱신
-            # (더 정교하게는 BenefitCalculator가 반환한 카테고리 매핑 정보를 활용해야 함)
-            new_breakdown.append(cb) # 일단 기존 구조 유지
+        # trace의 category 필드로 카테고리별 합산 후 breakdown 갱신
+        cat_totals: dict[str, int] = {}
+        for t in updated_trace:
+            if t.user_choice:
+                cat_totals[t.category] = cat_totals.get(t.category, 0) + t.yielded_discount
+
+        new_breakdown = [
+            cb.model_copy(update={"monthly_discount_krw": cat_totals.get(cb.category, 0)})
+            for cb in card.category_breakdown
+        ]
 
         updated_card = card.model_copy(update={
             "applied_benefits_trace": updated_trace,
             "expected_monthly_benefit": new_total,
+            "category_breakdown": new_breakdown,
         })
         updated_cards.append(updated_card)
 

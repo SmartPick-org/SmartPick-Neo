@@ -321,11 +321,9 @@ async def recommend_cards(payload: RecommendRequest) -> RecommendResponse:
             )
             if not explanation or not explanation.strip():
                 explanation = _LLM_FALLBACK_EXPLAIN
-        except Exception as e:
-            import traceback
-            err_msg = traceback.format_exc()
-            logger.warning("[LLM Fallback] explain() 실패, Fallback 텍스트 사용: %s", err_msg)
-            explanation = f"ERROR IN EXPLAIN: {err_msg}"
+        except Exception:
+            logger.exception("[LLM Fallback] explain() 실패, Fallback 텍스트 사용")
+            explanation = _LLM_FALLBACK_EXPLAIN
 
     try:
         # 상세 Tracing 기능이 포함된 빌더 호출

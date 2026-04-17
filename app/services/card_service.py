@@ -162,6 +162,14 @@ class CardRecommendService:
                         except Exception as e:
                             logger.error(f"Failed to load legacy data from {legacy_path}: {e}")
 
+                    # content 보강: json_v4는 content=null이므로 레거시 매칭 → fallback 순으로 채움
+                    raw_benefits = card.get("benefits", [])
+                    enriched_trace = _enrich_benefit_details(
+                        result.get("applied_benefits_trace", []),
+                        raw_benefits,
+                        legacy_benefits or None,
+                    )
+
                     return {
                         "card_name": card_name,
                         "card_company": card_meta.get("card_company", ""),
@@ -177,7 +185,7 @@ class CardRecommendService:
                             "min_spend_score": round(min_spend_score, 3),
                         },
                         "category_breakdown": result.get("category_breakdown", []),
-                        "applied_benefits_trace": result.get("applied_benefits_trace", []),
+                        "applied_benefits_trace": enriched_trace,
                         "warnings": result.get("warnings", []),
                         "_card_data": card,
                     }

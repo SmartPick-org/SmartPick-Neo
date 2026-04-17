@@ -227,8 +227,9 @@ class CompareResponse(BaseModel):
 class RecalculateRequest(BaseModel):
     """
     체크박스 재계산 요청 스키마입니다.
-    사용자가 영수증 항목에서 특정 혜택을 제외(체크 해제)했을 때, 
-    통합 한도 재분배 로직을 포함한 '정밀 재계산(Deep Recalculation)'을 수행합니다.
+    사용자가 영수증 항목에서 특정 혜택을 제외(체크 해제)했을 때,
+    해당 혜택의 할인액을 합산에서 제외하는 '단순 재계산(Shallow Recalculation)'을 수행합니다.
+    한도 재배분은 없으며, 다른 혜택의 yielded_discount는 변경되지 않습니다.
     """
     total_budget: int = Field(..., description="월 총 소비 금액 (원). 정밀 한도 재계산에 필수입니다.", examples=[500000])
     category_spending: Dict[CategoryEnum, Any] = Field(
@@ -247,7 +248,7 @@ class RecalculateRequest(BaseModel):
     )
     excluded_benefit_ids: List[str] = Field(
         ...,
-        description="사용자가 체크 해제한 혜택의 `benefit_id` 목록입니다. 이 혜택들은 계산에서 완전히 제외되며 남은 한도는 다른 혜택에 재배분됩니다.",
+        description="사용자가 체크 해제한 혜택의 `benefit_id` 목록입니다. 이 혜택들의 `yielded_discount`가 `expected_monthly_benefit` 합산에서 제외됩니다.",
         examples=[["B_BEAUTY_001"]]
     )
 

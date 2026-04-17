@@ -206,7 +206,7 @@ class TestEnrichBenefitDetails:
 
     def test_raw_benefit_without_content_triggers_fallback_generator(self):
         """raw_benefits에 id는 있지만 content가 비어있으면 `_create_fallback_content`가 동작.
-        `[카테고리] 서브 N% 혜택` 형태의 문자열이 생성된다."""
+        한글 라벨(`[커피] 카페 10% 혜택`) 형태의 문자열이 생성된다."""
         details = [self._make_trace("b001")]
         # v4 raw에 content가 없는 상태
         v4_raw_no_content = [{
@@ -217,9 +217,29 @@ class TestEnrichBenefitDetails:
         }]
         enriched = _enrich_benefit_details(details, v4_raw_no_content)
         content = enriched[0]["content"]
-        assert "Coffee" in content  # 카테고리
-        assert "cafe" in content    # 서브카테고리
-        assert "10%" in content     # rate
+        # 한글 라벨로 변환되어 출력
+        assert "커피" in content  # Coffee → 커피
+        assert "카페" in content  # cafe → 카페
+        # 영어 enum 원시값은 노출되면 안 됨 (회귀 방지)
+        assert "Coffee" not in content
+        assert "cafe" not in content
+        assert "10%" in content   # rate
+
+    def test_fallback_content_translates_eduhealth_hospital(self):
+        """EduHealth/hospital 도 한글로 변환되어야 한다 ('병원' → 'hospital' 회귀 방지)."""
+        details = [self._make_trace("b_hospital")]
+        v4_raw_no_content = [{
+            "benefit_id": "b_hospital",
+            "category": "EduHealth",
+            "sub_category": "hospital",
+            "calculation_rule": {"benefit_rate": 0.10},
+        }]
+        enriched = _enrich_benefit_details(details, v4_raw_no_content)
+        content = enriched[0]["content"]
+        assert "교육/헬스" in content
+        assert "병원" in content
+        assert "hospital" not in content
+        assert "EduHealth" not in content
 
     def test_id_not_in_raw_benefits_returns_default_label(self):
         """raw_benefits에 id 자체가 없으면 기본 '맞춤 혜택' 문자열이 들어간다."""

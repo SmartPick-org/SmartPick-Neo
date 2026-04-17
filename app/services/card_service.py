@@ -6,6 +6,7 @@ from pathlib import Path
 from app.core.config import LEGACY_DATASETS_DIR
 from app.domain.models import CardData
 from app.repositories.card_repo import CardRepository
+from app.schemas.labels import category_label_ko, sub_category_label_ko
 from app.tools.Calc_tool import BenefitCalculator
 from loguru import logger
 
@@ -22,11 +23,12 @@ def _enrich_benefit_details(benefit_details: list[dict], raw_benefits: list[dict
         sub = b.get("sub_category", "")
         rule = b.get("calculation_rule") or {}
         rate = rule.get("benefit_rate") or rule.get("rate")
-        
-        info = f"[{cat}]"
+
+        # 영어 enum 값을 한글 라벨로 치환 (매핑에 없으면 원본 유지)
+        info = f"[{category_label_ko(cat)}]" if cat else "[]"
         if sub and sub != "general":
-            info += f" {sub}"
-            
+            info += f" {sub_category_label_ko(sub)}"
+
         if rate:
             # 0.1 -> 10%
             info += f" {int(rate * 100)}% 혜택"
@@ -36,7 +38,7 @@ def _enrich_benefit_details(benefit_details: list[dict], raw_benefits: list[dict
             info += f" {rule.get('fixed_amount'):,}원 할인"
         else:
             info += " 맞춤 혜택"
-            
+
         return info
 
     # 레거시 매핑 테이블 생성 (category, sub_category) -> content

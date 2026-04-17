@@ -382,8 +382,10 @@ async def answer_qa(payload: QARequest) -> QAResponse:
 async def recalculate_benefits(payload: RecalculateRequest) -> RecalculateResponse:
     """
     유저 체크박스 상태를 반영하여 expected_monthly_benefit만 합산 변경합니다.
+    순위가 바뀐 경우 새 1순위 카드의 큐레이션 텍스트를 재생성합니다.
     """
     excluded = set(payload.excluded_benefit_ids)
+    original_top_id = payload.recommended_cards[0].card_id if payload.recommended_cards else None
     updated_cards = []
 
     for card in payload.recommended_cards:
@@ -419,4 +421,23 @@ async def recalculate_benefits(payload: RecalculateRequest) -> RecalculateRespon
     # 순위 재조정 (할인액이 줄어들어 순위가 바뀔 수 있음)
     updated_cards.sort(key=lambda c: c.expected_monthly_benefit, reverse=True)
 
-    return RecalculateResponse(recommended_cards=updated_cards)
+    # 1순위 카드가 바뀐 경우 새 큐레이션 텍스트 재생성
+    new_explanation = ""
+    new_top = updated_cards[0] if updated_cards else None
+    if new_top and new_top.card_id != original_top_id:
+        try:
+            explain_service = ExplainService(get_llm())
+            digest_repo = DigestRepository(DIGEST_DIR)
+            card_digest = await digest_repo.get_digest({"card_slug": new_top.card_id, "card_name": new_top.card_name})
+            category_spending_str = {k.value if hasattr(k, "value") else str(k): v for k, v in payload.category_spending.items()}
+            new_explanation = await explain_service.explain(
+                payload.total_budget,
+                category_spending_str,
+                [new_top.model_dump()],
+                card_digest,
+            ) or ""
+            logger.info("[recalculate] 1순위 변경 → 큐레이션 텍스트 재생성 완료 | new_top={}", new_top.card_id)
+        except Exception as e:
+            logger.warning("[recalculate] 큐레이션 텍스트 재생성 실패 (기존 유지) | error={}", repr(e))
+
+    return RecalculateResponse(recommended_cards=updated_cards, explanation=new_explanation)

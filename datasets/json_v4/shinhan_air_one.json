@@ -1,0 +1,221 @@
+{
+  "card_meta": {
+    "card_id": "shinhan_air_one",
+    "card_name": "신한카드 Air One",
+    "card_company": "SHINHAN",
+    "annual_fee_domestic": 49000,
+    "annual_fee_international": 51000,
+    "minimum_performance": 500000,
+    "performance_excluded_categories": [
+      "Cash_Service",
+      "Card_Loan",
+      "Annual_Fee",
+      "Fees_and_Interest",
+      "Canceled_Transactions",
+      "Prepaid_Card",
+      "Gift_Card",
+      "Taxes",
+      "Utilities",
+      "Insurance",
+      "School_Fees",
+      "Public_Transportation",
+      "Interest_Free_Installments",
+      "Auto_Rental",
+      "Point_Redemption"
+    ]
+  },
+  "benefit_groups": [
+    {
+      "group_id": "G_AIR_ONE_BASE",
+      "group_name": "기본 적립",
+      "group_type": "SHARED_LIMIT",
+      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
+      "choices": null,
+      "monthly_limit": null,
+      "annual_limit": null,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_AIR_ONE_AIRPORT",
+      "group_name": "추가 적립 1 (항공/면세)",
+      "group_type": "SHARED_LIMIT",
+      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
+      "choices": null,
+      "monthly_limit": 2000000,
+      "annual_limit": null,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_AIR_ONE_DUTY_FREE",
+      "group_name": "추가 적립 2 (신라면세점 온라인)",
+      "group_type": "SHARED_LIMIT",
+      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
+      "choices": null,
+      "monthly_limit": null,
+      "annual_limit": null,
+      "top_n_count": null
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_id": "B_AIR_ONE_BASE",
+      "content": "국내 일시불/할부, 해외 일시불 이용금액 1천원당 1마일리지 적립",
+      "group_id": "G_AIR_ONE_BASE",
+      "selective_choice": null,
+      "category": "General",
+      "sub_category": null,
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "MILEAGE",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "UNIT_BASED",
+        "calc_type_description": "UNIT_BASED: 1-3 공식(단위비례)",
+        "benefit_rate": null,
+        "flat_discount": null,
+        "discount_per_unit": 1,
+        "unit_label": "1,000원",
+        "fallback_rate": null,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 1000,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [],
+      "conditional_metadata": {
+        "warnings": [
+          "단기카드대출(현금서비스), 장기카드대출(카드론), 연회비, 각종 수수료 및 이자, 거래 취소금액, 선불카드 충전 및 구매(Gift카드 포함) 금액, 국세, 지방세, 수도요금, 아파트관리비, 도시가스, 전기요금, 4대보험(국민연금/고용보험/건강보험/산재보험), 학교 납입금(스쿨뱅킹) 및 등록금(초/중/고/대학교), 대중교통(버스/지하철/택시/철도) 이용거래, 무이자/슬림 할부 이용거래, 신한카드 오토리스 이용거래, 포인트 결제 시 포인트 사용 금액 제외"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_AIR_ONE_AIRPORT",
+      "content": "국내 항공/면세 업종 이용금액 1천원당 1마일리지 추가 적립 (월 2,000마일 한도)",
+      "group_id": "G_AIR_ONE_AIRPORT",
+      "selective_choice": null,
+      "category": "Travel",
+      "sub_category": "airline",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "MILEAGE",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "UNIT_BASED",
+        "calc_type_description": "UNIT_BASED: 1-3 공식(단위비례)",
+        "benefit_rate": null,
+        "flat_discount": null,
+        "discount_per_unit": 1,
+        "unit_label": "1,000원",
+        "fallback_rate": null,
+        "monthly_benefit_limit": 2000000,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 1000,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": true,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [],
+      "conditional_metadata": {
+        "warnings": [
+          "면세업종 가맹점은 오프라인 매장에 한하여 적용됩니다."
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_AIR_ONE_DUTY_FREE",
+      "content": "신라면세점 온라인(모바일 앱/웹/홈페이지) 이용금액 1천원당 1마일리지 추가 적립 (한도 없음)",
+      "group_id": "G_AIR_ONE_DUTY_FREE",
+      "selective_choice": null,
+      "category": "Shopping",
+      "sub_category": "duty_free",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "MILEAGE",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "UNIT_BASED",
+        "calc_type_description": "UNIT_BASED: 1-3 공식(단위비례)",
+        "benefit_rate": null,
+        "flat_discount": null,
+        "discount_per_unit": 1,
+        "unit_label": "1,000원",
+        "fallback_rate": null,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 1000,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": true,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [],
+      "conditional_metadata": {
+        "warnings": [
+          "“신라트립” 이용금액은 제외됩니다.",
+          "간편결제 이용 시 가맹점명이 해당 업체가 아닌 간편결제명(네이버페이 등)인 경우 제외됩니다."
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    }
+  ]
+}

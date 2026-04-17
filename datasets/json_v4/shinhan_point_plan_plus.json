@@ -1,0 +1,692 @@
+{
+  "card_meta": {
+    "card_id": "shinhan_point_plan_plus",
+    "card_name": "신한카드 Point Plan+",
+    "card_company": "SHINHAN",
+    "annual_fee_domestic": 30000,
+    "annual_fee_international": 33000,
+    "minimum_performance": 0,
+    "performance_excluded_categories": [
+      "Fuel",
+      "Tax",
+      "Education",
+      "Housing",
+      "Insurance_Tax",
+      "Others"
+    ]
+  },
+  "benefit_groups": [
+    {
+      "group_id": "G_DAILY_LIFE",
+      "group_name": "일상 생활비 적립 서비스",
+      "group_type": "SHARED_LIMIT",
+      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
+      "choices": null,
+      "monthly_limit": null,
+      "annual_limit": null,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_ESSENTIAL_LIFE",
+      "group_name": "필수 생활비 적립 서비스",
+      "group_type": "SHARED_LIMIT",
+      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
+      "choices": null,
+      "monthly_limit": null,
+      "annual_limit": null,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_OTT",
+      "group_name": "여가 생활비 적립 서비스",
+      "group_type": "SHARED_LIMIT",
+      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
+      "choices": null,
+      "monthly_limit": null,
+      "annual_limit": null,
+      "top_n_count": null
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_id": "B_DAILY_LIFE_01",
+      "content": "국내 건당 결제금액별 0.7~3% 마이신한포인트 적립",
+      "group_id": "G_DAILY_LIFE",
+      "selective_choice": null,
+      "category": "General",
+      "sub_category": null,
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "MY_SHINHAN_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.007,
+        "fallback_rate": 0.015,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 0,
+        "max_tx_spend_allowed": 30000,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "benefit_rate": 0.01,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": 10000
+        },
+        {
+          "min_prev_performance": 800000,
+          "benefit_rate": 0.015,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": 30000
+        },
+        {
+          "min_prev_performance": 1200000,
+          "benefit_rate": 0.02,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": 50000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "신한 SOL페이 결제 시 0.5% 추가 적립 (ARS, 일반결제 등 제외)",
+          "해외(일시불) 이용 금액 대상"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_DAILY_LIFE_02",
+      "content": "국내 건당 결제금액별 0.7~3% 마이신한포인트 적립",
+      "group_id": "G_DAILY_LIFE",
+      "selective_choice": null,
+      "category": "General",
+      "sub_category": null,
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "MY_SHINHAN_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.01,
+        "fallback_rate": 0.015,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 30000,
+        "max_tx_spend_allowed": 100000,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "benefit_rate": 0.01,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": 10000
+        },
+        {
+          "min_prev_performance": 800000,
+          "benefit_rate": 0.015,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": 30000
+        },
+        {
+          "min_prev_performance": 1200000,
+          "benefit_rate": 0.02,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": 50000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "신한 SOL페이 결제 시 0.5% 추가 적립 (ARS, 일반결제 등 제외)",
+          "해외(일시불) 이용 금액 대상"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_DAILY_LIFE_03",
+      "content": "국내 건당 결제금액별 0.7~3% 마이신한포인트 적립",
+      "group_id": "G_DAILY_LIFE",
+      "selective_choice": null,
+      "category": "General",
+      "sub_category": null,
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "MY_SHINHAN_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.015,
+        "fallback_rate": 0.015,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 100000,
+        "max_tx_spend_allowed": 300000,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "benefit_rate": 0.01,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": 10000
+        },
+        {
+          "min_prev_performance": 800000,
+          "benefit_rate": 0.015,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": 30000
+        },
+        {
+          "min_prev_performance": 1200000,
+          "benefit_rate": 0.02,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": 50000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "신한 SOL페이 결제 시 0.5% 추가 적립 (ARS, 일반결제 등 제외)",
+          "해외(일시불) 이용 금액 대상"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_DAILY_LIFE_04",
+      "content": "국내 건당 결제금액별 0.7~3% 마이신한포인트 적립",
+      "group_id": "G_DAILY_LIFE",
+      "selective_choice": null,
+      "category": "General",
+      "sub_category": null,
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "MY_SHINHAN_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.02,
+        "fallback_rate": 0.015,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 300000,
+        "max_tx_spend_allowed": 1000000,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "benefit_rate": 0.01,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": 10000
+        },
+        {
+          "min_prev_performance": 800000,
+          "benefit_rate": 0.015,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": 30000
+        },
+        {
+          "min_prev_performance": 1200000,
+          "benefit_rate": 0.02,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": 50000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "신한 SOL페이 결제 시 0.5% 추가 적립 (ARS, 일반결제 등 제외)",
+          "해외(일시불) 이용 금액 대상"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_DAILY_LIFE_05",
+      "content": "국내 건당 결제금액별 0.7~3% 마이신한포인트 적립",
+      "group_id": "G_DAILY_LIFE",
+      "selective_choice": null,
+      "category": "General",
+      "sub_category": null,
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "MY_SHINHAN_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.03,
+        "fallback_rate": 0.015,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 1000000,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "benefit_rate": 0.01,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": 10000
+        },
+        {
+          "min_prev_performance": 800000,
+          "benefit_rate": 0.015,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": 30000
+        },
+        {
+          "min_prev_performance": 1200000,
+          "benefit_rate": 0.02,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": 50000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "신한 SOL페이 결제 시 0.5% 추가 적립 (ARS, 일반결제 등 제외)",
+          "해외(일시불) 이용 금액 대상"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_ESSENTIAL_LIFE_01",
+      "content": "주말(토/일) 음식점/배달앱 건당 2만원 이상 결제 시 1천 마이신한포인트 적립",
+      "group_id": "G_ESSENTIAL_LIFE",
+      "selective_choice": null,
+      "category": "Food",
+      "sub_category": "restaurant",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "MY_SHINHAN_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "FLAT_RATE",
+        "calc_type_description": "FLAT_RATE: 1-2 공식(정액)",
+        "flat_discount": 1000,
+        "fallback_rate": null,
+        "monthly_benefit_limit": 5000,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 20000,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": 1,
+        "max_count_per_month": 5,
+        "max_count_per_year": null,
+        "day_of_week": [
+          "SAT",
+          "SUN"
+        ],
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": true,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 0,
+          "benefit_rate": null,
+          "flat_discount": 1000,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 2000,
+          "group_monthly_limit": null
+        },
+        {
+          "min_prev_performance": 400000,
+          "benefit_rate": null,
+          "flat_discount": 1000,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 5000,
+          "group_monthly_limit": null
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "음식점, 배달앱 통합 일 1회 적용",
+          "공식 앱 내 '신한 SOL페이' 결제 시 한함"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_ESSENTIAL_LIFE_02",
+      "content": "도시가스/전기요금, 이동통신요금 자동납부 시 2만원당 1천 마이신한포인트 적립",
+      "group_id": "G_ESSENTIAL_LIFE",
+      "selective_choice": null,
+      "category": "Life",
+      "sub_category": "telecom",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "MY_SHINHAN_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "UNIT_BASED",
+        "calc_type_description": "UNIT_BASED: 1-3 공식(단위비례)",
+        "discount_per_unit": 1000,
+        "unit_label": "20000",
+        "fallback_rate": null,
+        "monthly_benefit_limit": 5000,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 20000,
+        "max_tx_spend_allowed": 100000,
+        "max_count_per_day": null,
+        "max_count_per_month": 1,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": false,
+        "requires_auto_payment": true
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "benefit_rate": null,
+          "flat_discount": null,
+          "discount_per_unit": 1000,
+          "monthly_benefit_limit": 5000,
+          "group_monthly_limit": 10000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "도시가스/전기요금은 통합 영역으로, 월 1건만 적용됩니다",
+          "2만원 이상 승인 건에 한해 적용되며, 2건 이상의 결제금액을 합산하여 적용되지 않습니다"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_ESSENTIAL_LIFE_03",
+      "content": "도시가스/전기요금, 이동통신요금 자동납부 시 2만원당 1천 마이신한포인트 적립",
+      "group_id": "G_ESSENTIAL_LIFE",
+      "selective_choice": null,
+      "category": "Life",
+      "sub_category": "utility",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "MY_SHINHAN_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "UNIT_BASED",
+        "calc_type_description": "UNIT_BASED: 1-3 공식(단위비례)",
+        "discount_per_unit": 1000,
+        "unit_label": "20000",
+        "fallback_rate": null,
+        "monthly_benefit_limit": 5000,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 20000,
+        "max_tx_spend_allowed": 100000,
+        "max_count_per_day": null,
+        "max_count_per_month": 1,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": false,
+        "requires_auto_payment": true
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "benefit_rate": null,
+          "flat_discount": null,
+          "discount_per_unit": 1000,
+          "monthly_benefit_limit": 5000,
+          "group_monthly_limit": 10000
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "도시가스/전기요금은 통합 영역으로, 월 1건만 적용됩니다",
+          "2만원 이상 승인 건에 한해 적용되며, 2건 이상의 결제금액을 합산하여 적용되지 않습니다"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_OTT_01",
+      "content": "OTT 7천원 이상 자동납부 시 최대 2천 마이신한포인트 적립",
+      "group_id": "G_OTT",
+      "selective_choice": null,
+      "category": "Cultural",
+      "sub_category": "ott",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "MY_SHINHAN_POINT",
+        "currency_to_krw_rate": 0.666
+      },
+      "calculation_rule": {
+        "calc_type": "FLAT_RATE",
+        "calc_type_description": "FLAT_RATE: 1-2 공식(정액)",
+        "flat_discount": 2000,
+        "fallback_rate": null,
+        "monthly_benefit_limit": 2000,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 7000,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": true,
+        "requires_auto_payment": true
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 400000,
+          "benefit_rate": null,
+          "flat_discount": 1000,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 1000,
+          "group_monthly_limit": null
+        },
+        {
+          "min_prev_performance": 800000,
+          "benefit_rate": null,
+          "flat_discount": 2000,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": 2000,
+          "group_monthly_limit": null
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "공식 PC 홈페이지를 통한 정기결제 시에만 적립"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    }
+  ]
+}

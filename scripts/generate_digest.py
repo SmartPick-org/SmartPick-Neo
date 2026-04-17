@@ -1,13 +1,18 @@
 """
 카드 혜택 Compact Digest 생성 스크립트
 
-기존 JSON 데이터를 LLM에 전달하여 마크다운 형식의 요약본을 생성합니다.
+JSON v3 데이터를 LLM에 전달하여 마크다운 형식의 요약본을 생성합니다.
 LLM 프롬프트 입력용으로, 카드 혜택 정보를 토큰 효율적으로 전달하기 위한 포맷입니다.
 
-사용법: python3 -m scripts.generate_digest
+사용법: python -m scripts.generate_digest
+옵션:
+  --card <키워드>       특정 카드만 변환
+  --company <회사명>    특정 카드사만 변환
+  --no-sub-category     sub_category 없이 기존 형식으로 생성
 """
 
 import json
+import argparse
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -26,7 +31,57 @@ DST_DIR = ROOT / "datasets" / "digest"
 
 # ===========================< LLM 프롬프트 >============================
 
-DIGEST_PROMPT = """너는 신용카드 혜택 정보를 간결하고 구조화된 마크다운 요약본으로 변환하는 금융 데이터 요약 전문가이다.
+DIGEST_PROMPT_WITH_SUB = """너는 신용카드 혜택 정보를 간결하고 구조화된 마크다운 요약본으로 변환하는 금융 데이터 요약 전문가이다.
+
+아래의 카드 혜택 JSON 데이터를 읽고, 카드 추천 시스템의 LLM이 빠르게 이해할 수 있는 Compact Digest 마크다운으로 변환하라.
+
+[출력 형식]
+
+```
+# 카드명
+연회비: 국내 X원 / 해외 Y원 (또는 단일 금액)
+전월 실적: X원 이상 (특이 조건 있으면 괄호로 표기)
+
+## 서브카테고리_한글명 (카테고리/sub_category) — 혜택유형 비율/금액
+혜택 내용 1줄 요약
+- 실적구간별 한도 (있으면)
+⚠ 주의사항/제외조건 (있으면)
+
+## 서브카테고리_한글명 (카테고리/sub_category) — 혜택유형 비율/금액  [통합한도 공유]
+(통합 한도를 공유하는 혜택들은 [통합한도 공유]로 표시)
+```
+
+[카테고리 영문 키워드 매핑]
+반드시 아래 키워드 중 하나를 괄호 안에 표기할 것:
+General, Shopping, Traffic, Food, Coffee, Cultural, Travel, Life, EduHealth, Others
+
+[sub_category 매핑]
+JSON의 "sub_category" 필드가 있으면 카테고리 뒤에 슬래시로 구분하여 표기.
+예: (Traffic/transit), (Traffic/fuel), (Shopping/mart), (Life/telecom)
+sub_category가 null이면 카테고리만 표기: (General), (Others)
+
+[서브카테고리 한글명]
+## 섹션 제목에 해당 혜택의 실질적인 한글 서브카테고리 명칭을 사용.
+예: "대중교통", "주유", "택시", "편의점", "공과금", "항공 마일리지", "공항 라운지"
+
+[규칙]
+1. 각 혜택을 ## 섹션으로 구분한다.
+2. 혜택유형은 "청구할인", "포인트적립", "캐시백" 등 원문 그대로 간결하게 표기한다.
+3. 할인율/적립률이 있으면 퍼센트로 표기한다. 정액이면 금액을 표기한다.
+4. 실적 구간별로 한도가 다르면 구간별로 나열한다.
+5. 통합 한도를 공유하는 혜택들은 [통합한도 공유]로 명시한다.
+6. 계산 불가능한 혜택(라운지, 이벤트, 선지급 등)은 맨 아래 "기타 혜택"으로 묶어 1줄씩 표기한다.
+7. 원문에 없는 정보는 절대 추가하지 마라.
+8. 연간 한도/횟수 제한(`max_count_per_year`)이 있으면 반드시 명시한다 (예: "연 3회 할인").
+9. 설명 없이 마크다운만 출력하라. 코드블록(```)으로 감싸지 마라.
+10. source_benefit_id가 동일한 benefit들은 원래 하나의 혜택이 복수 카테고리에 걸쳐 분할된 것이다.
+   이들을 나란히 배치하고, 첫 번째 항목의 혜택 내용 뒤에 [원문: 분할 전 전체 내용]을 한 줄로 표기하라.
+
+[입력 데이터]
+{card_data}
+"""
+
+DIGEST_PROMPT_WITHOUT_SUB = """너는 신용카드 혜택 정보를 간결하고 구조화된 마크다운 요약본으로 변환하는 금융 데이터 요약 전문가이다.
 
 아래의 카드 혜택 JSON 데이터를 읽고, 카드 추천 시스템의 LLM이 빠르게 이해할 수 있는 Compact Digest 마크다운으로 변환하라.
 
@@ -58,17 +113,19 @@ General, Shopping, Traffic, Food, Coffee, Cultural, Travel, Life, EduHealth, Oth
 5. 통합 한도를 공유하는 혜택들은 [통합한도 공유]로 명시한다.
 6. 계산 불가능한 혜택(라운지, 이벤트, 선지급 등)은 맨 아래 "기타 혜택"으로 묶어 1줄씩 표기한다.
 7. 원문에 없는 정보는 절대 추가하지 마라.
-8. 설명 없이 마크다운만 출력하라. 코드블록(```)으로 감싸지 마라.
+8. 연간 한도/횟수 제한(`max_count_per_year`)이 있으면 반드시 명시한다 (예: "연 3회 할인").
+9. 설명 없이 마크다운만 출력하라. 코드블록(```)으로 감싸지 마라.
 
 [입력 데이터]
 {card_data}
 """
 
 
-def generate_digest(src_path: Path) -> str:
+def generate_digest(src_path: Path, use_sub_category: bool = True) -> str:
     """하나의 카드 JSON을 compact digest 마크다운으로 변환합니다."""
     raw_text = src_path.read_text(encoding="utf-8")
-    prompt = DIGEST_PROMPT.format(card_data=raw_text)
+    prompt_template = DIGEST_PROMPT_WITH_SUB if use_sub_category else DIGEST_PROMPT_WITHOUT_SUB
+    prompt = prompt_template.format(card_data=raw_text)
 
     try:
         response = llm.invoke([SystemMessage(content=prompt)]).content
@@ -79,8 +136,19 @@ def generate_digest(src_path: Path) -> str:
 
 
 def main():
+    parser = argparse.ArgumentParser(description="카드 혜택 Compact Digest 생성")
+    parser.add_argument("--card", type=str, help="특정 카드만 변환 (키워드)")
+    parser.add_argument("--company", type=str, help="특정 카드사만 변환")
+    parser.add_argument("--no-sub-category", action="store_true", help="sub_category 없이 기존 형식으로 생성")
+    parser.add_argument("--dst", type=str, help="출력 디렉토리 (기본: datasets/digest)")
+    args = parser.parse_args()
+
+    use_sub = not args.no_sub_category
+    dst_dir = Path(args.dst) if args.dst else DST_DIR
+
     print(f"원본: {SRC_DIR}")
-    print(f"출력: {DST_DIR}\n")
+    print(f"출력: {dst_dir}")
+    print(f"sub_category: {'포함' if use_sub else '미포함'}\n")
 
     total_files = 0
 
@@ -88,14 +156,22 @@ def main():
         if not company_dir.is_dir():
             continue
 
-        dst_company_dir = DST_DIR / company_dir.name
+        # 필터링
+        if args.company and company_dir.name != args.company:
+            continue
+
+        dst_company_dir = dst_dir / company_dir.name
         dst_company_dir.mkdir(parents=True, exist_ok=True)
 
         print(f"[{company_dir.name}]")
 
         for json_file in sorted(company_dir.glob("*.json")):
+            # 카드 필터링
+            if args.card and args.card.lower() not in json_file.stem.lower():
+                continue
+
             print(f"  변환 중: {json_file.name}")
-            digest = generate_digest(json_file)
+            digest = generate_digest(json_file, use_sub_category=use_sub)
 
             if not digest:
                 print(f"    [SKIP] 변환 실패")
@@ -109,7 +185,7 @@ def main():
 
     print(f"\n{'=' * 40}")
     print(f"총 {total_files}개 파일 변환 완료")
-    print(f"출력 위치: {DST_DIR}")
+    print(f"출력 위치: {dst_dir}")
 
 
 if __name__ == "__main__":

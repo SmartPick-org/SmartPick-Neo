@@ -1,0 +1,622 @@
+{
+  "card_meta": {
+    "card_id": "hyundai_t3_edition2",
+    "card_name": "현대카드 T3 Edition2",
+    "card_company": "HYUNDAI",
+    "annual_fee_domestic": 65000,
+    "annual_fee_international": 70000,
+    "minimum_performance": 500000,
+    "performance_excluded_categories": [
+      "Fuel",
+      "Tax",
+      "Utility",
+      "Education",
+      "Insurance_Tax",
+      "Others"
+    ]
+  },
+  "benefit_groups": [
+    {
+      "group_id": "G_MILEAGE_BONUS",
+      "group_name": "연간 보너스 마일리지",
+      "group_type": "SHARED_LIMIT",
+      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
+      "choices": null,
+      "monthly_limit": null,
+      "annual_limit": 24000000,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_TRAVEL_SERVICES",
+      "group_name": "여행 편의 서비스",
+      "group_type": "SHARED_LIMIT",
+      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
+      "choices": null,
+      "monthly_limit": 1,
+      "annual_limit": 2,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_PRIORITY_PASS",
+      "group_name": "Priority Pass 서비스",
+      "group_type": "SHARED_LIMIT",
+      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
+      "choices": null,
+      "monthly_limit": null,
+      "annual_limit": 5,
+      "top_n_count": null
+    },
+    {
+      "group_id": "G_PLATINUM_SERVICES",
+      "group_name": "플래티넘 서비스",
+      "group_type": "SHARED_LIMIT",
+      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식)",
+      "choices": null,
+      "monthly_limit": 1,
+      "annual_limit": 30,
+      "top_n_count": null
+    }
+  ],
+  "benefits": [
+    {
+      "benefit_id": "B_MILEAGE_KOREAN_AIR",
+      "group_id": null,
+      "selective_choice": null,
+      "category": "Travel",
+      "sub_category": "airline",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "MILEAGE",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "UNIT_BASED",
+        "calc_type_description": "UNIT_BASED: 1-3 공식(단위비례)",
+        "benefit_rate": null,
+        "flat_discount": null,
+        "discount_per_unit": 0.8,
+        "unit_label": "1,500원",
+        "fallback_rate": 0.0,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 500000,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 2000000,
+          "benefit_rate": null,
+          "flat_discount": null,
+          "discount_per_unit": 1.0,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": null
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "당월 이용금액 50만원 미만 시 적립 제외",
+          "장기카드대출(카드론), 단기카드대출(현금서비스), 연회비, 제수수료, 이자, 지방세·국세 등 세금 납부액, 도시가스요금, 대학·대학원 등록금, 자동납부서비스 이용수수료, 무이자할부 이용금액 제외"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_MILEAGE_ASIANA",
+      "group_id": null,
+      "selective_choice": null,
+      "category": "Travel",
+      "sub_category": "airline",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "MILEAGE",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "UNIT_BASED",
+        "calc_type_description": "UNIT_BASED: 1-3 공식(단위비례)",
+        "benefit_rate": null,
+        "flat_discount": null,
+        "discount_per_unit": 0.8,
+        "unit_label": "1,000원",
+        "fallback_rate": 0.0,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 500000,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": null,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 2000000,
+          "benefit_rate": null,
+          "flat_discount": null,
+          "discount_per_unit": 1.0,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": null
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "당월 이용금액 50만원 미만 시 적립 제외",
+          "장기카드대출(카드론), 단기카드대출(현금서비스), 연회비, 제수수료, 이자, 지방세·국세 등 세금 납부액, 도시가스요금, 대학·대학원 등록금, 자동납부서비스 이용수수료, 무이자할부 이용금액 제외"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_MILEAGE_BONUS",
+      "content": "연간 2,400만원 이상 이용 시 보너스 마일리지",
+      "group_id": "G_MILEAGE_BONUS",
+      "selective_choice": null,
+      "category": "Travel",
+      "sub_category": "airline",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "MILEAGE",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.1,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": 0.0,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 24000000,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": 1,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [],
+      "conditional_metadata": {
+        "warnings": [
+          "보너스 마일리지 적립 전 카드 해지 시 제공 불가"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_ROAMING",
+      "content": "모바일 해외데이터 로밍 1일 이용권",
+      "group_id": "G_TRAVEL_SERVICES",
+      "selective_choice": null,
+      "category": "Travel",
+      "sub_category": "roaming",
+      "reward_type": "INDIRECT",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "FULL_COVER",
+        "calc_type_description": "FULL_COVER: 결제금액 전액 혜택",
+        "benefit_rate": null,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": 0.0,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 500000,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": 1,
+        "max_count_per_year": 2,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [],
+      "conditional_metadata": {
+        "warnings": [
+          "당월 이용금액 50만원 이상 시 이용 가능"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": "해외 데이터 로밍 1일 이용권 제공 (SKT/kt/LG U+ 중 택 1)",
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_AIRPORT_DISCOUNT",
+      "group_id": "G_TRAVEL_SERVICES",
+      "selective_choice": null,
+      "category": "Travel",
+      "sub_category": "general",
+      "reward_type": "INDIRECT",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "FULL_COVER",
+        "calc_type_description": "FULL_COVER: 결제금액 전액 혜택",
+        "benefit_rate": null,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": 0.0,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 500000,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": 1,
+        "max_count_per_year": 2,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [],
+      "conditional_metadata": {
+        "warnings": [
+          "당월 이용금액 50만원 이상 시 이용 가능"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": "인천국제공항 교통할인 (공항철도, 고속도로, 리무진버스 할인권 중 택 1)",
+        "target_locations": [
+          "인천국제공항"
+        ],
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_PRIORITY_PASS",
+      "content": "Priority Pass카드 회원 본인 제공",
+      "group_id": "G_PRIORITY_PASS",
+      "selective_choice": null,
+      "category": "Travel",
+      "sub_category": "lounge_valet",
+      "reward_type": "INDIRECT",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "FULL_COVER",
+        "calc_type_description": "FULL_COVER: 결제금액 전액 혜택",
+        "benefit_rate": null,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": 0.0,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 1000000,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": null,
+        "max_count_per_month": null,
+        "max_count_per_year": 5,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [
+        {
+          "min_prev_performance": 12000000,
+          "benefit_rate": null,
+          "flat_discount": null,
+          "discount_per_unit": null,
+          "monthly_benefit_limit": null,
+          "group_monthly_limit": null
+        }
+      ],
+      "conditional_metadata": {
+        "warnings": [
+          "라운지 이용 2일 전까지의 이용금액(일시불+할부) 100만원 이상 시 무료 입장 가능",
+          "연간 이용금액 1,200만원 이상 시 자동 갱신 재발급"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": "세계 공항 라운지 무료 이용 (본인 한정)",
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_STARBUCKS",
+      "content": "커피전문점 건당 500원 할인",
+      "group_id": "G_PLATINUM_SERVICES",
+      "selective_choice": null,
+      "category": "Coffee",
+      "sub_category": "cafe",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "FLAT_RATE",
+        "calc_type_description": "FLAT_RATE: 1-2 공식(정액)",
+        "benefit_rate": null,
+        "flat_discount": 500,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": 0.0,
+        "monthly_benefit_limit": 1,
+        "annual_benefit_limit": 30
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 500000,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": 1,
+        "max_count_per_month": 1,
+        "max_count_per_year": 30,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [],
+      "conditional_metadata": {
+        "warnings": [
+          "당월 이용금액 50만원 이상 시 이용 가능"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_CINEMA",
+      "group_id": "G_PLATINUM_SERVICES",
+      "selective_choice": null,
+      "category": "Cultural",
+      "sub_category": "cinema",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "FLAT_RATE",
+        "calc_type_description": "FLAT_RATE: 1-2 공식(정액)",
+        "benefit_rate": null,
+        "flat_discount": 3000,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": 0.0,
+        "monthly_benefit_limit": 1,
+        "annual_benefit_limit": 6
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 500000,
+        "max_tx_spend_allowed": 6000,
+        "max_count_per_day": null,
+        "max_count_per_month": 1,
+        "max_count_per_year": 6,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [],
+      "conditional_metadata": {
+        "warnings": [
+          "당월 이용금액 50만원 이상 시 이용 가능"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_SHOPPING",
+      "group_id": "G_PLATINUM_SERVICES",
+      "selective_choice": null,
+      "category": "Shopping",
+      "sub_category": "general",
+      "reward_type": "DIRECT_FINANCIAL",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "PERCENTAGE",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율)",
+        "benefit_rate": 0.1,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": 0.0,
+        "monthly_benefit_limit": 1,
+        "annual_benefit_limit": 2
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 500000,
+        "max_tx_spend_allowed": 10000,
+        "max_count_per_day": null,
+        "max_count_per_month": 1,
+        "max_count_per_year": 2,
+        "day_of_week": null,
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [],
+      "conditional_metadata": {
+        "warnings": [
+          "당월 이용금액 50만원 이상 시 이용 가능"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": null,
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    },
+    {
+      "benefit_id": "B_PARKING",
+      "content": "서울 및 대도시 제휴 주차장 주말 무료 주차",
+      "group_id": "G_PLATINUM_SERVICES",
+      "selective_choice": null,
+      "category": "Traffic",
+      "sub_category": "parking",
+      "reward_type": "INDIRECT",
+      "reward_unit": {
+        "currency": "KRW",
+        "currency_to_krw_rate": 1.0
+      },
+      "calculation_rule": {
+        "calc_type": "FULL_COVER",
+        "calc_type_description": "FULL_COVER: 결제금액 전액 혜택",
+        "benefit_rate": null,
+        "flat_discount": null,
+        "discount_per_unit": null,
+        "unit_label": null,
+        "fallback_rate": 0.0,
+        "monthly_benefit_limit": null,
+        "annual_benefit_limit": null
+      },
+      "transaction_conditions": {
+        "min_payment_amount": 500000,
+        "max_tx_spend_allowed": null,
+        "max_count_per_day": 1,
+        "max_count_per_month": null,
+        "max_count_per_year": 20,
+        "day_of_week": [
+          "SAT",
+          "SUN"
+        ],
+        "time_of_day": {
+          "start": null,
+          "end": null
+        },
+        "requires_offline": false,
+        "requires_online": false,
+        "requires_auto_payment": false
+      },
+      "tier_conditions": [],
+      "conditional_metadata": {
+        "warnings": [
+          "당월 이용금액 50만원 이상 시 이용 가능"
+        ],
+        "excludes_from_performance": false,
+        "special_multiplier": null
+      },
+      "indirect_benefit_metadata": {
+        "description": "서울 및 대도시 제휴 주차장 주말 무료 주차",
+        "target_locations": null,
+        "voucher_choices": null,
+        "voucher_value": null
+      }
+    }
+  ]
+}

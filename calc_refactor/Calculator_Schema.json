@@ -1,0 +1,101 @@
+{
+  "card_meta": {
+    "card_id": "[String] 카드 고유 식별자 (예: shinhan_mr_life)",
+    "card_name": "[String] 카드 상품명",
+    "card_company": "[Enum] 카드사 이름 (HYUNDAI, KB, SHINHAN 등)",
+    "annual_fee_domestic": "[Integer] 국내전용 기본 연회비 (원 단위)",
+    "annual_fee_international": "[Integer] 해외겸용 기본 연회비 (원 단위, 해외겸용 미출시 카드는 null)",
+    "minimum_performance": "[Integer] 혜택을 받기 위한 카드의 최소 전월 실적 (원 단위). 실적 무관이면 0",
+    "performance_excluded_categories": "[Array<String>|Null] 전월 실적 산정에서 제외되는 카테고리 목록 (예: [\"Fuel\", \"Tax\"])"
+  },
+
+  "benefit_groups": [
+    {
+      "group_id": "[String] 그룹 고유 식별자 (예: G_TIME_PLAN, G_SELECTIVE_1)",
+      "group_name": "[String] 그룹명 (UI 노출용)",
+      "group_type": "[Enum] SHARED_LIMIT | SELECTIVE_GROUP | AUTO_TOP_N",
+      "group_type_description": "SHARED_LIMIT: 그룹 내 혜택들이 한도를 공유 (2-1 공식). SELECTIVE_GROUP: 필수 선택형 (2-3 공식). AUTO_TOP_N: 상위 이용금액 자동 추출",
+      "choices": "[Array<Object>|Null] SELECTIVE_GROUP일 경우 하위 선택지/패키지 목록. 예: [{\"choice_id\": \"CHOICE_1\", \"choice_name\": \"선택지 1 (주유강화)\"}]",
+      "monthly_limit": "[Integer|Null] 이 그룹에 속한 혜택들의 월 통합 최대 한도 (원 단위 캡)",
+      "annual_limit": "[Integer|Null] 이 그룹 전체의 연간 통합 한도 상한액 (3 연간 확장 캡). 제한 없으면 null",
+      "top_n_count": "[Integer|Null] AUTO_TOP_N일 경우 선택될 상위 혜택 개수"
+    }
+  ],
+
+  "benefits": [
+    {
+      "benefit_id": "[String] 개별 혜택 고유 식별자",
+      "content": "[String] 카드사의 공식 혜택 문구 (예: '스타벅스 50% 할인'). UI 노출 및 계산 영수증용",
+      "group_id": "[String|Null] 소속된 benefit_groups의 group_id. 한도를 공유하는 공유 그룹(SHARED_LIMIT)이거나 AUTO_TOP_N일 때만 사용. 단독 풀이면 null",
+      "selective_choice": {
+        "description": "이 혜택이 선택형 패키지에 속하는 경우 명시 (없으면 null)",
+        "group_id": "[String|Null] 이 혜택이 속한 SELECTIVE_GROUP의 group_id",
+        "choice_id": "[String|Null] 해당 그룹 내에서 어느 패키지/선택지에 속하는지 식별자 (예: CHOICE_1)"
+      },
+      "category": "[Enum] 엔진과 프론트엔드가 약속한 표준 카테고리 (예: Coffee, Convenience_Store 등)",
+      
+      "reward_type": "[Enum] DIRECT_FINANCIAL (할인,결제일차감,포인트적립) | INDIRECT (라운지,발렛,할인권 바우처 등)",
+      "reward_unit": {
+        "currency": "[Enum] KRW | M_POINT | MY_SHINHAN_POINT 등",
+        "currency_to_krw_rate": "[Float] 2-2 공식용 포인트 현금화 스칼라값 (KRW=1.0, M_POINT=0.666 등)"
+      },
+
+      "calculation_rule": {
+        "calc_type": "[Enum] PERCENTAGE | FLAT_RATE | UNIT_BASED | FULL_COVER",
+        "calc_type_description": "PERCENTAGE: 1-1 공식(비율). FLAT_RATE: 1-2 공식(정액). UNIT_BASED: 1-3 공식(단위비례). FULL_COVER: 결제금액 전액 혜택",
+        
+        "benefit_rate": "[Float|Null] PERCENTAGE용 혜택 비율 (예: 0.10). [1-1 공식]",
+        "flat_discount": "[Integer|Null] FLAT_RATE용 정액 혜택 금액 (예: 5000). [1-2 공식]",
+        "discount_per_unit": "[Integer|Null] UNIT_BASED용 단위당 할인액 (예: 60). [1-3 공식]",
+        "unit_label": "[String|Null] UNIT_BASED의 단위 기준 (예: 'liter')",
+
+        "fallback_rate": "[Float|Null] 한도 초과 시 0이 되지 않고 적용될 기본 비율 (예: 0.015). 한도 초과 시 0이면 0.0. [1-4 공식]",
+        
+        "monthly_benefit_limit": "[Integer|Null] 이 개별 혜택의 단독 월 최대 한도액 (캡). [1-1, 1-3 공식]",
+        "annual_benefit_limit": "[Integer|Null] 이 개별 혜택의 연간 최대 한도액 (월간 한도의 단순 12배를 제한하는 캡). [3 공식]"
+      },
+
+      "transaction_conditions": {
+        "min_payment_amount": "[Integer] 이 혜택을 발동시키기 위한 건당 최소 결제금액 조건 (예: 10000). [1-2 공식의 Optimal_Uses 분모]",
+        "max_tx_spend_allowed": "[Integer|Null] 1회 결제 시 혜택이 적용되는 '최대 상한 금액' (예: 최대 5만원까지만 할인 적용 대상). [1-1 공식의 Effective Spend 천장]",
+        
+        "max_count_per_day": "[Integer|Null] 일간 혜택 가능 최대 횟수. [1-1 최적화 가정 참고용]",
+        "max_count_per_month": "[Integer|Null] 월간 혜택 가능 최대 횟수. [1-1, 1-2 공식의 횟수 상한액 도출]",
+        "max_count_per_year": "[Integer|Null] 연간 혜택 가능 최대 횟수 (예: 연 6회). [3 공식 연간 횟수 상한 캡]",
+
+        "day_of_week": "[Array<Enum>|Null] 혜택 적용 요일 제한 (예: ['SAT', 'SUN']). 계산엔 제약이 없으나 프론트/LLM의 혜택 체감 설명용",
+        "time_of_day": {
+          "start": "[String|Null] 혜택 적용 시작 시간 (예: '21:00')",
+          "end": "[String|Null] 혜택 적용 종료 시간 (예: '09:00')"
+        },
+        "requires_offline": "[Boolean] 오프라인 결제 필수 여부",
+        "requires_online": "[Boolean] 온라인 결제 필수 여부",
+        "requires_auto_payment": "[Boolean] 자동이체(정기결제) 필수 여부"
+      },
+
+      "tier_conditions": [
+        {
+          "min_prev_performance": "[Integer] 전월 실적 하한선 (원 단위)",
+          "benefit_rate": "[Float|Null] 이 실적 구간에서 덮어씌워질 할인/적립률 (예: 100만 이상 시 0.15). [2-4 공식 Override]",
+          "flat_discount": "[Integer|Null] 이 실적 구간에서 덮어씌워질 정액 혜택 금액",
+          "discount_per_unit": "[Integer|Null] 이 실적 구간에서 덮어씌워질 단위당할인액",
+          "monthly_benefit_limit": "[Integer|Null] 이 실적 구간에서 적용될 개별 혜택 월 한도",
+          "group_monthly_limit": "[Integer|Null] 이 실적 구간에서 적용될 그룹(Shared Limit) 월 한도"
+        }
+      ],
+
+      "conditional_metadata": {
+        "warnings": "[Array<String>] LLM 및 프론트에서 유저에게 알릴 필수 경고/조건 텍스트 (예: '마트 내 입점 매장 제외', '전월 실적 산정에서 제외되는 혜택'). 계산엔 영향을 안 주나 명확한 고지를 위해 사용됨",
+        "excludes_from_performance": "[Boolean] 이 혜택을 받은 결제건이 전월 실적에서 제외되는지 여부",
+        "special_multiplier": "[Float|Null] 특정일(생일월 등) 한도/적립 배수 보너스 기믹 (예: 2.0)"
+      },
+
+      "indirect_benefit_metadata": {
+        "description": "[String|Null] 비경제적/간접적 혜택(reward_type = INDIRECT)인 경우 상세 내용 (예: '전세계 공항 라운지 무료 이용')",
+        "target_locations": "[Array<String>|Null] 대상 장소 (예: ['인천국제공항', '신라호텔'])",
+        "voucher_choices": "[Array<String>|Null] 바우처 제공 혜택의 경우 사용처 선택지 (예: ['쇼핑', '호텔', '여행', 'M포인트'])",
+        "voucher_value": "[Integer|Null] 바우처의 액면가 (예: 100000). 계산 총합에서 강제로 합산되진 않으나 유저 체감가용으로 보유"
+      }
+    }
+  ]
+}

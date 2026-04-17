@@ -1,7 +1,7 @@
 """
 마크다운 기반 카드 JSON v3 생성 스크립트
 
-markdown_upstage/ 하위의 마크다운 파일들을 카드별로 그룹핑한 뒤,
+terms/ 하위의 마크다운 파일들을 카드별로 그룹핑한 뒤,
 LLM(solar-pro2)으로 v3 스키마 JSON을 생성합니다.
 
 사용법: python -m scripts.generate_json_v3
@@ -23,6 +23,13 @@ from dotenv import load_dotenv
 from langchain.chat_models import init_chat_model
 from langchain_core.messages import SystemMessage
 
+from app.utils.md_table_refine import fix_markdown_text
+from scripts.sub_categories import (
+    build_prompt_block,
+    VALID_CATEGORIES,
+    VALID_SUB_CATEGORIES,
+)
+
 # ===========================< Setting >============================
 ROOT = Path(__file__).resolve().parents[1]
 load_dotenv(ROOT / ".env")
@@ -30,8 +37,8 @@ load_dotenv(ROOT / ".env")
 MODEL = "solar-pro2"
 llm = init_chat_model(model=MODEL, temperature=0.0)
 
-MD_DIR = ROOT / "datasets" / "markdown_upstage"
-DST_DIR = ROOT / "datasets" / "json_v3"
+MD_DIR = ROOT / "datasets" / "terms"
+DST_DIR = ROOT / "datasets" / "json"
 
 # ===========================< 카드 그룹핑 >============================
 
@@ -213,7 +220,7 @@ def normalize_card_key(company: str, filename: str) -> str:
 
 def group_markdown_files() -> dict[str, dict]:
     """
-    markdown_upstage/ 하위 파일들을 카드 키별로 그룹핑합니다.
+    terms/ 하위 파일들을 카드 키별로 그룹핑합니다.
 
     Returns:
         {card_key: {"company": str, "company_kr": str, "files": [Path, ...]}}
@@ -270,6 +277,8 @@ CONVERT_V3_PROMPT = """너는 신용카드 약관/설명서 마크다운을 읽�
     {{
       "benefit_id": "개별 혜택 고유 식별자 (예: b_mrlife_utility_10pct)",
       "category": "표준 카테고리 (아래 목록 참조)",
+      "sub_category": "세부 카테고리 (아래 매핑 규칙 참조, 해당 없으면 null)",
+      "source_benefit_id": "복합 카테고리 혜택을 분할한 경우 원본 식별자. 분할하지 않은 혜택은 null",
       "content": "약관 원문 요약 (LLM 추론 근거용)",
       "frequency": "MONTHLY | ANNUAL | ONCE",
       "reward_type": "DISCOUNT | POINT | CASHBACK | VOUCHER",
@@ -278,7 +287,7 @@ CONVERT_V3_PROMPT = """너는 신용카드 약관/설명서 마크다운을 읽�
         {{
           "min_prev_performance": 해당 구간 적용을 위한 전월 실적 하한 (원),
           "monthly_limit": 이 구간에서의 월 한도 (원),
-          "reward_rate": 할인/적립률 (예: 0.1 = 10%) 또는 null,
+          "rate": 할인/적립률 (예: 0.1 = 10%) 또는 null,
           "fixed_amount": 정액 금액 (원) 또는 null
         }}
       ],
@@ -295,7 +304,8 @@ CONVERT_V3_PROMPT = """너는 신용카드 약관/설명서 마크다운을 읽�
       "transaction_conditions": {{
         "min_payment_amount": 건당 최소 결제 요구 금액 (원, 없으면 0),
         "max_payment_amount_applied": 1회 결제 시 혜택 적용 최대 금액 또는 null,
-        "max_count_per_month": 월 최대 혜택 제공 횟수 또는 null
+        "max_count_per_month": 월 최대 혜택 제공 횟수 또는 null,
+        "max_count_per_year": 연간 최대 혜택 제공 횟수 또는 null
       }},
 
       "group_id": "benefit_groups의 group_id 참조 또는 null",
@@ -312,23 +322,20 @@ CONVERT_V3_PROMPT = """너는 신용카드 약관/설명서 마크다운을 읽�
   ]
 }}
 
-[카테고리 매핑 규칙]
-반드시 아래 중 하나만 사용:
-- General: 모든 가맹점, 일반 소비, 어디서나 적립/할인
-- Shopping: 온라인/오프라인 쇼핑, 마트, 백화점, 이커머스
-- Traffic: 주유소, 대중교통, 택시
-- Food: 음식점, 배달앱
-- Coffee: 카페, 베이커리, 디저트
-- Dining_FNB: 식음료 전체 (레스토랑, 카페, 음식점 통합)
-- Cultural: OTT, 구독, 영화, 공연
-- Travel: 항공, 호텔, 면세점, 해외
-- Life: 공과금, 통신비, 보험료, 편의점, 세탁
-- EduHealth: 교육, 병원, 약국
-- Streaming: 스트리밍 서비스
-- All_Domestic: 국내 전 가맹점
-- Others: 위에 해당하지 않는 경우
+{sub_category_rules}
 
 [변환 규칙]
+
+0. 엄격한 카테고리 매핑 원칙 (절대 위반 금지):
+   - LLM 본인의 일반 상식을 동원하여 임의로 카테고리를 판단하지 마라.
+   - 혜택 대상을 "매핑 규칙"의 'sub_category' 기재 내용과 대조한 뒤, 반드시 해당 서브 카테고리가 속한 최상위 'category'를 직접 지정해야 한다.
+   - 빈번한 오분류 사례 (이 지시를 무조건 따를 것):
+     * 골프장/골프연습장: Travel이 아닌 Cultural (sub_category: leisure_sports)
+     * 면세점: Travel이 아닌 Shopping (sub_category: duty_free)
+     * 렌터카/카셰어링: Traffic이 아닌 Travel (sub_category: rental)
+     * 놀이공원/테마파크: Travel이 아닌 Cultural (sub_category: theme_park)
+     * 기차(KTX/SRT): Travel이 아닌 Traffic (sub_category: transit)
+   - 잘못된 부모 카테고리를 임의 설정하면 시스템 에러가 발생하므로, [category - sub_category] 종속 관계 규칙을 최우선으로 복종하라.
 
 1. calc_method 판단:
    - "XX% 할인/적립" → RATE (rate = 소수, 예: 10% → 0.1)
@@ -346,8 +353,9 @@ CONVERT_V3_PROMPT = """너는 신용카드 약관/설명서 마크다운을 읽�
 
 4. transaction_conditions:
    - "1회 승인금액 5만원까지 할인" → max_payment_amount_applied: 50000
-   - "일 1회" → 해당 내용을 ui_warnings에 기재
+   - "일 1회" → 해당 내용을 ui_warnings에 기재하되, 절대 max_count_per_month에 1을 할당하지 마라. (월간 제한 구문이 명시되어 있지 않다면 max_count_per_month: null)
    - "월 5회" → max_count_per_month: 5
+   - "연 3회" → max_count_per_year: 3 (매우 중요: 테마파크, 엔진오일 등 연간 단위 혜택은 반드시 기입)
 
 5. edge_case_flags:
    - 사용자가 선호영역을 선택해야 하면 requires_user_selection: true
@@ -361,6 +369,24 @@ CONVERT_V3_PROMPT = """너는 신용카드 약관/설명서 마크다운을 읽�
    - 청구할인 → "KRW" (currency_to_krw_rate: 1.0)
 
 7. card_id 형식: {{company}}_{{card_name_snake_case}} (예: shinhan_mr_life, kb_easy_pick)
+
+8. 복합 카테고리 혜택 분할:
+   하나의 혜택이 2개 이상의 서로 다른 category에 해당하는 경우 (예: "편의점, 푸드, 카페 5% 적립"):
+   a) 카테고리별로 개별 benefit 항목을 생성한다.
+   b) 모든 분할 항목에 동일한 source_benefit_id를 부여한다 (예: "b_src_처음체크_food_cafe_conv").
+   c) 통합 한도가 있으면 동일한 group_id로 SHARED_LIMIT 그룹에 묶는다.
+   d) 각 분할 항목의 content에는 해당 카테고리의 대상만 기재한다.
+   e) 할인율/적립률과 calculation_rule은 원본과 동일하게 유지한다.
+   
+   예시:
+   원문: "편의점, 푸드, 카페 기본 5% 적립 (영역별 월 최대 1천 포인트)"
+   → benefit_1: category=Shopping, sub_category=convenience, content="편의점 5% 적립", source_benefit_id="b_src_xxx"
+   → benefit_2: category=Food, sub_category=general, content="푸드 5% 적립", source_benefit_id="b_src_xxx"
+   → benefit_3: category=Coffee, sub_category=general, content="카페 5% 적립", source_benefit_id="b_src_xxx"
+   → 3개 모두 동일한 group_id 참조 (SHARED_LIMIT)
+   
+   하나의 category 내에서만 sub_category가 다른 경우는 분할하지 않는다 (예: 주유+정비는 모두 Traffic).
+   반드시 category가 다를 때만 분할한다.
 
 결과는 JSON만 반환하고, 설명이나 주석은 출력하지 마라.
 
@@ -433,9 +459,52 @@ def validate_v3(data: dict) -> dict:
             print(f"    [FIX] rate={rate} 비정상 → {b.get('benefit_id')}")
             rule["rate"] = rate / 100.0  # 퍼센트를 소수로 보정
 
+        # sub_category 검증 및 Category 자동 교정
+        cat = b.get("category", "")
+        sub = b.get("sub_category")
+        
+        # 1. 서브카테고리로 카테고리 자동 교정 (general은 중복되므로 제외)
+        if sub and sub != "general":
+            correct_cat = None
+            for parent_cat, subs in VALID_SUB_CATEGORIES.items():
+                if sub in subs:
+                    correct_cat = parent_cat
+                    break
+            
+            if correct_cat and correct_cat != cat:
+                print(f"    [FIX] 카테고리 오분류 교정 (sub_category 기준): '{cat}' → '{correct_cat}' (혜택: {b.get('benefit_id')})")
+                b["category"] = correct_cat
+                cat = correct_cat
+
+        # 2. 일반 유효성 검증
+        if cat in VALID_SUB_CATEGORIES:
+            if sub and sub not in VALID_SUB_CATEGORIES[cat]:
+                print(f"    [WARN] sub_category '{sub}'가 {cat}에 유효하지 않음 → {b.get('benefit_id')}")
+                b["sub_category"] = None
+            elif not sub:
+                print(f"    [WARN] {cat} 카테고리에 sub_category 누락 → {b.get('benefit_id')}")
+        elif sub:
+            # General, Others 등 sub_category가 없어야 하는 카테고리
+            b["sub_category"] = None
+
     # benefit_groups가 없으면 빈 배열
     if "benefit_groups" not in data:
         data["benefit_groups"] = []
+
+    # source_benefit_id 분할 일관성 검증
+    from collections import defaultdict
+    source_groups = defaultdict(list)
+    for b in data.get("benefits", []):
+        src = b.get("source_benefit_id")
+        if src:
+            source_groups[src].append(b)
+    for src_id, siblings in source_groups.items():
+        group_ids = {s.get("group_id") for s in siblings}
+        if len(group_ids) > 1:
+            print(f"    [WARN] source_benefit_id '{src_id}'의 분할 항목들이 서로 다른 group_id를 참조: {group_ids}")
+        categories = [s.get("category") for s in siblings]
+        if len(categories) != len(set(categories)):
+            print(f"    [WARN] source_benefit_id '{src_id}'의 분할 항목 중 동일 카테고리 중복: {categories}")
 
     return data
 
@@ -444,10 +513,11 @@ def validate_v3(data: dict) -> dict:
 
 def convert_card(card_key: str, group: dict) -> dict | None:
     """카드 그룹의 마크다운들을 합쳐 LLM으로 v3 JSON을 생성합니다."""
-    # 마크다운 합치기
+    # 마크다운 합치기 + 표 정제 (md_table_refine 적용)
     md_parts = []
     for md_file in group["files"]:
         content = md_file.read_text(encoding="utf-8")
+        content = fix_markdown_text(content)  # 깨진 표 복구
         rel_path = md_file.relative_to(MD_DIR)
         md_parts.append(f"--- 파일: {rel_path} ---\n{content}")
 
@@ -468,6 +538,7 @@ def convert_card(card_key: str, group: dict) -> dict | None:
     prompt = CONVERT_V3_PROMPT.format(
         company=group["company_kr"],
         markdown_content=combined_md,
+        sub_category_rules=build_prompt_block(),
     ) + name_hint
 
     try:

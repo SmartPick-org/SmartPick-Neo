@@ -22,8 +22,8 @@ class DigestRepository:
         card_name = card_meta.get("card_name", "알 수 없음")
 
         logger.info(
-            "[DigestRepository] digest 조회 시작 | card={} | slug={}",
-            card_name, card_slug,
+            "[DigestRepository] 조회 시작 | card={} | slug={} | supabase={}",
+            card_name, card_slug, _USE_SUPABASE,
         )
 
         # 1) Supabase DB lookup → Storage download (primary)
@@ -31,6 +31,7 @@ class DigestRepository:
             try:
                 from app.core.database import fetch_markdown_from_s3, get_supabase
                 supabase = get_supabase()
+                logger.info("[DigestRepository] DB 쿼리: cards WHERE card_slug='{}' → SELECT digest_file_path", card_slug)
                 response = (
                     supabase.table("cards")
                     .select("digest_file_path")
@@ -39,9 +40,10 @@ class DigestRepository:
                     .execute()
                 )
                 file_path: str = (response.data or {}).get("digest_file_path", "")
+                logger.info("[DigestRepository] DB 결과: digest_file_path={}", file_path or "(없음)")
                 if not file_path:
                     logger.info(
-                        "[DigestRepository] DB에 digest_file_path 없음, 로컬 파일로 폴백 | card={} | slug={}",
+                        "[DigestRepository] digest_file_path 없음, 로컬 파일로 폴백 | card={} | slug={}",
                         card_name, card_slug,
                     )
                 else:
@@ -69,8 +71,8 @@ class DigestRepository:
         # 2) Local file fallback: search recursively (digest_v4 uses company subfolders)
         if card_slug:
             logger.info(
-                "[DigestRepository] 로컬 파일 검색 | dir={} | pattern={}.md",
-                self.digest_dir, card_slug,
+                "[DigestRepository] 로컬 파일 검색 | rglob 경로={} | 패턴={}.md",
+                self.digest_dir.resolve(), card_slug,
             )
             matches = list(self.digest_dir.rglob(f"{card_slug}.md"))
             if matches:

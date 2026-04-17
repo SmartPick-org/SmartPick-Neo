@@ -20,7 +20,7 @@ class TermsRepository:
         file_path: str = ""
 
         # 1) DB lookup — get both terms_file_path and card_slug in one query
-        logger.info("[TermsRepository] DB 조회 시작 | card={}", card_name)
+        logger.info("[TermsRepository] DB 쿼리: cards WHERE card_name='{}' → SELECT terms_file_path, card_slug", card_name)
         try:
             supabase = get_supabase()
             response = (
@@ -34,8 +34,8 @@ class TermsRepository:
             file_path = data.get("terms_file_path", "")
             card_slug = data.get("card_slug", "")
             logger.info(
-                "[TermsRepository] DB 조회 완료 | card={} | slug={} | terms_file_path={}",
-                card_name, card_slug, file_path or "(없음)",
+                "[TermsRepository] DB 결과: card_slug={} | terms_file_path={}",
+                card_slug or "(없음)", file_path or "(없음)",
             )
         except Exception as exc:
             logger.warning(
@@ -74,7 +74,7 @@ class TermsRepository:
         # 3) Local fallback: datasets/terms/{card_slug}.md
         slug = card_slug or card_name
         local_file = self.terms_dir / f"{slug}.md"
-        logger.info("[TermsRepository] 로컬 파일 확인 | card={} | path={}", card_name, local_file)
+        logger.info("[TermsRepository] 로컬 파일 확인 | card={} | 절대경로={}", card_name, local_file.resolve())
         if local_file.exists():
             logger.info(
                 "[TermsRepository] 로컬 파일 로드 성공 | card={} | path={}",

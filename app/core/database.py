@@ -11,9 +11,8 @@ from __future__ import annotations
 import os
 
 from dotenv import load_dotenv
-from supabase import Client, create_client
-
 from loguru import logger
+from supabase import Client, create_client
 
 # 프로젝트 루트의 .env 로드
 _env_path = os.path.join(os.path.dirname(__file__), "..", "..", ".env")
@@ -83,7 +82,7 @@ def fetch_markdown_from_s3(file_path: str) -> str:
     bucket_name = BUCKET_MAP.get(prefix)
 
     if not bucket_name:
-        print(f"[Storage] 알 수 없는 경로 prefix '{prefix}' | file_path={file_path}")
+        logger.warning("[Storage] 알 수 없는 경로 prefix | prefix={} | file_path={}", prefix, file_path)
         return ""
 
     if prefix == "Digest":
@@ -91,21 +90,21 @@ def fetch_markdown_from_s3(file_path: str) -> str:
         company_key = filename.split("_")[0]
         company_folder = DIGEST_COMPANY_FOLDER_MAP.get(company_key)
         if not company_folder:
-            print(f"[Storage] 알 수 없는 회사 key '{company_key}' | file={filename}")
+            logger.warning("[Storage] 알 수 없는 회사 key | company_key={} | filename={}", company_key, filename)
             return ""
         bucket_path = f"{company_folder}/{filename}"
     else:
         # Manuals / Terms 버킷: prefix를 제거한 나머지가 버킷 내 경로
         bucket_path = "/".join(file_path.split("/")[1:])
 
-    print(f"[Storage] 다운로드 시도 | bucket={bucket_name} | path={bucket_path}")
+    logger.info("[Storage] 다운로드 시도 | bucket={} | bucket_path={}", bucket_name, bucket_path)
     try:
         res = _storage_client.storage.from_(bucket_name).download(bucket_path)
         content = res.decode("utf-8")
-        print(f"[Storage] 다운로드 성공 | bucket={bucket_name} | path={bucket_path} | {len(content)} chars")
+        logger.info("[Storage] 다운로드 성공 | bucket={} | bucket_path={} | {} chars", bucket_name, bucket_path, len(content))
         return content
     except Exception as e:
-        print(f"[Storage] 다운로드 실패 ({e}) — 대소문자 무시 fallback 시도 | bucket={bucket_name} | path={bucket_path}")
+        logger.warning("[Storage] 다운로드 실패 | bucket={} | bucket_path={} | error={}", bucket_name, bucket_path, e)
         # 대소문자 무시 fallback
         if "/" in bucket_path:
             folder = bucket_path.rsplit("/", 1)[0]
@@ -113,6 +112,7 @@ def fetch_markdown_from_s3(file_path: str) -> str:
         else:
             folder = ""
             target_name = bucket_path.lower()
+        logger.info("[Storage] 대소문자 무시 fallback 시도 | bucket={} | folder='{}' | target={}", bucket_name, folder, target_name)
         try:
             files = _storage_client.storage.from_(bucket_name).list(folder)
             matched = next(
@@ -121,10 +121,10 @@ def fetch_markdown_from_s3(file_path: str) -> str:
             )
             if matched:
                 actual_path = f"{folder}/{matched}" if folder else matched
-                print(f"[Storage] 대소문자 무시 매칭 성공 | actual_path={actual_path}")
+                logger.info("[Storage] 대소문자 무시 매칭 성공 | actual_path={}", actual_path)
                 res = _storage_client.storage.from_(bucket_name).download(actual_path)
                 return res.decode("utf-8")
-            print(f"[Storage] 대소문자 무시 fallback도 매칭 없음 | folder='{folder}' | target={target_name}")
+            logger.warning("[Storage] 대소문자 무시 fallback 매칭 없음 | bucket={} | folder='{}' | target={}", bucket_name, folder, target_name)
         except Exception as e2:
-            print(f"[Storage] 대소문자 무시 fallback 실패 | error={e2}")
+            logger.warning("[Storage] 대소문자 무시 fallback 실패 | bucket={} | error={}", bucket_name, e2)
         return ""

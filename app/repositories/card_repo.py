@@ -32,6 +32,10 @@ class DatasetCardRepository(CardRepository):
                 # v4 데이터를 직접 로드
                 card_data = raw
                 card_data["_file_path"] = str(json_file)
+                # card_slug은 JSON 스키마에 없으므로 card_id로 채움
+                card_meta = card_data.setdefault("card_meta", {})
+                if not card_meta.get("card_slug"):
+                    card_meta["card_slug"] = card_meta.get("card_id", "")
 
                 # 필터링을 위한 카테고리 추출 로직 (v4 스키마 대응)
                 card_categories: set[str] = set()
@@ -86,6 +90,7 @@ class DBCardRepository(CardRepository):
             card_data: CardData = {
                 "card_meta": {
                     "card_id": card_id,
+                    "card_slug": card_id,
                     "card_name": row.get("card_name", ""),
                     "card_company": row.get("card_company", ""),
                     "annual_fee_domestic": row.get("annual_fee_domestic", 0),

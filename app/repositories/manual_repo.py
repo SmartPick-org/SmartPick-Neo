@@ -21,6 +21,7 @@ class ManualRepository:
         file_path: str = ""
 
         # 1) DB lookup — get both manual_file_path and card_slug in one query
+        logger.info("[ManualRepository] DB 조회 시작 | card={}", card_name)
         try:
             supabase = get_supabase()
             response = (
@@ -33,6 +34,10 @@ class ManualRepository:
             data = response.data or {}
             file_path = data.get("manual_file_path", "")
             card_slug = data.get("card_slug", "")
+            logger.info(
+                "[ManualRepository] DB 조회 완료 | card={} | slug={} | manual_file_path={}",
+                card_name, card_slug, file_path or "(없음)",
+            )
         except Exception as exc:
             logger.warning(
                 "[ManualRepository] DB 조회 실패, 로컬 파일로 폴백 | card={} | error={}",
@@ -42,37 +47,45 @@ class ManualRepository:
 
         # 2) Supabase Storage download
         if file_path:
+            logger.info("[ManualRepository] Storage 다운로드 시도 | card={} | path={}", card_name, file_path)
             try:
                 content = fetch_markdown_from_s3(file_path)
                 if content:
                     logger.info(
-                        "[ManualRepository] 상품설명서 로드 완료 | card={} | path={} | {} chars",
+                        "[ManualRepository] Storage에서 상품설명서 로드 성공 | card={} | path={} | {} chars",
                         card_name, file_path, len(content),
                     )
                     return content
+                logger.warning(
+                    "[ManualRepository] Storage 다운로드 결과 없음, 로컬 파일로 폴백 | card={} | path={}",
+                    card_name, file_path,
+                )
             except Exception as exc:
                 logger.warning(
-                    "[ManualRepository] storage 다운로드 실패, 로컬 파일로 폴백 | path={} | error={}",
+                    "[ManualRepository] Storage 다운로드 실패, 로컬 파일로 폴백 | path={} | error={}",
                     file_path, exc,
                 )
                 await notify_discord(
                     exc,
                     context=f"ManualRepository.get_manual — storage download | card={card_name} path={file_path}",
                 )
+        else:
+            logger.info("[ManualRepository] manual_file_path 없음, 로컬 파일로 폴백 | card={}", card_name)
 
         # 3) Local fallback: datasets/manuals/{card_slug}.md
         slug = card_slug or card_name
         local_file = self.manuals_dir / f"{slug}.md"
+        logger.info("[ManualRepository] 로컬 파일 확인 | card={} | path={}", card_name, local_file)
         if local_file.exists():
             logger.info(
-                "[ManualRepository] 로컬 파일에서 상품설명서 로드 성공 | card={} | file={}",
-                card_name, local_file.name,
+                "[ManualRepository] 로컬 파일 로드 성공 | card={} | path={}",
+                card_name, local_file,
             )
             return local_file.read_text(encoding="utf-8")
 
-        # 4) Not found — return empty (manual may not exist for all cards)
-        logger.info(
-            "[ManualRepository] 상품설명서 없음 | card={} | slug={}",
-            card_name, slug,
+        # 4) Not found
+        logger.warning(
+            "[ManualRepository] 상품설명서 없음 — DB에도 로컬에도 파일 없음 | card={} | slug={} | 시도한 경로={}",
+            card_name, slug, local_file,
         )
         return ""

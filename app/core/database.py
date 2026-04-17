@@ -48,9 +48,9 @@ def get_supabase() -> Client:
 # 버킷 매핑 (DB 경로 prefix → Supabase Storage 버킷 이름)
 # ---------------------------------------------------------------------------
 BUCKET_MAP: dict[str, str] = {
-    "digest": "Digest",
-    "manual": "Markdown",
-    "terms": "Markdown",
+    "Digest": "Digest",
+    "Manuals": "Manuals",
+    "Terms": "Terms",
 }
 
 # Digest 버킷 내 회사별 폴더 매핑 (파일명 prefix 기준)
@@ -65,44 +65,54 @@ DIGEST_COMPANY_FOLDER_MAP: dict[str, str] = {
 def fetch_markdown_from_s3(file_path: str) -> str:
     """Supabase Storage 에서 마크다운 파일을 다운로드해 문자열로 반환.
 
+    DB에 저장된 file_path 형식: "{Bucket}/{path}" (e.g. "Manuals/kb_youth_talk_talk.md")
     버킷 구조:
-      - Markdown 버킷: manual/{filename}.md  ← DB 경로 그대로 사용
-      - Digest   버킷: {company}/{filename}.md ← DB는 digest/{filename}.md 형태로 저장
-                                               실제 버킷 경로는 {company}/{filename}
+      - Manuals 버킷: {filename}.md  (root-level)
+      - Terms   버킷: {filename}.md  (root-level)
+      - Digest  버킷: {company}/{filename}.md  (company subfolder)
     """
     if not file_path:
         return ""
-        
+
     if not _storage_client:
         print("[WARN] Supabase storage is disabled due to missing URL/KEY.")
         return ""
 
-    prefix = file_path.split("/")[0]    # 'manual' or 'digest'
-    filename = file_path.split("/")[-1] # 예: hyundai_DigitalLover.md
+    prefix = file_path.split("/")[0]    # e.g. 'Digest', 'Manuals', 'Terms'
+    filename = file_path.split("/")[-1] # e.g. 'kb_youth_talk_talk.md'
     bucket_name = BUCKET_MAP.get(prefix)
 
     if not bucket_name:
-        print(f"[WARN] Unknown file path prefix '{prefix}' in: {file_path}")
+        print(f"[Storage] 알 수 없는 경로 prefix '{prefix}' | file_path={file_path}")
         return ""
 
-    if prefix in ("manual", "terms"):
-        bucket_path = file_path
-    else:
-        # Digest 버킷: {company}/{filename} 으로 변환
+    if prefix == "Digest":
+        # Digest 버킷: {company}/{filename} 경로로 변환
         company_key = filename.split("_")[0]
         company_folder = DIGEST_COMPANY_FOLDER_MAP.get(company_key)
         if not company_folder:
-            print(f"[WARN] Unknown company key '{company_key}' from file: {filename}")
+            print(f"[Storage] 알 수 없는 회사 key '{company_key}' | file={filename}")
             return ""
         bucket_path = f"{company_folder}/{filename}"
+    else:
+        # Manuals / Terms 버킷: prefix를 제거한 나머지가 버킷 내 경로
+        bucket_path = "/".join(file_path.split("/")[1:])
 
+    print(f"[Storage] 다운로드 시도 | bucket={bucket_name} | path={bucket_path}")
     try:
         res = _storage_client.storage.from_(bucket_name).download(bucket_path)
-        return res.decode("utf-8")
-    except Exception:
+        content = res.decode("utf-8")
+        print(f"[Storage] 다운로드 성공 | bucket={bucket_name} | path={bucket_path} | {len(content)} chars")
+        return content
+    except Exception as e:
+        print(f"[Storage] 다운로드 실패 ({e}) — 대소문자 무시 fallback 시도 | bucket={bucket_name} | path={bucket_path}")
         # 대소문자 무시 fallback
-        folder = bucket_path.rsplit("/", 1)[0]
-        target_name = bucket_path.rsplit("/", 1)[-1].lower()
+        if "/" in bucket_path:
+            folder = bucket_path.rsplit("/", 1)[0]
+            target_name = bucket_path.rsplit("/", 1)[-1].lower()
+        else:
+            folder = ""
+            target_name = bucket_path.lower()
         try:
             files = _storage_client.storage.from_(bucket_name).list(folder)
             matched = next(
@@ -110,13 +120,11 @@ def fetch_markdown_from_s3(file_path: str) -> str:
                 None,
             )
             if matched:
-                actual_path = f"{folder}/{matched}"
+                actual_path = f"{folder}/{matched}" if folder else matched
+                print(f"[Storage] 대소문자 무시 매칭 성공 | actual_path={actual_path}")
                 res = _storage_client.storage.from_(bucket_name).download(actual_path)
                 return res.decode("utf-8")
-        except Exception:
-            pass
-        print(
-            f"[ERROR] File not found: '{bucket_path}' in bucket '{bucket_name}'"
-            " (case-insensitive fallback also failed)"
-        )
+            print(f"[Storage] 대소문자 무시 fallback도 매칭 없음 | folder='{folder}' | target={target_name}")
+        except Exception as e2:
+            print(f"[Storage] 대소문자 무시 fallback 실패 | error={e2}")
         return ""

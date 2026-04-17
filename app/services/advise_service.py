@@ -362,8 +362,13 @@ async def get_advice(
         logger.info(f"[CardAdvisorService] {len(response.tool_calls)}개의 도구 호출 요청됨")
         for tool_call in response.tool_calls:
             name = tool_call["name"]
-            logger.info(f"[CardAdvisorService] 도구 실행: {name} | args={tool_call['args']}")
-            result = _tools[name].invoke(tool_call["args"])
+            args = tool_call["args"]
+            logger.info(f"[CardAdvisorService] 도구 실행: {name} | args={args}")
+            if not args:
+                result = f"도구 호출 오류: '{name}' 필수 인자가 누락되었습니다. 검색어(query)를 포함해서 다시 호출해주세요."
+                logger.warning(f"[CardAdvisorService] 도구 호출 인자 누락 — tool={name}")
+            else:
+                result = _tools[name].invoke(args)
             messages.append(ToolMessage(
                 content=result,
                 tool_call_id=tool_call["id"],

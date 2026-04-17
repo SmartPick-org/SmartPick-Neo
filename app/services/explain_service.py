@@ -125,7 +125,9 @@ class ExplainService:
 
         current_monthly = current_card_result.get("expected_monthly_benefit", 0)
         recommended_monthly = recommended_card_result.get("expected_monthly_benefit", 0)
-        yearly_diff = (recommended_monthly - current_monthly) * 12
+        current_yearly = current_card_result.get("expected_yearly_benefit", current_monthly * 12)
+        recommended_yearly = recommended_card_result.get("expected_yearly_benefit", recommended_monthly * 12)
+        yearly_diff = int(recommended_yearly - current_yearly)
 
         # 혜택 차이가 가장 큰 카테고리 찾기
         top_category = ""
@@ -194,14 +196,14 @@ class ExplainService:
         prefix = f"[{rank}순위] "
         lines.append(f"{prefix}{card['card_name']} ({card['card_company']})")
         
-        # 기본 정보: 연회비 | 월 예상 할인 | 연 순이익 추정
+        # 기본 정보: 연회비 | 월 예상 혜택 | 연간 예상 혜택(연회비 차감 전)
         annual_fee = f"{card['annual_fee']:,}원"
         # 월 예상 할인은 1000원 단위 반올림 적용
         monthly_benefit = self._round_to_thousands(card['expected_monthly_benefit'])
         # 연간 혜택은 이미 원 단위이므로 콤마 포맷팅만 (회원님 예시 참고)
         yearly_benefit = f"{card.get('expected_yearly_benefit', 0):,}원"
         
-        lines.append(f"연회비: {annual_fee} | 월 예상 할인: {monthly_benefit} | 연 순이익 추정: {yearly_benefit}")
+        lines.append(f"연회비: {annual_fee} | 월 예상 혜택: {monthly_benefit} | 연간 예상 혜택: {yearly_benefit}")
         
         # 카테고리별 상세 내역
         for cb in card.get("category_breakdown", []):

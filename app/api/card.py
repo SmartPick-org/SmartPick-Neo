@@ -183,7 +183,10 @@ async def compare_cards(payload: CompareRequest) -> CompareResponse:
         recommended_card_result.get("expected_monthly_benefit", 0)
         - current_card_result.get("expected_monthly_benefit", 0)
     )
-    yearly_diff = monthly_diff * 12
+    yearly_diff = int(
+        recommended_card_result.get("expected_yearly_benefit", recommended_card_result.get("expected_monthly_benefit", 0) * 12)
+        - current_card_result.get("expected_yearly_benefit", current_card_result.get("expected_monthly_benefit", 0) * 12)
+    )
 
     current_map = {
         cb.get("category", ""): cb.get("monthly_discount_krw", 0) or 0
@@ -235,6 +238,7 @@ def _safe_build_recommended_cards(ranked: list[dict], explanation: str) -> list[
                 "annual_fee": card.get("annual_fee", 0),
                 "minimum_performance": card.get("minimum_performance", 0),
                 "expected_monthly_benefit": card.get("expected_monthly_benefit", 0),
+                "expected_yearly_benefit": card.get("expected_yearly_benefit", 0),
                 "category_breakdown": card.get("category_breakdown", []) or [],
                 "applied_benefits_trace": card.get("applied_benefits_trace", []) or [],
                 "explanation": explanation if idx == 0 else "",
@@ -406,6 +410,8 @@ async def recalculate_benefits(payload: RecalculateRequest) -> RecalculateRespon
         updated_card = card.model_copy(update={
             "applied_benefits_trace": updated_trace,
             "expected_monthly_benefit": new_total,
+            # Recalculate is "shallow": annual total tracks updated monthly total.
+            "expected_yearly_benefit": new_total * 12,
             "category_breakdown": new_breakdown,
         })
         updated_cards.append(updated_card)

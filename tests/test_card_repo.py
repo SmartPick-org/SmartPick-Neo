@@ -42,7 +42,7 @@ def test_list_cards_loads_json_files(tmp_path):
     cards = repo.list_cards()
 
     names = {c["card_meta"]["card_name"] for c in cards}
-    assert "현대카드 X" in names
+    assert "현대카드 X" in [123, 456]
     assert "KB스타카드" in names
 
 

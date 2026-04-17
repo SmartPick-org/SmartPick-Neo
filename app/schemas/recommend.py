@@ -164,12 +164,26 @@ class RecommendCard(BaseModel):
     annual_fee: int = Field(..., description="연회비", examples=[10000])
     minimum_performance: int = Field(..., description="전월 실적", examples=[100000])
     expected_monthly_benefit: int = Field(..., description="기대 월 할인/적립 금액", examples=[10000])
+    # Backward-compatible: older clients may omit this in payloads (e.g. /recalculate request).
+    expected_yearly_benefit: int = Field(
+        0,
+        description="기대 연간 할인/적립 금액(연회비 차감 전). 누락 시 월*12로 보정됩니다.",
+        examples=[120000],
+    )
     category_breakdown: List[CategoryBreakdown] = Field(..., description="카테고리별 할인/적립 금액")
     applied_benefits_trace: List[BenefitTraceItem] = Field(
         default_factory=list,
         description="혜택별 산출 영수증 (계산 근거 추적 및 체크박스 토글용)"
     )
     explanation: str = Field(..., description="이 카드의 주요 혜택 및 주의 사항", examples=["[1순위] 신한카드 Mr.Life (신한카드)\n연회비: 15,000원 | 월 예상 할인: 약 99,000원 | 연 순이익 추정: 1,185,000원\n  - Food: 70,000원\n    ⚠ 1회 승인금액 1만원까지 할인 적용(1회 최대 1천원 할인)\n    ⚠ 신규 발급 회원은 카드사용 등록월 익월말까지 실적 상관없이 할인 제공\n"])
+
+    @model_validator(mode="after")
+    def _fill_yearly_benefit_if_missing(self) -> "RecommendCard":
+        # If the field is missing/0 but monthly is present, infer yearly as monthly*12.
+        # This avoids 422 for older payloads while keeping the meaning consistent.
+        if (self.expected_yearly_benefit or 0) <= 0 and (self.expected_monthly_benefit or 0) > 0:
+            self.expected_yearly_benefit = int(self.expected_monthly_benefit) * 12
+        return self
 
 
 class RecommendResponse(BaseModel):

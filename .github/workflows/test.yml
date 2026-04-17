@@ -18,6 +18,9 @@ jobs:
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
       - uses: actions/checkout@v4
 
@@ -34,3 +37,26 @@ jobs:
 
       - name: Run tests
         run: uv run pytest tests/ -v
+
+      - name: Comment on PR when tests fail
+        if: failure() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const body = [
+              '## CI 실패',
+              '',
+              '이 PR 의 테스트가 통과하지 못했습니다. **머지하지 말고** 먼저 실패 원인을 해결해 주세요.',
+              '',
+              `- 실패한 실행: ${runUrl}`,
+              '- 로컬 재현: `uv run pytest tests/ -v`',
+              '',
+              '테스트 수정이 의도된 변경이라면 같은 PR 에서 테스트와 구현을 함께 업데이트해 주세요.',
+            ].join('\n');
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body,
+            });

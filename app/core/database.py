@@ -52,50 +52,28 @@ BUCKET_MAP: dict[str, str] = {
     "Terms": "Terms",
 }
 
-# Digest 버킷 내 회사별 폴더 매핑 (파일명 prefix 기준)
-DIGEST_COMPANY_FOLDER_MAP: dict[str, str] = {
-    "hyundai": "hyundai",
-    "kb": "kb",
-    "shinhan": "shinhan",
-    "sc": "shinhan",  # sc_ prefix 도 shinhan 폴더에 있음
-}
-
-
 def fetch_markdown_from_s3(file_path: str) -> str:
     """Supabase Storage 에서 마크다운 파일을 다운로드해 문자열로 반환.
 
-    DB에 저장된 file_path 형식: "{Bucket}/{path}" (e.g. "Manuals/kb_youth_talk_talk.md")
-    버킷 구조:
-      - Manuals 버킷: {filename}.md  (root-level)
-      - Terms   버킷: {filename}.md  (root-level)
-      - Digest  버킷: {company}/{filename}.md  (company subfolder)
+    DB에 저장된 file_path 형식: "{Bucket}/{filename}" (e.g. "Digest/shinhan_first.md")
+    첫 번째 세그먼트가 버킷 이름, 나머지가 버킷 내 경로 (모든 버킷 flat 구조).
     """
     if not file_path:
         return ""
 
     if not _storage_client:
-        print("[WARN] Supabase storage is disabled due to missing URL/KEY.")
+        logger.warning("[Storage] Supabase storage 비활성화 (URL/KEY 없음)")
         return ""
 
-    prefix = file_path.split("/")[0]    # e.g. 'Digest', 'Manuals', 'Terms'
-    filename = file_path.split("/")[-1] # e.g. 'kb_youth_talk_talk.md'
+    prefix = file_path.split("/")[0]
     bucket_name = BUCKET_MAP.get(prefix)
 
     if not bucket_name:
         logger.warning("[Storage] 알 수 없는 경로 prefix | prefix={} | file_path={}", prefix, file_path)
         return ""
 
-    if prefix == "Digest":
-        # Digest 버킷: {company}/{filename} 경로로 변환
-        company_key = filename.split("_")[0]
-        company_folder = DIGEST_COMPANY_FOLDER_MAP.get(company_key)
-        if not company_folder:
-            logger.warning("[Storage] 알 수 없는 회사 key | company_key={} | filename={}", company_key, filename)
-            return ""
-        bucket_path = f"{company_folder}/{filename}"
-    else:
-        # Manuals / Terms 버킷: prefix를 제거한 나머지가 버킷 내 경로
-        bucket_path = "/".join(file_path.split("/")[1:])
+    # 모든 버킷 flat 구조: prefix 제거 후 나머지가 버킷 내 경로
+    bucket_path = "/".join(file_path.split("/")[1:])
 
     logger.info("[Storage] 다운로드 시도 | bucket={} | bucket_path={}", bucket_name, bucket_path)
     try:

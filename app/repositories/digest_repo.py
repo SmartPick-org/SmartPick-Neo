@@ -70,21 +70,20 @@ class DigestRepository:
 
         # 2) Local file fallback: search recursively (digest_v4 uses company subfolders)
         if card_slug:
+            local_file = self.digest_dir / f"{card_slug}.md"
             logger.info(
-                "[DigestRepository] 로컬 파일 검색 | rglob 경로={} | 패턴={}.md",
-                self.digest_dir.resolve(), card_slug,
+                "[DigestRepository] 로컬 파일 확인 | 절대경로={}",
+                local_file.resolve(),
             )
-            matches = list(self.digest_dir.rglob(f"{card_slug}.md"))
-            if matches:
-                local_file = matches[0]
+            if local_file.exists():
                 logger.info(
                     "[DigestRepository] 로컬 파일 로드 성공 | card={} | path={}",
-                    card_name, local_file,
+                    card_name, local_file.resolve(),
                 )
                 return local_file.read_text(encoding="utf-8")
             logger.warning(
-                "[DigestRepository] 로컬 파일 없음 | card={} | dir={} | slug={}.md",
-                card_name, self.digest_dir, card_slug,
+                "[DigestRepository] 로컬 파일 없음 | card={} | 시도한 경로={}",
+                card_name, local_file.resolve(),
             )
 
         # 3) Not found

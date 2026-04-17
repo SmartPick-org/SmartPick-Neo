@@ -426,7 +426,13 @@ async def recalculate_benefits(payload: RecalculateRequest) -> RecalculateRespon
         try:
             explain_service = ExplainService(get_llm())
             digest_repo = DigestRepository(DIGEST_DIR)
-            card_digest = await digest_repo.get_digest({"card_slug": new_top.card_id, "card_name": new_top.card_name})
+            # DigestRepository.get_digest 는 CardData 형태 (card_meta 하위에 slug/name) 를 기대한다.
+            card_digest = await digest_repo.get_digest({
+                "card_meta": {
+                    "card_slug": new_top.card_id,
+                    "card_name": new_top.card_name,
+                }
+            })
             category_spending_str = {k.value if hasattr(k, "value") else str(k): v for k, v in payload.category_spending.items()}
             new_explanation = await explain_service.explain(
                 payload.total_budget,

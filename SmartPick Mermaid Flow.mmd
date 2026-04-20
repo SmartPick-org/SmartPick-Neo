@@ -1,0 +1,86 @@
+---
+config:
+  layout: dagre
+  theme: mc
+---
+flowchart TB
+ subgraph RECOMMEND["POST /cards/recommend"]
+        C["카테고리 매칭 필터링<br>사용자 카테고리 ∩ 카드 카테고리"]
+        B["전월 실적 필터링<br>minimum_performance ≤ total_budget"]
+        D["전 카드 혜택 병렬 계산<br>BenefitCalculator × N장<br>asyncio.gather + Semaphore"]
+        E["점수 기반 랭킹<br>expected_monthly_benefit 내림차순"]
+        F["Top-3 선정<br>rank_top"]
+        G["Digest 로드<br>digest_repo.get_digest"]
+        H["LLM 추천 설명 생성<br>ExplainService.explain<br>Upstage Solar Pro 2"]
+        I(["추천 결과 반환<br>Top-3 카드 + 혜택 breakdown + 설명"])
+  end
+
+ subgraph RECALC["POST /cards/recalculate"]
+        L["혜택 합산 재계산<br>Shallow: 한도 재분배 없음"]
+        K["제외된 benefit_id 적용<br>user_choice=False로 마킹"]
+        M["카테고리 breakdown 갱신"]
+        N["순위 재조정<br>expected_monthly_benefit 내림차순 재정렬"]
+        O{"1순위 카드<br>변경됐나?"}
+        P["새 Digest 로드<br>+ LLM 설명 재생성<br>ExplainService.explain"]
+        Q["기존 설명 유지"]
+  end
+
+ subgraph ADVISOR["POST /advisor — AdvisorAgent"]
+        S["Supabase 캐시 조회<br>advisor_cache 7일 TTL"] --> S2
+        S2{"캐시 히트?"}
+        S2 -- Yes --> Z
+        S2 -- No --> T
+
+        T{"query_type"}
+
+        T -- "QUERIES_DETAILS<br>credit_fees · international_fees<br>late_payment · revolving" --> U
+        T -- "QUERIES_STANDALONE<br>reviews · how_to_apply" --> V2
+
+        U["상품설명서 + 약관 병렬 로드<br>ManualRepository + TermsRepository<br>asyncio.gather"] --> U2
+        U2["시스템 프롬프트에 card_info 삽입<br>카드 공식 문서 기반 응답"] --> W
+
+        V2["문서 로드 생략<br>card_info = 빈 문자열<br>웹 검색 기반 응답"] --> W
+
+        W["LLM 초기화 + 툴 바인딩<br>Upstage Solar Pro 2"] --> X
+        X["LLM 호출"] --> Y
+        Y{"tool_calls 있나?"}
+        Y -- reviews --> YA["naver_blog_search<br>네이버 블로그 검색"]
+        Y -- "how_to_apply<br>info 질문" --> YB["web_search<br>네이버 웹 → Tavily fallback"]
+        YA --> YC["ToolMessage 추가"]
+        YB --> YC
+        YC --> X
+        Y -- 없음 --> Z2["답변 Supabase 캐시 저장"]
+        Z2 --> Z
+  end
+
+    A(["사용자: 소비 패턴 입력<br>total_budget + category_spending"]) --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+    G --> H
+    H --> I
+    I --> J{"사용자 액션"}
+    J -- 특정 혜택 체크 해제 --> K
+    K --> L
+    L --> M
+    M --> N
+    N --> O
+    O -- Yes --> P
+    O -- No --> Q
+    P --> R(["재추천 결과 반환<br>업데이트된 Top-3 + 새 설명"])
+    Q --> R
+    R --> J
+    J -- 더 물어보기 클릭 --> S
+
+     I:::green
+     A:::green
+     J:::violet
+     R:::green
+     Z:::violet
+    classDef indigo stroke:#818cf8,fill:#eef2ff
+    classDef teal stroke:#2dd4bf,fill:#f0fdfa
+    classDef orange stroke:#fb923c,fill:#fff7ed
+    classDef violet stroke:#a78bfa,fill:#f5f3ff
+    classDef green stroke:#4ade80,fill:#f0fdf4
